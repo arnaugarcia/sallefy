@@ -1,0 +1,71 @@
+entity Track {
+	name String,
+    raiting Double,
+    reference String,
+    artists Artists,
+    duration Integer,
+    primaryColor String
+}
+
+entity Playlist {
+	name String,
+    collaborative Boolean,
+    reference String,
+    description TextBob,
+    primaryColor String,
+    public Boolean,
+    numberSongs Integer,
+    followers Integer,
+    owner User,
+    rating Double
+}
+
+entity Artist {
+	name String,
+    reference String,
+    photo String,
+    biography TextBlob
+}
+
+entity Album {
+	title String,
+    reference String,
+    totaltracks Integer
+}
+
+entity Image {
+	url String,
+    height Integer,
+    thumbnail Boolean,
+    cover Boolean,
+    width Integer
+}
+
+relationship OneToOne {
+    User to Playlist{owner}
+}
+
+relationship ManyToMany {
+	Track{playlist(name)} to Playlist{track(name)}
+}
+
+relationship OneToMany {
+	Album{artist(name)} to Artist{album(title)},
+
+    Album{images} to Image,
+    Artist{images} to Image,
+    Playlist{images} to Image,
+    Track{images} to Image
+}
+
+// Set pagination options
+paginate Track with pagination
+
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+
+// Set an angular suffix
+angularSuffix * with sf
