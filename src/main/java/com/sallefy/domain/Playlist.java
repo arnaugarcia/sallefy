@@ -1,5 +1,6 @@
 package com.sallefy.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -51,13 +52,13 @@ public class Playlist implements Serializable {
     @Column(name = "rating")
     private Double rating;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private User owner;
-
     @OneToMany(mappedBy = "playlist")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Image> images = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties("playlists")
+    private User owner;
 
     @ManyToMany(mappedBy = "playlists")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -190,19 +191,6 @@ public class Playlist implements Serializable {
         this.rating = rating;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
-    public Playlist owner(User user) {
-        this.owner = user;
-        return this;
-    }
-
-    public void setOwner(User user) {
-        this.owner = user;
-    }
-
     public Set<Image> getImages() {
         return images;
     }
@@ -226,6 +214,19 @@ public class Playlist implements Serializable {
 
     public void setImages(Set<Image> images) {
         this.images = images;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public Playlist owner(User user) {
+        this.owner = user;
+        return this;
+    }
+
+    public void setOwner(User user) {
+        this.owner = user;
     }
 
     public Set<Track> getTracks() {

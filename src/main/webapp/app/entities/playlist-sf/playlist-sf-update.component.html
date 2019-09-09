@@ -59,7 +59,7 @@
                     <label class="form-control-label" jhiTranslate="sallefyApp.playlist.owner" for="field_owner">Owner</label>
                     <select class="form-control" id="field_owner" name="owner" formControlName="ownerId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
+                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
                     </select>
                 </div>
             </div>

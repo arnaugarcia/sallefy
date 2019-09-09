@@ -12,8 +12,9 @@ export interface IPlaylistSf {
   numberSongs?: number;
   followers?: number;
   rating?: number;
-  ownerId?: number;
   images?: IImageSf[];
+  ownerLogin?: string;
+  ownerId?: number;
   tracks?: ITrackSf[];
 }
 
@@ -29,8 +30,9 @@ export class PlaylistSf implements IPlaylistSf {
     public numberSongs?: number,
     public followers?: number,
     public rating?: number,
-    public ownerId?: number,
     public images?: IImageSf[],
+    public ownerLogin?: string,
+    public ownerId?: number,
     public tracks?: ITrackSf[]
   ) {
     this.collaborative = this.collaborative || false;

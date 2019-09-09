@@ -41,18 +41,17 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "user",
-            "otherEntityRelationshipName": "playlist",
-            "relationshipName": "owner",
-            "otherEntityField": "id",
-            "ownerSide": true
-        },
-        {
             "relationshipType": "one-to-many",
             "otherEntityName": "image",
             "otherEntityRelationshipName": "playlist",
             "relationshipName": "images"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "playlist",
+            "relationshipName": "owner",
+            "otherEntityField": "login"
         },
         {
             "relationshipType": "many-to-many",

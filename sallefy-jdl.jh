@@ -43,8 +43,8 @@ entity User {
 
 }
 
-relationship OneToOne {
-    Playlist{owner} to User
+relationship ManyToOne {
+    Playlist{owner(login)} to User
 }
 
 relationship ManyToMany {

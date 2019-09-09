@@ -25,8 +25,8 @@
       "numberSongs": "Number Songs",
       "followers": "Followers",
       "rating": "Rating",
-      "owner": "Owner",
       "images": "Images",
+      "owner": "Owner",
       "track": "Track"
     }
   }

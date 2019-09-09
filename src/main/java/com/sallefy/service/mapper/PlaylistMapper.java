@@ -12,11 +12,12 @@ import org.mapstruct.*;
 public interface PlaylistMapper extends EntityMapper<PlaylistDTO, Playlist> {
 
     @Mapping(source = "owner.id", target = "ownerId")
+    @Mapping(source = "owner.login", target = "ownerLogin")
     PlaylistDTO toDto(Playlist playlist);
 
-    @Mapping(source = "ownerId", target = "owner")
     @Mapping(target = "images", ignore = true)
     @Mapping(target = "removeImages", ignore = true)
+    @Mapping(source = "ownerId", target = "owner")
     @Mapping(target = "tracks", ignore = true)
     @Mapping(target = "removeTrack", ignore = true)
     Playlist toEntity(PlaylistDTO playlistDTO);

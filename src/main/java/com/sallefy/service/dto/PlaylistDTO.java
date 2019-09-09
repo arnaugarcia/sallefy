@@ -32,6 +32,8 @@ public class PlaylistDTO implements Serializable {
 
     private Long ownerId;
 
+    private String ownerLogin;
+
     public Long getId() {
         return id;
     }
@@ -120,6 +122,14 @@ public class PlaylistDTO implements Serializable {
         this.ownerId = userId;
     }
 
+    public String getOwnerLogin() {
+        return ownerLogin;
+    }
+
+    public void setOwnerLogin(String userLogin) {
+        this.ownerLogin = userLogin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -155,6 +165,7 @@ public class PlaylistDTO implements Serializable {
             ", followers=" + getFollowers() +
             ", rating=" + getRating() +
             ", owner=" + getOwnerId() +
+            ", owner='" + getOwnerLogin() + "'" +
             "}";
     }
 }
