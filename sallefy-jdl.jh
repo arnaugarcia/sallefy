@@ -49,11 +49,11 @@ relationship ManyToOne {
 }
 
 relationship ManyToMany {
-	Track{playlist(name)} to Playlist{track(name)}
+	Track{playlist(name)} to Playlist{track(name)},
+	Album{artist(name)} to Artist{album(title)}
 }
 
 relationship OneToMany {
-	Album{artist(name)} to Artist{album(title)},
 
     Album{images} to Image,
     Artist{images} to Image,
