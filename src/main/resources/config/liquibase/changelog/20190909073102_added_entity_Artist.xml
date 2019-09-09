@@ -59,7 +59,7 @@
             <column name="name" type="string"/>
             <column name="reference" type="string"/>
             <column name="photo" type="string"/>
-            <column name="biography" type="clob"/>
+            <column name="biography" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

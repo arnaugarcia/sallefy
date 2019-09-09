@@ -7,7 +7,7 @@
         Added the constraints for entity Album.
     -->
     <changeSet id="20190909073103-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="album_id"
                                  baseTableName="album_artist"
                                  constraintName="fk_album_artist_album_id"
@@ -19,6 +19,19 @@
                                  constraintName="fk_album_artist_artist_id"
                                  referencedColumnNames="id"
                                  referencedTableName="artist"/>
-        
+
     </changeSet>
+
+    <changeSet id="20190909073103-3" author="faker">
+
+        <loadData
+            file="config/liquibase/fake-data/album_artist.csv"
+            separator=";"
+            tableName="album_artist">
+            <column name="artist_id" type="numeric"/>
+            <column name="album_id" type="numeric"/>
+        </loadData>
+
+    </changeSet>
+
 </databaseChangeLog>

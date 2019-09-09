@@ -7,7 +7,7 @@
         Added the constraints for entity Track.
     -->
     <changeSet id="20190909073100-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="track_id"
                                  baseTableName="track_playlist"
                                  constraintName="fk_track_playlist_track_id"
@@ -19,6 +19,18 @@
                                  constraintName="fk_track_playlist_playlist_id"
                                  referencedColumnNames="id"
                                  referencedTableName="playlist"/>
-        
+
+    </changeSet>
+
+    <changeSet id="20190909073100-3" author="faker">
+
+        <loadData
+            file="config/liquibase/fake-data/track_playlist.csv"
+            separator=";"
+            tableName="track_playlist">
+            <column name="playlist_id" type="numeric"/>
+            <column name="track_id" type="numeric"/>
+        </loadData>
+
     </changeSet>
 </databaseChangeLog>

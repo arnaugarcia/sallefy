@@ -7,7 +7,7 @@
         Added the constraints for entity Image.
     -->
     <changeSet id="20190909073104-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="track_id"
                                  baseTableName="image"
                                  constraintName="fk_image_track_id"
@@ -33,4 +33,5 @@
                                  referencedTableName="album"/>
 
     </changeSet>
+
 </databaseChangeLog>

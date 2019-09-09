@@ -7,18 +7,19 @@
         Added the constraints for entity Artist.
     -->
     <changeSet id="20190909073102-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="artist_id"
-                                 baseTableName="artist_album"
+                                 baseTableName="album_artist"
                                  constraintName="fk_artist_album_artist_id"
                                  referencedColumnNames="id"
                                  referencedTableName="artist"/>
 
         <addForeignKeyConstraint baseColumnNames="album_id"
-                                 baseTableName="artist_album"
+                                 baseTableName="album_artist"
                                  constraintName="fk_artist_album_album_id"
                                  referencedColumnNames="id"
                                  referencedTableName="album"/>
-        
+
     </changeSet>
+
 </databaseChangeLog>
