@@ -81,11 +81,11 @@ public class ArtistResource {
     /**
      * {@code GET  /artists} : get all the artists.
      *
-
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of artists in body.
      */
     @GetMapping("/artists")
-    public List<ArtistDTO> getAllArtists() {
+    public List<ArtistDTO> getAllArtists(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Artists");
         return artistService.findAll();
     }

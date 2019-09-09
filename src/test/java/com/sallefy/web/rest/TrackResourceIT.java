@@ -46,6 +46,9 @@ public class TrackResourceIT {
     private static final String DEFAULT_URL = "AAAAAAAAAA";
     private static final String UPDATED_URL = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_EXPLICIT = false;
+    private static final Boolean UPDATED_EXPLICIT = true;
+
     private static final String DEFAULT_REFERENCE = "AAAAAAAAAA";
     private static final String UPDATED_REFERENCE = "BBBBBBBBBB";
 
@@ -107,6 +110,7 @@ public class TrackResourceIT {
             .name(DEFAULT_NAME)
             .rating(DEFAULT_RATING)
             .url(DEFAULT_URL)
+            .explicit(DEFAULT_EXPLICIT)
             .reference(DEFAULT_REFERENCE)
             .duration(DEFAULT_DURATION)
             .primaryColor(DEFAULT_PRIMARY_COLOR);
@@ -123,6 +127,7 @@ public class TrackResourceIT {
             .name(UPDATED_NAME)
             .rating(UPDATED_RATING)
             .url(UPDATED_URL)
+            .explicit(UPDATED_EXPLICIT)
             .reference(UPDATED_REFERENCE)
             .duration(UPDATED_DURATION)
             .primaryColor(UPDATED_PRIMARY_COLOR);
@@ -153,6 +158,7 @@ public class TrackResourceIT {
         assertThat(testTrack.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testTrack.getRating()).isEqualTo(DEFAULT_RATING);
         assertThat(testTrack.getUrl()).isEqualTo(DEFAULT_URL);
+        assertThat(testTrack.isExplicit()).isEqualTo(DEFAULT_EXPLICIT);
         assertThat(testTrack.getReference()).isEqualTo(DEFAULT_REFERENCE);
         assertThat(testTrack.getDuration()).isEqualTo(DEFAULT_DURATION);
         assertThat(testTrack.getPrimaryColor()).isEqualTo(DEFAULT_PRIMARY_COLOR);
@@ -193,6 +199,7 @@ public class TrackResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].rating").value(hasItem(DEFAULT_RATING.doubleValue())))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())))
+            .andExpect(jsonPath("$.[*].explicit").value(hasItem(DEFAULT_EXPLICIT.booleanValue())))
             .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE.toString())))
             .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION)))
             .andExpect(jsonPath("$.[*].primaryColor").value(hasItem(DEFAULT_PRIMARY_COLOR.toString())));
@@ -212,6 +219,7 @@ public class TrackResourceIT {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.rating").value(DEFAULT_RATING.doubleValue()))
             .andExpect(jsonPath("$.url").value(DEFAULT_URL.toString()))
+            .andExpect(jsonPath("$.explicit").value(DEFAULT_EXPLICIT.booleanValue()))
             .andExpect(jsonPath("$.reference").value(DEFAULT_REFERENCE.toString()))
             .andExpect(jsonPath("$.duration").value(DEFAULT_DURATION))
             .andExpect(jsonPath("$.primaryColor").value(DEFAULT_PRIMARY_COLOR.toString()));
@@ -241,6 +249,7 @@ public class TrackResourceIT {
             .name(UPDATED_NAME)
             .rating(UPDATED_RATING)
             .url(UPDATED_URL)
+            .explicit(UPDATED_EXPLICIT)
             .reference(UPDATED_REFERENCE)
             .duration(UPDATED_DURATION)
             .primaryColor(UPDATED_PRIMARY_COLOR);
@@ -258,6 +267,7 @@ public class TrackResourceIT {
         assertThat(testTrack.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testTrack.getRating()).isEqualTo(UPDATED_RATING);
         assertThat(testTrack.getUrl()).isEqualTo(UPDATED_URL);
+        assertThat(testTrack.isExplicit()).isEqualTo(UPDATED_EXPLICIT);
         assertThat(testTrack.getReference()).isEqualTo(UPDATED_REFERENCE);
         assertThat(testTrack.getDuration()).isEqualTo(UPDATED_DURATION);
         assertThat(testTrack.getPrimaryColor()).isEqualTo(UPDATED_PRIMARY_COLOR);

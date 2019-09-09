@@ -14,6 +14,10 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "explicit",
+            "fieldType": "Boolean"
+        },
+        {
             "fieldName": "reference",
             "fieldType": "String"
         },

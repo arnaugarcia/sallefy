@@ -23,7 +23,7 @@ describe('Service Tests', () => {
       service = injector.get(ArtistSfService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new ArtistSf(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
+      elemDefault = new ArtistSf(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 0, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -62,6 +62,7 @@ describe('Service Tests', () => {
             name: 'BBBBBB',
             reference: 'BBBBBB',
             photo: 'BBBBBB',
+            followers: 1,
             biography: 'BBBBBB'
           },
           elemDefault
@@ -83,6 +84,7 @@ describe('Service Tests', () => {
             name: 'BBBBBB',
             reference: 'BBBBBB',
             photo: 'BBBBBB',
+            followers: 1,
             biography: 'BBBBBB'
           },
           elemDefault

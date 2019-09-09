@@ -21,7 +21,9 @@
             <th><span jhiTranslate="sallefyApp.artist.name">Name</span></th>
             <th><span jhiTranslate="sallefyApp.artist.reference">Reference</span></th>
             <th><span jhiTranslate="sallefyApp.artist.photo">Photo</span></th>
+            <th><span jhiTranslate="sallefyApp.artist.followers">Followers</span></th>
             <th><span jhiTranslate="sallefyApp.artist.biography">Biography</span></th>
+            <th><span jhiTranslate="sallefyApp.artist.genre">Genre</span></th>
             <th></th>
             </tr>
             </thead>
@@ -31,7 +33,13 @@
                 <td>{{artist.name}}</td>
                 <td>{{artist.reference}}</td>
                 <td>{{artist.photo}}</td>
+                <td>{{artist.followers}}</td>
                 <td>{{artist.biography}}</td>
+                <td>
+                    <span *ngFor="let genre of artist.genres; let last = last">
+                            <a class="form-control-static" [routerLink]="['/genre', genre?.id, 'view' ]">{{genre.name}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"

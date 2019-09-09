@@ -8,6 +8,8 @@ import com.sallefy.service.mapper.ArtistMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,11 +59,20 @@ public class ArtistServiceImpl implements ArtistService {
     @Transactional(readOnly = true)
     public List<ArtistDTO> findAll() {
         log.debug("Request to get all Artists");
-        return artistRepository.findAll().stream()
+        return artistRepository.findAllWithEagerRelationships().stream()
             .map(artistMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    /**
+     * Get all the artists with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<ArtistDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return artistRepository.findAllWithEagerRelationships(pageable).map(artistMapper::toDto);
+    }
+    
 
     /**
      * Get one artist by id.
@@ -73,7 +84,7 @@ public class ArtistServiceImpl implements ArtistService {
     @Transactional(readOnly = true)
     public Optional<ArtistDTO> findOne(Long id) {
         log.debug("Request to get Artist : {}", id);
-        return artistRepository.findById(id)
+        return artistRepository.findOneWithEagerRelationships(id)
             .map(artistMapper::toDto);
     }
 

@@ -32,6 +32,9 @@ public class Track implements Serializable {
     @Column(name = "url")
     private String url;
 
+    @Column(name = "explicit")
+    private Boolean explicit;
+
     @Column(name = "reference")
     private String reference;
 
@@ -101,6 +104,19 @@ public class Track implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Boolean isExplicit() {
+        return explicit;
+    }
+
+    public Track explicit(Boolean explicit) {
+        this.explicit = explicit;
+        return this;
+    }
+
+    public void setExplicit(Boolean explicit) {
+        this.explicit = explicit;
     }
 
     public String getReference() {
@@ -241,6 +257,7 @@ public class Track implements Serializable {
             ", name='" + getName() + "'" +
             ", rating=" + getRating() +
             ", url='" + getUrl() + "'" +
+            ", explicit='" + isExplicit() + "'" +
             ", reference='" + getReference() + "'" +
             ", duration=" + getDuration() +
             ", primaryColor='" + getPrimaryColor() + "'" +

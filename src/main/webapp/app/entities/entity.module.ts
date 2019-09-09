@@ -23,6 +23,10 @@ import { RouterModule } from '@angular/router';
       {
         path: 'image-sf',
         loadChildren: () => import('./image-sf/image-sf.module').then(m => m.SallefyImageSfModule)
+      },
+      {
+        path: 'genre',
+        loadChildren: () => import('./genre/genre.module').then(m => m.SallefyGenreModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

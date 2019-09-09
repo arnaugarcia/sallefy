@@ -3,9 +3,12 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { IArtistSf, ArtistSf } from 'app/shared/model/artist-sf.model';
 import { ArtistSfService } from './artist-sf.service';
+import { IGenre } from 'app/shared/model/genre.model';
+import { GenreService } from 'app/entities/genre';
 
 @Component({
   selector: 'jhi-artist-sf-update',
@@ -14,18 +17,23 @@ import { ArtistSfService } from './artist-sf.service';
 export class ArtistSfUpdateComponent implements OnInit {
   isSaving: boolean;
 
+  genres: IGenre[];
+
   editForm = this.fb.group({
     id: [],
     name: [],
     reference: [],
     photo: [],
-    biography: []
+    followers: [],
+    biography: [],
+    genres: []
   });
 
   constructor(
     protected dataUtils: JhiDataUtils,
     protected jhiAlertService: JhiAlertService,
     protected artistService: ArtistSfService,
+    protected genreService: GenreService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -35,6 +43,13 @@ export class ArtistSfUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ artist }) => {
       this.updateForm(artist);
     });
+    this.genreService
+      .query()
+      .pipe(
+        filter((mayBeOk: HttpResponse<IGenre[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IGenre[]>) => response.body)
+      )
+      .subscribe((res: IGenre[]) => (this.genres = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(artist: IArtistSf) {
@@ -43,7 +58,9 @@ export class ArtistSfUpdateComponent implements OnInit {
       name: artist.name,
       reference: artist.reference,
       photo: artist.photo,
-      biography: artist.biography
+      followers: artist.followers,
+      biography: artist.biography,
+      genres: artist.genres
     });
   }
 
@@ -100,7 +117,9 @@ export class ArtistSfUpdateComponent implements OnInit {
       name: this.editForm.get(['name']).value,
       reference: this.editForm.get(['reference']).value,
       photo: this.editForm.get(['photo']).value,
-      biography: this.editForm.get(['biography']).value
+      followers: this.editForm.get(['followers']).value,
+      biography: this.editForm.get(['biography']).value,
+      genres: this.editForm.get(['genres']).value
     };
   }
 
@@ -118,5 +137,20 @@ export class ArtistSfUpdateComponent implements OnInit {
   }
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  trackGenreById(index: number, item: IGenre) {
+    return item.id;
+  }
+
+  getSelected(selectedVals: Array<any>, option: any) {
+    if (selectedVals) {
+      for (let i = 0; i < selectedVals.length; i++) {
+        if (option.id === selectedVals[i].id) {
+          return selectedVals[i];
+        }
+      }
+    }
+    return option;
   }
 }

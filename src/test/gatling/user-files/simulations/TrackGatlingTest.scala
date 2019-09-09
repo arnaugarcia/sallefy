@@ -75,6 +75,7 @@ class TrackGatlingTest extends Simulation {
                 , "name":"SAMPLE_TEXT"
                 , "rating":null
                 , "url":"SAMPLE_TEXT"
+                , "explicit":null
                 , "reference":"SAMPLE_TEXT"
                 , "duration":"0"
                 , "primaryColor":"SAMPLE_TEXT"

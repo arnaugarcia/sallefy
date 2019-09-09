@@ -29,7 +29,9 @@ export class ArtistUpdatePage {
   nameInput = element(by.id('field_name'));
   referenceInput = element(by.id('field_reference'));
   photoInput = element(by.id('field_photo'));
+  followersInput = element(by.id('field_followers'));
   biographyInput = element(by.id('field_biography'));
+  genreSelect = element(by.id('field_genre'));
 
   async getPageTitle() {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -59,12 +61,39 @@ export class ArtistUpdatePage {
     return await this.photoInput.getAttribute('value');
   }
 
+  async setFollowersInput(followers) {
+    await this.followersInput.sendKeys(followers);
+  }
+
+  async getFollowersInput() {
+    return await this.followersInput.getAttribute('value');
+  }
+
   async setBiographyInput(biography) {
     await this.biographyInput.sendKeys(biography);
   }
 
   async getBiographyInput() {
     return await this.biographyInput.getAttribute('value');
+  }
+
+  async genreSelectLastOption(timeout?: number) {
+    await this.genreSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async genreSelectOption(option) {
+    await this.genreSelect.sendKeys(option);
+  }
+
+  getGenreSelect(): ElementFinder {
+    return this.genreSelect;
+  }
+
+  async getGenreSelectedOption() {
+    return await this.genreSelect.element(by.css('option:checked')).getText();
   }
 
   async save(timeout?: number) {

@@ -19,9 +19,11 @@
     <include file="config/liquibase/changelog/20190909073102_added_entity_Artist.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190909073103_added_entity_Album.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190909073104_added_entity_Image.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190909112904_added_entity_Genre.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20190909073101_added_entity_constraints_Playlist.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190909073103_added_entity_constraints_Album.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190909073104_added_entity_constraints_Image.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190909073102_added_entity_constraints_Artist.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

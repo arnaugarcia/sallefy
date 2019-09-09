@@ -10,9 +10,12 @@ import com.sallefy.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -23,11 +26,13 @@ import org.springframework.util.Base64Utils;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -46,14 +51,24 @@ public class ArtistResourceIT {
     private static final String DEFAULT_PHOTO = "AAAAAAAAAA";
     private static final String UPDATED_PHOTO = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_FOLLOWERS = 1;
+    private static final Integer UPDATED_FOLLOWERS = 2;
+    private static final Integer SMALLER_FOLLOWERS = 1 - 1;
+
     private static final String DEFAULT_BIOGRAPHY = "AAAAAAAAAA";
     private static final String UPDATED_BIOGRAPHY = "BBBBBBBBBB";
 
     @Autowired
     private ArtistRepository artistRepository;
 
+    @Mock
+    private ArtistRepository artistRepositoryMock;
+
     @Autowired
     private ArtistMapper artistMapper;
+
+    @Mock
+    private ArtistService artistServiceMock;
 
     @Autowired
     private ArtistService artistService;
@@ -100,6 +115,7 @@ public class ArtistResourceIT {
             .name(DEFAULT_NAME)
             .reference(DEFAULT_REFERENCE)
             .photo(DEFAULT_PHOTO)
+            .followers(DEFAULT_FOLLOWERS)
             .biography(DEFAULT_BIOGRAPHY);
         return artist;
     }
@@ -114,6 +130,7 @@ public class ArtistResourceIT {
             .name(UPDATED_NAME)
             .reference(UPDATED_REFERENCE)
             .photo(UPDATED_PHOTO)
+            .followers(UPDATED_FOLLOWERS)
             .biography(UPDATED_BIOGRAPHY);
         return artist;
     }
@@ -142,6 +159,7 @@ public class ArtistResourceIT {
         assertThat(testArtist.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testArtist.getReference()).isEqualTo(DEFAULT_REFERENCE);
         assertThat(testArtist.getPhoto()).isEqualTo(DEFAULT_PHOTO);
+        assertThat(testArtist.getFollowers()).isEqualTo(DEFAULT_FOLLOWERS);
         assertThat(testArtist.getBiography()).isEqualTo(DEFAULT_BIOGRAPHY);
     }
 
@@ -180,9 +198,43 @@ public class ArtistResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE.toString())))
             .andExpect(jsonPath("$.[*].photo").value(hasItem(DEFAULT_PHOTO.toString())))
+            .andExpect(jsonPath("$.[*].followers").value(hasItem(DEFAULT_FOLLOWERS)))
             .andExpect(jsonPath("$.[*].biography").value(hasItem(DEFAULT_BIOGRAPHY.toString())));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllArtistsWithEagerRelationshipsIsEnabled() throws Exception {
+        ArtistResource artistResource = new ArtistResource(artistServiceMock);
+        when(artistServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        MockMvc restArtistMockMvc = MockMvcBuilders.standaloneSetup(artistResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restArtistMockMvc.perform(get("/api/artists?eagerload=true"))
+        .andExpect(status().isOk());
+
+        verify(artistServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllArtistsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        ArtistResource artistResource = new ArtistResource(artistServiceMock);
+            when(artistServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+            MockMvc restArtistMockMvc = MockMvcBuilders.standaloneSetup(artistResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restArtistMockMvc.perform(get("/api/artists?eagerload=true"))
+        .andExpect(status().isOk());
+
+            verify(artistServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getArtist() throws Exception {
@@ -197,6 +249,7 @@ public class ArtistResourceIT {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.reference").value(DEFAULT_REFERENCE.toString()))
             .andExpect(jsonPath("$.photo").value(DEFAULT_PHOTO.toString()))
+            .andExpect(jsonPath("$.followers").value(DEFAULT_FOLLOWERS))
             .andExpect(jsonPath("$.biography").value(DEFAULT_BIOGRAPHY.toString()));
     }
 
@@ -224,6 +277,7 @@ public class ArtistResourceIT {
             .name(UPDATED_NAME)
             .reference(UPDATED_REFERENCE)
             .photo(UPDATED_PHOTO)
+            .followers(UPDATED_FOLLOWERS)
             .biography(UPDATED_BIOGRAPHY);
         ArtistDTO artistDTO = artistMapper.toDto(updatedArtist);
 
@@ -239,6 +293,7 @@ public class ArtistResourceIT {
         assertThat(testArtist.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testArtist.getReference()).isEqualTo(UPDATED_REFERENCE);
         assertThat(testArtist.getPhoto()).isEqualTo(UPDATED_PHOTO);
+        assertThat(testArtist.getFollowers()).isEqualTo(UPDATED_FOLLOWERS);
         assertThat(testArtist.getBiography()).isEqualTo(UPDATED_BIOGRAPHY);
     }
 

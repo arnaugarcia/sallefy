@@ -31,6 +31,9 @@ public class Artist implements Serializable {
     @Column(name = "photo")
     private String photo;
 
+    @Column(name = "followers")
+    private Integer followers;
+
     @Lob
     @Column(name = "biography")
     private String biography;
@@ -38,6 +41,13 @@ public class Artist implements Serializable {
     @OneToMany(mappedBy = "artist")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Image> images = new HashSet<>();
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "artist_genre",
+               joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
+    private Set<Genre> genres = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -87,6 +97,19 @@ public class Artist implements Serializable {
         this.photo = photo;
     }
 
+    public Integer getFollowers() {
+        return followers;
+    }
+
+    public Artist followers(Integer followers) {
+        this.followers = followers;
+        return this;
+    }
+
+    public void setFollowers(Integer followers) {
+        this.followers = followers;
+    }
+
     public String getBiography() {
         return biography;
     }
@@ -124,6 +147,31 @@ public class Artist implements Serializable {
     public void setImages(Set<Image> images) {
         this.images = images;
     }
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public Artist genres(Set<Genre> genres) {
+        this.genres = genres;
+        return this;
+    }
+
+    public Artist addGenre(Genre genre) {
+        this.genres.add(genre);
+        genre.getArtists().add(this);
+        return this;
+    }
+
+    public Artist removeGenre(Genre genre) {
+        this.genres.remove(genre);
+        genre.getArtists().remove(this);
+        return this;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -149,6 +197,7 @@ public class Artist implements Serializable {
             ", name='" + getName() + "'" +
             ", reference='" + getReference() + "'" +
             ", photo='" + getPhoto() + "'" +
+            ", followers=" + getFollowers() +
             ", biography='" + getBiography() + "'" +
             "}";
     }

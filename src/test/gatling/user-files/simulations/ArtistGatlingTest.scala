@@ -75,6 +75,7 @@ class ArtistGatlingTest extends Simulation {
                 , "name":"SAMPLE_TEXT"
                 , "reference":"SAMPLE_TEXT"
                 , "photo":"SAMPLE_TEXT"
+                , "followers":"0"
                 , "biography":null
                 }""")).asJson
             .check(status.is(201))

@@ -19,6 +19,7 @@
       "name": "Name",
       "rating": "Rating",
       "url": "Url",
+      "explicit": "Explicit",
       "reference": "Reference",
       "duration": "Duration",
       "primaryColor": "Primary Color",

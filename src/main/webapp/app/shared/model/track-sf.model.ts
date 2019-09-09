@@ -7,6 +7,7 @@ export interface ITrackSf {
   name?: string;
   rating?: number;
   url?: string;
+  explicit?: boolean;
   reference?: string;
   duration?: number;
   primaryColor?: string;
@@ -21,11 +22,14 @@ export class TrackSf implements ITrackSf {
     public name?: string,
     public rating?: number,
     public url?: string,
+    public explicit?: boolean,
     public reference?: string,
     public duration?: number,
     public primaryColor?: string,
     public images?: IImageSf[],
     public playlists?: IPlaylistSf[],
     public albums?: IAlbumSf[]
-  ) {}
+  ) {
+    this.explicit = this.explicit || false;
+  }
 }

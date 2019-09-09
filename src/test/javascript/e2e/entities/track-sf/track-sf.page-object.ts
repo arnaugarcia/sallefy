@@ -29,6 +29,7 @@ export class TrackUpdatePage {
   nameInput = element(by.id('field_name'));
   ratingInput = element(by.id('field_rating'));
   urlInput = element(by.id('field_url'));
+  explicitInput = element(by.id('field_explicit'));
   referenceInput = element(by.id('field_reference'));
   durationInput = element(by.id('field_duration'));
   primaryColorInput = element(by.id('field_primaryColor'));
@@ -61,6 +62,9 @@ export class TrackUpdatePage {
     return await this.urlInput.getAttribute('value');
   }
 
+  getExplicitInput(timeout?: number) {
+    return this.explicitInput;
+  }
   async setReferenceInput(reference) {
     await this.referenceInput.sendKeys(reference);
   }

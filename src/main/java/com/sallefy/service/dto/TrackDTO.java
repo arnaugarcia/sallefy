@@ -15,6 +15,8 @@ public class TrackDTO implements Serializable {
 
     private String url;
 
+    private Boolean explicit;
+
     private String reference;
 
     private Integer duration;
@@ -52,6 +54,14 @@ public class TrackDTO implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Boolean isExplicit() {
+        return explicit;
+    }
+
+    public void setExplicit(Boolean explicit) {
+        this.explicit = explicit;
     }
 
     public String getReference() {
@@ -106,6 +116,7 @@ public class TrackDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", rating=" + getRating() +
             ", url='" + getUrl() + "'" +
+            ", explicit='" + isExplicit() + "'" +
             ", reference='" + getReference() + "'" +
             ", duration=" + getDuration() +
             ", primaryColor='" + getPrimaryColor() + "'" +

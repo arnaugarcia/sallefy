@@ -4,6 +4,7 @@ entity Track {
 	name String,
     rating Double,
     url String,
+    explicit Boolean,
     reference String,
     duration Integer,
     primaryColor String
@@ -25,7 +26,12 @@ entity Artist {
 	name String,
     reference String,
     photo String,
+    followers Integer,
     biography TextBlob
+}
+
+entity Genre {
+	name String
 }
 
 entity Album {
@@ -54,7 +60,8 @@ relationship ManyToOne {
 
 relationship ManyToMany {
 	Playlist{track(name)} to Track{playlist(name)},
-    Album{track(name)} to Track{album(title)}
+    Album{track(name)} to Track{album(title)},
+    Artist{genre(name)} to Genre{artist(name)}
 }
 
 relationship OneToMany {

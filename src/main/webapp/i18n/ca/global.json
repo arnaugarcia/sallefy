@@ -12,6 +12,7 @@
         "artistSf": "Artist",
         "albumSf": "Album",
         "imageSf": "Image",
+        "genre": "Genre",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

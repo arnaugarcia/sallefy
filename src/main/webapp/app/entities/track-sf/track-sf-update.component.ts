@@ -28,6 +28,7 @@ export class TrackSfUpdateComponent implements OnInit {
     name: [],
     rating: [],
     url: [],
+    explicit: [],
     reference: [],
     duration: [],
     primaryColor: []
@@ -69,6 +70,7 @@ export class TrackSfUpdateComponent implements OnInit {
       name: track.name,
       rating: track.rating,
       url: track.url,
+      explicit: track.explicit,
       reference: track.reference,
       duration: track.duration,
       primaryColor: track.primaryColor
@@ -96,6 +98,7 @@ export class TrackSfUpdateComponent implements OnInit {
       name: this.editForm.get(['name']).value,
       rating: this.editForm.get(['rating']).value,
       url: this.editForm.get(['url']).value,
+      explicit: this.editForm.get(['explicit']).value,
       reference: this.editForm.get(['reference']).value,
       duration: this.editForm.get(['duration']).value,
       primaryColor: this.editForm.get(['primaryColor']).value

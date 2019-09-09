@@ -19,8 +19,10 @@
       "name": "Name",
       "reference": "Reference",
       "photo": "Photo",
+      "followers": "Followers",
       "biography": "Biography",
-      "images": "Images"
+      "images": "Images",
+      "genre": "Genre"
     }
   }
 }

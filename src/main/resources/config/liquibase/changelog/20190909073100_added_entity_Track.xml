@@ -28,6 +28,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="explicit" type="boolean">
+                <constraints nullable="true" />
+            </column>
+
             <column name="reference" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -67,6 +71,7 @@
             <column name="name" type="string"/>
             <column name="rating" type="numeric"/>
             <column name="url" type="string"/>
+            <column name="explicit" type="boolean"/>
             <column name="reference" type="string"/>
             <column name="duration" type="numeric"/>
             <column name="primary_color" type="string"/>
