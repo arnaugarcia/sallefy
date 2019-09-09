@@ -1,6 +1,7 @@
 entity Track {
 	name String,
     raiting Double,
+    url String,
     reference String,
     duration Integer,
     primaryColor String
@@ -54,7 +55,6 @@ relationship ManyToMany {
 }
 
 relationship OneToMany {
-
     Album{images} to Image,
     Artist{images} to Image,
     Playlist{images} to Image,

@@ -28,6 +28,7 @@ export class TrackUpdatePage {
   cancelButton = element(by.id('cancel-save'));
   nameInput = element(by.id('field_name'));
   raitingInput = element(by.id('field_raiting'));
+  urlInput = element(by.id('field_url'));
   referenceInput = element(by.id('field_reference'));
   durationInput = element(by.id('field_duration'));
   primaryColorInput = element(by.id('field_primaryColor'));
@@ -51,6 +52,14 @@ export class TrackUpdatePage {
 
   async getRaitingInput() {
     return await this.raitingInput.getAttribute('value');
+  }
+
+  async setUrlInput(url) {
+    await this.urlInput.sendKeys(url);
+  }
+
+  async getUrlInput() {
+    return await this.urlInput.getAttribute('value');
   }
 
   async setReferenceInput(reference) {

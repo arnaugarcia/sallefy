@@ -18,6 +18,7 @@
       },
       "name": "Name",
       "raiting": "Raiting",
+      "url": "Url",
       "reference": "Reference",
       "duration": "Duration",
       "primaryColor": "Primary Color",

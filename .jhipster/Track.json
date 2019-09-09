@@ -10,6 +10,10 @@
             "fieldType": "Double"
         },
         {
+            "fieldName": "url",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "reference",
             "fieldType": "String"
         },

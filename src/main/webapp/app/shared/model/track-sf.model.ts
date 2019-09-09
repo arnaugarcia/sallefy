@@ -5,6 +5,7 @@ export interface ITrackSf {
   id?: number;
   name?: string;
   raiting?: number;
+  url?: string;
   reference?: string;
   duration?: number;
   primaryColor?: string;
@@ -17,6 +18,7 @@ export class TrackSf implements ITrackSf {
     public id?: number,
     public name?: string,
     public raiting?: number,
+    public url?: string,
     public reference?: string,
     public duration?: number,
     public primaryColor?: string,

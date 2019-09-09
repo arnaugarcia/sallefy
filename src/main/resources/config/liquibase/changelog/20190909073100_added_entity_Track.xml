@@ -24,6 +24,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="url" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="reference" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -73,6 +77,7 @@
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
             <column name="raiting" type="numeric"/>
+            <column name="url" type="string"/>
             <column name="reference" type="string"/>
             <column name="duration" type="numeric"/>
             <column name="primary_color" type="string"/>

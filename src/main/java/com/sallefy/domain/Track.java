@@ -28,6 +28,9 @@ public class Track implements Serializable {
     @Column(name = "raiting")
     private Double raiting;
 
+    @Column(name = "url")
+    private String url;
+
     @Column(name = "reference")
     private String reference;
 
@@ -81,6 +84,19 @@ public class Track implements Serializable {
 
     public void setRaiting(Double raiting) {
         this.raiting = raiting;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public Track url(String url) {
+        this.url = url;
+        return this;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getReference() {
@@ -195,6 +211,7 @@ public class Track implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", raiting=" + getRaiting() +
+            ", url='" + getUrl() + "'" +
             ", reference='" + getReference() + "'" +
             ", duration=" + getDuration() +
             ", primaryColor='" + getPrimaryColor() + "'" +

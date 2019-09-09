@@ -48,6 +48,9 @@ public class TrackResourceIT {
     private static final Double UPDATED_RAITING = 2D;
     private static final Double SMALLER_RAITING = 1D - 1D;
 
+    private static final String DEFAULT_URL = "AAAAAAAAAA";
+    private static final String UPDATED_URL = "BBBBBBBBBB";
+
     private static final String DEFAULT_REFERENCE = "AAAAAAAAAA";
     private static final String UPDATED_REFERENCE = "BBBBBBBBBB";
 
@@ -114,6 +117,7 @@ public class TrackResourceIT {
         Track track = new Track()
             .name(DEFAULT_NAME)
             .raiting(DEFAULT_RAITING)
+            .url(DEFAULT_URL)
             .reference(DEFAULT_REFERENCE)
             .duration(DEFAULT_DURATION)
             .primaryColor(DEFAULT_PRIMARY_COLOR);
@@ -129,6 +133,7 @@ public class TrackResourceIT {
         Track track = new Track()
             .name(UPDATED_NAME)
             .raiting(UPDATED_RAITING)
+            .url(UPDATED_URL)
             .reference(UPDATED_REFERENCE)
             .duration(UPDATED_DURATION)
             .primaryColor(UPDATED_PRIMARY_COLOR);
@@ -158,6 +163,7 @@ public class TrackResourceIT {
         Track testTrack = trackList.get(trackList.size() - 1);
         assertThat(testTrack.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testTrack.getRaiting()).isEqualTo(DEFAULT_RAITING);
+        assertThat(testTrack.getUrl()).isEqualTo(DEFAULT_URL);
         assertThat(testTrack.getReference()).isEqualTo(DEFAULT_REFERENCE);
         assertThat(testTrack.getDuration()).isEqualTo(DEFAULT_DURATION);
         assertThat(testTrack.getPrimaryColor()).isEqualTo(DEFAULT_PRIMARY_COLOR);
@@ -197,6 +203,7 @@ public class TrackResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(track.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].raiting").value(hasItem(DEFAULT_RAITING.doubleValue())))
+            .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())))
             .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE.toString())))
             .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION)))
             .andExpect(jsonPath("$.[*].primaryColor").value(hasItem(DEFAULT_PRIMARY_COLOR.toString())));
@@ -248,6 +255,7 @@ public class TrackResourceIT {
             .andExpect(jsonPath("$.id").value(track.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.raiting").value(DEFAULT_RAITING.doubleValue()))
+            .andExpect(jsonPath("$.url").value(DEFAULT_URL.toString()))
             .andExpect(jsonPath("$.reference").value(DEFAULT_REFERENCE.toString()))
             .andExpect(jsonPath("$.duration").value(DEFAULT_DURATION))
             .andExpect(jsonPath("$.primaryColor").value(DEFAULT_PRIMARY_COLOR.toString()));
@@ -276,6 +284,7 @@ public class TrackResourceIT {
         updatedTrack
             .name(UPDATED_NAME)
             .raiting(UPDATED_RAITING)
+            .url(UPDATED_URL)
             .reference(UPDATED_REFERENCE)
             .duration(UPDATED_DURATION)
             .primaryColor(UPDATED_PRIMARY_COLOR);
@@ -292,6 +301,7 @@ public class TrackResourceIT {
         Track testTrack = trackList.get(trackList.size() - 1);
         assertThat(testTrack.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testTrack.getRaiting()).isEqualTo(UPDATED_RAITING);
+        assertThat(testTrack.getUrl()).isEqualTo(UPDATED_URL);
         assertThat(testTrack.getReference()).isEqualTo(UPDATED_REFERENCE);
         assertThat(testTrack.getDuration()).isEqualTo(UPDATED_DURATION);
         assertThat(testTrack.getPrimaryColor()).isEqualTo(UPDATED_PRIMARY_COLOR);

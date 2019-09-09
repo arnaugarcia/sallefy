@@ -15,6 +15,8 @@ public class TrackDTO implements Serializable {
 
     private Double raiting;
 
+    private String url;
+
     private String reference;
 
     private Integer duration;
@@ -46,6 +48,14 @@ public class TrackDTO implements Serializable {
 
     public void setRaiting(Double raiting) {
         this.raiting = raiting;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getReference() {
@@ -107,6 +117,7 @@ public class TrackDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", raiting=" + getRaiting() +
+            ", url='" + getUrl() + "'" +
             ", reference='" + getReference() + "'" +
             ", duration=" + getDuration() +
             ", primaryColor='" + getPrimaryColor() + "'" +
