@@ -1,0 +1,76 @@
+{
+    "name": "Playlist",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "collaborative",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "reference",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
+        },
+        {
+            "fieldName": "primaryColor",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "publicAccessible",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "numberSongs",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "followers",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "rating",
+            "fieldType": "Double"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "playlist",
+            "relationshipName": "owner",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "image",
+            "otherEntityRelationshipName": "playlist",
+            "relationshipName": "images"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "track",
+            "otherEntityRelationshipName": "playlist",
+            "relationshipName": "track",
+            "otherEntityField": "name",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20190909073101",
+    "entityTableName": "playlist",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "sf"
+}

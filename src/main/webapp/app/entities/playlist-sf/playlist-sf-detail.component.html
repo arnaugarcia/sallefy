@@ -1,0 +1,63 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="playlist">
+            <h2><span jhiTranslate="sallefyApp.playlist.detail.title">Playlist</span> {{playlist.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sallefyApp.playlist.name">Name</span></dt>
+                <dd>
+                    <span>{{playlist.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playlist.collaborative">Collaborative</span></dt>
+                <dd>
+                    <span>{{playlist.collaborative}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playlist.reference">Reference</span></dt>
+                <dd>
+                    <span>{{playlist.reference}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playlist.description">Description</span></dt>
+                <dd>
+                    <span>{{playlist.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playlist.primaryColor">Primary Color</span></dt>
+                <dd>
+                    <span>{{playlist.primaryColor}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playlist.publicAccessible">Public Accessible</span></dt>
+                <dd>
+                    <span>{{playlist.publicAccessible}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playlist.numberSongs">Number Songs</span></dt>
+                <dd>
+                    <span>{{playlist.numberSongs}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playlist.followers">Followers</span></dt>
+                <dd>
+                    <span>{{playlist.followers}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playlist.rating">Rating</span></dt>
+                <dd>
+                    <span>{{playlist.rating}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playlist.owner">Owner</span></dt>
+                <dd>
+                    {{playlist.ownerId}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/playlist-sf', playlist.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

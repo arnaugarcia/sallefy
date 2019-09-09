@@ -1,0 +1,30 @@
+{
+  "sallefyApp": {
+    "image": {
+      "home": {
+        "title": "Images",
+        "createLabel": "Crear nuevo Image",
+        "createOrEditLabel": "Crear o editar Image",
+        "notFound": "No Images found"
+      },
+      "created": "Un nuevo Image ha sido creado con el identificador {{ param }}",
+      "updated": "Un Image ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Image ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Image {{ id }}?"
+      },
+      "detail": {
+        "title": "Image"
+      },
+      "url": "Url",
+      "height": "Height",
+      "thumbnail": "Thumbnail",
+      "cover": "Cover",
+      "width": "Width",
+      "track": "Track",
+      "playlist": "Playlist",
+      "artist": "Artist",
+      "album": "Album"
+    }
+  }
+}

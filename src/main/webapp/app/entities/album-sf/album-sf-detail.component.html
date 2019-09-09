@@ -1,0 +1,35 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="album">
+            <h2><span jhiTranslate="sallefyApp.album.detail.title">Album</span> {{album.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sallefyApp.album.title">Title</span></dt>
+                <dd>
+                    <span>{{album.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.album.reference">Reference</span></dt>
+                <dd>
+                    <span>{{album.reference}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.album.totalTracks">Total Tracks</span></dt>
+                <dd>
+                    <span>{{album.totalTracks}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/album-sf', album.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
