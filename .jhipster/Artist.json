@@ -1,0 +1,52 @@
+{
+    "name": "Artist",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "reference",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "photo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "followers",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "biography",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "image",
+            "otherEntityRelationshipName": "artist",
+            "relationshipName": "images"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "genre",
+            "otherEntityRelationshipName": "artist",
+            "relationshipName": "genre",
+            "otherEntityField": "name",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20190909073102",
+    "entityTableName": "artist",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "sf"
+}

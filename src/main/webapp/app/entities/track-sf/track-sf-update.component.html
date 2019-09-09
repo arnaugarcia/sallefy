@@ -1,0 +1,59 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-track-sf-heading" jhiTranslate="sallefyApp.track.home.createOrEditLabel">Create or edit a Track</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           formControlName="name"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.rating" for="field_rating">Rating</label>
+                    <input type="number" class="form-control" name="rating" id="field_rating"
+                           formControlName="rating"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.url" for="field_url">Url</label>
+                    <input type="text" class="form-control" name="url" id="field_url"
+                           formControlName="url"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.explicit" for="field_explicit">Explicit</label>
+                    <input type="checkbox" class="form-control" name="explicit" id="field_explicit"
+                           formControlName="explicit"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.reference" for="field_reference">Reference</label>
+                    <input type="text" class="form-control" name="reference" id="field_reference"
+                           formControlName="reference"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.duration" for="field_duration">Duration</label>
+                    <input type="number" class="form-control" name="duration" id="field_duration"
+                           formControlName="duration"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.primaryColor" for="field_primaryColor">Primary Color</label>
+                    <input type="text" class="form-control" name="primaryColor" id="field_primaryColor"
+                           formControlName="primaryColor"/>
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

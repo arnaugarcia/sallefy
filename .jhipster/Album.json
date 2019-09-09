@@ -1,0 +1,47 @@
+{
+    "name": "Album",
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "reference",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "year",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "totalTracks",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "image",
+            "otherEntityRelationshipName": "album",
+            "relationshipName": "images"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "track",
+            "otherEntityRelationshipName": "album",
+            "relationshipName": "track",
+            "otherEntityField": "name",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20190909073103",
+    "entityTableName": "album",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "sf"
+}

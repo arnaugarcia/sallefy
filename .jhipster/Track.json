@@ -1,0 +1,67 @@
+{
+    "name": "Track",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rating",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "url",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "explicit",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "reference",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "duration",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "primaryColor",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "image",
+            "otherEntityRelationshipName": "track",
+            "relationshipName": "images"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "playlist",
+            "otherEntityRelationshipName": "track",
+            "relationshipName": "playlist",
+            "otherEntityField": "name",
+            "ownerSide": false
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "album",
+            "otherEntityRelationshipName": "track",
+            "relationshipName": "album",
+            "otherEntityField": "title",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20190909073100",
+    "entityTableName": "track",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "angularJSSuffix": "sf"
+}
