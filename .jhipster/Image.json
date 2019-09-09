@@ -10,6 +10,10 @@
             "fieldType": "Integer"
         },
         {
+            "fieldName": "reference",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "thumbnail",
             "fieldType": "Boolean"
         },
@@ -24,28 +28,32 @@
     ],
     "relationships": [
         {
-            "relationshipName": "track",
-            "otherEntityName": "track",
             "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipName": "playlist",
-            "otherEntityName": "playlist",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipName": "artist",
-            "otherEntityName": "artist",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipName": "album",
             "otherEntityName": "album",
+            "otherEntityRelationshipName": "images",
+            "relationshipName": "album",
+            "otherEntityField": "title"
+        },
+        {
             "relationshipType": "many-to-one",
-            "otherEntityField": "id"
+            "otherEntityName": "artist",
+            "otherEntityRelationshipName": "images",
+            "relationshipName": "artist",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "playlist",
+            "otherEntityRelationshipName": "images",
+            "relationshipName": "playlist",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "track",
+            "otherEntityRelationshipName": "images",
+            "relationshipName": "track",
+            "otherEntityField": "name"
         }
     ],
     "changelogDate": "20190909073104",

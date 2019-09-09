@@ -74,6 +74,7 @@ class ImageGatlingTest extends Simulation {
                 "id":null
                 , "url":"SAMPLE_TEXT"
                 , "height":"0"
+                , "reference":"SAMPLE_TEXT"
                 , "thumbnail":null
                 , "cover":null
                 , "width":"0"

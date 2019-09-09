@@ -9,9 +9,9 @@
                 <dd>
                     <span>{{track.name}}</span>
                 </dd>
-                <dt><span jhiTranslate="sallefyApp.track.raiting">Raiting</span></dt>
+                <dt><span jhiTranslate="sallefyApp.track.rating">Rating</span></dt>
                 <dd>
-                    <span>{{track.raiting}}</span>
+                    <span>{{track.rating}}</span>
                 </dd>
                 <dt><span jhiTranslate="sallefyApp.track.url">Url</span></dt>
                 <dd>
@@ -28,12 +28,6 @@
                 <dt><span jhiTranslate="sallefyApp.track.primaryColor">Primary Color</span></dt>
                 <dd>
                     <span>{{track.primaryColor}}</span>
-                </dd>
-                <dt><span jhiTranslate="sallefyApp.track.playlist">Playlist</span></dt>
-                <dd>
-                    <span *ngFor="let playlist of track.playlists; let last = last">
-                        <a [routerLink]="['/playlist-sf', playlist?.id, 'view' ]">{{playlist.name}}</a>{{last ? '' : ', '}}
-                    </span>
                 </dd>
             </dl>
 

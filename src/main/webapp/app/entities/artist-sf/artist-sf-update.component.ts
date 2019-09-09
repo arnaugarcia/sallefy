@@ -3,12 +3,9 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { IArtistSf, ArtistSf } from 'app/shared/model/artist-sf.model';
 import { ArtistSfService } from './artist-sf.service';
-import { IAlbumSf } from 'app/shared/model/album-sf.model';
-import { AlbumSfService } from 'app/entities/album-sf';
 
 @Component({
   selector: 'jhi-artist-sf-update',
@@ -16,8 +13,6 @@ import { AlbumSfService } from 'app/entities/album-sf';
 })
 export class ArtistSfUpdateComponent implements OnInit {
   isSaving: boolean;
-
-  albums: IAlbumSf[];
 
   editForm = this.fb.group({
     id: [],
@@ -31,7 +26,6 @@ export class ArtistSfUpdateComponent implements OnInit {
     protected dataUtils: JhiDataUtils,
     protected jhiAlertService: JhiAlertService,
     protected artistService: ArtistSfService,
-    protected albumService: AlbumSfService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -41,13 +35,6 @@ export class ArtistSfUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ artist }) => {
       this.updateForm(artist);
     });
-    this.albumService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IAlbumSf[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IAlbumSf[]>) => response.body)
-      )
-      .subscribe((res: IAlbumSf[]) => (this.albums = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(artist: IArtistSf) {
@@ -131,20 +118,5 @@ export class ArtistSfUpdateComponent implements OnInit {
   }
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
-  }
-
-  trackAlbumById(index: number, item: IAlbumSf) {
-    return item.id;
-  }
-
-  getSelected(selectedVals: Array<any>, option: any) {
-    if (selectedVals) {
-      for (let i = 0; i < selectedVals.length; i++) {
-        if (option.id === selectedVals[i].id) {
-          return selectedVals[i];
-        }
-      }
-    }
-    return option;
   }
 }

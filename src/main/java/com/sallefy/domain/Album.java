@@ -40,10 +40,10 @@ public class Album implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "album_artist",
+    @JoinTable(name = "album_track",
                joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"))
-    private Set<Artist> artists = new HashSet<>();
+               inverseJoinColumns = @JoinColumn(name = "track_id", referencedColumnName = "id"))
+    private Set<Track> tracks = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -131,29 +131,29 @@ public class Album implements Serializable {
         this.images = images;
     }
 
-    public Set<Artist> getArtists() {
-        return artists;
+    public Set<Track> getTracks() {
+        return tracks;
     }
 
-    public Album artists(Set<Artist> artists) {
-        this.artists = artists;
+    public Album tracks(Set<Track> tracks) {
+        this.tracks = tracks;
         return this;
     }
 
-    public Album addArtist(Artist artist) {
-        this.artists.add(artist);
-        artist.getAlbums().add(this);
+    public Album addTrack(Track track) {
+        this.tracks.add(track);
+        track.getAlbums().add(this);
         return this;
     }
 
-    public Album removeArtist(Artist artist) {
-        this.artists.remove(artist);
-        artist.getAlbums().remove(this);
+    public Album removeTrack(Track track) {
+        this.tracks.remove(track);
+        track.getAlbums().remove(this);
         return this;
     }
 
-    public void setArtists(Set<Artist> artists) {
-        this.artists = artists;
+    public void setTracks(Set<Track> tracks) {
+        this.tracks = tracks;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -17,13 +17,14 @@
         "title": "Track"
       },
       "name": "Name",
-      "raiting": "Raiting",
+      "rating": "Rating",
       "url": "Url",
       "reference": "Reference",
       "duration": "Duration",
       "primaryColor": "Primary Color",
       "images": "Images",
-      "playlist": "Playlist"
+      "playlist": "Playlist",
+      "album": "Album"
     }
   }
 }

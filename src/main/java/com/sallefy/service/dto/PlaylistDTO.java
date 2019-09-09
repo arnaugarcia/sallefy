@@ -1,5 +1,7 @@
 package com.sallefy.service.dto;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 import javax.persistence.Lob;
 
@@ -33,6 +35,8 @@ public class PlaylistDTO implements Serializable {
     private Long ownerId;
 
     private String ownerLogin;
+
+    private Set<TrackDTO> tracks = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -128,6 +132,14 @@ public class PlaylistDTO implements Serializable {
 
     public void setOwnerLogin(String userLogin) {
         this.ownerLogin = userLogin;
+    }
+
+    public Set<TrackDTO> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Set<TrackDTO> tracks) {
+        this.tracks = tracks;
     }
 
     @Override

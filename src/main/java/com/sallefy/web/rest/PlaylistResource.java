@@ -81,11 +81,11 @@ public class PlaylistResource {
     /**
      * {@code GET  /playlists} : get all the playlists.
      *
-
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
      */
     @GetMapping("/playlists")
-    public List<PlaylistDTO> getAllPlaylists() {
+    public List<PlaylistDTO> getAllPlaylists(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Playlists");
         return playlistService.findAll();
     }

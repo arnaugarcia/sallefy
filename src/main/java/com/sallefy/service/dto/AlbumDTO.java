@@ -20,7 +20,7 @@ public class AlbumDTO implements Serializable {
     private Integer totalTracks;
 
 
-    private Set<ArtistDTO> artists = new HashSet<>();
+    private Set<TrackDTO> tracks = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -62,12 +62,12 @@ public class AlbumDTO implements Serializable {
         this.totalTracks = totalTracks;
     }
 
-    public Set<ArtistDTO> getArtists() {
-        return artists;
+    public Set<TrackDTO> getTracks() {
+        return tracks;
     }
 
-    public void setArtists(Set<ArtistDTO> artists) {
-        this.artists = artists;
+    public void setTracks(Set<TrackDTO> tracks) {
+        this.tracks = tracks;
     }
 
     @Override

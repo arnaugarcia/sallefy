@@ -16,14 +16,14 @@ import java.util.Optional;
 @Repository
 public interface AlbumRepository extends JpaRepository<Album, Long> {
 
-    @Query(value = "select distinct album from Album album left join fetch album.artists",
+    @Query(value = "select distinct album from Album album left join fetch album.tracks",
         countQuery = "select count(distinct album) from Album album")
     Page<Album> findAllWithEagerRelationships(Pageable pageable);
 
-    @Query("select distinct album from Album album left join fetch album.artists")
+    @Query("select distinct album from Album album left join fetch album.tracks")
     List<Album> findAllWithEagerRelationships();
 
-    @Query("select album from Album album left join fetch album.artists where album.id =:id")
+    @Query("select album from Album album left join fetch album.tracks where album.id =:id")
     Optional<Album> findOneWithEagerRelationships(@Param("id") Long id);
 
 }

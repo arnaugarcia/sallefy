@@ -8,19 +8,23 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Image} and its DTO {@link ImageDTO}.
  */
-@Mapper(componentModel = "spring", uses = {TrackMapper.class, PlaylistMapper.class, ArtistMapper.class, AlbumMapper.class})
+@Mapper(componentModel = "spring", uses = {AlbumMapper.class, ArtistMapper.class, PlaylistMapper.class, TrackMapper.class})
 public interface ImageMapper extends EntityMapper<ImageDTO, Image> {
 
-    @Mapping(source = "track.id", target = "trackId")
-    @Mapping(source = "playlist.id", target = "playlistId")
-    @Mapping(source = "artist.id", target = "artistId")
     @Mapping(source = "album.id", target = "albumId")
+    @Mapping(source = "album.title", target = "albumTitle")
+    @Mapping(source = "artist.id", target = "artistId")
+    @Mapping(source = "artist.name", target = "artistName")
+    @Mapping(source = "playlist.id", target = "playlistId")
+    @Mapping(source = "playlist.name", target = "playlistName")
+    @Mapping(source = "track.id", target = "trackId")
+    @Mapping(source = "track.name", target = "trackName")
     ImageDTO toDto(Image image);
 
-    @Mapping(source = "trackId", target = "track")
-    @Mapping(source = "playlistId", target = "playlist")
-    @Mapping(source = "artistId", target = "artist")
     @Mapping(source = "albumId", target = "album")
+    @Mapping(source = "artistId", target = "artist")
+    @Mapping(source = "playlistId", target = "playlist")
+    @Mapping(source = "trackId", target = "track")
     Image toEntity(ImageDTO imageDTO);
 
     default Image fromId(Long id) {

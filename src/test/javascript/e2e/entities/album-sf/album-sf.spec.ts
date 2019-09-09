@@ -44,7 +44,7 @@ describe('Album e2e test', () => {
       albumUpdatePage.setReferenceInput('reference'),
       albumUpdatePage.setYearInput('5'),
       albumUpdatePage.setTotalTracksInput('5')
-      // albumUpdatePage.artistSelectLastOption(),
+      // albumUpdatePage.trackSelectLastOption(),
     ]);
     expect(await albumUpdatePage.getTitleInput()).to.eq('title', 'Expected Title value to be equals to title');
     expect(await albumUpdatePage.getReferenceInput()).to.eq('reference', 'Expected Reference value to be equals to reference');

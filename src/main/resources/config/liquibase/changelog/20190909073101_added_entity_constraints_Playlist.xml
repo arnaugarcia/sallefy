@@ -14,5 +14,17 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
+        <addForeignKeyConstraint baseColumnNames="playlist_id"
+                                 baseTableName="playlist_track"
+                                 constraintName="fk_playlist_track_playlist_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="playlist"/>
+
+        <addForeignKeyConstraint baseColumnNames="track_id"
+                                 baseTableName="playlist_track"
+                                 constraintName="fk_playlist_track_track_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="track"/>
+        
     </changeSet>
 </databaseChangeLog>

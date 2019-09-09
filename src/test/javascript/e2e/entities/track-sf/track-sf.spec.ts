@@ -41,15 +41,14 @@ describe('Track e2e test', () => {
     await trackComponentsPage.clickOnCreateButton();
     await promise.all([
       trackUpdatePage.setNameInput('name'),
-      trackUpdatePage.setRaitingInput('5'),
+      trackUpdatePage.setRatingInput('5'),
       trackUpdatePage.setUrlInput('url'),
       trackUpdatePage.setReferenceInput('reference'),
       trackUpdatePage.setDurationInput('5'),
       trackUpdatePage.setPrimaryColorInput('primaryColor')
-      // trackUpdatePage.playlistSelectLastOption(),
     ]);
     expect(await trackUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
-    expect(await trackUpdatePage.getRaitingInput()).to.eq('5', 'Expected raiting value to be equals to 5');
+    expect(await trackUpdatePage.getRatingInput()).to.eq('5', 'Expected rating value to be equals to 5');
     expect(await trackUpdatePage.getUrlInput()).to.eq('url', 'Expected Url value to be equals to url');
     expect(await trackUpdatePage.getReferenceInput()).to.eq('reference', 'Expected Reference value to be equals to reference');
     expect(await trackUpdatePage.getDurationInput()).to.eq('5', 'Expected duration value to be equals to 5');

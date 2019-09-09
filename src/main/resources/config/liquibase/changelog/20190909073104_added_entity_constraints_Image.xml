@@ -7,18 +7,12 @@
         Added the constraints for entity Image.
     -->
     <changeSet id="20190909073104-2" author="jhipster">
-
-        <addForeignKeyConstraint baseColumnNames="track_id"
+        
+        <addForeignKeyConstraint baseColumnNames="album_id"
                                  baseTableName="image"
-                                 constraintName="fk_image_track_id"
+                                 constraintName="fk_image_album_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="track"/>
-
-        <addForeignKeyConstraint baseColumnNames="playlist_id"
-                                 baseTableName="image"
-                                 constraintName="fk_image_playlist_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="playlist"/>
+                                 referencedTableName="album"/>
 
         <addForeignKeyConstraint baseColumnNames="artist_id"
                                  baseTableName="image"
@@ -26,12 +20,17 @@
                                  referencedColumnNames="id"
                                  referencedTableName="artist"/>
 
-        <addForeignKeyConstraint baseColumnNames="album_id"
+        <addForeignKeyConstraint baseColumnNames="playlist_id"
                                  baseTableName="image"
-                                 constraintName="fk_image_album_id"
+                                 constraintName="fk_image_playlist_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="album"/>
+                                 referencedTableName="playlist"/>
+
+        <addForeignKeyConstraint baseColumnNames="track_id"
+                                 baseTableName="image"
+                                 constraintName="fk_image_track_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="track"/>
 
     </changeSet>
-
 </databaseChangeLog>

@@ -6,7 +6,7 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "raiting",
+            "fieldName": "rating",
             "fieldType": "Double"
         },
         {
@@ -39,7 +39,15 @@
             "otherEntityRelationshipName": "track",
             "relationshipName": "playlist",
             "otherEntityField": "name",
-            "ownerSide": true
+            "ownerSide": false
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "album",
+            "otherEntityRelationshipName": "track",
+            "relationshipName": "album",
+            "otherEntityField": "title",
+            "ownerSide": false
         }
     ],
     "changelogDate": "20190909073100",

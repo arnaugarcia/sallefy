@@ -20,7 +20,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="raiting" type="double">
+            <column name="rating" type="double">
                 <constraints nullable="true" />
             </column>
 
@@ -47,17 +47,6 @@
 
     <changeSet id="20190909073100-1-relations" author="jhipster">
 
-        <createTable tableName="track_playlist">
-            <column name="playlist_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="track_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="track_id, playlist_id" tableName="track_playlist"/>
-        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 
@@ -76,7 +65,7 @@
                   tableName="track">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
-            <column name="raiting" type="numeric"/>
+            <column name="rating" type="numeric"/>
             <column name="url" type="string"/>
             <column name="reference" type="string"/>
             <column name="duration" type="numeric"/>

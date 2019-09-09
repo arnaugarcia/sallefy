@@ -14,8 +14,6 @@ public interface ArtistMapper extends EntityMapper<ArtistDTO, Artist> {
 
     @Mapping(target = "images", ignore = true)
     @Mapping(target = "removeImages", ignore = true)
-    @Mapping(target = "albums", ignore = true)
-    @Mapping(target = "removeAlbum", ignore = true)
     Artist toEntity(ArtistDTO artistDTO);
 
     default Artist fromId(Long id) {

@@ -8,6 +8,8 @@ import com.sallefy.service.mapper.PlaylistMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,11 +59,20 @@ public class PlaylistServiceImpl implements PlaylistService {
     @Transactional(readOnly = true)
     public List<PlaylistDTO> findAll() {
         log.debug("Request to get all Playlists");
-        return playlistRepository.findAll().stream()
+        return playlistRepository.findAllWithEagerRelationships().stream()
             .map(playlistMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    /**
+     * Get all the playlists with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<PlaylistDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return playlistRepository.findAllWithEagerRelationships(pageable).map(playlistMapper::toDto);
+    }
+    
 
     /**
      * Get one playlist by id.
@@ -73,7 +84,7 @@ public class PlaylistServiceImpl implements PlaylistService {
     @Transactional(readOnly = true)
     public Optional<PlaylistDTO> findOne(Long id) {
         log.debug("Request to get Playlist : {}", id);
-        return playlistRepository.findById(id)
+        return playlistRepository.findOneWithEagerRelationships(id)
             .map(playlistMapper::toDto);
     }
 

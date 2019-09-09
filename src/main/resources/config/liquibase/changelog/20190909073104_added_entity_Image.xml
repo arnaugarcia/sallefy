@@ -24,6 +24,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="reference" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="thumbnail" type="boolean">
                 <constraints nullable="true" />
             </column>
@@ -36,11 +40,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="track_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="playlist_id" type="bigint">
+            <column name="album_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
@@ -48,7 +48,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="album_id" type="bigint">
+            <column name="playlist_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="track_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
@@ -78,13 +82,10 @@
             <column name="id" type="numeric"/>
             <column name="url" type="string"/>
             <column name="height" type="numeric"/>
+            <column name="reference" type="string"/>
             <column name="thumbnail" type="boolean"/>
             <column name="cover" type="boolean"/>
             <column name="width" type="numeric"/>
-            <column name="track_id" type="numeric"/>
-            <column name="playlist_id" type="numeric"/>
-            <column name="artist_id" type="numeric"/>
-            <column name="album_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

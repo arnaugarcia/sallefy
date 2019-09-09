@@ -45,6 +45,12 @@
                 <dd>
                     {{playlist.ownerLogin}}
                 </dd>
+                <dt><span jhiTranslate="sallefyApp.playlist.track">Track</span></dt>
+                <dd>
+                    <span *ngFor="let track of playlist.tracks; let last = last">
+                        <a [routerLink]="['/track-sf', track?.id, 'view' ]">{{track.name}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
             </dl>
 
             <button type="submit"

@@ -27,12 +27,11 @@ export class TrackUpdatePage {
   saveButton = element(by.id('save-entity'));
   cancelButton = element(by.id('cancel-save'));
   nameInput = element(by.id('field_name'));
-  raitingInput = element(by.id('field_raiting'));
+  ratingInput = element(by.id('field_rating'));
   urlInput = element(by.id('field_url'));
   referenceInput = element(by.id('field_reference'));
   durationInput = element(by.id('field_duration'));
   primaryColorInput = element(by.id('field_primaryColor'));
-  playlistSelect = element(by.id('field_playlist'));
 
   async getPageTitle() {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -46,12 +45,12 @@ export class TrackUpdatePage {
     return await this.nameInput.getAttribute('value');
   }
 
-  async setRaitingInput(raiting) {
-    await this.raitingInput.sendKeys(raiting);
+  async setRatingInput(rating) {
+    await this.ratingInput.sendKeys(rating);
   }
 
-  async getRaitingInput() {
-    return await this.raitingInput.getAttribute('value');
+  async getRatingInput() {
+    return await this.ratingInput.getAttribute('value');
   }
 
   async setUrlInput(url) {
@@ -84,25 +83,6 @@ export class TrackUpdatePage {
 
   async getPrimaryColorInput() {
     return await this.primaryColorInput.getAttribute('value');
-  }
-
-  async playlistSelectLastOption(timeout?: number) {
-    await this.playlistSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async playlistSelectOption(option) {
-    await this.playlistSelect.sendKeys(option);
-  }
-
-  getPlaylistSelect(): ElementFinder {
-    return this.playlistSelect;
-  }
-
-  async getPlaylistSelectedOption() {
-    return await this.playlistSelect.element(by.css('option:checked')).getText();
   }
 
   async save(timeout?: number) {

@@ -28,13 +28,7 @@ public interface TrackService {
      */
     Page<TrackDTO> findAll(Pageable pageable);
 
-    /**
-     * Get all the tracks with eager load of many-to-many relationships.
-     *
-     * @return the list of entities.
-     */
-    Page<TrackDTO> findAllWithEagerRelationships(Pageable pageable);
-    
+
     /**
      * Get the "id" track.
      *

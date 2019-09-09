@@ -43,6 +43,9 @@ public class ImageResourceIT {
     private static final Integer UPDATED_HEIGHT = 2;
     private static final Integer SMALLER_HEIGHT = 1 - 1;
 
+    private static final String DEFAULT_REFERENCE = "AAAAAAAAAA";
+    private static final String UPDATED_REFERENCE = "BBBBBBBBBB";
+
     private static final Boolean DEFAULT_THUMBNAIL = false;
     private static final Boolean UPDATED_THUMBNAIL = true;
 
@@ -103,6 +106,7 @@ public class ImageResourceIT {
         Image image = new Image()
             .url(DEFAULT_URL)
             .height(DEFAULT_HEIGHT)
+            .reference(DEFAULT_REFERENCE)
             .thumbnail(DEFAULT_THUMBNAIL)
             .cover(DEFAULT_COVER)
             .width(DEFAULT_WIDTH);
@@ -118,6 +122,7 @@ public class ImageResourceIT {
         Image image = new Image()
             .url(UPDATED_URL)
             .height(UPDATED_HEIGHT)
+            .reference(UPDATED_REFERENCE)
             .thumbnail(UPDATED_THUMBNAIL)
             .cover(UPDATED_COVER)
             .width(UPDATED_WIDTH);
@@ -147,6 +152,7 @@ public class ImageResourceIT {
         Image testImage = imageList.get(imageList.size() - 1);
         assertThat(testImage.getUrl()).isEqualTo(DEFAULT_URL);
         assertThat(testImage.getHeight()).isEqualTo(DEFAULT_HEIGHT);
+        assertThat(testImage.getReference()).isEqualTo(DEFAULT_REFERENCE);
         assertThat(testImage.isThumbnail()).isEqualTo(DEFAULT_THUMBNAIL);
         assertThat(testImage.isCover()).isEqualTo(DEFAULT_COVER);
         assertThat(testImage.getWidth()).isEqualTo(DEFAULT_WIDTH);
@@ -186,6 +192,7 @@ public class ImageResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(image.getId().intValue())))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())))
             .andExpect(jsonPath("$.[*].height").value(hasItem(DEFAULT_HEIGHT)))
+            .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE.toString())))
             .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL.booleanValue())))
             .andExpect(jsonPath("$.[*].cover").value(hasItem(DEFAULT_COVER.booleanValue())))
             .andExpect(jsonPath("$.[*].width").value(hasItem(DEFAULT_WIDTH)));
@@ -204,6 +211,7 @@ public class ImageResourceIT {
             .andExpect(jsonPath("$.id").value(image.getId().intValue()))
             .andExpect(jsonPath("$.url").value(DEFAULT_URL.toString()))
             .andExpect(jsonPath("$.height").value(DEFAULT_HEIGHT))
+            .andExpect(jsonPath("$.reference").value(DEFAULT_REFERENCE.toString()))
             .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL.booleanValue()))
             .andExpect(jsonPath("$.cover").value(DEFAULT_COVER.booleanValue()))
             .andExpect(jsonPath("$.width").value(DEFAULT_WIDTH));
@@ -232,6 +240,7 @@ public class ImageResourceIT {
         updatedImage
             .url(UPDATED_URL)
             .height(UPDATED_HEIGHT)
+            .reference(UPDATED_REFERENCE)
             .thumbnail(UPDATED_THUMBNAIL)
             .cover(UPDATED_COVER)
             .width(UPDATED_WIDTH);
@@ -248,6 +257,7 @@ public class ImageResourceIT {
         Image testImage = imageList.get(imageList.size() - 1);
         assertThat(testImage.getUrl()).isEqualTo(UPDATED_URL);
         assertThat(testImage.getHeight()).isEqualTo(UPDATED_HEIGHT);
+        assertThat(testImage.getReference()).isEqualTo(UPDATED_REFERENCE);
         assertThat(testImage.isThumbnail()).isEqualTo(UPDATED_THUMBNAIL);
         assertThat(testImage.isCover()).isEqualTo(UPDATED_COVER);
         assertThat(testImage.getWidth()).isEqualTo(UPDATED_WIDTH);

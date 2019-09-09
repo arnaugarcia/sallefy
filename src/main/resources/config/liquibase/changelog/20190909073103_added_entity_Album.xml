@@ -39,8 +39,8 @@
 
     <changeSet id="20190909073103-1-relations" author="jhipster">
 
-        <createTable tableName="album_artist">
-            <column name="artist_id" type="bigint">
+        <createTable tableName="album_track">
+            <column name="track_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="album_id" type="bigint">
@@ -48,7 +48,7 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="album_id, artist_id" tableName="album_artist"/>
+        <addPrimaryKey columnNames="album_id, track_id" tableName="album_track"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

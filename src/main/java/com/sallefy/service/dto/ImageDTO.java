@@ -13,6 +13,8 @@ public class ImageDTO implements Serializable {
 
     private Integer height;
 
+    private String reference;
+
     private Boolean thumbnail;
 
     private Boolean cover;
@@ -20,13 +22,21 @@ public class ImageDTO implements Serializable {
     private Integer width;
 
 
-    private Long trackId;
+    private Long albumId;
 
-    private Long playlistId;
+    private String albumTitle;
 
     private Long artistId;
 
-    private Long albumId;
+    private String artistName;
+
+    private Long playlistId;
+
+    private String playlistName;
+
+    private Long trackId;
+
+    private String trackName;
 
     public Long getId() {
         return id;
@@ -50,6 +60,14 @@ public class ImageDTO implements Serializable {
 
     public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public Boolean isThumbnail() {
@@ -76,20 +94,20 @@ public class ImageDTO implements Serializable {
         this.width = width;
     }
 
-    public Long getTrackId() {
-        return trackId;
+    public Long getAlbumId() {
+        return albumId;
     }
 
-    public void setTrackId(Long trackId) {
-        this.trackId = trackId;
+    public void setAlbumId(Long albumId) {
+        this.albumId = albumId;
     }
 
-    public Long getPlaylistId() {
-        return playlistId;
+    public String getAlbumTitle() {
+        return albumTitle;
     }
 
-    public void setPlaylistId(Long playlistId) {
-        this.playlistId = playlistId;
+    public void setAlbumTitle(String albumTitle) {
+        this.albumTitle = albumTitle;
     }
 
     public Long getArtistId() {
@@ -100,12 +118,44 @@ public class ImageDTO implements Serializable {
         this.artistId = artistId;
     }
 
-    public Long getAlbumId() {
-        return albumId;
+    public String getArtistName() {
+        return artistName;
     }
 
-    public void setAlbumId(Long albumId) {
-        this.albumId = albumId;
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+
+    public Long getPlaylistId() {
+        return playlistId;
+    }
+
+    public void setPlaylistId(Long playlistId) {
+        this.playlistId = playlistId;
+    }
+
+    public String getPlaylistName() {
+        return playlistName;
+    }
+
+    public void setPlaylistName(String playlistName) {
+        this.playlistName = playlistName;
+    }
+
+    public Long getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(Long trackId) {
+        this.trackId = trackId;
+    }
+
+    public String getTrackName() {
+        return trackName;
+    }
+
+    public void setTrackName(String trackName) {
+        this.trackName = trackName;
     }
 
     @Override
@@ -135,13 +185,18 @@ public class ImageDTO implements Serializable {
             "id=" + getId() +
             ", url='" + getUrl() + "'" +
             ", height=" + getHeight() +
+            ", reference='" + getReference() + "'" +
             ", thumbnail='" + isThumbnail() + "'" +
             ", cover='" + isCover() + "'" +
             ", width=" + getWidth() +
-            ", track=" + getTrackId() +
-            ", playlist=" + getPlaylistId() +
-            ", artist=" + getArtistId() +
             ", album=" + getAlbumId() +
+            ", album='" + getAlbumTitle() + "'" +
+            ", artist=" + getArtistId() +
+            ", artist='" + getArtistName() + "'" +
+            ", playlist=" + getPlaylistId() +
+            ", playlist='" + getPlaylistName() + "'" +
+            ", track=" + getTrackId() +
+            ", track='" + getTrackName() + "'" +
             "}";
     }
 }

@@ -21,10 +21,10 @@
                 <dd>
                     <span>{{album.totalTracks}}</span>
                 </dd>
-                <dt><span jhiTranslate="sallefyApp.album.artist">Artist</span></dt>
+                <dt><span jhiTranslate="sallefyApp.album.track">Track</span></dt>
                 <dd>
-                    <span *ngFor="let artist of album.artists; let last = last">
-                        <a [routerLink]="['/artist-sf', artist?.id, 'view' ]">{{artist.name}}</a>{{last ? '' : ', '}}
+                    <span *ngFor="let track of album.tracks; let last = last">
+                        <a [routerLink]="['/track-sf', track?.id, 'view' ]">{{track.name}}</a>{{last ? '' : ', '}}
                     </span>
                 </dd>
             </dl>

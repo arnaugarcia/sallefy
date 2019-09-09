@@ -28,6 +28,7 @@
             <th><span jhiTranslate="sallefyApp.playlist.followers">Followers</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.rating">Rating</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.owner">Owner</span></th>
+            <th><span jhiTranslate="sallefyApp.playlist.track">Track</span></th>
             <th></th>
             </tr>
             </thead>
@@ -45,6 +46,11 @@
                 <td>{{playlist.rating}}</td>
                 <td>
                     {{playlist.ownerLogin}}
+                </td>
+                <td>
+                    <span *ngFor="let track of playlist.tracks; let last = last">
+                            <a class="form-control-static" [routerLink]="['/track-sf', track?.id, 'view' ]">{{track.name}}</a>{{last ? '' : ', '}}
+                        </span>
                 </td>
                 <td class="text-right">
                     <div class="btn-group">

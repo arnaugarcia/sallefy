@@ -61,15 +61,6 @@ public class TrackServiceImpl implements TrackService {
             .map(trackMapper::toDto);
     }
 
-    /**
-     * Get all the tracks with eager load of many-to-many relationships.
-     *
-     * @return the list of entities.
-     */
-    public Page<TrackDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return trackRepository.findAllWithEagerRelationships(pageable).map(trackMapper::toDto);
-    }
-    
 
     /**
      * Get one track by id.
@@ -81,7 +72,7 @@ public class TrackServiceImpl implements TrackService {
     @Transactional(readOnly = true)
     public Optional<TrackDTO> findOne(Long id) {
         log.debug("Request to get Track : {}", id);
-        return trackRepository.findOneWithEagerRelationships(id)
+        return trackRepository.findById(id)
             .map(trackMapper::toDto);
     }
 

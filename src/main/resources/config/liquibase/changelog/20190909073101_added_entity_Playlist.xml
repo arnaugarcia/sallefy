@@ -63,6 +63,17 @@
 
     <changeSet id="20190909073101-1-relations" author="jhipster">
 
+        <createTable tableName="playlist_track">
+            <column name="track_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="playlist_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="playlist_id, track_id" tableName="playlist_track"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 
@@ -76,19 +87,20 @@
     -->
     <changeSet id="20190909073101-1-data" author="jhipster" context="faker">
         <loadData
-            file="config/liquibase/fake-data/playlist.csv"
-            separator=";"
-            tableName="playlist">
+                  file="config/liquibase/fake-data/playlist.csv"
+                  separator=";"
+                  tableName="playlist">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
             <column name="collaborative" type="boolean"/>
             <column name="reference" type="string"/>
-            <column name="description" type="string"/>
+            <column name="description" type="clob"/>
             <column name="primary_color" type="string"/>
             <column name="public_accessible" type="boolean"/>
             <column name="number_songs" type="numeric"/>
             <column name="followers" type="numeric"/>
             <column name="rating" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>
 

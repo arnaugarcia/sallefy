@@ -60,7 +60,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            raiting: 1,
+            rating: 1,
             url: 'BBBBBB',
             reference: 'BBBBBB',
             duration: 1,
@@ -83,7 +83,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            raiting: 1,
+            rating: 1,
             url: 'BBBBBB',
             reference: 'BBBBBB',
             duration: 1,

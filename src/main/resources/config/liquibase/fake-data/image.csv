@@ -1,8 +1,11 @@
-id;url;height;thumbnail;cover;width;track_id;playlist_id;artist_id;album_id
-1;https://res.cloudinary.com/sallefy/image/upload/v1568021000/eagles_un5pcg.jpg;600;true;true;400;1;1;1;1
-2;https://res.cloudinary.com/sallefy/image/upload/v1568021000/eagles_un5pcg.jpg;600;true;true;400;2;1;1;1
-3;https://res.cloudinary.com/sallefy/image/upload/v1568021000/eagles_un5pcg.jpg;600;true;true;400;3;1;1;1
-4;https://res.cloudinary.com/sallefy/image/upload/v1568021000/eagles_un5pcg.jpg;600;true;true;400;4;1;1;1
-5;https://res.cloudinary.com/sallefy/image/upload/v1568021000/eagles_un5pcg.jpg;600;true;true;400;5;1;1;1
-6;https://res.cloudinary.com/sallefy/image/upload/v1568021000/eagles_un5pcg.jpg;600;true;true;400;6;1;1;1
-7;https://res.cloudinary.com/sallefy/image/upload/v1568021000/eagles_un5pcg.jpg;600;true;true;400;7;1;1;1
+id;url;height;reference;thumbnail;cover;width
+1;http://agustina.com;76336;online e-business;false;false;64977
+2;http://alysson.name;94914;HTTP explicit;false;true;93343
+3;https://jevon.org;53937;Chilean Peso Unidades de fomento Checking Account;true;true;94425
+4;http://sandra.name;63640;multi-byte Jamaican Dollar North Carolina;false;false;81120
+5;https://reggie.org;62593;parsing invoice;false;false;27396
+6;http://cristobal.com;37725;Ergonomic Rubber Chicken;false;false;65572
+7;http://gerhard.org;68161;wireless;false;false;49603
+8;http://matilda.net;34833;Accountability Handmade Cotton Bacon;true;false;54797
+9;http://henri.net;56852;Wyoming interface Cotton;false;true;58054
+10;http://sandra.org;56186;Managed Dobra application;false;false;37772

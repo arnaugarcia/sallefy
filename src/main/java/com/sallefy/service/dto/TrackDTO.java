@@ -1,7 +1,5 @@
 package com.sallefy.service.dto;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -13,7 +11,7 @@ public class TrackDTO implements Serializable {
 
     private String name;
 
-    private Double raiting;
+    private Double rating;
 
     private String url;
 
@@ -23,8 +21,6 @@ public class TrackDTO implements Serializable {
 
     private String primaryColor;
 
-
-    private Set<PlaylistDTO> playlists = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -42,12 +38,12 @@ public class TrackDTO implements Serializable {
         this.name = name;
     }
 
-    public Double getRaiting() {
-        return raiting;
+    public Double getRating() {
+        return rating;
     }
 
-    public void setRaiting(Double raiting) {
-        this.raiting = raiting;
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
     public String getUrl() {
@@ -82,14 +78,6 @@ public class TrackDTO implements Serializable {
         this.primaryColor = primaryColor;
     }
 
-    public Set<PlaylistDTO> getPlaylists() {
-        return playlists;
-    }
-
-    public void setPlaylists(Set<PlaylistDTO> playlists) {
-        this.playlists = playlists;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -116,7 +104,7 @@ public class TrackDTO implements Serializable {
         return "TrackDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", raiting=" + getRaiting() +
+            ", rating=" + getRating() +
             ", url='" + getUrl() + "'" +
             ", reference='" + getReference() + "'" +
             ", duration=" + getDuration() +

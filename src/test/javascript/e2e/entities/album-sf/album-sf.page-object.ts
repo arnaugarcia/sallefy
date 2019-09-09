@@ -30,7 +30,7 @@ export class AlbumUpdatePage {
   referenceInput = element(by.id('field_reference'));
   yearInput = element(by.id('field_year'));
   totalTracksInput = element(by.id('field_totalTracks'));
-  artistSelect = element(by.id('field_artist'));
+  trackSelect = element(by.id('field_track'));
 
   async getPageTitle() {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -68,23 +68,23 @@ export class AlbumUpdatePage {
     return await this.totalTracksInput.getAttribute('value');
   }
 
-  async artistSelectLastOption(timeout?: number) {
-    await this.artistSelect
+  async trackSelectLastOption(timeout?: number) {
+    await this.trackSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async artistSelectOption(option) {
-    await this.artistSelect.sendKeys(option);
+  async trackSelectOption(option) {
+    await this.trackSelect.sendKeys(option);
   }
 
-  getArtistSelect(): ElementFinder {
-    return this.artistSelect;
+  getTrackSelect(): ElementFinder {
+    return this.trackSelect;
   }
 
-  async getArtistSelectedOption() {
-    return await this.artistSelect.element(by.css('option:checked')).getText();
+  async getTrackSelectedOption() {
+    return await this.trackSelect.element(by.css('option:checked')).getText();
   }
 
   async save(timeout?: number) {

@@ -1,6 +1,8 @@
+
+
 entity Track {
 	name String,
-    raiting Double,
+    rating Double,
     url String,
     reference String,
     duration Integer,
@@ -36,6 +38,7 @@ entity Album {
 entity Image {
 	url String,
     height Integer,
+    reference String,
     thumbnail Boolean,
     cover Boolean,
     width Integer
@@ -50,15 +53,15 @@ relationship ManyToOne {
 }
 
 relationship ManyToMany {
-	Track{playlist(name)} to Playlist{track(name)},
-	Album{artist(name)} to Artist{album(title)}
+	Playlist{track(name)} to Track{playlist(name)},
+    Album{track(name)} to Track{album(title)}
 }
 
 relationship OneToMany {
-    Album{images} to Image,
-    Artist{images} to Image,
-    Playlist{images} to Image,
-    Track{images} to Image
+    Album{images(reference)} to Image{album(title)},
+    Artist{images(reference)} to Image{artist(name)},
+    Playlist{images(reference)} to Image{playlist(name)},
+    Track{images(reference)} to Image{track(name)}
 }
 
 // Set pagination options
@@ -69,3 +72,5 @@ dto * with mapstruct
 
 // Set service options to all except few
 service all with serviceImpl
+
+#title: sallefy-jdl

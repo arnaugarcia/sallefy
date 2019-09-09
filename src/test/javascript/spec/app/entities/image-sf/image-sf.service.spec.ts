@@ -23,7 +23,7 @@ describe('Service Tests', () => {
       service = injector.get(ImageSfService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new ImageSf(0, 'AAAAAAA', 0, false, false, 0);
+      elemDefault = new ImageSf(0, 'AAAAAAA', 0, 'AAAAAAA', false, false, 0);
     });
 
     describe('Service methods', () => {
@@ -61,6 +61,7 @@ describe('Service Tests', () => {
           {
             url: 'BBBBBB',
             height: 1,
+            reference: 'BBBBBB',
             thumbnail: true,
             cover: true,
             width: 1
@@ -83,6 +84,7 @@ describe('Service Tests', () => {
           {
             url: 'BBBBBB',
             height: 1,
+            reference: 'BBBBBB',
             thumbnail: true,
             cover: true,
             width: 1

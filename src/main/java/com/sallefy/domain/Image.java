@@ -27,6 +27,9 @@ public class Image implements Serializable {
     @Column(name = "height")
     private Integer height;
 
+    @Column(name = "reference")
+    private String reference;
+
     @Column(name = "thumbnail")
     private Boolean thumbnail;
 
@@ -38,11 +41,7 @@ public class Image implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("images")
-    private Track track;
-
-    @ManyToOne
-    @JsonIgnoreProperties("images")
-    private Playlist playlist;
+    private Album album;
 
     @ManyToOne
     @JsonIgnoreProperties("images")
@@ -50,7 +49,11 @@ public class Image implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("images")
-    private Album album;
+    private Playlist playlist;
+
+    @ManyToOne
+    @JsonIgnoreProperties("images")
+    private Track track;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -85,6 +88,19 @@ public class Image implements Serializable {
 
     public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public Image reference(String reference) {
+        this.reference = reference;
+        return this;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public Boolean isThumbnail() {
@@ -126,30 +142,17 @@ public class Image implements Serializable {
         this.width = width;
     }
 
-    public Track getTrack() {
-        return track;
+    public Album getAlbum() {
+        return album;
     }
 
-    public Image track(Track track) {
-        this.track = track;
+    public Image album(Album album) {
+        this.album = album;
         return this;
     }
 
-    public void setTrack(Track track) {
-        this.track = track;
-    }
-
-    public Playlist getPlaylist() {
-        return playlist;
-    }
-
-    public Image playlist(Playlist playlist) {
-        this.playlist = playlist;
-        return this;
-    }
-
-    public void setPlaylist(Playlist playlist) {
-        this.playlist = playlist;
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 
     public Artist getArtist() {
@@ -165,17 +168,30 @@ public class Image implements Serializable {
         this.artist = artist;
     }
 
-    public Album getAlbum() {
-        return album;
+    public Playlist getPlaylist() {
+        return playlist;
     }
 
-    public Image album(Album album) {
-        this.album = album;
+    public Image playlist(Playlist playlist) {
+        this.playlist = playlist;
         return this;
     }
 
-    public void setAlbum(Album album) {
-        this.album = album;
+    public void setPlaylist(Playlist playlist) {
+        this.playlist = playlist;
+    }
+
+    public Track getTrack() {
+        return track;
+    }
+
+    public Image track(Track track) {
+        this.track = track;
+        return this;
+    }
+
+    public void setTrack(Track track) {
+        this.track = track;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -201,6 +217,7 @@ public class Image implements Serializable {
             "id=" + getId() +
             ", url='" + getUrl() + "'" +
             ", height=" + getHeight() +
+            ", reference='" + getReference() + "'" +
             ", thumbnail='" + isThumbnail() + "'" +
             ", cover='" + isCover() + "'" +
             ", width=" + getWidth() +
