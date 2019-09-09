@@ -28,6 +28,7 @@ entity Artist {
 entity Album {
 	title String,
     reference String,
+    year Integer,
     totalTracks Integer
 }
 
