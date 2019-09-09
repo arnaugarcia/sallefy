@@ -1,5 +1,5 @@
 package com.sallefy.domain;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -40,9 +40,10 @@ public class Artist implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Image> images = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties("artists")
-    private Album album;
+    @ManyToMany(mappedBy = "artists")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
+    private Set<Album> albums = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -130,17 +131,29 @@ public class Artist implements Serializable {
         this.images = images;
     }
 
-    public Album getAlbum() {
-        return album;
+    public Set<Album> getAlbums() {
+        return albums;
     }
 
-    public Artist album(Album album) {
-        this.album = album;
+    public Artist albums(Set<Album> albums) {
+        this.albums = albums;
         return this;
     }
 
-    public void setAlbum(Album album) {
-        this.album = album;
+    public Artist addAlbum(Album album) {
+        this.albums.add(album);
+        album.getArtists().add(this);
+        return this;
+    }
+
+    public Artist removeAlbum(Album album) {
+        this.albums.remove(album);
+        album.getArtists().remove(this);
+        return this;
+    }
+
+    public void setAlbums(Set<Album> albums) {
+        this.albums = albums;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -8,6 +8,8 @@ import com.sallefy.service.mapper.AlbumMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,11 +59,20 @@ public class AlbumServiceImpl implements AlbumService {
     @Transactional(readOnly = true)
     public List<AlbumDTO> findAll() {
         log.debug("Request to get all Albums");
-        return albumRepository.findAll().stream()
+        return albumRepository.findAllWithEagerRelationships().stream()
             .map(albumMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    /**
+     * Get all the albums with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<AlbumDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return albumRepository.findAllWithEagerRelationships(pageable).map(albumMapper::toDto);
+    }
+    
 
     /**
      * Get one album by id.
@@ -73,7 +84,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Transactional(readOnly = true)
     public Optional<AlbumDTO> findOne(Long id) {
         log.debug("Request to get Album : {}", id);
-        return albumRepository.findById(id)
+        return albumRepository.findOneWithEagerRelationships(id)
             .map(albumMapper::toDto);
     }
 

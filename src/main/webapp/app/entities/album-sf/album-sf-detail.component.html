@@ -13,9 +13,19 @@
                 <dd>
                     <span>{{album.reference}}</span>
                 </dd>
+                <dt><span jhiTranslate="sallefyApp.album.year">Year</span></dt>
+                <dd>
+                    <span>{{album.year}}</span>
+                </dd>
                 <dt><span jhiTranslate="sallefyApp.album.totalTracks">Total Tracks</span></dt>
                 <dd>
                     <span>{{album.totalTracks}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.album.artist">Artist</span></dt>
+                <dd>
+                    <span *ngFor="let artist of album.artists; let last = last">
+                        <a [routerLink]="['/artist-sf', artist?.id, 'view' ]">{{artist.name}}</a>{{last ? '' : ', '}}
+                    </span>
                 </dd>
             </dl>
 

@@ -1,5 +1,7 @@
 package com.sallefy.service.dto;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -13,8 +15,12 @@ public class AlbumDTO implements Serializable {
 
     private String reference;
 
+    private Integer year;
+
     private Integer totalTracks;
 
+
+    private Set<ArtistDTO> artists = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -40,12 +46,28 @@ public class AlbumDTO implements Serializable {
         this.reference = reference;
     }
 
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
     public Integer getTotalTracks() {
         return totalTracks;
     }
 
     public void setTotalTracks(Integer totalTracks) {
         this.totalTracks = totalTracks;
+    }
+
+    public Set<ArtistDTO> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(Set<ArtistDTO> artists) {
+        this.artists = artists;
     }
 
     @Override
@@ -75,6 +97,7 @@ public class AlbumDTO implements Serializable {
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
             ", reference='" + getReference() + "'" +
+            ", year=" + getYear() +
             ", totalTracks=" + getTotalTracks() +
             "}";
     }

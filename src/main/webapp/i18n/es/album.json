@@ -18,9 +18,10 @@
       },
       "title": "Title",
       "reference": "Reference",
+      "year": "Year",
       "totalTracks": "Total Tracks",
-      "artist": "Artist",
-      "images": "Images"
+      "images": "Images",
+      "artist": "Artist"
     }
   }
 }

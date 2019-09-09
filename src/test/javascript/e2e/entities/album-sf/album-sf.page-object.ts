@@ -28,7 +28,9 @@ export class AlbumUpdatePage {
   cancelButton = element(by.id('cancel-save'));
   titleInput = element(by.id('field_title'));
   referenceInput = element(by.id('field_reference'));
+  yearInput = element(by.id('field_year'));
   totalTracksInput = element(by.id('field_totalTracks'));
+  artistSelect = element(by.id('field_artist'));
 
   async getPageTitle() {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -50,12 +52,39 @@ export class AlbumUpdatePage {
     return await this.referenceInput.getAttribute('value');
   }
 
+  async setYearInput(year) {
+    await this.yearInput.sendKeys(year);
+  }
+
+  async getYearInput() {
+    return await this.yearInput.getAttribute('value');
+  }
+
   async setTotalTracksInput(totalTracks) {
     await this.totalTracksInput.sendKeys(totalTracks);
   }
 
   async getTotalTracksInput() {
     return await this.totalTracksInput.getAttribute('value');
+  }
+
+  async artistSelectLastOption(timeout?: number) {
+    await this.artistSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async artistSelectOption(option) {
+    await this.artistSelect.sendKeys(option);
+  }
+
+  getArtistSelect(): ElementFinder {
+    return this.artistSelect;
+  }
+
+  async getArtistSelectedOption() {
+    return await this.artistSelect.element(by.css('option:checked')).getText();
   }
 
   async save(timeout?: number) {

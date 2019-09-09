@@ -28,16 +28,22 @@ public class Album implements Serializable {
     @Column(name = "reference")
     private String reference;
 
+    @Column(name = "year")
+    private Integer year;
+
     @Column(name = "total_tracks")
     private Integer totalTracks;
 
     @OneToMany(mappedBy = "album")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Artist> artists = new HashSet<>();
-
-    @OneToMany(mappedBy = "album")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Image> images = new HashSet<>();
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "album_artist",
+               joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"))
+    private Set<Artist> artists = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -74,6 +80,19 @@ public class Album implements Serializable {
         this.reference = reference;
     }
 
+    public Integer getYear() {
+        return year;
+    }
+
+    public Album year(Integer year) {
+        this.year = year;
+        return this;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
     public Integer getTotalTracks() {
         return totalTracks;
     }
@@ -85,31 +104,6 @@ public class Album implements Serializable {
 
     public void setTotalTracks(Integer totalTracks) {
         this.totalTracks = totalTracks;
-    }
-
-    public Set<Artist> getArtists() {
-        return artists;
-    }
-
-    public Album artists(Set<Artist> artists) {
-        this.artists = artists;
-        return this;
-    }
-
-    public Album addArtist(Artist artist) {
-        this.artists.add(artist);
-        artist.setAlbum(this);
-        return this;
-    }
-
-    public Album removeArtist(Artist artist) {
-        this.artists.remove(artist);
-        artist.setAlbum(null);
-        return this;
-    }
-
-    public void setArtists(Set<Artist> artists) {
-        this.artists = artists;
     }
 
     public Set<Image> getImages() {
@@ -136,6 +130,31 @@ public class Album implements Serializable {
     public void setImages(Set<Image> images) {
         this.images = images;
     }
+
+    public Set<Artist> getArtists() {
+        return artists;
+    }
+
+    public Album artists(Set<Artist> artists) {
+        this.artists = artists;
+        return this;
+    }
+
+    public Album addArtist(Artist artist) {
+        this.artists.add(artist);
+        artist.getAlbums().add(this);
+        return this;
+    }
+
+    public Album removeArtist(Artist artist) {
+        this.artists.remove(artist);
+        artist.getAlbums().remove(this);
+        return this;
+    }
+
+    public void setArtists(Set<Artist> artists) {
+        this.artists = artists;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -160,6 +179,7 @@ public class Album implements Serializable {
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
             ", reference='" + getReference() + "'" +
+            ", year=" + getYear() +
             ", totalTracks=" + getTotalTracks() +
             "}";
     }

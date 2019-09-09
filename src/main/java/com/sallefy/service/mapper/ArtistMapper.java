@@ -8,16 +8,14 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Artist} and its DTO {@link ArtistDTO}.
  */
-@Mapper(componentModel = "spring", uses = {AlbumMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface ArtistMapper extends EntityMapper<ArtistDTO, Artist> {
 
-    @Mapping(source = "album.id", target = "albumId")
-    @Mapping(source = "album.title", target = "albumTitle")
-    ArtistDTO toDto(Artist artist);
 
     @Mapping(target = "images", ignore = true)
     @Mapping(target = "removeImages", ignore = true)
-    @Mapping(source = "albumId", target = "album")
+    @Mapping(target = "albums", ignore = true)
+    @Mapping(target = "removeAlbum", ignore = true)
     Artist toEntity(ArtistDTO artistDTO);
 
     default Artist fromId(Long id) {

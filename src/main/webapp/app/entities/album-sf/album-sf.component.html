@@ -20,7 +20,9 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="sallefyApp.album.title">Title</span></th>
             <th><span jhiTranslate="sallefyApp.album.reference">Reference</span></th>
+            <th><span jhiTranslate="sallefyApp.album.year">Year</span></th>
             <th><span jhiTranslate="sallefyApp.album.totalTracks">Total Tracks</span></th>
+            <th><span jhiTranslate="sallefyApp.album.artist">Artist</span></th>
             <th></th>
             </tr>
             </thead>
@@ -29,7 +31,13 @@
                 <td><a [routerLink]="['/album-sf', album.id, 'view' ]">{{album.id}}</a></td>
                 <td>{{album.title}}</td>
                 <td>{{album.reference}}</td>
+                <td>{{album.year}}</td>
                 <td>{{album.totalTracks}}</td>
+                <td>
+                    <span *ngFor="let artist of album.artists; let last = last">
+                            <a class="form-control-static" [routerLink]="['/artist-sf', artist?.id, 'view' ]">{{artist.name}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"

@@ -20,11 +20,22 @@
                            formControlName="reference"/>
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.album.year" for="field_year">Year</label>
+                    <input type="number" class="form-control" name="year" id="field_year"
+                           formControlName="year"/>
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="sallefyApp.album.totalTracks" for="field_totalTracks">Total Tracks</label>
                     <input type="number" class="form-control" name="totalTracks" id="field_totalTracks"
                            formControlName="totalTracks"/>
                 </div>
 
+                <div class="form-group">
+                    <label jhiTranslate="sallefyApp.album.artist" for="field_artists">Artist</label>
+                    <select class="form-control" id="field_artists" multiple name="artists" formControlName="artists">
+                        <option [ngValue]="getSelected(editForm.get('artists').value, artistOption)" *ngFor="let artistOption of artists; trackBy: trackArtistById">{{artistOption.name}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

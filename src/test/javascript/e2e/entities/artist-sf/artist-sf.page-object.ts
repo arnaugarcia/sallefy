@@ -30,7 +30,6 @@ export class ArtistUpdatePage {
   referenceInput = element(by.id('field_reference'));
   photoInput = element(by.id('field_photo'));
   biographyInput = element(by.id('field_biography'));
-  albumSelect = element(by.id('field_album'));
 
   async getPageTitle() {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -66,25 +65,6 @@ export class ArtistUpdatePage {
 
   async getBiographyInput() {
     return await this.biographyInput.getAttribute('value');
-  }
-
-  async albumSelectLastOption(timeout?: number) {
-    await this.albumSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async albumSelectOption(option) {
-    await this.albumSelect.sendKeys(option);
-  }
-
-  getAlbumSelect(): ElementFinder {
-    return this.albumSelect;
-  }
-
-  async getAlbumSelectedOption() {
-    return await this.albumSelect.element(by.css('option:checked')).getText();
   }
 
   async save(timeout?: number) {

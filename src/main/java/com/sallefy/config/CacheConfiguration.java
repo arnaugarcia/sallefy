@@ -55,6 +55,7 @@ public class CacheConfiguration {
             createCache(cm, com.sallefy.domain.Album.class.getName() + ".artists");
             createCache(cm, com.sallefy.domain.Album.class.getName() + ".images");
             createCache(cm, com.sallefy.domain.Image.class.getName());
+            createCache(cm, com.sallefy.domain.Artist.class.getName() + ".albums");
             // jhipster-needle-ehcache-add-entry
         };
     }

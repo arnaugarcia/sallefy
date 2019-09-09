@@ -10,9 +10,12 @@ import com.sallefy.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -22,11 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -42,6 +47,10 @@ public class AlbumResourceIT {
     private static final String DEFAULT_REFERENCE = "AAAAAAAAAA";
     private static final String UPDATED_REFERENCE = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_YEAR = 1;
+    private static final Integer UPDATED_YEAR = 2;
+    private static final Integer SMALLER_YEAR = 1 - 1;
+
     private static final Integer DEFAULT_TOTAL_TRACKS = 1;
     private static final Integer UPDATED_TOTAL_TRACKS = 2;
     private static final Integer SMALLER_TOTAL_TRACKS = 1 - 1;
@@ -49,8 +58,14 @@ public class AlbumResourceIT {
     @Autowired
     private AlbumRepository albumRepository;
 
+    @Mock
+    private AlbumRepository albumRepositoryMock;
+
     @Autowired
     private AlbumMapper albumMapper;
+
+    @Mock
+    private AlbumService albumServiceMock;
 
     @Autowired
     private AlbumService albumService;
@@ -96,6 +111,7 @@ public class AlbumResourceIT {
         Album album = new Album()
             .title(DEFAULT_TITLE)
             .reference(DEFAULT_REFERENCE)
+            .year(DEFAULT_YEAR)
             .totalTracks(DEFAULT_TOTAL_TRACKS);
         return album;
     }
@@ -109,6 +125,7 @@ public class AlbumResourceIT {
         Album album = new Album()
             .title(UPDATED_TITLE)
             .reference(UPDATED_REFERENCE)
+            .year(UPDATED_YEAR)
             .totalTracks(UPDATED_TOTAL_TRACKS);
         return album;
     }
@@ -136,6 +153,7 @@ public class AlbumResourceIT {
         Album testAlbum = albumList.get(albumList.size() - 1);
         assertThat(testAlbum.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testAlbum.getReference()).isEqualTo(DEFAULT_REFERENCE);
+        assertThat(testAlbum.getYear()).isEqualTo(DEFAULT_YEAR);
         assertThat(testAlbum.getTotalTracks()).isEqualTo(DEFAULT_TOTAL_TRACKS);
     }
 
@@ -173,9 +191,43 @@ public class AlbumResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(album.getId().intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
             .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE.toString())))
+            .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)))
             .andExpect(jsonPath("$.[*].totalTracks").value(hasItem(DEFAULT_TOTAL_TRACKS)));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllAlbumsWithEagerRelationshipsIsEnabled() throws Exception {
+        AlbumResource albumResource = new AlbumResource(albumServiceMock);
+        when(albumServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        MockMvc restAlbumMockMvc = MockMvcBuilders.standaloneSetup(albumResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restAlbumMockMvc.perform(get("/api/albums?eagerload=true"))
+        .andExpect(status().isOk());
+
+        verify(albumServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllAlbumsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        AlbumResource albumResource = new AlbumResource(albumServiceMock);
+            when(albumServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+            MockMvc restAlbumMockMvc = MockMvcBuilders.standaloneSetup(albumResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restAlbumMockMvc.perform(get("/api/albums?eagerload=true"))
+        .andExpect(status().isOk());
+
+            verify(albumServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getAlbum() throws Exception {
@@ -189,6 +241,7 @@ public class AlbumResourceIT {
             .andExpect(jsonPath("$.id").value(album.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
             .andExpect(jsonPath("$.reference").value(DEFAULT_REFERENCE.toString()))
+            .andExpect(jsonPath("$.year").value(DEFAULT_YEAR))
             .andExpect(jsonPath("$.totalTracks").value(DEFAULT_TOTAL_TRACKS));
     }
 
@@ -215,6 +268,7 @@ public class AlbumResourceIT {
         updatedAlbum
             .title(UPDATED_TITLE)
             .reference(UPDATED_REFERENCE)
+            .year(UPDATED_YEAR)
             .totalTracks(UPDATED_TOTAL_TRACKS);
         AlbumDTO albumDTO = albumMapper.toDto(updatedAlbum);
 
@@ -229,6 +283,7 @@ public class AlbumResourceIT {
         Album testAlbum = albumList.get(albumList.size() - 1);
         assertThat(testAlbum.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testAlbum.getReference()).isEqualTo(UPDATED_REFERENCE);
+        assertThat(testAlbum.getYear()).isEqualTo(UPDATED_YEAR);
         assertThat(testAlbum.getTotalTracks()).isEqualTo(UPDATED_TOTAL_TRACKS);
     }
 

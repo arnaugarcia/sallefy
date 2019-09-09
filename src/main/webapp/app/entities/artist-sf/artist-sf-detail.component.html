@@ -21,12 +21,6 @@
                 <dd>
                     <span>{{artist.biography}}</span>
                 </dd>
-                <dt><span jhiTranslate="sallefyApp.artist.album">Album</span></dt>
-                <dd>
-                    <div *ngIf="artist.albumId">
-                        <a [routerLink]="['/album-sf', artist.albumId, 'view']">{{artist.albumTitle}}</a>
-                    </div>
-                </dd>
             </dl>
 
             <button type="submit"

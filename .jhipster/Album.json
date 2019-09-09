@@ -10,6 +10,10 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "year",
+            "fieldType": "Integer"
+        },
+        {
             "fieldName": "totalTracks",
             "fieldType": "Integer"
         }
@@ -17,15 +21,17 @@
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "otherEntityName": "artist",
-            "otherEntityRelationshipName": "album",
-            "relationshipName": "artist"
-        },
-        {
-            "relationshipType": "one-to-many",
             "otherEntityName": "image",
             "otherEntityRelationshipName": "album",
             "relationshipName": "images"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "artist",
+            "otherEntityRelationshipName": "album",
+            "relationshipName": "artist",
+            "otherEntityField": "name",
+            "ownerSide": true
         }
     ],
     "changelogDate": "20190909073103",

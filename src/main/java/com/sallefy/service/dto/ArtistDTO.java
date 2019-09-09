@@ -20,10 +20,6 @@ public class ArtistDTO implements Serializable {
     private String biography;
 
 
-    private Long albumId;
-
-    private String albumTitle;
-
     public Long getId() {
         return id;
     }
@@ -64,22 +60,6 @@ public class ArtistDTO implements Serializable {
         this.biography = biography;
     }
 
-    public Long getAlbumId() {
-        return albumId;
-    }
-
-    public void setAlbumId(Long albumId) {
-        this.albumId = albumId;
-    }
-
-    public String getAlbumTitle() {
-        return albumTitle;
-    }
-
-    public void setAlbumTitle(String albumTitle) {
-        this.albumTitle = albumTitle;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -109,8 +89,6 @@ public class ArtistDTO implements Serializable {
             ", reference='" + getReference() + "'" +
             ", photo='" + getPhoto() + "'" +
             ", biography='" + getBiography() + "'" +
-            ", album=" + getAlbumId() +
-            ", album='" + getAlbumTitle() + "'" +
             "}";
     }
 }

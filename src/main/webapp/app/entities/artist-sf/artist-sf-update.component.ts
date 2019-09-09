@@ -24,8 +24,7 @@ export class ArtistSfUpdateComponent implements OnInit {
     name: [],
     reference: [],
     photo: [],
-    biography: [],
-    albumId: []
+    biography: []
   });
 
   constructor(
@@ -57,8 +56,7 @@ export class ArtistSfUpdateComponent implements OnInit {
       name: artist.name,
       reference: artist.reference,
       photo: artist.photo,
-      biography: artist.biography,
-      albumId: artist.albumId
+      biography: artist.biography
     });
   }
 
@@ -115,8 +113,7 @@ export class ArtistSfUpdateComponent implements OnInit {
       name: this.editForm.get(['name']).value,
       reference: this.editForm.get(['reference']).value,
       photo: this.editForm.get(['photo']).value,
-      biography: this.editForm.get(['biography']).value,
-      albumId: this.editForm.get(['albumId']).value
+      biography: this.editForm.get(['biography']).value
     };
   }
 
@@ -138,5 +135,16 @@ export class ArtistSfUpdateComponent implements OnInit {
 
   trackAlbumById(index: number, item: IAlbumSf) {
     return item.id;
+  }
+
+  getSelected(selectedVals: Array<any>, option: any) {
+    if (selectedVals) {
+      for (let i = 0; i < selectedVals.length; i++) {
+        if (option.id === selectedVals[i].id) {
+          return selectedVals[i];
+        }
+      }
+    }
+    return option;
   }
 }

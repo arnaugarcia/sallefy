@@ -81,11 +81,11 @@ public class AlbumResource {
     /**
      * {@code GET  /albums} : get all the albums.
      *
-
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of albums in body.
      */
     @GetMapping("/albums")
-    public List<AlbumDTO> getAllAlbums() {
+    public List<AlbumDTO> getAllAlbums(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Albums");
         return albumService.findAll();
     }

@@ -24,6 +24,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="year" type="integer">
+                <constraints nullable="true" />
+            </column>
+
             <column name="total_tracks" type="integer">
                 <constraints nullable="true" />
             </column>
@@ -35,6 +39,17 @@
 
     <changeSet id="20190909073103-1-relations" author="jhipster">
 
+        <createTable tableName="album_artist">
+            <column name="artist_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="album_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="album_id, artist_id" tableName="album_artist"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 
@@ -54,6 +69,7 @@
             <column name="id" type="numeric"/>
             <column name="title" type="string"/>
             <column name="reference" type="string"/>
+            <column name="year" type="numeric"/>
             <column name="total_tracks" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>

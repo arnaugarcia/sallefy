@@ -43,8 +43,7 @@ describe('Artist e2e test', () => {
       artistUpdatePage.setNameInput('name'),
       artistUpdatePage.setReferenceInput('reference'),
       artistUpdatePage.setPhotoInput('photo'),
-      artistUpdatePage.setBiographyInput('biography'),
-      artistUpdatePage.albumSelectLastOption()
+      artistUpdatePage.setBiographyInput('biography')
     ]);
     expect(await artistUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
     expect(await artistUpdatePage.getReferenceInput()).to.eq('reference', 'Expected Reference value to be equals to reference');

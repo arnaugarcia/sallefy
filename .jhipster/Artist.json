@@ -27,11 +27,12 @@
             "relationshipName": "images"
         },
         {
-            "relationshipType": "many-to-one",
+            "relationshipType": "many-to-many",
             "otherEntityName": "album",
             "otherEntityRelationshipName": "artist",
             "relationshipName": "album",
-            "otherEntityField": "title"
+            "otherEntityField": "title",
+            "ownerSide": false
         }
     ],
     "changelogDate": "20190909073102",
