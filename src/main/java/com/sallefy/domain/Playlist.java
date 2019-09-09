@@ -1,13 +1,15 @@
 package com.sallefy.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import static javax.persistence.CascadeType.*;
 
 /**
  * A Playlist.
@@ -59,11 +61,11 @@ public class Playlist implements Serializable {
     @JsonIgnoreProperties("playlists")
     private User owner;
 
-    @ManyToMany
+    @ManyToMany(cascade = {PERSIST, REMOVE})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "playlist_track",
-               joinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "track_id", referencedColumnName = "id"))
+        joinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "track_id", referencedColumnName = "id"))
     private Set<Track> tracks = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
