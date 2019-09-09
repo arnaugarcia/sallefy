@@ -2,7 +2,6 @@ entity Track {
 	name String,
     raiting Double,
     reference String,
-    artists Artists,
     duration Integer,
     primaryColor String
 }
@@ -11,12 +10,11 @@ entity Playlist {
 	name String,
     collaborative Boolean,
     reference String,
-    description TextBob,
+    description TextBlob,
     primaryColor String,
-    public Boolean,
+    publicAccessible Boolean,
     numberSongs Integer,
     followers Integer,
-    owner User,
     rating Double
 }
 
@@ -30,7 +28,7 @@ entity Artist {
 entity Album {
 	title String,
     reference String,
-    totaltracks Integer
+    totalTracks Integer
 }
 
 entity Image {
@@ -41,8 +39,12 @@ entity Image {
     width Integer
 }
 
+entity User {
+
+}
+
 relationship OneToOne {
-    User to Playlist{owner}
+    Playlist{owner} to User
 }
 
 relationship ManyToMany {
