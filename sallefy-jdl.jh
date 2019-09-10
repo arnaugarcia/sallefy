@@ -36,13 +36,14 @@ entity Profile {
 }
 
 relationship ManyToOne {
-    Playlist{owner(login)} to User,
+    Playlist{user(login)} to User,
     Album{user(login)} to User
+    Track{user(login)} to User
 }
 
 relationship ManyToMany {
-	Track{playlist(name)} to Playlist{track(name)},
-    Track{album(title)} to Album{track(title)}
+	Playlist{track(name)} to Track{playlist(name)},
+    Album{track(name)} to Track{album(title)}
 }
 
 relationship OneToOne {

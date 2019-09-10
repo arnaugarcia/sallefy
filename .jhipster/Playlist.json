@@ -48,7 +48,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "playlist",
-            "relationshipName": "owner",
+            "relationshipName": "user",
             "otherEntityField": "login"
         },
         {
@@ -57,7 +57,7 @@
             "otherEntityRelationshipName": "playlist",
             "relationshipName": "track",
             "otherEntityField": "name",
-            "ownerSide": false
+            "ownerSide": true
         }
     ],
     "changelogDate": "20190909073101",

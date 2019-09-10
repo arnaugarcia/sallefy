@@ -31,8 +31,8 @@
             "otherEntityName": "track",
             "otherEntityRelationshipName": "album",
             "relationshipName": "track",
-            "otherEntityField": "title",
-            "ownerSide": false
+            "otherEntityField": "name",
+            "ownerSide": true
         }
     ],
     "changelogDate": "20190909073103",

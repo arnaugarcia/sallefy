@@ -32,12 +32,19 @@
     ],
     "relationships": [
         {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "track",
+            "relationshipName": "user",
+            "otherEntityField": "login"
+        },
+        {
             "relationshipType": "many-to-many",
             "otherEntityName": "playlist",
             "otherEntityRelationshipName": "track",
             "relationshipName": "playlist",
             "otherEntityField": "name",
-            "ownerSide": true
+            "ownerSide": false
         },
         {
             "relationshipType": "many-to-many",
@@ -45,7 +52,7 @@
             "otherEntityRelationshipName": "track",
             "relationshipName": "album",
             "otherEntityField": "title",
-            "ownerSide": true
+            "ownerSide": false
         }
     ],
     "changelogDate": "20190909073100",

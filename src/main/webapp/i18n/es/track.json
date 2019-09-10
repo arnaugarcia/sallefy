@@ -1,0 +1,31 @@
+{
+  "sallefyApp": {
+    "track": {
+      "home": {
+        "title": "Tracks",
+        "createLabel": "Crear nuevo Track",
+        "createOrEditLabel": "Crear o editar Track",
+        "notFound": "No Tracks found"
+      },
+      "created": "Un nuevo Track ha sido creado con el identificador {{ param }}",
+      "updated": "Un Track ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Track ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Track {{ id }}?"
+      },
+      "detail": {
+        "title": "Track"
+      },
+      "name": "Name",
+      "rating": "Rating",
+      "url": "Url",
+      "thumbnail": "Thumbnail",
+      "createdAt": "Created At",
+      "duration": "Duration",
+      "primaryColor": "Primary Color",
+      "user": "User",
+      "playlist": "Playlist",
+      "album": "Album"
+    }
+  }
+}
