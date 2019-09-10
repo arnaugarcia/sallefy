@@ -1,0 +1,33 @@
+{
+  "sallefyApp": {
+    "playlist": {
+      "home": {
+        "title": "Playlists",
+        "createLabel": "Create a new Playlist",
+        "createOrEditLabel": "Create or edit a Playlist",
+        "notFound": "No Playlists found"
+      },
+      "created": "A new Playlist is created with identifier {{ param }}",
+      "updated": "A Playlist is updated with identifier {{ param }}",
+      "deleted": "A Playlist is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Playlist {{ id }}?"
+      },
+      "detail": {
+        "title": "Playlist"
+      },
+      "name": "Name",
+      "collaborative": "Collaborative",
+      "description": "Description",
+      "primaryColor": "Primary Color",
+      "cover": "Cover",
+      "thumbnail": "Thumbnail",
+      "publicAccessible": "Public Accessible",
+      "numberSongs": "Number Songs",
+      "followers": "Followers",
+      "rating": "Rating",
+      "user": "User",
+      "track": "Track"
+    }
+  }
+}

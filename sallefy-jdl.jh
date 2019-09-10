@@ -37,21 +37,21 @@ entity LikeTrack {
 
 relationship ManyToOne {
     Playlist{user(login)} to User,
-    Album{user(login)} to User
-    Track{user(login)} to User
+    Album{user(login)} to User,
+    Track{user(login)} to User,
+    LikeTrack{user(login)} to User
 }
 
 relationship ManyToMany {
 	Playlist{track(name)} to Track{playlist(name)},
-    Album{track(name)} to Track{album(title)},
+    Album{track(name)} to Track{album(title)}
 }
 
 relationship OneToMany {
 	/**
      * LikeTrack Relationships
      */
-	Track to LikeTrack{track(name)},
-	LikeTrack{user(login)} to User{likeTrack}
+	Track to LikeTrack{track(name)}
 }
 
 // Set pagination options
