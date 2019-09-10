@@ -35,7 +35,7 @@ entity LikeTrack {
     date ZonedDateTime,
 }
 
-entity LikeUser {
+entity FollowUser {
 	liked Boolean,
     date ZonedDateTime,
 }
@@ -44,8 +44,8 @@ relationship ManyToOne {
     Playlist{user(login)} to User,
     Album{user(login)} to User,
     Track{user(login)} to User,
-    LikeUser{likedUser(login)} to User,
-    LikeUser{user(login)} to User
+    FollowUser{followed(login)} to User,
+    FollowUser{user(login)} to User
 }
 
 relationship ManyToMany {
@@ -66,4 +66,4 @@ paginate Track with pagination
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct
 
-service all with serviceImpl except LikeTrack
+service all with serviceImpl except FollowUser
