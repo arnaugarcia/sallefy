@@ -39,10 +39,6 @@ relationship ManyToMany {
     Album{track(name)} to Track{album(title)}
 }
 
-relationship OneToOne {
-	Profile{user(login)} to User
-}
-
 // Set pagination options
 paginate Track with pagination
 
