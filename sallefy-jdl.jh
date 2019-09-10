@@ -45,6 +45,11 @@ entity LikeAlbum {
     date ZonedDateTime,
 }
 
+entity Genre {
+ 	name String,
+    popularity Integer
+}
+
 relationship ManyToOne {
     Playlist{user(login)} to User,
     Album{user(login)} to User,
@@ -57,7 +62,8 @@ relationship ManyToOne {
 
 relationship ManyToMany {
 	Playlist{track(name)} to Track{playlist(name)},
-    Album{track(name)} to Track{album(title)}
+    Album{track(name)} to Track{album(title)},
+    Track{genre(name)} to Genre{track(name)}
 }
 
 relationship OneToMany {
