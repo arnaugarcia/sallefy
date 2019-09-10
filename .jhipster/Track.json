@@ -7,10 +7,14 @@
         },
         {
             "fieldName": "rating",
-            "fieldType": "Double"
+            "fieldType": "String"
         },
         {
             "fieldName": "url",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "popularity",
             "fieldType": "String"
         },
         {
@@ -31,6 +35,13 @@
         }
     ],
     "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "likeTrack",
+            "otherEntityRelationshipName": "track",
+            "javadoc": "LikeTrack Relationships",
+            "relationshipName": "likeTrack"
+        },
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
