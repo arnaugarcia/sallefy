@@ -20,14 +20,13 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="sallefyApp.image.url">Url</span></th>
             <th><span jhiTranslate="sallefyApp.image.height">Height</span></th>
-            <th><span jhiTranslate="sallefyApp.image.reference">Reference</span></th>
             <th><span jhiTranslate="sallefyApp.image.thumbnail">Thumbnail</span></th>
             <th><span jhiTranslate="sallefyApp.image.cover">Cover</span></th>
             <th><span jhiTranslate="sallefyApp.image.width">Width</span></th>
-            <th><span jhiTranslate="sallefyApp.image.album">Album</span></th>
-            <th><span jhiTranslate="sallefyApp.image.artist">Artist</span></th>
-            <th><span jhiTranslate="sallefyApp.image.playlist">Playlist</span></th>
             <th><span jhiTranslate="sallefyApp.image.track">Track</span></th>
+            <th><span jhiTranslate="sallefyApp.image.playlist">Playlist</span></th>
+            <th><span jhiTranslate="sallefyApp.image.artist">Artist</span></th>
+            <th><span jhiTranslate="sallefyApp.image.album">Album</span></th>
             <th></th>
             </tr>
             </thead>
@@ -36,28 +35,27 @@
                 <td><a [routerLink]="['/image-sf', image.id, 'view' ]">{{image.id}}</a></td>
                 <td>{{image.url}}</td>
                 <td>{{image.height}}</td>
-                <td>{{image.reference}}</td>
                 <td>{{image.thumbnail}}</td>
                 <td>{{image.cover}}</td>
                 <td>{{image.width}}</td>
                 <td>
-                    <div *ngIf="image.albumId">
-                        <a [routerLink]="['/album-sf', image.albumId , 'view' ]" >{{image.albumTitle}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="image.artistId">
-                        <a [routerLink]="['/artist-sf', image.artistId , 'view' ]" >{{image.artistName}}</a>
+                    <div *ngIf="image.trackId">
+                        <a [routerLink]="['/track-sf', image.trackId , 'view' ]" >{{image.trackId}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="image.playlistId">
-                        <a [routerLink]="['/playlist-sf', image.playlistId , 'view' ]" >{{image.playlistName}}</a>
+                        <a [routerLink]="['/playlist-sf', image.playlistId , 'view' ]" >{{image.playlistId}}</a>
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="image.trackId">
-                        <a [routerLink]="['/track-sf', image.trackId , 'view' ]" >{{image.trackName}}</a>
+                    <div *ngIf="image.artistId">
+                        <a [routerLink]="['/artist-sf', image.artistId , 'view' ]" >{{image.artistId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="image.albumId">
+                        <a [routerLink]="['/album-sf', image.albumId , 'view' ]" >{{image.albumId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

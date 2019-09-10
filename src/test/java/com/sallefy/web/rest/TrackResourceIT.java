@@ -10,9 +10,12 @@ import com.sallefy.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -22,11 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -39,15 +44,12 @@ public class TrackResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final Double DEFAULT_RATING = 1D;
-    private static final Double UPDATED_RATING = 2D;
-    private static final Double SMALLER_RATING = 1D - 1D;
+    private static final Double DEFAULT_RAITING = 1D;
+    private static final Double UPDATED_RAITING = 2D;
+    private static final Double SMALLER_RAITING = 1D - 1D;
 
     private static final String DEFAULT_URL = "AAAAAAAAAA";
     private static final String UPDATED_URL = "BBBBBBBBBB";
-
-    private static final Boolean DEFAULT_EXPLICIT = false;
-    private static final Boolean UPDATED_EXPLICIT = true;
 
     private static final String DEFAULT_REFERENCE = "AAAAAAAAAA";
     private static final String UPDATED_REFERENCE = "BBBBBBBBBB";
@@ -62,8 +64,14 @@ public class TrackResourceIT {
     @Autowired
     private TrackRepository trackRepository;
 
+    @Mock
+    private TrackRepository trackRepositoryMock;
+
     @Autowired
     private TrackMapper trackMapper;
+
+    @Mock
+    private TrackService trackServiceMock;
 
     @Autowired
     private TrackService trackService;
@@ -108,9 +116,8 @@ public class TrackResourceIT {
     public static Track createEntity(EntityManager em) {
         Track track = new Track()
             .name(DEFAULT_NAME)
-            .rating(DEFAULT_RATING)
+            .raiting(DEFAULT_RAITING)
             .url(DEFAULT_URL)
-            .explicit(DEFAULT_EXPLICIT)
             .reference(DEFAULT_REFERENCE)
             .duration(DEFAULT_DURATION)
             .primaryColor(DEFAULT_PRIMARY_COLOR);
@@ -125,9 +132,8 @@ public class TrackResourceIT {
     public static Track createUpdatedEntity(EntityManager em) {
         Track track = new Track()
             .name(UPDATED_NAME)
-            .rating(UPDATED_RATING)
+            .raiting(UPDATED_RAITING)
             .url(UPDATED_URL)
-            .explicit(UPDATED_EXPLICIT)
             .reference(UPDATED_REFERENCE)
             .duration(UPDATED_DURATION)
             .primaryColor(UPDATED_PRIMARY_COLOR);
@@ -156,9 +162,8 @@ public class TrackResourceIT {
         assertThat(trackList).hasSize(databaseSizeBeforeCreate + 1);
         Track testTrack = trackList.get(trackList.size() - 1);
         assertThat(testTrack.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testTrack.getRating()).isEqualTo(DEFAULT_RATING);
+        assertThat(testTrack.getRaiting()).isEqualTo(DEFAULT_RAITING);
         assertThat(testTrack.getUrl()).isEqualTo(DEFAULT_URL);
-        assertThat(testTrack.isExplicit()).isEqualTo(DEFAULT_EXPLICIT);
         assertThat(testTrack.getReference()).isEqualTo(DEFAULT_REFERENCE);
         assertThat(testTrack.getDuration()).isEqualTo(DEFAULT_DURATION);
         assertThat(testTrack.getPrimaryColor()).isEqualTo(DEFAULT_PRIMARY_COLOR);
@@ -197,14 +202,46 @@ public class TrackResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(track.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].rating").value(hasItem(DEFAULT_RATING.doubleValue())))
+            .andExpect(jsonPath("$.[*].raiting").value(hasItem(DEFAULT_RAITING.doubleValue())))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())))
-            .andExpect(jsonPath("$.[*].explicit").value(hasItem(DEFAULT_EXPLICIT.booleanValue())))
             .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE.toString())))
             .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION)))
             .andExpect(jsonPath("$.[*].primaryColor").value(hasItem(DEFAULT_PRIMARY_COLOR.toString())));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllTracksWithEagerRelationshipsIsEnabled() throws Exception {
+        TrackResource trackResource = new TrackResource(trackServiceMock);
+        when(trackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        MockMvc restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restTrackMockMvc.perform(get("/api/tracks?eagerload=true"))
+        .andExpect(status().isOk());
+
+        verify(trackServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllTracksWithEagerRelationshipsIsNotEnabled() throws Exception {
+        TrackResource trackResource = new TrackResource(trackServiceMock);
+            when(trackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+            MockMvc restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restTrackMockMvc.perform(get("/api/tracks?eagerload=true"))
+        .andExpect(status().isOk());
+
+            verify(trackServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getTrack() throws Exception {
@@ -217,9 +254,8 @@ public class TrackResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(track.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.rating").value(DEFAULT_RATING.doubleValue()))
+            .andExpect(jsonPath("$.raiting").value(DEFAULT_RAITING.doubleValue()))
             .andExpect(jsonPath("$.url").value(DEFAULT_URL.toString()))
-            .andExpect(jsonPath("$.explicit").value(DEFAULT_EXPLICIT.booleanValue()))
             .andExpect(jsonPath("$.reference").value(DEFAULT_REFERENCE.toString()))
             .andExpect(jsonPath("$.duration").value(DEFAULT_DURATION))
             .andExpect(jsonPath("$.primaryColor").value(DEFAULT_PRIMARY_COLOR.toString()));
@@ -247,9 +283,8 @@ public class TrackResourceIT {
         em.detach(updatedTrack);
         updatedTrack
             .name(UPDATED_NAME)
-            .rating(UPDATED_RATING)
+            .raiting(UPDATED_RAITING)
             .url(UPDATED_URL)
-            .explicit(UPDATED_EXPLICIT)
             .reference(UPDATED_REFERENCE)
             .duration(UPDATED_DURATION)
             .primaryColor(UPDATED_PRIMARY_COLOR);
@@ -265,9 +300,8 @@ public class TrackResourceIT {
         assertThat(trackList).hasSize(databaseSizeBeforeUpdate);
         Track testTrack = trackList.get(trackList.size() - 1);
         assertThat(testTrack.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testTrack.getRating()).isEqualTo(UPDATED_RATING);
+        assertThat(testTrack.getRaiting()).isEqualTo(UPDATED_RAITING);
         assertThat(testTrack.getUrl()).isEqualTo(UPDATED_URL);
-        assertThat(testTrack.isExplicit()).isEqualTo(UPDATED_EXPLICIT);
         assertThat(testTrack.getReference()).isEqualTo(UPDATED_REFERENCE);
         assertThat(testTrack.getDuration()).isEqualTo(UPDATED_DURATION);
         assertThat(testTrack.getPrimaryColor()).isEqualTo(UPDATED_PRIMARY_COLOR);

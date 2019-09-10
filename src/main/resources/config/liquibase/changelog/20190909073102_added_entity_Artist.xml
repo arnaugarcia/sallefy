@@ -28,10 +28,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="followers" type="integer">
-                <constraints nullable="true" />
-            </column>
-
             <column name="biography" type="${clobType}">
                 <constraints nullable="true" />
             </column>
@@ -43,17 +39,6 @@
 
     <changeSet id="20190909073102-1-relations" author="jhipster">
 
-        <createTable tableName="artist_genre">
-            <column name="genre_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="artist_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="artist_id, genre_id" tableName="artist_genre"/>
-        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 
@@ -74,7 +59,6 @@
             <column name="name" type="string"/>
             <column name="reference" type="string"/>
             <column name="photo" type="string"/>
-            <column name="followers" type="numeric"/>
             <column name="biography" type="clob"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>

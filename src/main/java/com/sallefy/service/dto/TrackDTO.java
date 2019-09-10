@@ -1,5 +1,7 @@
 package com.sallefy.service.dto;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -11,11 +13,9 @@ public class TrackDTO implements Serializable {
 
     private String name;
 
-    private Double rating;
+    private Double raiting;
 
     private String url;
-
-    private Boolean explicit;
 
     private String reference;
 
@@ -23,6 +23,8 @@ public class TrackDTO implements Serializable {
 
     private String primaryColor;
 
+
+    private Set<PlaylistDTO> playlists = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -40,12 +42,12 @@ public class TrackDTO implements Serializable {
         this.name = name;
     }
 
-    public Double getRating() {
-        return rating;
+    public Double getRaiting() {
+        return raiting;
     }
 
-    public void setRating(Double rating) {
-        this.rating = rating;
+    public void setRaiting(Double raiting) {
+        this.raiting = raiting;
     }
 
     public String getUrl() {
@@ -54,14 +56,6 @@ public class TrackDTO implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Boolean isExplicit() {
-        return explicit;
-    }
-
-    public void setExplicit(Boolean explicit) {
-        this.explicit = explicit;
     }
 
     public String getReference() {
@@ -86,6 +80,14 @@ public class TrackDTO implements Serializable {
 
     public void setPrimaryColor(String primaryColor) {
         this.primaryColor = primaryColor;
+    }
+
+    public Set<PlaylistDTO> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(Set<PlaylistDTO> playlists) {
+        this.playlists = playlists;
     }
 
     @Override
@@ -114,9 +116,8 @@ public class TrackDTO implements Serializable {
         return "TrackDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", rating=" + getRating() +
+            ", raiting=" + getRaiting() +
             ", url='" + getUrl() + "'" +
-            ", explicit='" + isExplicit() + "'" +
             ", reference='" + getReference() + "'" +
             ", duration=" + getDuration() +
             ", primaryColor='" + getPrimaryColor() + "'" +

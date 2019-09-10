@@ -63,17 +63,6 @@
 
     <changeSet id="20190909073101-1-relations" author="jhipster">
 
-        <createTable tableName="playlist_track">
-            <column name="track_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="playlist_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="playlist_id, track_id" tableName="playlist_track"/>
-        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 

@@ -1,4 +1,5 @@
 package com.sallefy.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -59,11 +60,9 @@ public class Playlist implements Serializable {
     @JsonIgnoreProperties("playlists")
     private User owner;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "playlists")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "playlist_track",
-               joinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "track_id", referencedColumnName = "id"))
+    @JsonIgnore
     private Set<Track> tracks = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

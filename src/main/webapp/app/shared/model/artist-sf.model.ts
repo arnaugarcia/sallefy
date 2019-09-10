@@ -1,15 +1,14 @@
 import { IImageSf } from 'app/shared/model/image-sf.model';
-import { IGenre } from 'app/shared/model/genre.model';
+import { IAlbumSf } from 'app/shared/model/album-sf.model';
 
 export interface IArtistSf {
   id?: number;
   name?: string;
   reference?: string;
   photo?: string;
-  followers?: number;
   biography?: any;
   images?: IImageSf[];
-  genres?: IGenre[];
+  albums?: IAlbumSf[];
 }
 
 export class ArtistSf implements IArtistSf {
@@ -18,9 +17,8 @@ export class ArtistSf implements IArtistSf {
     public name?: string,
     public reference?: string,
     public photo?: string,
-    public followers?: number,
     public biography?: any,
     public images?: IImageSf[],
-    public genres?: IGenre[]
+    public albums?: IAlbumSf[]
   ) {}
 }

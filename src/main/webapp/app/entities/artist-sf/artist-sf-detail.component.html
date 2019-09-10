@@ -17,19 +17,9 @@
                 <dd>
                     <span>{{artist.photo}}</span>
                 </dd>
-                <dt><span jhiTranslate="sallefyApp.artist.followers">Followers</span></dt>
-                <dd>
-                    <span>{{artist.followers}}</span>
-                </dd>
                 <dt><span jhiTranslate="sallefyApp.artist.biography">Biography</span></dt>
                 <dd>
                     <span>{{artist.biography}}</span>
-                </dd>
-                <dt><span jhiTranslate="sallefyApp.artist.genre">Genre</span></dt>
-                <dd>
-                    <span *ngFor="let genre of artist.genres; let last = last">
-                        <a [routerLink]="['/genre', genre?.id, 'view' ]">{{genre.name}}</a>{{last ? '' : ', '}}
-                    </span>
                 </dd>
             </dl>
 

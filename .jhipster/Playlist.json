@@ -59,7 +59,7 @@
             "otherEntityRelationshipName": "playlist",
             "relationshipName": "track",
             "otherEntityField": "name",
-            "ownerSide": true
+            "ownerSide": false
         }
     ],
     "changelogDate": "20190909073101",

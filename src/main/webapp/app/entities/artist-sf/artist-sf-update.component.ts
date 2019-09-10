@@ -7,8 +7,8 @@ import { filter, map } from 'rxjs/operators';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { IArtistSf, ArtistSf } from 'app/shared/model/artist-sf.model';
 import { ArtistSfService } from './artist-sf.service';
-import { IGenre } from 'app/shared/model/genre.model';
-import { GenreService } from 'app/entities/genre';
+import { IAlbumSf } from 'app/shared/model/album-sf.model';
+import { AlbumSfService } from 'app/entities/album-sf';
 
 @Component({
   selector: 'jhi-artist-sf-update',
@@ -17,23 +17,21 @@ import { GenreService } from 'app/entities/genre';
 export class ArtistSfUpdateComponent implements OnInit {
   isSaving: boolean;
 
-  genres: IGenre[];
+  albums: IAlbumSf[];
 
   editForm = this.fb.group({
     id: [],
     name: [],
     reference: [],
     photo: [],
-    followers: [],
-    biography: [],
-    genres: []
+    biography: []
   });
 
   constructor(
     protected dataUtils: JhiDataUtils,
     protected jhiAlertService: JhiAlertService,
     protected artistService: ArtistSfService,
-    protected genreService: GenreService,
+    protected albumService: AlbumSfService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -43,13 +41,13 @@ export class ArtistSfUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ artist }) => {
       this.updateForm(artist);
     });
-    this.genreService
+    this.albumService
       .query()
       .pipe(
-        filter((mayBeOk: HttpResponse<IGenre[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IGenre[]>) => response.body)
+        filter((mayBeOk: HttpResponse<IAlbumSf[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IAlbumSf[]>) => response.body)
       )
-      .subscribe((res: IGenre[]) => (this.genres = res), (res: HttpErrorResponse) => this.onError(res.message));
+      .subscribe((res: IAlbumSf[]) => (this.albums = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(artist: IArtistSf) {
@@ -58,9 +56,7 @@ export class ArtistSfUpdateComponent implements OnInit {
       name: artist.name,
       reference: artist.reference,
       photo: artist.photo,
-      followers: artist.followers,
-      biography: artist.biography,
-      genres: artist.genres
+      biography: artist.biography
     });
   }
 
@@ -117,9 +113,7 @@ export class ArtistSfUpdateComponent implements OnInit {
       name: this.editForm.get(['name']).value,
       reference: this.editForm.get(['reference']).value,
       photo: this.editForm.get(['photo']).value,
-      followers: this.editForm.get(['followers']).value,
-      biography: this.editForm.get(['biography']).value,
-      genres: this.editForm.get(['genres']).value
+      biography: this.editForm.get(['biography']).value
     };
   }
 
@@ -139,7 +133,7 @@ export class ArtistSfUpdateComponent implements OnInit {
     this.jhiAlertService.error(errorMessage, null, null);
   }
 
-  trackGenreById(index: number, item: IGenre) {
+  trackAlbumById(index: number, item: IAlbumSf) {
     return item.id;
   }
 

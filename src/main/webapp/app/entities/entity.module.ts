@@ -27,6 +27,10 @@ import { RouterModule } from '@angular/router';
       {
         path: 'genre',
         loadChildren: () => import('./genre/genre.module').then(m => m.SallefyGenreModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.module').then(m => m.SallefyProfileModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

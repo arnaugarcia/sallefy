@@ -33,8 +33,7 @@ export class PlaylistSfUpdateComponent implements OnInit {
     numberSongs: [],
     followers: [],
     rating: [],
-    ownerId: [],
-    tracks: []
+    ownerId: []
   });
 
   constructor(
@@ -80,8 +79,7 @@ export class PlaylistSfUpdateComponent implements OnInit {
       numberSongs: playlist.numberSongs,
       followers: playlist.followers,
       rating: playlist.rating,
-      ownerId: playlist.ownerId,
-      tracks: playlist.tracks
+      ownerId: playlist.ownerId
     });
   }
 
@@ -144,8 +142,7 @@ export class PlaylistSfUpdateComponent implements OnInit {
       numberSongs: this.editForm.get(['numberSongs']).value,
       followers: this.editForm.get(['followers']).value,
       rating: this.editForm.get(['rating']).value,
-      ownerId: this.editForm.get(['ownerId']).value,
-      tracks: this.editForm.get(['tracks']).value
+      ownerId: this.editForm.get(['ownerId']).value
     };
   }
 

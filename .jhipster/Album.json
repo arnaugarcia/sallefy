@@ -27,9 +27,9 @@
         },
         {
             "relationshipType": "many-to-many",
-            "otherEntityName": "track",
+            "otherEntityName": "artist",
             "otherEntityRelationshipName": "album",
-            "relationshipName": "track",
+            "relationshipName": "artist",
             "otherEntityField": "name",
             "ownerSide": true
         }

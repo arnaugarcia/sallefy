@@ -7,8 +7,8 @@ import { filter, map } from 'rxjs/operators';
 import { JhiAlertService } from 'ng-jhipster';
 import { IAlbumSf, AlbumSf } from 'app/shared/model/album-sf.model';
 import { AlbumSfService } from './album-sf.service';
-import { ITrackSf } from 'app/shared/model/track-sf.model';
-import { TrackSfService } from 'app/entities/track-sf';
+import { IArtistSf } from 'app/shared/model/artist-sf.model';
+import { ArtistSfService } from 'app/entities/artist-sf';
 
 @Component({
   selector: 'jhi-album-sf-update',
@@ -17,7 +17,7 @@ import { TrackSfService } from 'app/entities/track-sf';
 export class AlbumSfUpdateComponent implements OnInit {
   isSaving: boolean;
 
-  tracks: ITrackSf[];
+  artists: IArtistSf[];
 
   editForm = this.fb.group({
     id: [],
@@ -25,13 +25,13 @@ export class AlbumSfUpdateComponent implements OnInit {
     reference: [],
     year: [],
     totalTracks: [],
-    tracks: []
+    artists: []
   });
 
   constructor(
     protected jhiAlertService: JhiAlertService,
     protected albumService: AlbumSfService,
-    protected trackService: TrackSfService,
+    protected artistService: ArtistSfService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -41,13 +41,13 @@ export class AlbumSfUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ album }) => {
       this.updateForm(album);
     });
-    this.trackService
+    this.artistService
       .query()
       .pipe(
-        filter((mayBeOk: HttpResponse<ITrackSf[]>) => mayBeOk.ok),
-        map((response: HttpResponse<ITrackSf[]>) => response.body)
+        filter((mayBeOk: HttpResponse<IArtistSf[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IArtistSf[]>) => response.body)
       )
-      .subscribe((res: ITrackSf[]) => (this.tracks = res), (res: HttpErrorResponse) => this.onError(res.message));
+      .subscribe((res: IArtistSf[]) => (this.artists = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(album: IAlbumSf) {
@@ -57,7 +57,7 @@ export class AlbumSfUpdateComponent implements OnInit {
       reference: album.reference,
       year: album.year,
       totalTracks: album.totalTracks,
-      tracks: album.tracks
+      artists: album.artists
     });
   }
 
@@ -83,7 +83,7 @@ export class AlbumSfUpdateComponent implements OnInit {
       reference: this.editForm.get(['reference']).value,
       year: this.editForm.get(['year']).value,
       totalTracks: this.editForm.get(['totalTracks']).value,
-      tracks: this.editForm.get(['tracks']).value
+      artists: this.editForm.get(['artists']).value
     };
   }
 
@@ -103,7 +103,7 @@ export class AlbumSfUpdateComponent implements OnInit {
     this.jhiAlertService.error(errorMessage, null, null);
   }
 
-  trackTrackById(index: number, item: ITrackSf) {
+  trackArtistById(index: number, item: IArtistSf) {
     return item.id;
   }
 

@@ -6,16 +6,12 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "rating",
+            "fieldName": "raiting",
             "fieldType": "Double"
         },
         {
             "fieldName": "url",
             "fieldType": "String"
-        },
-        {
-            "fieldName": "explicit",
-            "fieldType": "Boolean"
         },
         {
             "fieldName": "reference",
@@ -43,15 +39,7 @@
             "otherEntityRelationshipName": "track",
             "relationshipName": "playlist",
             "otherEntityField": "name",
-            "ownerSide": false
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityName": "album",
-            "otherEntityRelationshipName": "track",
-            "relationshipName": "album",
-            "otherEntityField": "title",
-            "ownerSide": false
+            "ownerSide": true
         }
     ],
     "changelogDate": "20190909073100",

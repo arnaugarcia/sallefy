@@ -1,11 +1,7 @@
-
-
 entity Track {
 	name String,
-    rating Double,
+    raiting Double,
     url String,
-    explicit Boolean,
-    reference String,
     duration Integer,
     primaryColor String
 }
@@ -13,7 +9,6 @@ entity Track {
 entity Playlist {
 	name String,
     collaborative Boolean,
-    reference String,
     description TextBlob,
     primaryColor String,
     publicAccessible Boolean,
@@ -22,21 +17,8 @@ entity Playlist {
     rating Double
 }
 
-entity Artist {
-	name String,
-    reference String,
-    photo String,
-    followers Integer,
-    biography TextBlob
-}
-
-entity Genre {
-	name String
-}
-
 entity Album {
 	title String,
-    reference String,
     year Integer,
     totalTracks Integer
 }
@@ -44,14 +26,20 @@ entity Album {
 entity Image {
 	url String,
     height Integer,
-    reference String,
     thumbnail Boolean,
     cover Boolean,
     width Integer
 }
 
-entity User {
+entity Genre {
+	name String
+}
 
+entity Profile {
+	artist Boolean,
+    name String,
+    photo String,
+    biography TextBlob
 }
 
 relationship ManyToOne {
@@ -59,16 +47,19 @@ relationship ManyToOne {
 }
 
 relationship ManyToMany {
-	Playlist{track(name)} to Track{playlist(name)},
-    Album{track(name)} to Track{album(title)},
-    Artist{genre(name)} to Genre{artist(name)}
+	Track{playlist(name)} to Playlist{track(name)},
+	Album{profile(id)} to Profile{album(title)},
+    Track{album(title)} to Album{track}
 }
 
 relationship OneToMany {
-    Album{images(reference)} to Image{album(title)},
-    Artist{images(reference)} to Image{artist(name)},
-    Playlist{images(reference)} to Image{playlist(name)},
-    Track{images(reference)} to Image{track(name)}
+    Album{images} to Image,
+    Playlist{images} to Image,
+    Track{images} to Image
+}
+
+relationship OneToOne {
+	Profile{user(login)} to User
 }
 
 // Set pagination options

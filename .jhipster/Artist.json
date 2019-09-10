@@ -14,10 +14,6 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "followers",
-            "fieldType": "Integer"
-        },
-        {
             "fieldName": "biography",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "text"
@@ -32,11 +28,11 @@
         },
         {
             "relationshipType": "many-to-many",
-            "otherEntityName": "genre",
+            "otherEntityName": "album",
             "otherEntityRelationshipName": "artist",
-            "relationshipName": "genre",
-            "otherEntityField": "name",
-            "ownerSide": true
+            "relationshipName": "album",
+            "otherEntityField": "title",
+            "ownerSide": false
         }
     ],
     "changelogDate": "20190909073102",

@@ -42,16 +42,14 @@ describe('Image e2e test', () => {
     await promise.all([
       imageUpdatePage.setUrlInput('url'),
       imageUpdatePage.setHeightInput('5'),
-      imageUpdatePage.setReferenceInput('reference'),
       imageUpdatePage.setWidthInput('5'),
-      imageUpdatePage.albumSelectLastOption(),
-      imageUpdatePage.artistSelectLastOption(),
+      imageUpdatePage.trackSelectLastOption(),
       imageUpdatePage.playlistSelectLastOption(),
-      imageUpdatePage.trackSelectLastOption()
+      imageUpdatePage.artistSelectLastOption(),
+      imageUpdatePage.albumSelectLastOption()
     ]);
     expect(await imageUpdatePage.getUrlInput()).to.eq('url', 'Expected Url value to be equals to url');
     expect(await imageUpdatePage.getHeightInput()).to.eq('5', 'Expected height value to be equals to 5');
-    expect(await imageUpdatePage.getReferenceInput()).to.eq('reference', 'Expected Reference value to be equals to reference');
     const selectedThumbnail = imageUpdatePage.getThumbnailInput();
     if (await selectedThumbnail.isSelected()) {
       await imageUpdatePage.getThumbnailInput().click();

@@ -15,19 +15,14 @@
                            formControlName="name"/>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="sallefyApp.track.rating" for="field_rating">Rating</label>
-                    <input type="number" class="form-control" name="rating" id="field_rating"
-                           formControlName="rating"/>
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.raiting" for="field_raiting">Raiting</label>
+                    <input type="number" class="form-control" name="raiting" id="field_raiting"
+                           formControlName="raiting"/>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="sallefyApp.track.url" for="field_url">Url</label>
                     <input type="text" class="form-control" name="url" id="field_url"
                            formControlName="url"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="sallefyApp.track.explicit" for="field_explicit">Explicit</label>
-                    <input type="checkbox" class="form-control" name="explicit" id="field_explicit"
-                           formControlName="explicit"/>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="sallefyApp.track.reference" for="field_reference">Reference</label>
@@ -45,6 +40,12 @@
                            formControlName="primaryColor"/>
                 </div>
 
+                <div class="form-group">
+                    <label jhiTranslate="sallefyApp.track.playlist" for="field_playlists">Playlist</label>
+                    <select class="form-control" id="field_playlists" multiple name="playlists" formControlName="playlists">
+                        <option [ngValue]="getSelected(editForm.get('playlists').value, playlistOption)" *ngFor="let playlistOption of playlists; trackBy: trackPlaylistById">{{playlistOption.name}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

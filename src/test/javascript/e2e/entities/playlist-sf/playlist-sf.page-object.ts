@@ -36,7 +36,6 @@ export class PlaylistUpdatePage {
   followersInput = element(by.id('field_followers'));
   ratingInput = element(by.id('field_rating'));
   ownerSelect = element(by.id('field_owner'));
-  trackSelect = element(by.id('field_track'));
 
   async getPageTitle() {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -121,25 +120,6 @@ export class PlaylistUpdatePage {
 
   async getOwnerSelectedOption() {
     return await this.ownerSelect.element(by.css('option:checked')).getText();
-  }
-
-  async trackSelectLastOption(timeout?: number) {
-    await this.trackSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async trackSelectOption(option) {
-    await this.trackSelect.sendKeys(option);
-  }
-
-  getTrackSelect(): ElementFinder {
-    return this.trackSelect;
-  }
-
-  async getTrackSelectedOption() {
-    return await this.trackSelect.element(by.css('option:checked')).getText();
   }
 
   async save(timeout?: number) {

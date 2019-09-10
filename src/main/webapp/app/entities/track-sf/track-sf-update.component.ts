@@ -9,8 +9,6 @@ import { ITrackSf, TrackSf } from 'app/shared/model/track-sf.model';
 import { TrackSfService } from './track-sf.service';
 import { IPlaylistSf } from 'app/shared/model/playlist-sf.model';
 import { PlaylistSfService } from 'app/entities/playlist-sf';
-import { IAlbumSf } from 'app/shared/model/album-sf.model';
-import { AlbumSfService } from 'app/entities/album-sf';
 
 @Component({
   selector: 'jhi-track-sf-update',
@@ -21,24 +19,21 @@ export class TrackSfUpdateComponent implements OnInit {
 
   playlists: IPlaylistSf[];
 
-  albums: IAlbumSf[];
-
   editForm = this.fb.group({
     id: [],
     name: [],
-    rating: [],
+    raiting: [],
     url: [],
-    explicit: [],
     reference: [],
     duration: [],
-    primaryColor: []
+    primaryColor: [],
+    playlists: []
   });
 
   constructor(
     protected jhiAlertService: JhiAlertService,
     protected trackService: TrackSfService,
     protected playlistService: PlaylistSfService,
-    protected albumService: AlbumSfService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -55,25 +50,18 @@ export class TrackSfUpdateComponent implements OnInit {
         map((response: HttpResponse<IPlaylistSf[]>) => response.body)
       )
       .subscribe((res: IPlaylistSf[]) => (this.playlists = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.albumService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IAlbumSf[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IAlbumSf[]>) => response.body)
-      )
-      .subscribe((res: IAlbumSf[]) => (this.albums = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(track: ITrackSf) {
     this.editForm.patchValue({
       id: track.id,
       name: track.name,
-      rating: track.rating,
+      raiting: track.raiting,
       url: track.url,
-      explicit: track.explicit,
       reference: track.reference,
       duration: track.duration,
-      primaryColor: track.primaryColor
+      primaryColor: track.primaryColor,
+      playlists: track.playlists
     });
   }
 
@@ -96,12 +84,12 @@ export class TrackSfUpdateComponent implements OnInit {
       ...new TrackSf(),
       id: this.editForm.get(['id']).value,
       name: this.editForm.get(['name']).value,
-      rating: this.editForm.get(['rating']).value,
+      raiting: this.editForm.get(['raiting']).value,
       url: this.editForm.get(['url']).value,
-      explicit: this.editForm.get(['explicit']).value,
       reference: this.editForm.get(['reference']).value,
       duration: this.editForm.get(['duration']).value,
-      primaryColor: this.editForm.get(['primaryColor']).value
+      primaryColor: this.editForm.get(['primaryColor']).value,
+      playlists: this.editForm.get(['playlists']).value
     };
   }
 
@@ -122,10 +110,6 @@ export class TrackSfUpdateComponent implements OnInit {
   }
 
   trackPlaylistById(index: number, item: IPlaylistSf) {
-    return item.id;
-  }
-
-  trackAlbumById(index: number, item: IAlbumSf) {
     return item.id;
   }
 

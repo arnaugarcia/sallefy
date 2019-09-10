@@ -43,14 +43,11 @@ describe('Artist e2e test', () => {
       artistUpdatePage.setNameInput('name'),
       artistUpdatePage.setReferenceInput('reference'),
       artistUpdatePage.setPhotoInput('photo'),
-      artistUpdatePage.setFollowersInput('5'),
       artistUpdatePage.setBiographyInput('biography')
-      // artistUpdatePage.genreSelectLastOption(),
     ]);
     expect(await artistUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
     expect(await artistUpdatePage.getReferenceInput()).to.eq('reference', 'Expected Reference value to be equals to reference');
     expect(await artistUpdatePage.getPhotoInput()).to.eq('photo', 'Expected Photo value to be equals to photo');
-    expect(await artistUpdatePage.getFollowersInput()).to.eq('5', 'Expected followers value to be equals to 5');
     expect(await artistUpdatePage.getBiographyInput()).to.eq('biography', 'Expected Biography value to be equals to biography');
     await artistUpdatePage.save();
     expect(await artistUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

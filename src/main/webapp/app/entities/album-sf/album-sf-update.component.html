@@ -31,9 +31,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label jhiTranslate="sallefyApp.album.track" for="field_tracks">Track</label>
-                    <select class="form-control" id="field_tracks" multiple name="tracks" formControlName="tracks">
-                        <option [ngValue]="getSelected(editForm.get('tracks').value, trackOption)" *ngFor="let trackOption of tracks; trackBy: trackTrackById">{{trackOption.name}}</option>
+                    <label jhiTranslate="sallefyApp.album.artist" for="field_artists">Artist</label>
+                    <select class="form-control" id="field_artists" multiple name="artists" formControlName="artists">
+                        <option [ngValue]="getSelected(editForm.get('artists').value, artistOption)" *ngFor="let artistOption of artists; trackBy: trackArtistById">{{artistOption.name}}</option>
                     </select>
                 </div>
             </div>

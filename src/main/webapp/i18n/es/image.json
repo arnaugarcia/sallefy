@@ -18,14 +18,13 @@
       },
       "url": "Url",
       "height": "Height",
-      "reference": "Reference",
       "thumbnail": "Thumbnail",
       "cover": "Cover",
       "width": "Width",
-      "album": "Album",
-      "artist": "Artist",
+      "track": "Track",
       "playlist": "Playlist",
-      "track": "Track"
+      "artist": "Artist",
+      "album": "Album"
     }
   }
 }

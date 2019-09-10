@@ -41,23 +41,16 @@ describe('Track e2e test', () => {
     await trackComponentsPage.clickOnCreateButton();
     await promise.all([
       trackUpdatePage.setNameInput('name'),
-      trackUpdatePage.setRatingInput('5'),
+      trackUpdatePage.setRaitingInput('5'),
       trackUpdatePage.setUrlInput('url'),
       trackUpdatePage.setReferenceInput('reference'),
       trackUpdatePage.setDurationInput('5'),
       trackUpdatePage.setPrimaryColorInput('primaryColor')
+      // trackUpdatePage.playlistSelectLastOption(),
     ]);
     expect(await trackUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
-    expect(await trackUpdatePage.getRatingInput()).to.eq('5', 'Expected rating value to be equals to 5');
+    expect(await trackUpdatePage.getRaitingInput()).to.eq('5', 'Expected raiting value to be equals to 5');
     expect(await trackUpdatePage.getUrlInput()).to.eq('url', 'Expected Url value to be equals to url');
-    const selectedExplicit = trackUpdatePage.getExplicitInput();
-    if (await selectedExplicit.isSelected()) {
-      await trackUpdatePage.getExplicitInput().click();
-      expect(await trackUpdatePage.getExplicitInput().isSelected(), 'Expected explicit not to be selected').to.be.false;
-    } else {
-      await trackUpdatePage.getExplicitInput().click();
-      expect(await trackUpdatePage.getExplicitInput().isSelected(), 'Expected explicit to be selected').to.be.true;
-    }
     expect(await trackUpdatePage.getReferenceInput()).to.eq('reference', 'Expected Reference value to be equals to reference');
     expect(await trackUpdatePage.getDurationInput()).to.eq('5', 'Expected duration value to be equals to 5');
     expect(await trackUpdatePage.getPrimaryColorInput()).to.eq('primaryColor', 'Expected PrimaryColor value to be equals to primaryColor');

@@ -8,17 +8,11 @@
     -->
     <changeSet id="20190909073104-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="album_id"
+        <addForeignKeyConstraint baseColumnNames="track_id"
                                  baseTableName="image"
-                                 constraintName="fk_image_album_id"
+                                 constraintName="fk_image_track_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="album"/>
-
-        <addForeignKeyConstraint baseColumnNames="artist_id"
-                                 baseTableName="image"
-                                 constraintName="fk_image_artist_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="artist"/>
+                                 referencedTableName="track"/>
 
         <addForeignKeyConstraint baseColumnNames="playlist_id"
                                  baseTableName="image"
@@ -26,11 +20,17 @@
                                  referencedColumnNames="id"
                                  referencedTableName="playlist"/>
 
-        <addForeignKeyConstraint baseColumnNames="track_id"
+        <addForeignKeyConstraint baseColumnNames="artist_id"
                                  baseTableName="image"
-                                 constraintName="fk_image_track_id"
+                                 constraintName="fk_image_artist_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="track"/>
+                                 referencedTableName="artist"/>
+
+        <addForeignKeyConstraint baseColumnNames="album_id"
+                                 baseTableName="image"
+                                 constraintName="fk_image_album_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="album"/>
 
     </changeSet>
 </databaseChangeLog>

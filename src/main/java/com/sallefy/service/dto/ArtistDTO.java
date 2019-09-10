@@ -1,7 +1,5 @@
 package com.sallefy.service.dto;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 import javax.persistence.Lob;
 
@@ -18,13 +16,9 @@ public class ArtistDTO implements Serializable {
 
     private String photo;
 
-    private Integer followers;
-
     @Lob
     private String biography;
 
-
-    private Set<GenreDTO> genres = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -58,28 +52,12 @@ public class ArtistDTO implements Serializable {
         this.photo = photo;
     }
 
-    public Integer getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Integer followers) {
-        this.followers = followers;
-    }
-
     public String getBiography() {
         return biography;
     }
 
     public void setBiography(String biography) {
         this.biography = biography;
-    }
-
-    public Set<GenreDTO> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(Set<GenreDTO> genres) {
-        this.genres = genres;
     }
 
     @Override
@@ -110,7 +88,6 @@ public class ArtistDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", reference='" + getReference() + "'" +
             ", photo='" + getPhoto() + "'" +
-            ", followers=" + getFollowers() +
             ", biography='" + getBiography() + "'" +
             "}";
     }

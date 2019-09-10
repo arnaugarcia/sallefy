@@ -28,14 +28,13 @@ export class ImageUpdatePage {
   cancelButton = element(by.id('cancel-save'));
   urlInput = element(by.id('field_url'));
   heightInput = element(by.id('field_height'));
-  referenceInput = element(by.id('field_reference'));
   thumbnailInput = element(by.id('field_thumbnail'));
   coverInput = element(by.id('field_cover'));
   widthInput = element(by.id('field_width'));
-  albumSelect = element(by.id('field_album'));
-  artistSelect = element(by.id('field_artist'));
-  playlistSelect = element(by.id('field_playlist'));
   trackSelect = element(by.id('field_track'));
+  playlistSelect = element(by.id('field_playlist'));
+  artistSelect = element(by.id('field_artist'));
+  albumSelect = element(by.id('field_album'));
 
   async getPageTitle() {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -57,14 +56,6 @@ export class ImageUpdatePage {
     return await this.heightInput.getAttribute('value');
   }
 
-  async setReferenceInput(reference) {
-    await this.referenceInput.sendKeys(reference);
-  }
-
-  async getReferenceInput() {
-    return await this.referenceInput.getAttribute('value');
-  }
-
   getThumbnailInput(timeout?: number) {
     return this.thumbnailInput;
   }
@@ -79,42 +70,23 @@ export class ImageUpdatePage {
     return await this.widthInput.getAttribute('value');
   }
 
-  async albumSelectLastOption(timeout?: number) {
-    await this.albumSelect
+  async trackSelectLastOption(timeout?: number) {
+    await this.trackSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async albumSelectOption(option) {
-    await this.albumSelect.sendKeys(option);
+  async trackSelectOption(option) {
+    await this.trackSelect.sendKeys(option);
   }
 
-  getAlbumSelect(): ElementFinder {
-    return this.albumSelect;
+  getTrackSelect(): ElementFinder {
+    return this.trackSelect;
   }
 
-  async getAlbumSelectedOption() {
-    return await this.albumSelect.element(by.css('option:checked')).getText();
-  }
-
-  async artistSelectLastOption(timeout?: number) {
-    await this.artistSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async artistSelectOption(option) {
-    await this.artistSelect.sendKeys(option);
-  }
-
-  getArtistSelect(): ElementFinder {
-    return this.artistSelect;
-  }
-
-  async getArtistSelectedOption() {
-    return await this.artistSelect.element(by.css('option:checked')).getText();
+  async getTrackSelectedOption() {
+    return await this.trackSelect.element(by.css('option:checked')).getText();
   }
 
   async playlistSelectLastOption(timeout?: number) {
@@ -136,23 +108,42 @@ export class ImageUpdatePage {
     return await this.playlistSelect.element(by.css('option:checked')).getText();
   }
 
-  async trackSelectLastOption(timeout?: number) {
-    await this.trackSelect
+  async artistSelectLastOption(timeout?: number) {
+    await this.artistSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async trackSelectOption(option) {
-    await this.trackSelect.sendKeys(option);
+  async artistSelectOption(option) {
+    await this.artistSelect.sendKeys(option);
   }
 
-  getTrackSelect(): ElementFinder {
-    return this.trackSelect;
+  getArtistSelect(): ElementFinder {
+    return this.artistSelect;
   }
 
-  async getTrackSelectedOption() {
-    return await this.trackSelect.element(by.css('option:checked')).getText();
+  async getArtistSelectedOption() {
+    return await this.artistSelect.element(by.css('option:checked')).getText();
+  }
+
+  async albumSelectLastOption(timeout?: number) {
+    await this.albumSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async albumSelectOption(option) {
+    await this.albumSelect.sendKeys(option);
+  }
+
+  getAlbumSelect(): ElementFinder {
+    return this.albumSelect;
+  }
+
+  async getAlbumSelectedOption() {
+    return await this.albumSelect.element(by.css('option:checked')).getText();
   }
 
   async save(timeout?: number) {

@@ -24,10 +24,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="reference" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
             <column name="thumbnail" type="boolean">
                 <constraints nullable="true" />
             </column>
@@ -40,11 +36,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="album_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="artist_id" type="bigint">
+            <column name="track_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
@@ -52,7 +44,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="track_id" type="bigint">
+            <column name="artist_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="album_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
@@ -82,7 +78,6 @@
             <column name="id" type="numeric"/>
             <column name="url" type="string"/>
             <column name="height" type="numeric"/>
-            <column name="reference" type="string"/>
             <column name="thumbnail" type="boolean"/>
             <column name="cover" type="boolean"/>
             <column name="width" type="numeric"/>

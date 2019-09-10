@@ -48,7 +48,6 @@ describe('Playlist e2e test', () => {
       playlistUpdatePage.setFollowersInput('5'),
       playlistUpdatePage.setRatingInput('5'),
       playlistUpdatePage.ownerSelectLastOption()
-      // playlistUpdatePage.trackSelectLastOption(),
     ]);
     expect(await playlistUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
     const selectedCollaborative = playlistUpdatePage.getCollaborativeInput();

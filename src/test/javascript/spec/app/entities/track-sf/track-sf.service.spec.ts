@@ -23,7 +23,7 @@ describe('Service Tests', () => {
       service = injector.get(TrackSfService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new TrackSf(0, 'AAAAAAA', 0, 'AAAAAAA', false, 'AAAAAAA', 0, 'AAAAAAA');
+      elemDefault = new TrackSf(0, 'AAAAAAA', 0, 'AAAAAAA', 'AAAAAAA', 0, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -60,9 +60,8 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            rating: 1,
+            raiting: 1,
             url: 'BBBBBB',
-            explicit: true,
             reference: 'BBBBBB',
             duration: 1,
             primaryColor: 'BBBBBB'
@@ -84,9 +83,8 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            rating: 1,
+            raiting: 1,
             url: 'BBBBBB',
-            explicit: true,
             reference: 'BBBBBB',
             duration: 1,
             primaryColor: 'BBBBBB'

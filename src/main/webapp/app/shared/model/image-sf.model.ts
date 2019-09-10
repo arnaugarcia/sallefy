@@ -2,18 +2,13 @@ export interface IImageSf {
   id?: number;
   url?: string;
   height?: number;
-  reference?: string;
   thumbnail?: boolean;
   cover?: boolean;
   width?: number;
-  albumTitle?: string;
-  albumId?: number;
-  artistName?: string;
-  artistId?: number;
-  playlistName?: string;
-  playlistId?: number;
-  trackName?: string;
   trackId?: number;
+  playlistId?: number;
+  artistId?: number;
+  albumId?: number;
 }
 
 export class ImageSf implements IImageSf {
@@ -21,18 +16,13 @@ export class ImageSf implements IImageSf {
     public id?: number,
     public url?: string,
     public height?: number,
-    public reference?: string,
     public thumbnail?: boolean,
     public cover?: boolean,
     public width?: number,
-    public albumTitle?: string,
-    public albumId?: number,
-    public artistName?: string,
-    public artistId?: number,
-    public playlistName?: string,
+    public trackId?: number,
     public playlistId?: number,
-    public trackName?: string,
-    public trackId?: number
+    public artistId?: number,
+    public albumId?: number
   ) {
     this.thumbnail = this.thumbnail || false;
     this.cover = this.cover || false;

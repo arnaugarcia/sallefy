@@ -20,11 +20,6 @@
                            formControlName="height"/>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="sallefyApp.image.reference" for="field_reference">Reference</label>
-                    <input type="text" class="form-control" name="reference" id="field_reference"
-                           formControlName="reference"/>
-                </div>
-                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="sallefyApp.image.thumbnail" for="field_thumbnail">Thumbnail</label>
                     <input type="checkbox" class="form-control" name="thumbnail" id="field_thumbnail"
                            formControlName="thumbnail"/>
@@ -41,31 +36,31 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="sallefyApp.image.album" for="field_album">Album</label>
-                    <select class="form-control" id="field_album" name="album" formControlName="albumId">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.image.track" for="field_track">Track</label>
+                    <select class="form-control" id="field_track" name="track" formControlName="trackId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="albumOption.id" *ngFor="let albumOption of albums; trackBy: trackAlbumById">{{albumOption.title}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="sallefyApp.image.artist" for="field_artist">Artist</label>
-                    <select class="form-control" id="field_artist" name="artist" formControlName="artistId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="artistOption.id" *ngFor="let artistOption of artists; trackBy: trackArtistById">{{artistOption.name}}</option>
+                        <option [ngValue]="trackOption.id" *ngFor="let trackOption of tracks; trackBy: trackTrackById">{{trackOption.id}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="sallefyApp.image.playlist" for="field_playlist">Playlist</label>
                     <select class="form-control" id="field_playlist" name="playlist" formControlName="playlistId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="playlistOption.id" *ngFor="let playlistOption of playlists; trackBy: trackPlaylistById">{{playlistOption.name}}</option>
+                        <option [ngValue]="playlistOption.id" *ngFor="let playlistOption of playlists; trackBy: trackPlaylistById">{{playlistOption.id}}</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="sallefyApp.image.track" for="field_track">Track</label>
-                    <select class="form-control" id="field_track" name="track" formControlName="trackId">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.image.artist" for="field_artist">Artist</label>
+                    <select class="form-control" id="field_artist" name="artist" formControlName="artistId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="trackOption.id" *ngFor="let trackOption of tracks; trackBy: trackTrackById">{{trackOption.name}}</option>
+                        <option [ngValue]="artistOption.id" *ngFor="let artistOption of artists; trackBy: trackArtistById">{{artistOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.image.album" for="field_album">Album</label>
+                    <select class="form-control" id="field_album" name="album" formControlName="albumId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="albumOption.id" *ngFor="let albumOption of albums; trackBy: trackAlbumById">{{albumOption.id}}</option>
                     </select>
                 </div>
             </div>

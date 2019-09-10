@@ -1,5 +1,4 @@
 package com.sallefy.domain;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -26,14 +25,11 @@ public class Track implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "rating")
-    private Double rating;
+    @Column(name = "raiting")
+    private Double raiting;
 
     @Column(name = "url")
     private String url;
-
-    @Column(name = "explicit")
-    private Boolean explicit;
 
     @Column(name = "reference")
     private String reference;
@@ -48,15 +44,12 @@ public class Track implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Image> images = new HashSet<>();
 
-    @ManyToMany(mappedBy = "tracks")
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JsonIgnore
+    @JoinTable(name = "track_playlist",
+               joinColumns = @JoinColumn(name = "track_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"))
     private Set<Playlist> playlists = new HashSet<>();
-
-    @ManyToMany(mappedBy = "tracks")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JsonIgnore
-    private Set<Album> albums = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -80,17 +73,17 @@ public class Track implements Serializable {
         this.name = name;
     }
 
-    public Double getRating() {
-        return rating;
+    public Double getRaiting() {
+        return raiting;
     }
 
-    public Track rating(Double rating) {
-        this.rating = rating;
+    public Track raiting(Double raiting) {
+        this.raiting = raiting;
         return this;
     }
 
-    public void setRating(Double rating) {
-        this.rating = rating;
+    public void setRaiting(Double raiting) {
+        this.raiting = raiting;
     }
 
     public String getUrl() {
@@ -104,19 +97,6 @@ public class Track implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Boolean isExplicit() {
-        return explicit;
-    }
-
-    public Track explicit(Boolean explicit) {
-        this.explicit = explicit;
-        return this;
-    }
-
-    public void setExplicit(Boolean explicit) {
-        this.explicit = explicit;
     }
 
     public String getReference() {
@@ -207,31 +187,6 @@ public class Track implements Serializable {
     public void setPlaylists(Set<Playlist> playlists) {
         this.playlists = playlists;
     }
-
-    public Set<Album> getAlbums() {
-        return albums;
-    }
-
-    public Track albums(Set<Album> albums) {
-        this.albums = albums;
-        return this;
-    }
-
-    public Track addAlbum(Album album) {
-        this.albums.add(album);
-        album.getTracks().add(this);
-        return this;
-    }
-
-    public Track removeAlbum(Album album) {
-        this.albums.remove(album);
-        album.getTracks().remove(this);
-        return this;
-    }
-
-    public void setAlbums(Set<Album> albums) {
-        this.albums = albums;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -255,9 +210,8 @@ public class Track implements Serializable {
         return "Track{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", rating=" + getRating() +
+            ", raiting=" + getRaiting() +
             ", url='" + getUrl() + "'" +
-            ", explicit='" + isExplicit() + "'" +
             ", reference='" + getReference() + "'" +
             ", duration=" + getDuration() +
             ", primaryColor='" + getPrimaryColor() + "'" +

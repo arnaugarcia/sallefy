@@ -19,9 +19,8 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="name"><span jhiTranslate="sallefyApp.track.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="rating"><span jhiTranslate="sallefyApp.track.rating">Rating</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="raiting"><span jhiTranslate="sallefyApp.track.raiting">Raiting</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="url"><span jhiTranslate="sallefyApp.track.url">Url</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="explicit"><span jhiTranslate="sallefyApp.track.explicit">Explicit</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="reference"><span jhiTranslate="sallefyApp.track.reference">Reference</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="duration"><span jhiTranslate="sallefyApp.track.duration">Duration</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="primaryColor"><span jhiTranslate="sallefyApp.track.primaryColor">Primary Color</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -32,9 +31,8 @@
             <tr *ngFor="let track of tracks ;trackBy: trackId">
                 <td><a [routerLink]="['/track-sf', track.id, 'view' ]">{{track.id}}</a></td>
                 <td>{{track.name}}</td>
-                <td>{{track.rating}}</td>
+                <td>{{track.raiting}}</td>
                 <td>{{track.url}}</td>
-                <td>{{track.explicit}}</td>
                 <td>{{track.reference}}</td>
                 <td>{{track.duration}}</td>
                 <td>{{track.primaryColor}}</td>
