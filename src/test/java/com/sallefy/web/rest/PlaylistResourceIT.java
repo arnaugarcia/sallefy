@@ -43,14 +43,17 @@ public class PlaylistResourceIT {
     private static final Boolean DEFAULT_COLLABORATIVE = false;
     private static final Boolean UPDATED_COLLABORATIVE = true;
 
-    private static final String DEFAULT_REFERENCE = "AAAAAAAAAA";
-    private static final String UPDATED_REFERENCE = "BBBBBBBBBB";
-
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
     private static final String DEFAULT_PRIMARY_COLOR = "AAAAAAAAAA";
     private static final String UPDATED_PRIMARY_COLOR = "BBBBBBBBBB";
+
+    private static final String DEFAULT_COVER = "AAAAAAAAAA";
+    private static final String UPDATED_COVER = "BBBBBBBBBB";
+
+    private static final String DEFAULT_THUMBNAIL = "AAAAAAAAAA";
+    private static final String UPDATED_THUMBNAIL = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_PUBLIC_ACCESSIBLE = false;
     private static final Boolean UPDATED_PUBLIC_ACCESSIBLE = true;
@@ -117,9 +120,10 @@ public class PlaylistResourceIT {
         Playlist playlist = new Playlist()
             .name(DEFAULT_NAME)
             .collaborative(DEFAULT_COLLABORATIVE)
-            .reference(DEFAULT_REFERENCE)
             .description(DEFAULT_DESCRIPTION)
             .primaryColor(DEFAULT_PRIMARY_COLOR)
+            .cover(DEFAULT_COVER)
+            .thumbnail(DEFAULT_THUMBNAIL)
             .publicAccessible(DEFAULT_PUBLIC_ACCESSIBLE)
             .numberSongs(DEFAULT_NUMBER_SONGS)
             .followers(DEFAULT_FOLLOWERS)
@@ -136,9 +140,10 @@ public class PlaylistResourceIT {
         Playlist playlist = new Playlist()
             .name(UPDATED_NAME)
             .collaborative(UPDATED_COLLABORATIVE)
-            .reference(UPDATED_REFERENCE)
             .description(UPDATED_DESCRIPTION)
             .primaryColor(UPDATED_PRIMARY_COLOR)
+            .cover(UPDATED_COVER)
+            .thumbnail(UPDATED_THUMBNAIL)
             .publicAccessible(UPDATED_PUBLIC_ACCESSIBLE)
             .numberSongs(UPDATED_NUMBER_SONGS)
             .followers(UPDATED_FOLLOWERS)
@@ -169,9 +174,10 @@ public class PlaylistResourceIT {
         Playlist testPlaylist = playlistList.get(playlistList.size() - 1);
         assertThat(testPlaylist.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testPlaylist.isCollaborative()).isEqualTo(DEFAULT_COLLABORATIVE);
-        assertThat(testPlaylist.getReference()).isEqualTo(DEFAULT_REFERENCE);
         assertThat(testPlaylist.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testPlaylist.getPrimaryColor()).isEqualTo(DEFAULT_PRIMARY_COLOR);
+        assertThat(testPlaylist.getCover()).isEqualTo(DEFAULT_COVER);
+        assertThat(testPlaylist.getThumbnail()).isEqualTo(DEFAULT_THUMBNAIL);
         assertThat(testPlaylist.isPublicAccessible()).isEqualTo(DEFAULT_PUBLIC_ACCESSIBLE);
         assertThat(testPlaylist.getNumberSongs()).isEqualTo(DEFAULT_NUMBER_SONGS);
         assertThat(testPlaylist.getFollowers()).isEqualTo(DEFAULT_FOLLOWERS);
@@ -212,9 +218,10 @@ public class PlaylistResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(playlist.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].collaborative").value(hasItem(DEFAULT_COLLABORATIVE.booleanValue())))
-            .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].primaryColor").value(hasItem(DEFAULT_PRIMARY_COLOR.toString())))
+            .andExpect(jsonPath("$.[*].cover").value(hasItem(DEFAULT_COVER.toString())))
+            .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL.toString())))
             .andExpect(jsonPath("$.[*].publicAccessible").value(hasItem(DEFAULT_PUBLIC_ACCESSIBLE.booleanValue())))
             .andExpect(jsonPath("$.[*].numberSongs").value(hasItem(DEFAULT_NUMBER_SONGS)))
             .andExpect(jsonPath("$.[*].followers").value(hasItem(DEFAULT_FOLLOWERS)))
@@ -234,9 +241,10 @@ public class PlaylistResourceIT {
             .andExpect(jsonPath("$.id").value(playlist.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.collaborative").value(DEFAULT_COLLABORATIVE.booleanValue()))
-            .andExpect(jsonPath("$.reference").value(DEFAULT_REFERENCE.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.primaryColor").value(DEFAULT_PRIMARY_COLOR.toString()))
+            .andExpect(jsonPath("$.cover").value(DEFAULT_COVER.toString()))
+            .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL.toString()))
             .andExpect(jsonPath("$.publicAccessible").value(DEFAULT_PUBLIC_ACCESSIBLE.booleanValue()))
             .andExpect(jsonPath("$.numberSongs").value(DEFAULT_NUMBER_SONGS))
             .andExpect(jsonPath("$.followers").value(DEFAULT_FOLLOWERS))
@@ -266,9 +274,10 @@ public class PlaylistResourceIT {
         updatedPlaylist
             .name(UPDATED_NAME)
             .collaborative(UPDATED_COLLABORATIVE)
-            .reference(UPDATED_REFERENCE)
             .description(UPDATED_DESCRIPTION)
             .primaryColor(UPDATED_PRIMARY_COLOR)
+            .cover(UPDATED_COVER)
+            .thumbnail(UPDATED_THUMBNAIL)
             .publicAccessible(UPDATED_PUBLIC_ACCESSIBLE)
             .numberSongs(UPDATED_NUMBER_SONGS)
             .followers(UPDATED_FOLLOWERS)
@@ -286,9 +295,10 @@ public class PlaylistResourceIT {
         Playlist testPlaylist = playlistList.get(playlistList.size() - 1);
         assertThat(testPlaylist.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testPlaylist.isCollaborative()).isEqualTo(UPDATED_COLLABORATIVE);
-        assertThat(testPlaylist.getReference()).isEqualTo(UPDATED_REFERENCE);
         assertThat(testPlaylist.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testPlaylist.getPrimaryColor()).isEqualTo(UPDATED_PRIMARY_COLOR);
+        assertThat(testPlaylist.getCover()).isEqualTo(UPDATED_COVER);
+        assertThat(testPlaylist.getThumbnail()).isEqualTo(UPDATED_THUMBNAIL);
         assertThat(testPlaylist.isPublicAccessible()).isEqualTo(UPDATED_PUBLIC_ACCESSIBLE);
         assertThat(testPlaylist.getNumberSongs()).isEqualTo(UPDATED_NUMBER_SONGS);
         assertThat(testPlaylist.getFollowers()).isEqualTo(UPDATED_FOLLOWERS);

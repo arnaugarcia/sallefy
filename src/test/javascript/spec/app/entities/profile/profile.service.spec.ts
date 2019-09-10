@@ -4,15 +4,15 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { take, map } from 'rxjs/operators';
-import { AlbumSfService } from 'app/entities/album-sf/album-sf.service';
-import { IAlbumSf, AlbumSf } from 'app/shared/model/album-sf.model';
+import { ProfileService } from 'app/entities/profile/profile.service';
+import { IProfile, Profile } from 'app/shared/model/profile.model';
 
 describe('Service Tests', () => {
-  describe('AlbumSf Service', () => {
+  describe('Profile Service', () => {
     let injector: TestBed;
-    let service: AlbumSfService;
+    let service: ProfileService;
     let httpMock: HttpTestingController;
-    let elemDefault: IAlbumSf;
+    let elemDefault: IProfile;
     let expectedResult;
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -20,10 +20,10 @@ describe('Service Tests', () => {
       });
       expectedResult = {};
       injector = getTestBed();
-      service = injector.get(AlbumSfService);
+      service = injector.get(ProfileService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new AlbumSf(0, 'AAAAAAA', 0, 'AAAAAAA', 0);
+      elemDefault = new Profile(0, false, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -39,7 +39,7 @@ describe('Service Tests', () => {
         expect(expectedResult).toMatchObject({ body: elemDefault });
       });
 
-      it('should create a AlbumSf', async () => {
+      it('should create a Profile', async () => {
         const returnedFromService = Object.assign(
           {
             id: 0
@@ -48,7 +48,7 @@ describe('Service Tests', () => {
         );
         const expected = Object.assign({}, returnedFromService);
         service
-          .create(new AlbumSf(null))
+          .create(new Profile(null))
           .pipe(take(1))
           .subscribe(resp => (expectedResult = resp));
         const req = httpMock.expectOne({ method: 'POST' });
@@ -56,13 +56,13 @@ describe('Service Tests', () => {
         expect(expectedResult).toMatchObject({ body: expected });
       });
 
-      it('should update a AlbumSf', async () => {
+      it('should update a Profile', async () => {
         const returnedFromService = Object.assign(
           {
-            title: 'BBBBBB',
-            year: 1,
-            thumbnail: 'BBBBBB',
-            totalTracks: 1
+            artist: true,
+            name: 'BBBBBB',
+            photo: 'BBBBBB',
+            biography: 'BBBBBB'
           },
           elemDefault
         );
@@ -77,13 +77,13 @@ describe('Service Tests', () => {
         expect(expectedResult).toMatchObject({ body: expected });
       });
 
-      it('should return a list of AlbumSf', async () => {
+      it('should return a list of Profile', async () => {
         const returnedFromService = Object.assign(
           {
-            title: 'BBBBBB',
-            year: 1,
-            thumbnail: 'BBBBBB',
-            totalTracks: 1
+            artist: true,
+            name: 'BBBBBB',
+            photo: 'BBBBBB',
+            biography: 'BBBBBB'
           },
           elemDefault
         );
@@ -101,7 +101,7 @@ describe('Service Tests', () => {
         expect(expectedResult).toContainEqual(expected);
       });
 
-      it('should delete a AlbumSf', async () => {
+      it('should delete a Profile', async () => {
         const rxPromise = service.delete(123).subscribe(resp => (expectedResult = resp.ok));
 
         const req = httpMock.expectOne({ method: 'DELETE' });

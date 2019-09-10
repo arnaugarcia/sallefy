@@ -1,7 +1,9 @@
 entity Track {
 	name String,
-    raiting Double,
+    rating Double,
     url String,
+    thumbnail String,
+    createdAt ZonedDateTime,
     duration Integer,
     primaryColor String
 }
@@ -11,6 +13,8 @@ entity Playlist {
     collaborative Boolean,
     description TextBlob,
     primaryColor String,
+    cover String,
+    thumbnail String,
     publicAccessible Boolean,
     numberSongs Integer,
     followers Integer,
@@ -20,19 +24,8 @@ entity Playlist {
 entity Album {
 	title String,
     year Integer,
+    thumbnail String,
     totalTracks Integer
-}
-
-entity Image {
-	url String,
-    height Integer,
-    thumbnail Boolean,
-    cover Boolean,
-    width Integer
-}
-
-entity Genre {
-	name String
 }
 
 entity Profile {
@@ -43,19 +36,13 @@ entity Profile {
 }
 
 relationship ManyToOne {
-    Playlist{owner(login)} to User
+    Playlist{owner(login)} to User,
+    Album{user(login)} to User
 }
 
 relationship ManyToMany {
 	Track{playlist(name)} to Playlist{track(name)},
-	Album{profile(id)} to Profile{album(title)},
-    Track{album(title)} to Album{track}
-}
-
-relationship OneToMany {
-    Album{images} to Image,
-    Playlist{images} to Image,
-    Track{images} to Image
+    Track{album(title)} to Album{track(title)}
 }
 
 relationship OneToOne {

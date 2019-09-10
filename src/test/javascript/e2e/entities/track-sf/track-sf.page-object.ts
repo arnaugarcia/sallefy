@@ -27,12 +27,14 @@ export class TrackUpdatePage {
   saveButton = element(by.id('save-entity'));
   cancelButton = element(by.id('cancel-save'));
   nameInput = element(by.id('field_name'));
-  raitingInput = element(by.id('field_raiting'));
+  ratingInput = element(by.id('field_rating'));
   urlInput = element(by.id('field_url'));
-  referenceInput = element(by.id('field_reference'));
+  thumbnailInput = element(by.id('field_thumbnail'));
+  createdAtInput = element(by.id('field_createdAt'));
   durationInput = element(by.id('field_duration'));
   primaryColorInput = element(by.id('field_primaryColor'));
   playlistSelect = element(by.id('field_playlist'));
+  albumSelect = element(by.id('field_album'));
 
   async getPageTitle() {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -46,12 +48,12 @@ export class TrackUpdatePage {
     return await this.nameInput.getAttribute('value');
   }
 
-  async setRaitingInput(raiting) {
-    await this.raitingInput.sendKeys(raiting);
+  async setRatingInput(rating) {
+    await this.ratingInput.sendKeys(rating);
   }
 
-  async getRaitingInput() {
-    return await this.raitingInput.getAttribute('value');
+  async getRatingInput() {
+    return await this.ratingInput.getAttribute('value');
   }
 
   async setUrlInput(url) {
@@ -62,12 +64,20 @@ export class TrackUpdatePage {
     return await this.urlInput.getAttribute('value');
   }
 
-  async setReferenceInput(reference) {
-    await this.referenceInput.sendKeys(reference);
+  async setThumbnailInput(thumbnail) {
+    await this.thumbnailInput.sendKeys(thumbnail);
   }
 
-  async getReferenceInput() {
-    return await this.referenceInput.getAttribute('value');
+  async getThumbnailInput() {
+    return await this.thumbnailInput.getAttribute('value');
+  }
+
+  async setCreatedAtInput(createdAt) {
+    await this.createdAtInput.sendKeys(createdAt);
+  }
+
+  async getCreatedAtInput() {
+    return await this.createdAtInput.getAttribute('value');
   }
 
   async setDurationInput(duration) {
@@ -103,6 +113,25 @@ export class TrackUpdatePage {
 
   async getPlaylistSelectedOption() {
     return await this.playlistSelect.element(by.css('option:checked')).getText();
+  }
+
+  async albumSelectLastOption(timeout?: number) {
+    await this.albumSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async albumSelectOption(option) {
+    await this.albumSelect.sendKeys(option);
+  }
+
+  getAlbumSelect(): ElementFinder {
+    return this.albumSelect;
+  }
+
+  async getAlbumSelectedOption() {
+    return await this.albumSelect.element(by.css('option:checked')).getText();
   }
 
   async save(timeout?: number) {

@@ -41,14 +41,14 @@ describe('Album e2e test', () => {
     await albumComponentsPage.clickOnCreateButton();
     await promise.all([
       albumUpdatePage.setTitleInput('title'),
-      albumUpdatePage.setReferenceInput('reference'),
       albumUpdatePage.setYearInput('5'),
-      albumUpdatePage.setTotalTracksInput('5')
-      // albumUpdatePage.artistSelectLastOption(),
+      albumUpdatePage.setThumbnailInput('thumbnail'),
+      albumUpdatePage.setTotalTracksInput('5'),
+      albumUpdatePage.userSelectLastOption()
     ]);
     expect(await albumUpdatePage.getTitleInput()).to.eq('title', 'Expected Title value to be equals to title');
-    expect(await albumUpdatePage.getReferenceInput()).to.eq('reference', 'Expected Reference value to be equals to reference');
     expect(await albumUpdatePage.getYearInput()).to.eq('5', 'Expected year value to be equals to 5');
+    expect(await albumUpdatePage.getThumbnailInput()).to.eq('thumbnail', 'Expected Thumbnail value to be equals to thumbnail');
     expect(await albumUpdatePage.getTotalTracksInput()).to.eq('5', 'Expected totalTracks value to be equals to 5');
     await albumUpdatePage.save();
     expect(await albumUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

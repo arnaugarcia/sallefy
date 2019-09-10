@@ -23,7 +23,7 @@ describe('Service Tests', () => {
       service = injector.get(PlaylistSfService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new PlaylistSf(0, 'AAAAAAA', false, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', false, 0, 0, 0);
+      elemDefault = new PlaylistSf(0, 'AAAAAAA', false, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', false, 0, 0, 0);
     });
 
     describe('Service methods', () => {
@@ -61,9 +61,10 @@ describe('Service Tests', () => {
           {
             name: 'BBBBBB',
             collaborative: true,
-            reference: 'BBBBBB',
             description: 'BBBBBB',
             primaryColor: 'BBBBBB',
+            cover: 'BBBBBB',
+            thumbnail: 'BBBBBB',
             publicAccessible: true,
             numberSongs: 1,
             followers: 1,
@@ -87,9 +88,10 @@ describe('Service Tests', () => {
           {
             name: 'BBBBBB',
             collaborative: true,
-            reference: 'BBBBBB',
             description: 'BBBBBB',
             primaryColor: 'BBBBBB',
+            cover: 'BBBBBB',
+            thumbnail: 'BBBBBB',
             publicAccessible: true,
             numberSongs: 1,
             followers: 1,

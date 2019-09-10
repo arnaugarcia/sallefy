@@ -73,9 +73,10 @@ class TrackGatlingTest extends Simulation {
             .body(StringBody("""{
                 "id":null
                 , "name":"SAMPLE_TEXT"
-                , "raiting":null
+                , "rating":null
                 , "url":"SAMPLE_TEXT"
-                , "reference":"SAMPLE_TEXT"
+                , "thumbnail":"SAMPLE_TEXT"
+                , "createdAt":"2020-01-01T00:00:00.000Z"
                 , "duration":"0"
                 , "primaryColor":"SAMPLE_TEXT"
                 }""")).asJson

@@ -1,9 +1,9 @@
 import { browser, ExpectedConditions, element, by, ElementFinder } from 'protractor';
 
-export class AlbumComponentsPage {
+export class ProfileComponentsPage {
   createButton = element(by.id('jh-create-entity'));
-  deleteButtons = element.all(by.css('jhi-album-sf div table .btn-danger'));
-  title = element.all(by.css('jhi-album-sf div h2#page-heading span')).first();
+  deleteButtons = element.all(by.css('jhi-profile div table .btn-danger'));
+  title = element.all(by.css('jhi-profile div h2#page-heading span')).first();
 
   async clickOnCreateButton(timeout?: number) {
     await this.createButton.click();
@@ -22,50 +22,45 @@ export class AlbumComponentsPage {
   }
 }
 
-export class AlbumUpdatePage {
-  pageTitle = element(by.id('jhi-album-sf-heading'));
+export class ProfileUpdatePage {
+  pageTitle = element(by.id('jhi-profile-heading'));
   saveButton = element(by.id('save-entity'));
   cancelButton = element(by.id('cancel-save'));
-  titleInput = element(by.id('field_title'));
-  yearInput = element(by.id('field_year'));
-  thumbnailInput = element(by.id('field_thumbnail'));
-  totalTracksInput = element(by.id('field_totalTracks'));
+  artistInput = element(by.id('field_artist'));
+  nameInput = element(by.id('field_name'));
+  photoInput = element(by.id('field_photo'));
+  biographyInput = element(by.id('field_biography'));
   userSelect = element(by.id('field_user'));
 
   async getPageTitle() {
     return this.pageTitle.getAttribute('jhiTranslate');
   }
 
-  async setTitleInput(title) {
-    await this.titleInput.sendKeys(title);
+  getArtistInput(timeout?: number) {
+    return this.artistInput;
+  }
+  async setNameInput(name) {
+    await this.nameInput.sendKeys(name);
   }
 
-  async getTitleInput() {
-    return await this.titleInput.getAttribute('value');
+  async getNameInput() {
+    return await this.nameInput.getAttribute('value');
   }
 
-  async setYearInput(year) {
-    await this.yearInput.sendKeys(year);
+  async setPhotoInput(photo) {
+    await this.photoInput.sendKeys(photo);
   }
 
-  async getYearInput() {
-    return await this.yearInput.getAttribute('value');
+  async getPhotoInput() {
+    return await this.photoInput.getAttribute('value');
   }
 
-  async setThumbnailInput(thumbnail) {
-    await this.thumbnailInput.sendKeys(thumbnail);
+  async setBiographyInput(biography) {
+    await this.biographyInput.sendKeys(biography);
   }
 
-  async getThumbnailInput() {
-    return await this.thumbnailInput.getAttribute('value');
-  }
-
-  async setTotalTracksInput(totalTracks) {
-    await this.totalTracksInput.sendKeys(totalTracks);
-  }
-
-  async getTotalTracksInput() {
-    return await this.totalTracksInput.getAttribute('value');
+  async getBiographyInput() {
+    return await this.biographyInput.getAttribute('value');
   }
 
   async userSelectLastOption(timeout?: number) {
@@ -100,9 +95,9 @@ export class AlbumUpdatePage {
   }
 }
 
-export class AlbumDeleteDialog {
-  private dialogTitle = element(by.id('jhi-delete-album-heading'));
-  private confirmButton = element(by.id('jhi-confirm-delete-album'));
+export class ProfileDeleteDialog {
+  private dialogTitle = element(by.id('jhi-delete-profile-heading'));
+  private confirmButton = element(by.id('jhi-confirm-delete-profile'));
 
   async getDialogTitle() {
     return this.dialogTitle.getAttribute('jhiTranslate');

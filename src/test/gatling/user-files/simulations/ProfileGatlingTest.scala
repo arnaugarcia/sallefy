@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.duration._
 
 /**
- * Performance test for the Album entity.
+ * Performance test for the Profile entity.
  */
-class AlbumGatlingTest extends Simulation {
+class ProfileGatlingTest extends Simulation {
 
     val context: LoggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
     // Log all HTTP requests
@@ -43,7 +43,7 @@ class AlbumGatlingTest extends Simulation {
         "Authorization" -> "${access_token}"
     )
 
-    val scn = scenario("Test the Album entity")
+    val scn = scenario("Test the Profile entity")
         .exec(http("First unauthenticated request")
         .get("/api/account")
         .headers(headers_http)
@@ -62,32 +62,32 @@ class AlbumGatlingTest extends Simulation {
         .check(status.is(200)))
         .pause(10)
         .repeat(2) {
-            exec(http("Get all albums")
-            .get("/api/albums")
+            exec(http("Get all profiles")
+            .get("/api/profiles")
             .headers(headers_http_authenticated)
             .check(status.is(200)))
             .pause(10 seconds, 20 seconds)
-            .exec(http("Create new album")
-            .post("/api/albums")
+            .exec(http("Create new profile")
+            .post("/api/profiles")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "id":null
-                , "title":"SAMPLE_TEXT"
-                , "year":"0"
-                , "thumbnail":"SAMPLE_TEXT"
-                , "totalTracks":"0"
+                , "artist":null
+                , "name":"SAMPLE_TEXT"
+                , "photo":"SAMPLE_TEXT"
+                , "biography":null
                 }""")).asJson
             .check(status.is(201))
-            .check(headerRegex("Location", "(.*)").saveAs("new_album_url"))).exitHereIfFailed
+            .check(headerRegex("Location", "(.*)").saveAs("new_profile_url"))).exitHereIfFailed
             .pause(10)
             .repeat(5) {
-                exec(http("Get created album")
-                .get("${new_album_url}")
+                exec(http("Get created profile")
+                .get("${new_profile_url}")
                 .headers(headers_http_authenticated))
                 .pause(10)
             }
-            .exec(http("Delete created album")
-            .delete("${new_album_url}")
+            .exec(http("Delete created profile")
+            .delete("${new_profile_url}")
             .headers(headers_http_authenticated))
             .pause(10)
         }
