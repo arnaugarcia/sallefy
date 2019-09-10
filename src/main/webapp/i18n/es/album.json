@@ -17,10 +17,10 @@
         "title": "Album"
       },
       "title": "Title",
-      "reference": "Reference",
       "year": "Year",
+      "thumbnail": "Thumbnail",
       "totalTracks": "Total Tracks",
-      "images": "Images",
+      "user": "User",
       "track": "Track"
     }
   }

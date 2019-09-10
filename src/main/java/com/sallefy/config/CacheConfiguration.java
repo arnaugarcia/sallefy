@@ -44,21 +44,15 @@ public class CacheConfiguration {
             createCache(cm, com.sallefy.domain.Authority.class.getName());
             createCache(cm, com.sallefy.domain.User.class.getName() + ".authorities");
             createCache(cm, com.sallefy.domain.Track.class.getName());
-            createCache(cm, com.sallefy.domain.Track.class.getName() + ".images");
+            createCache(cm, com.sallefy.domain.Track.class.getName() + ".likeTracks");
             createCache(cm, com.sallefy.domain.Track.class.getName() + ".playlists");
             createCache(cm, com.sallefy.domain.Track.class.getName() + ".albums");
             createCache(cm, com.sallefy.domain.Playlist.class.getName());
-            createCache(cm, com.sallefy.domain.Playlist.class.getName() + ".images");
             createCache(cm, com.sallefy.domain.Playlist.class.getName() + ".tracks");
-            createCache(cm, com.sallefy.domain.Artist.class.getName());
-            createCache(cm, com.sallefy.domain.Artist.class.getName() + ".images");
             createCache(cm, com.sallefy.domain.Album.class.getName());
-            createCache(cm, com.sallefy.domain.Album.class.getName() + ".images");
             createCache(cm, com.sallefy.domain.Album.class.getName() + ".tracks");
-            createCache(cm, com.sallefy.domain.Image.class.getName());
-            createCache(cm, com.sallefy.domain.Artist.class.getName() + ".genres");
-            createCache(cm, com.sallefy.domain.Genre.class.getName());
-            createCache(cm, com.sallefy.domain.Genre.class.getName() + ".artists");
+            createCache(cm, com.sallefy.domain.LikeTrack.class.getName());
+            createCache(cm, com.sallefy.domain.LikeTrack.class.getName() + ".users");
             // jhipster-needle-ehcache-add-entry
         };
     }

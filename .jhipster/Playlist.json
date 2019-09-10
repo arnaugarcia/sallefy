@@ -10,16 +10,20 @@
             "fieldType": "Boolean"
         },
         {
-            "fieldName": "reference",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "description",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "text"
         },
         {
             "fieldName": "primaryColor",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cover",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "thumbnail",
             "fieldType": "String"
         },
         {
@@ -41,16 +45,10 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "image",
-            "otherEntityRelationshipName": "playlist",
-            "relationshipName": "images"
-        },
-        {
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "playlist",
-            "relationshipName": "owner",
+            "relationshipName": "user",
             "otherEntityField": "login"
         },
         {

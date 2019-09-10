@@ -16,12 +16,14 @@ public class PlaylistDTO implements Serializable {
 
     private Boolean collaborative;
 
-    private String reference;
-
     @Lob
     private String description;
 
     private String primaryColor;
+
+    private String cover;
+
+    private String thumbnail;
 
     private Boolean publicAccessible;
 
@@ -32,9 +34,9 @@ public class PlaylistDTO implements Serializable {
     private Double rating;
 
 
-    private Long ownerId;
+    private Long userId;
 
-    private String ownerLogin;
+    private String userLogin;
 
     private Set<TrackDTO> tracks = new HashSet<>();
 
@@ -62,14 +64,6 @@ public class PlaylistDTO implements Serializable {
         this.collaborative = collaborative;
     }
 
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -84,6 +78,22 @@ public class PlaylistDTO implements Serializable {
 
     public void setPrimaryColor(String primaryColor) {
         this.primaryColor = primaryColor;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public Boolean isPublicAccessible() {
@@ -118,20 +128,20 @@ public class PlaylistDTO implements Serializable {
         this.rating = rating;
     }
 
-    public Long getOwnerId() {
-        return ownerId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setOwnerId(Long userId) {
-        this.ownerId = userId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public String getOwnerLogin() {
-        return ownerLogin;
+    public String getUserLogin() {
+        return userLogin;
     }
 
-    public void setOwnerLogin(String userLogin) {
-        this.ownerLogin = userLogin;
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     public Set<TrackDTO> getTracks() {
@@ -169,15 +179,16 @@ public class PlaylistDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", collaborative='" + isCollaborative() + "'" +
-            ", reference='" + getReference() + "'" +
             ", description='" + getDescription() + "'" +
             ", primaryColor='" + getPrimaryColor() + "'" +
+            ", cover='" + getCover() + "'" +
+            ", thumbnail='" + getThumbnail() + "'" +
             ", publicAccessible='" + isPublicAccessible() + "'" +
             ", numberSongs=" + getNumberSongs() +
             ", followers=" + getFollowers() +
             ", rating=" + getRating() +
-            ", owner=" + getOwnerId() +
-            ", owner='" + getOwnerLogin() + "'" +
+            ", user=" + getUserId() +
+            ", user='" + getUserLogin() + "'" +
             "}";
     }
 }

@@ -20,7 +20,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="rating" type="double">
+            <column name="rating" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -28,11 +28,15 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="explicit" type="boolean">
+            <column name="popularity" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="reference" type="varchar(255)">
+            <column name="thumbnail" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="created_at" type="datetime">
                 <constraints nullable="true" />
             </column>
 
@@ -44,9 +48,14 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="user_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
 
+        <dropDefaultValue tableName="track" columnName="created_at" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20190909073100-1-relations" author="jhipster">
@@ -69,10 +78,11 @@
                   tableName="track">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
-            <column name="rating" type="numeric"/>
+            <column name="rating" type="string"/>
             <column name="url" type="string"/>
-            <column name="explicit" type="boolean"/>
-            <column name="reference" type="string"/>
+            <column name="popularity" type="string"/>
+            <column name="thumbnail" type="string"/>
+            <column name="created_at" type="datetime"/>
             <column name="duration" type="numeric"/>
             <column name="primary_color" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->

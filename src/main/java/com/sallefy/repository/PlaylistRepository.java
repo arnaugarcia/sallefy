@@ -16,8 +16,8 @@ import java.util.Optional;
 @Repository
 public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
 
-    @Query("select playlist from Playlist playlist where playlist.owner.login = ?#{principal.username}")
-    List<Playlist> findByOwnerIsCurrentUser();
+    @Query("select playlist from Playlist playlist where playlist.user.login = ?#{principal.username}")
+    List<Playlist> findByUserIsCurrentUser();
 
     @Query(value = "select distinct playlist from Playlist playlist left join fetch playlist.tracks",
         countQuery = "select count(distinct playlist) from Playlist playlist")

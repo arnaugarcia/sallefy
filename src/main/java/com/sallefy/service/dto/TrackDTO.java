@@ -1,4 +1,6 @@
 package com.sallefy.service.dto;
+import io.swagger.annotations.ApiModelProperty;
+import java.time.ZonedDateTime;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,18 +13,28 @@ public class TrackDTO implements Serializable {
 
     private String name;
 
-    private Double rating;
+    private String rating;
 
     private String url;
 
-    private Boolean explicit;
+    private String popularity;
 
-    private String reference;
+    private String thumbnail;
+
+    private ZonedDateTime createdAt;
 
     private Integer duration;
 
     private String primaryColor;
 
+    /**
+     * LikeTrack Relationships
+     */
+    @ApiModelProperty(value = "LikeTrack Relationships")
+
+    private Long userId;
+
+    private String userLogin;
 
     public Long getId() {
         return id;
@@ -40,11 +52,11 @@ public class TrackDTO implements Serializable {
         this.name = name;
     }
 
-    public Double getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
@@ -56,20 +68,28 @@ public class TrackDTO implements Serializable {
         this.url = url;
     }
 
-    public Boolean isExplicit() {
-        return explicit;
+    public String getPopularity() {
+        return popularity;
     }
 
-    public void setExplicit(Boolean explicit) {
-        this.explicit = explicit;
+    public void setPopularity(String popularity) {
+        this.popularity = popularity;
     }
 
-    public String getReference() {
-        return reference;
+    public String getThumbnail() {
+        return thumbnail;
     }
 
-    public void setReference(String reference) {
-        this.reference = reference;
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public ZonedDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(ZonedDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Integer getDuration() {
@@ -86,6 +106,22 @@ public class TrackDTO implements Serializable {
 
     public void setPrimaryColor(String primaryColor) {
         this.primaryColor = primaryColor;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     @Override
@@ -114,12 +150,15 @@ public class TrackDTO implements Serializable {
         return "TrackDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", rating=" + getRating() +
+            ", rating='" + getRating() + "'" +
             ", url='" + getUrl() + "'" +
-            ", explicit='" + isExplicit() + "'" +
-            ", reference='" + getReference() + "'" +
+            ", popularity='" + getPopularity() + "'" +
+            ", thumbnail='" + getThumbnail() + "'" +
+            ", createdAt='" + getCreatedAt() + "'" +
             ", duration=" + getDuration() +
             ", primaryColor='" + getPrimaryColor() + "'" +
+            ", user=" + getUserId() +
+            ", user='" + getUserLogin() + "'" +
             "}";
     }
 }

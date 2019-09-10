@@ -1,13 +1,13 @@
-import { IImageSf } from 'app/shared/model/image-sf.model';
 import { ITrackSf } from 'app/shared/model/track-sf.model';
 
 export interface IAlbumSf {
   id?: number;
   title?: string;
-  reference?: string;
   year?: number;
+  thumbnail?: string;
   totalTracks?: number;
-  images?: IImageSf[];
+  userLogin?: string;
+  userId?: number;
   tracks?: ITrackSf[];
 }
 
@@ -15,10 +15,11 @@ export class AlbumSf implements IAlbumSf {
   constructor(
     public id?: number,
     public title?: string,
-    public reference?: string,
     public year?: number,
+    public thumbnail?: string,
     public totalTracks?: number,
-    public images?: IImageSf[],
+    public userLogin?: string,
+    public userId?: number,
     public tracks?: ITrackSf[]
   ) {}
 }

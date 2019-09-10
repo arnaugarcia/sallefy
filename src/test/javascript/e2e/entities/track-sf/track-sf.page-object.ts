@@ -29,10 +29,12 @@ export class TrackUpdatePage {
   nameInput = element(by.id('field_name'));
   ratingInput = element(by.id('field_rating'));
   urlInput = element(by.id('field_url'));
-  explicitInput = element(by.id('field_explicit'));
-  referenceInput = element(by.id('field_reference'));
+  popularityInput = element(by.id('field_popularity'));
+  thumbnailInput = element(by.id('field_thumbnail'));
+  createdAtInput = element(by.id('field_createdAt'));
   durationInput = element(by.id('field_duration'));
   primaryColorInput = element(by.id('field_primaryColor'));
+  userSelect = element(by.id('field_user'));
 
   async getPageTitle() {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -62,15 +64,28 @@ export class TrackUpdatePage {
     return await this.urlInput.getAttribute('value');
   }
 
-  getExplicitInput(timeout?: number) {
-    return this.explicitInput;
-  }
-  async setReferenceInput(reference) {
-    await this.referenceInput.sendKeys(reference);
+  async setPopularityInput(popularity) {
+    await this.popularityInput.sendKeys(popularity);
   }
 
-  async getReferenceInput() {
-    return await this.referenceInput.getAttribute('value');
+  async getPopularityInput() {
+    return await this.popularityInput.getAttribute('value');
+  }
+
+  async setThumbnailInput(thumbnail) {
+    await this.thumbnailInput.sendKeys(thumbnail);
+  }
+
+  async getThumbnailInput() {
+    return await this.thumbnailInput.getAttribute('value');
+  }
+
+  async setCreatedAtInput(createdAt) {
+    await this.createdAtInput.sendKeys(createdAt);
+  }
+
+  async getCreatedAtInput() {
+    return await this.createdAtInput.getAttribute('value');
   }
 
   async setDurationInput(duration) {
@@ -87,6 +102,25 @@ export class TrackUpdatePage {
 
   async getPrimaryColorInput() {
     return await this.primaryColorInput.getAttribute('value');
+  }
+
+  async userSelectLastOption(timeout?: number) {
+    await this.userSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async userSelectOption(option) {
+    await this.userSelect.sendKeys(option);
+  }
+
+  getUserSelect(): ElementFinder {
+    return this.userSelect;
+  }
+
+  async getUserSelectedOption() {
+    return await this.userSelect.element(by.css('option:checked')).getText();
   }
 
   async save(timeout?: number) {

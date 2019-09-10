@@ -9,10 +9,8 @@
         "main": "Entitats",
         "trackSf": "Track",
         "playlistSf": "Playlist",
-        "artistSf": "Artist",
         "albumSf": "Album",
-        "imageSf": "Image",
-        "genre": "Genre",
+        "likeTrack": "Like Track",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

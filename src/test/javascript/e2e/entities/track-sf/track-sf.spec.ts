@@ -1,5 +1,5 @@
 /* tslint:disable no-unused-expression */
-import { browser, ExpectedConditions as ec, promise } from 'protractor';
+import { browser, ExpectedConditions as ec, protractor, promise } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
 import { TrackComponentsPage, TrackDeleteDialog, TrackUpdatePage } from './track-sf.page-object';
@@ -41,24 +41,21 @@ describe('Track e2e test', () => {
     await trackComponentsPage.clickOnCreateButton();
     await promise.all([
       trackUpdatePage.setNameInput('name'),
-      trackUpdatePage.setRatingInput('5'),
+      trackUpdatePage.setRatingInput('rating'),
       trackUpdatePage.setUrlInput('url'),
-      trackUpdatePage.setReferenceInput('reference'),
+      trackUpdatePage.setPopularityInput('popularity'),
+      trackUpdatePage.setThumbnailInput('thumbnail'),
+      trackUpdatePage.setCreatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       trackUpdatePage.setDurationInput('5'),
-      trackUpdatePage.setPrimaryColorInput('primaryColor')
+      trackUpdatePage.setPrimaryColorInput('primaryColor'),
+      trackUpdatePage.userSelectLastOption()
     ]);
     expect(await trackUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
-    expect(await trackUpdatePage.getRatingInput()).to.eq('5', 'Expected rating value to be equals to 5');
+    expect(await trackUpdatePage.getRatingInput()).to.eq('rating', 'Expected Rating value to be equals to rating');
     expect(await trackUpdatePage.getUrlInput()).to.eq('url', 'Expected Url value to be equals to url');
-    const selectedExplicit = trackUpdatePage.getExplicitInput();
-    if (await selectedExplicit.isSelected()) {
-      await trackUpdatePage.getExplicitInput().click();
-      expect(await trackUpdatePage.getExplicitInput().isSelected(), 'Expected explicit not to be selected').to.be.false;
-    } else {
-      await trackUpdatePage.getExplicitInput().click();
-      expect(await trackUpdatePage.getExplicitInput().isSelected(), 'Expected explicit to be selected').to.be.true;
-    }
-    expect(await trackUpdatePage.getReferenceInput()).to.eq('reference', 'Expected Reference value to be equals to reference');
+    expect(await trackUpdatePage.getPopularityInput()).to.eq('popularity', 'Expected Popularity value to be equals to popularity');
+    expect(await trackUpdatePage.getThumbnailInput()).to.eq('thumbnail', 'Expected Thumbnail value to be equals to thumbnail');
+    expect(await trackUpdatePage.getCreatedAtInput()).to.contain('2001-01-01T02:30', 'Expected createdAt value to be equals to 2000-12-31');
     expect(await trackUpdatePage.getDurationInput()).to.eq('5', 'Expected duration value to be equals to 5');
     expect(await trackUpdatePage.getPrimaryColorInput()).to.eq('primaryColor', 'Expected PrimaryColor value to be equals to primaryColor');
     await trackUpdatePage.save();

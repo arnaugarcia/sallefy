@@ -16,7 +16,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="sallefyApp.track.rating" for="field_rating">Rating</label>
-                    <input type="number" class="form-control" name="rating" id="field_rating"
+                    <input type="text" class="form-control" name="rating" id="field_rating"
                            formControlName="rating"/>
                 </div>
                 <div class="form-group">
@@ -25,14 +25,20 @@
                            formControlName="url"/>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="sallefyApp.track.explicit" for="field_explicit">Explicit</label>
-                    <input type="checkbox" class="form-control" name="explicit" id="field_explicit"
-                           formControlName="explicit"/>
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.popularity" for="field_popularity">Popularity</label>
+                    <input type="text" class="form-control" name="popularity" id="field_popularity"
+                           formControlName="popularity"/>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="sallefyApp.track.reference" for="field_reference">Reference</label>
-                    <input type="text" class="form-control" name="reference" id="field_reference"
-                           formControlName="reference"/>
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.thumbnail" for="field_thumbnail">Thumbnail</label>
+                    <input type="text" class="form-control" name="thumbnail" id="field_thumbnail"
+                           formControlName="thumbnail"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.createdAt" for="field_createdAt">Created At</label>
+                    <div class="d-flex">
+                        <input id="field_createdAt" type="datetime-local" class="form-control" name="createdAt" formControlName="createdAt" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="sallefyApp.track.duration" for="field_duration">Duration</label>
@@ -45,6 +51,13 @@
                            formControlName="primaryColor"/>
                 </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.user" for="field_user">User</label>
+                    <select class="form-control" id="field_user" name="user" formControlName="userId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

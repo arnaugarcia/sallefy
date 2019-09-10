@@ -41,13 +41,14 @@ describe('Playlist e2e test', () => {
     await playlistComponentsPage.clickOnCreateButton();
     await promise.all([
       playlistUpdatePage.setNameInput('name'),
-      playlistUpdatePage.setReferenceInput('reference'),
       playlistUpdatePage.setDescriptionInput('description'),
       playlistUpdatePage.setPrimaryColorInput('primaryColor'),
+      playlistUpdatePage.setCoverInput('cover'),
+      playlistUpdatePage.setThumbnailInput('thumbnail'),
       playlistUpdatePage.setNumberSongsInput('5'),
       playlistUpdatePage.setFollowersInput('5'),
       playlistUpdatePage.setRatingInput('5'),
-      playlistUpdatePage.ownerSelectLastOption()
+      playlistUpdatePage.userSelectLastOption()
       // playlistUpdatePage.trackSelectLastOption(),
     ]);
     expect(await playlistUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
@@ -59,12 +60,13 @@ describe('Playlist e2e test', () => {
       await playlistUpdatePage.getCollaborativeInput().click();
       expect(await playlistUpdatePage.getCollaborativeInput().isSelected(), 'Expected collaborative to be selected').to.be.true;
     }
-    expect(await playlistUpdatePage.getReferenceInput()).to.eq('reference', 'Expected Reference value to be equals to reference');
     expect(await playlistUpdatePage.getDescriptionInput()).to.eq('description', 'Expected Description value to be equals to description');
     expect(await playlistUpdatePage.getPrimaryColorInput()).to.eq(
       'primaryColor',
       'Expected PrimaryColor value to be equals to primaryColor'
     );
+    expect(await playlistUpdatePage.getCoverInput()).to.eq('cover', 'Expected Cover value to be equals to cover');
+    expect(await playlistUpdatePage.getThumbnailInput()).to.eq('thumbnail', 'Expected Thumbnail value to be equals to thumbnail');
     const selectedPublicAccessible = playlistUpdatePage.getPublicAccessibleInput();
     if (await selectedPublicAccessible.isSelected()) {
       await playlistUpdatePage.getPublicAccessibleInput().click();

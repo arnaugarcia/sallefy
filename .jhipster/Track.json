@@ -7,19 +7,23 @@
         },
         {
             "fieldName": "rating",
-            "fieldType": "Double"
+            "fieldType": "String"
         },
         {
             "fieldName": "url",
             "fieldType": "String"
         },
         {
-            "fieldName": "explicit",
-            "fieldType": "Boolean"
+            "fieldName": "popularity",
+            "fieldType": "String"
         },
         {
-            "fieldName": "reference",
+            "fieldName": "thumbnail",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "createdAt",
+            "fieldType": "ZonedDateTime"
         },
         {
             "fieldName": "duration",
@@ -33,9 +37,17 @@
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "otherEntityName": "image",
+            "otherEntityName": "likeTrack",
             "otherEntityRelationshipName": "track",
-            "relationshipName": "images"
+            "javadoc": "LikeTrack Relationships",
+            "relationshipName": "likeTrack"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "track",
+            "relationshipName": "user",
+            "otherEntityField": "login"
         },
         {
             "relationshipType": "many-to-many",

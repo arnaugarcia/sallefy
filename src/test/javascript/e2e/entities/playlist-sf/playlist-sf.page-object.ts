@@ -28,14 +28,15 @@ export class PlaylistUpdatePage {
   cancelButton = element(by.id('cancel-save'));
   nameInput = element(by.id('field_name'));
   collaborativeInput = element(by.id('field_collaborative'));
-  referenceInput = element(by.id('field_reference'));
   descriptionInput = element(by.id('field_description'));
   primaryColorInput = element(by.id('field_primaryColor'));
+  coverInput = element(by.id('field_cover'));
+  thumbnailInput = element(by.id('field_thumbnail'));
   publicAccessibleInput = element(by.id('field_publicAccessible'));
   numberSongsInput = element(by.id('field_numberSongs'));
   followersInput = element(by.id('field_followers'));
   ratingInput = element(by.id('field_rating'));
-  ownerSelect = element(by.id('field_owner'));
+  userSelect = element(by.id('field_user'));
   trackSelect = element(by.id('field_track'));
 
   async getPageTitle() {
@@ -53,14 +54,6 @@ export class PlaylistUpdatePage {
   getCollaborativeInput(timeout?: number) {
     return this.collaborativeInput;
   }
-  async setReferenceInput(reference) {
-    await this.referenceInput.sendKeys(reference);
-  }
-
-  async getReferenceInput() {
-    return await this.referenceInput.getAttribute('value');
-  }
-
   async setDescriptionInput(description) {
     await this.descriptionInput.sendKeys(description);
   }
@@ -75,6 +68,22 @@ export class PlaylistUpdatePage {
 
   async getPrimaryColorInput() {
     return await this.primaryColorInput.getAttribute('value');
+  }
+
+  async setCoverInput(cover) {
+    await this.coverInput.sendKeys(cover);
+  }
+
+  async getCoverInput() {
+    return await this.coverInput.getAttribute('value');
+  }
+
+  async setThumbnailInput(thumbnail) {
+    await this.thumbnailInput.sendKeys(thumbnail);
+  }
+
+  async getThumbnailInput() {
+    return await this.thumbnailInput.getAttribute('value');
   }
 
   getPublicAccessibleInput(timeout?: number) {
@@ -104,23 +113,23 @@ export class PlaylistUpdatePage {
     return await this.ratingInput.getAttribute('value');
   }
 
-  async ownerSelectLastOption(timeout?: number) {
-    await this.ownerSelect
+  async userSelectLastOption(timeout?: number) {
+    await this.userSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async ownerSelectOption(option) {
-    await this.ownerSelect.sendKeys(option);
+  async userSelectOption(option) {
+    await this.userSelect.sendKeys(option);
   }
 
-  getOwnerSelect(): ElementFinder {
-    return this.ownerSelect;
+  getUserSelect(): ElementFinder {
+    return this.userSelect;
   }
 
-  async getOwnerSelectedOption() {
-    return await this.ownerSelect.element(by.css('option:checked')).getText();
+  async getUserSelectedOption() {
+    return await this.userSelect.element(by.css('option:checked')).getText();
   }
 
   async trackSelectLastOption(timeout?: number) {

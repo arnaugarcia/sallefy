@@ -1,11 +1,11 @@
-
-
 entity Track {
 	name String,
     rating Double,
     url String,
-    explicit Boolean,
-    reference String,
+    popularity String,
+    rating String,
+    thumbnail String,
+    createdAt ZonedDateTime,
     duration Integer,
     primaryColor String
 }
@@ -13,62 +13,45 @@ entity Track {
 entity Playlist {
 	name String,
     collaborative Boolean,
-    reference String,
     description TextBlob,
     primaryColor String,
+    cover String,
+    thumbnail String,
     publicAccessible Boolean,
     numberSongs Integer,
     followers Integer,
     rating Double
 }
 
-entity Artist {
-	name String,
-    reference String,
-    photo String,
-    followers Integer,
-    biography TextBlob
-}
-
-entity Genre {
-	name String
-}
-
 entity Album {
 	title String,
-    reference String,
     year Integer,
+    thumbnail String,
     totalTracks Integer
 }
 
-entity Image {
-	url String,
-    height Integer,
-    reference String,
-    thumbnail Boolean,
-    cover Boolean,
-    width Integer
-}
-
-entity User {
-
+entity LikeTrack {
+	liked Boolean,
+    date ZonedDateTime,
 }
 
 relationship ManyToOne {
-    Playlist{owner(login)} to User
+    Playlist{user(login)} to User,
+    Album{user(login)} to User,
+    Track{user(login)} to User,
+    LikeTrack{user(login)} to User
 }
 
 relationship ManyToMany {
 	Playlist{track(name)} to Track{playlist(name)},
-    Album{track(name)} to Track{album(title)},
-    Artist{genre(name)} to Genre{artist(name)}
+    Album{track(name)} to Track{album(title)}
 }
 
 relationship OneToMany {
-    Album{images(reference)} to Image{album(title)},
-    Artist{images(reference)} to Image{artist(name)},
-    Playlist{images(reference)} to Image{playlist(name)},
-    Track{images(reference)} to Image{track(name)}
+	/**
+     * LikeTrack Relationships
+     */
+	Track to LikeTrack{track(name)}
 }
 
 // Set pagination options
@@ -77,7 +60,4 @@ paginate Track with pagination
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct
 
-// Set service options to all except few
-service all with serviceImpl
-
-#title: sallefy-jdl
+service all with serviceImpl except LikeTrack

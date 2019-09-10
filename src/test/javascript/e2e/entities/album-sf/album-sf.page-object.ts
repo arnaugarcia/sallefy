@@ -27,9 +27,10 @@ export class AlbumUpdatePage {
   saveButton = element(by.id('save-entity'));
   cancelButton = element(by.id('cancel-save'));
   titleInput = element(by.id('field_title'));
-  referenceInput = element(by.id('field_reference'));
   yearInput = element(by.id('field_year'));
+  thumbnailInput = element(by.id('field_thumbnail'));
   totalTracksInput = element(by.id('field_totalTracks'));
+  userSelect = element(by.id('field_user'));
   trackSelect = element(by.id('field_track'));
 
   async getPageTitle() {
@@ -44,14 +45,6 @@ export class AlbumUpdatePage {
     return await this.titleInput.getAttribute('value');
   }
 
-  async setReferenceInput(reference) {
-    await this.referenceInput.sendKeys(reference);
-  }
-
-  async getReferenceInput() {
-    return await this.referenceInput.getAttribute('value');
-  }
-
   async setYearInput(year) {
     await this.yearInput.sendKeys(year);
   }
@@ -60,12 +53,39 @@ export class AlbumUpdatePage {
     return await this.yearInput.getAttribute('value');
   }
 
+  async setThumbnailInput(thumbnail) {
+    await this.thumbnailInput.sendKeys(thumbnail);
+  }
+
+  async getThumbnailInput() {
+    return await this.thumbnailInput.getAttribute('value');
+  }
+
   async setTotalTracksInput(totalTracks) {
     await this.totalTracksInput.sendKeys(totalTracks);
   }
 
   async getTotalTracksInput() {
     return await this.totalTracksInput.getAttribute('value');
+  }
+
+  async userSelectLastOption(timeout?: number) {
+    await this.userSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async userSelectOption(option) {
+    await this.userSelect.sendKeys(option);
+  }
+
+  getUserSelect(): ElementFinder {
+    return this.userSelect;
+  }
+
+  async getUserSelectedOption() {
+    return await this.userSelect.element(by.css('option:checked')).getText();
   }
 
   async trackSelectLastOption(timeout?: number) {

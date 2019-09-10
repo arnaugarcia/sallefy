@@ -8,9 +8,9 @@
     -->
     <changeSet id="20190909073101-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="owner_id"
+        <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="playlist"
-                                 constraintName="fk_playlist_owner_id"
+                                 constraintName="fk_playlist_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 

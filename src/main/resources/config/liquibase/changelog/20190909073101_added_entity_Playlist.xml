@@ -24,15 +24,19 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="reference" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
             <column name="description" type="${clobType}">
                 <constraints nullable="true" />
             </column>
 
             <column name="primary_color" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="cover" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="thumbnail" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -52,7 +56,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="owner_id" type="bigint">
+            <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
@@ -93,9 +97,10 @@
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
             <column name="collaborative" type="boolean"/>
-            <column name="reference" type="string"/>
             <column name="description" type="clob"/>
             <column name="primary_color" type="string"/>
+            <column name="cover" type="string"/>
+            <column name="thumbnail" type="string"/>
             <column name="public_accessible" type="boolean"/>
             <column name="number_songs" type="numeric"/>
             <column name="followers" type="numeric"/>

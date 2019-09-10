@@ -1,4 +1,5 @@
 package com.sallefy.domain;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -25,18 +26,18 @@ public class Album implements Serializable {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "reference")
-    private String reference;
-
     @Column(name = "year")
     private Integer year;
+
+    @Column(name = "thumbnail")
+    private String thumbnail;
 
     @Column(name = "total_tracks")
     private Integer totalTracks;
 
-    @OneToMany(mappedBy = "album")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Image> images = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties("albums")
+    private User user;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -67,19 +68,6 @@ public class Album implements Serializable {
         this.title = title;
     }
 
-    public String getReference() {
-        return reference;
-    }
-
-    public Album reference(String reference) {
-        this.reference = reference;
-        return this;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
     public Integer getYear() {
         return year;
     }
@@ -91,6 +79,19 @@ public class Album implements Serializable {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public Album thumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+        return this;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public Integer getTotalTracks() {
@@ -106,29 +107,17 @@ public class Album implements Serializable {
         this.totalTracks = totalTracks;
     }
 
-    public Set<Image> getImages() {
-        return images;
+    public User getUser() {
+        return user;
     }
 
-    public Album images(Set<Image> images) {
-        this.images = images;
+    public Album user(User user) {
+        this.user = user;
         return this;
     }
 
-    public Album addImages(Image image) {
-        this.images.add(image);
-        image.setAlbum(this);
-        return this;
-    }
-
-    public Album removeImages(Image image) {
-        this.images.remove(image);
-        image.setAlbum(null);
-        return this;
-    }
-
-    public void setImages(Set<Image> images) {
-        this.images = images;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Track> getTracks() {
@@ -178,8 +167,8 @@ public class Album implements Serializable {
         return "Album{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
-            ", reference='" + getReference() + "'" +
             ", year=" + getYear() +
+            ", thumbnail='" + getThumbnail() + "'" +
             ", totalTracks=" + getTotalTracks() +
             "}";
     }

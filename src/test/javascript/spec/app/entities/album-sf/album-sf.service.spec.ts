@@ -23,7 +23,7 @@ describe('Service Tests', () => {
       service = injector.get(AlbumSfService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new AlbumSf(0, 'AAAAAAA', 'AAAAAAA', 0, 0);
+      elemDefault = new AlbumSf(0, 'AAAAAAA', 0, 'AAAAAAA', 0);
     });
 
     describe('Service methods', () => {
@@ -60,8 +60,8 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             title: 'BBBBBB',
-            reference: 'BBBBBB',
             year: 1,
+            thumbnail: 'BBBBBB',
             totalTracks: 1
           },
           elemDefault
@@ -81,8 +81,8 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             title: 'BBBBBB',
-            reference: 'BBBBBB',
             year: 1,
+            thumbnail: 'BBBBBB',
             totalTracks: 1
           },
           elemDefault

@@ -29,15 +29,18 @@ public class Playlist implements Serializable {
     @Column(name = "collaborative")
     private Boolean collaborative;
 
-    @Column(name = "reference")
-    private String reference;
-
     @Lob
     @Column(name = "description")
     private String description;
 
     @Column(name = "primary_color")
     private String primaryColor;
+
+    @Column(name = "cover")
+    private String cover;
+
+    @Column(name = "thumbnail")
+    private String thumbnail;
 
     @Column(name = "public_accessible")
     private Boolean publicAccessible;
@@ -51,13 +54,9 @@ public class Playlist implements Serializable {
     @Column(name = "rating")
     private Double rating;
 
-    @OneToMany(mappedBy = "playlist")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Image> images = new HashSet<>();
-
     @ManyToOne
     @JsonIgnoreProperties("playlists")
-    private User owner;
+    private User user;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -101,19 +100,6 @@ public class Playlist implements Serializable {
         this.collaborative = collaborative;
     }
 
-    public String getReference() {
-        return reference;
-    }
-
-    public Playlist reference(String reference) {
-        this.reference = reference;
-        return this;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -138,6 +124,32 @@ public class Playlist implements Serializable {
 
     public void setPrimaryColor(String primaryColor) {
         this.primaryColor = primaryColor;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public Playlist cover(String cover) {
+        this.cover = cover;
+        return this;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public Playlist thumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+        return this;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public Boolean isPublicAccessible() {
@@ -192,42 +204,17 @@ public class Playlist implements Serializable {
         this.rating = rating;
     }
 
-    public Set<Image> getImages() {
-        return images;
+    public User getUser() {
+        return user;
     }
 
-    public Playlist images(Set<Image> images) {
-        this.images = images;
+    public Playlist user(User user) {
+        this.user = user;
         return this;
     }
 
-    public Playlist addImages(Image image) {
-        this.images.add(image);
-        image.setPlaylist(this);
-        return this;
-    }
-
-    public Playlist removeImages(Image image) {
-        this.images.remove(image);
-        image.setPlaylist(null);
-        return this;
-    }
-
-    public void setImages(Set<Image> images) {
-        this.images = images;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public Playlist owner(User user) {
-        this.owner = user;
-        return this;
-    }
-
-    public void setOwner(User user) {
-        this.owner = user;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Track> getTracks() {
@@ -278,9 +265,10 @@ public class Playlist implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", collaborative='" + isCollaborative() + "'" +
-            ", reference='" + getReference() + "'" +
             ", description='" + getDescription() + "'" +
             ", primaryColor='" + getPrimaryColor() + "'" +
+            ", cover='" + getCover() + "'" +
+            ", thumbnail='" + getThumbnail() + "'" +
             ", publicAccessible='" + isPublicAccessible() + "'" +
             ", numberSongs=" + getNumberSongs() +
             ", followers=" + getFollowers() +

@@ -21,10 +21,12 @@
             <th jhiSortBy="name"><span jhiTranslate="sallefyApp.track.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="rating"><span jhiTranslate="sallefyApp.track.rating">Rating</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="url"><span jhiTranslate="sallefyApp.track.url">Url</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="explicit"><span jhiTranslate="sallefyApp.track.explicit">Explicit</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="reference"><span jhiTranslate="sallefyApp.track.reference">Reference</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="popularity"><span jhiTranslate="sallefyApp.track.popularity">Popularity</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="thumbnail"><span jhiTranslate="sallefyApp.track.thumbnail">Thumbnail</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdAt"><span jhiTranslate="sallefyApp.track.createdAt">Created At</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="duration"><span jhiTranslate="sallefyApp.track.duration">Duration</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="primaryColor"><span jhiTranslate="sallefyApp.track.primaryColor">Primary Color</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="userLogin"><span jhiTranslate="sallefyApp.track.user">User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -34,10 +36,14 @@
                 <td>{{track.name}}</td>
                 <td>{{track.rating}}</td>
                 <td>{{track.url}}</td>
-                <td>{{track.explicit}}</td>
-                <td>{{track.reference}}</td>
+                <td>{{track.popularity}}</td>
+                <td>{{track.thumbnail}}</td>
+                <td>{{track.createdAt | date:'medium'}}</td>
                 <td>{{track.duration}}</td>
                 <td>{{track.primaryColor}}</td>
+                <td>
+                    {{track.userLogin}}
+                </td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"

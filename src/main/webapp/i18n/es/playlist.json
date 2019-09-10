@@ -18,15 +18,15 @@
       },
       "name": "Name",
       "collaborative": "Collaborative",
-      "reference": "Reference",
       "description": "Description",
       "primaryColor": "Primary Color",
+      "cover": "Cover",
+      "thumbnail": "Thumbnail",
       "publicAccessible": "Public Accessible",
       "numberSongs": "Number Songs",
       "followers": "Followers",
       "rating": "Rating",
-      "images": "Images",
-      "owner": "Owner",
+      "user": "User",
       "track": "Track"
     }
   }

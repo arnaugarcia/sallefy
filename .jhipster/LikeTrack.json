@@ -1,0 +1,38 @@
+{
+    "name": "LikeTrack",
+    "fields": [
+        {
+            "fieldName": "liked",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "likeTrack",
+            "relationshipName": "user",
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "track",
+            "otherEntityRelationshipName": "likeTrack",
+            "relationshipName": "track",
+            "otherEntityField": "name"
+        }
+    ],
+    "changelogDate": "20190910120954",
+    "entityTableName": "like_track",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

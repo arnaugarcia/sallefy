@@ -13,12 +13,16 @@ public class AlbumDTO implements Serializable {
 
     private String title;
 
-    private String reference;
-
     private Integer year;
+
+    private String thumbnail;
 
     private Integer totalTracks;
 
+
+    private Long userId;
+
+    private String userLogin;
 
     private Set<TrackDTO> tracks = new HashSet<>();
 
@@ -38,14 +42,6 @@ public class AlbumDTO implements Serializable {
         this.title = title;
     }
 
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
     public Integer getYear() {
         return year;
     }
@@ -54,12 +50,36 @@ public class AlbumDTO implements Serializable {
         this.year = year;
     }
 
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
     public Integer getTotalTracks() {
         return totalTracks;
     }
 
     public void setTotalTracks(Integer totalTracks) {
         this.totalTracks = totalTracks;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     public Set<TrackDTO> getTracks() {
@@ -96,9 +116,11 @@ public class AlbumDTO implements Serializable {
         return "AlbumDTO{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
-            ", reference='" + getReference() + "'" +
             ", year=" + getYear() +
+            ", thumbnail='" + getThumbnail() + "'" +
             ", totalTracks=" + getTotalTracks() +
+            ", user=" + getUserId() +
+            ", user='" + getUserLogin() + "'" +
             "}";
     }
 }

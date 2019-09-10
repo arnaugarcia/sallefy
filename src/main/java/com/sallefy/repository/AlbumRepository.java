@@ -16,6 +16,9 @@ import java.util.Optional;
 @Repository
 public interface AlbumRepository extends JpaRepository<Album, Long> {
 
+    @Query("select album from Album album where album.user.login = ?#{principal.username}")
+    List<Album> findByUserIsCurrentUser();
+
     @Query(value = "select distinct album from Album album left join fetch album.tracks",
         countQuery = "select count(distinct album) from Album album")
     Page<Album> findAllWithEagerRelationships(Pageable pageable);

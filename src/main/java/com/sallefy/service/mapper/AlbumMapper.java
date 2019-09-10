@@ -8,12 +8,14 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Album} and its DTO {@link AlbumDTO}.
  */
-@Mapper(componentModel = "spring", uses = {TrackMapper.class})
+@Mapper(componentModel = "spring", uses = {UserMapper.class, TrackMapper.class})
 public interface AlbumMapper extends EntityMapper<AlbumDTO, Album> {
 
+    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "user.login", target = "userLogin")
+    AlbumDTO toDto(Album album);
 
-    @Mapping(target = "images", ignore = true)
-    @Mapping(target = "removeImages", ignore = true)
+    @Mapping(source = "userId", target = "user")
     @Mapping(target = "removeTrack", ignore = true)
     Album toEntity(AlbumDTO albumDTO);
 

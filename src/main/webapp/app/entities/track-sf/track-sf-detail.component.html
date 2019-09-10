@@ -17,13 +17,17 @@
                 <dd>
                     <span>{{track.url}}</span>
                 </dd>
-                <dt><span jhiTranslate="sallefyApp.track.explicit">Explicit</span></dt>
+                <dt><span jhiTranslate="sallefyApp.track.popularity">Popularity</span></dt>
                 <dd>
-                    <span>{{track.explicit}}</span>
+                    <span>{{track.popularity}}</span>
                 </dd>
-                <dt><span jhiTranslate="sallefyApp.track.reference">Reference</span></dt>
+                <dt><span jhiTranslate="sallefyApp.track.thumbnail">Thumbnail</span></dt>
                 <dd>
-                    <span>{{track.reference}}</span>
+                    <span>{{track.thumbnail}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.track.createdAt">Created At</span></dt>
+                <dd>
+                    <span>{{track.createdAt}}</span>
                 </dd>
                 <dt><span jhiTranslate="sallefyApp.track.duration">Duration</span></dt>
                 <dd>
@@ -32,6 +36,10 @@
                 <dt><span jhiTranslate="sallefyApp.track.primaryColor">Primary Color</span></dt>
                 <dd>
                     <span>{{track.primaryColor}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.track.user">User</span></dt>
+                <dd>
+                    {{track.userLogin}}
                 </dd>
             </dl>
 

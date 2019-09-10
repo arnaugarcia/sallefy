@@ -20,14 +20,15 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.name">Name</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.collaborative">Collaborative</span></th>
-            <th><span jhiTranslate="sallefyApp.playlist.reference">Reference</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.description">Description</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.primaryColor">Primary Color</span></th>
+            <th><span jhiTranslate="sallefyApp.playlist.cover">Cover</span></th>
+            <th><span jhiTranslate="sallefyApp.playlist.thumbnail">Thumbnail</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.publicAccessible">Public Accessible</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.numberSongs">Number Songs</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.followers">Followers</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.rating">Rating</span></th>
-            <th><span jhiTranslate="sallefyApp.playlist.owner">Owner</span></th>
+            <th><span jhiTranslate="sallefyApp.playlist.user">User</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.track">Track</span></th>
             <th></th>
             </tr>
@@ -37,15 +38,16 @@
                 <td><a [routerLink]="['/playlist-sf', playlist.id, 'view' ]">{{playlist.id}}</a></td>
                 <td>{{playlist.name}}</td>
                 <td>{{playlist.collaborative}}</td>
-                <td>{{playlist.reference}}</td>
                 <td>{{playlist.description}}</td>
                 <td>{{playlist.primaryColor}}</td>
+                <td>{{playlist.cover}}</td>
+                <td>{{playlist.thumbnail}}</td>
                 <td>{{playlist.publicAccessible}}</td>
                 <td>{{playlist.numberSongs}}</td>
                 <td>{{playlist.followers}}</td>
                 <td>{{playlist.rating}}</td>
                 <td>
-                    {{playlist.ownerLogin}}
+                    {{playlist.userLogin}}
                 </td>
                 <td>
                     <span *ngFor="let track of playlist.tracks; let last = last">

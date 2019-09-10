@@ -1,11 +1,13 @@
 package com.sallefy.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,16 +29,19 @@ public class Track implements Serializable {
     private String name;
 
     @Column(name = "rating")
-    private Double rating;
+    private String rating;
 
     @Column(name = "url")
     private String url;
 
-    @Column(name = "explicit")
-    private Boolean explicit;
+    @Column(name = "popularity")
+    private String popularity;
 
-    @Column(name = "reference")
-    private String reference;
+    @Column(name = "thumbnail")
+    private String thumbnail;
+
+    @Column(name = "created_at")
+    private ZonedDateTime createdAt;
 
     @Column(name = "duration")
     private Integer duration;
@@ -44,9 +49,16 @@ public class Track implements Serializable {
     @Column(name = "primary_color")
     private String primaryColor;
 
+    /**
+     * LikeTrack Relationships
+     */
     @OneToMany(mappedBy = "track")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Image> images = new HashSet<>();
+    private Set<LikeTrack> likeTracks = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties("tracks")
+    private User user;
 
     @ManyToMany(mappedBy = "tracks")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -80,16 +92,16 @@ public class Track implements Serializable {
         this.name = name;
     }
 
-    public Double getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public Track rating(Double rating) {
+    public Track rating(String rating) {
         this.rating = rating;
         return this;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
@@ -106,30 +118,43 @@ public class Track implements Serializable {
         this.url = url;
     }
 
-    public Boolean isExplicit() {
-        return explicit;
+    public String getPopularity() {
+        return popularity;
     }
 
-    public Track explicit(Boolean explicit) {
-        this.explicit = explicit;
+    public Track popularity(String popularity) {
+        this.popularity = popularity;
         return this;
     }
 
-    public void setExplicit(Boolean explicit) {
-        this.explicit = explicit;
+    public void setPopularity(String popularity) {
+        this.popularity = popularity;
     }
 
-    public String getReference() {
-        return reference;
+    public String getThumbnail() {
+        return thumbnail;
     }
 
-    public Track reference(String reference) {
-        this.reference = reference;
+    public Track thumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
         return this;
     }
 
-    public void setReference(String reference) {
-        this.reference = reference;
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public ZonedDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public Track createdAt(ZonedDateTime createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
+    public void setCreatedAt(ZonedDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Integer getDuration() {
@@ -158,29 +183,42 @@ public class Track implements Serializable {
         this.primaryColor = primaryColor;
     }
 
-    public Set<Image> getImages() {
-        return images;
+    public Set<LikeTrack> getLikeTracks() {
+        return likeTracks;
     }
 
-    public Track images(Set<Image> images) {
-        this.images = images;
+    public Track likeTracks(Set<LikeTrack> likeTracks) {
+        this.likeTracks = likeTracks;
         return this;
     }
 
-    public Track addImages(Image image) {
-        this.images.add(image);
-        image.setTrack(this);
+    public Track addLikeTrack(LikeTrack likeTrack) {
+        this.likeTracks.add(likeTrack);
+        likeTrack.setTrack(this);
         return this;
     }
 
-    public Track removeImages(Image image) {
-        this.images.remove(image);
-        image.setTrack(null);
+    public Track removeLikeTrack(LikeTrack likeTrack) {
+        this.likeTracks.remove(likeTrack);
+        likeTrack.setTrack(null);
         return this;
     }
 
-    public void setImages(Set<Image> images) {
-        this.images = images;
+    public void setLikeTracks(Set<LikeTrack> likeTracks) {
+        this.likeTracks = likeTracks;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Track user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Playlist> getPlaylists() {
@@ -255,10 +293,11 @@ public class Track implements Serializable {
         return "Track{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", rating=" + getRating() +
+            ", rating='" + getRating() + "'" +
             ", url='" + getUrl() + "'" +
-            ", explicit='" + isExplicit() + "'" +
-            ", reference='" + getReference() + "'" +
+            ", popularity='" + getPopularity() + "'" +
+            ", thumbnail='" + getThumbnail() + "'" +
+            ", createdAt='" + getCreatedAt() + "'" +
             ", duration=" + getDuration() +
             ", primaryColor='" + getPrimaryColor() + "'" +
             "}";

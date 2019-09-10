@@ -8,12 +8,16 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Track} and its DTO {@link TrackDTO}.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface TrackMapper extends EntityMapper<TrackDTO, Track> {
 
+    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "user.login", target = "userLogin")
+    TrackDTO toDto(Track track);
 
-    @Mapping(target = "images", ignore = true)
-    @Mapping(target = "removeImages", ignore = true)
+    @Mapping(target = "likeTracks", ignore = true)
+    @Mapping(target = "removeLikeTrack", ignore = true)
+    @Mapping(source = "userId", target = "user")
     @Mapping(target = "playlists", ignore = true)
     @Mapping(target = "removePlaylist", ignore = true)
     @Mapping(target = "albums", ignore = true)

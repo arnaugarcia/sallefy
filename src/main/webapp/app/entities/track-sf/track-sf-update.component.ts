@@ -4,9 +4,12 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 import { ITrackSf, TrackSf } from 'app/shared/model/track-sf.model';
 import { TrackSfService } from './track-sf.service';
+import { IUser, UserService } from 'app/core';
 import { IPlaylistSf } from 'app/shared/model/playlist-sf.model';
 import { PlaylistSfService } from 'app/entities/playlist-sf';
 import { IAlbumSf } from 'app/shared/model/album-sf.model';
@@ -19,6 +22,8 @@ import { AlbumSfService } from 'app/entities/album-sf';
 export class TrackSfUpdateComponent implements OnInit {
   isSaving: boolean;
 
+  users: IUser[];
+
   playlists: IPlaylistSf[];
 
   albums: IAlbumSf[];
@@ -28,15 +33,18 @@ export class TrackSfUpdateComponent implements OnInit {
     name: [],
     rating: [],
     url: [],
-    explicit: [],
-    reference: [],
+    popularity: [],
+    thumbnail: [],
+    createdAt: [],
     duration: [],
-    primaryColor: []
+    primaryColor: [],
+    userId: []
   });
 
   constructor(
     protected jhiAlertService: JhiAlertService,
     protected trackService: TrackSfService,
+    protected userService: UserService,
     protected playlistService: PlaylistSfService,
     protected albumService: AlbumSfService,
     protected activatedRoute: ActivatedRoute,
@@ -48,6 +56,13 @@ export class TrackSfUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ track }) => {
       this.updateForm(track);
     });
+    this.userService
+      .query()
+      .pipe(
+        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IUser[]>) => response.body)
+      )
+      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
     this.playlistService
       .query()
       .pipe(
@@ -70,10 +85,12 @@ export class TrackSfUpdateComponent implements OnInit {
       name: track.name,
       rating: track.rating,
       url: track.url,
-      explicit: track.explicit,
-      reference: track.reference,
+      popularity: track.popularity,
+      thumbnail: track.thumbnail,
+      createdAt: track.createdAt != null ? track.createdAt.format(DATE_TIME_FORMAT) : null,
       duration: track.duration,
-      primaryColor: track.primaryColor
+      primaryColor: track.primaryColor,
+      userId: track.userId
     });
   }
 
@@ -98,10 +115,13 @@ export class TrackSfUpdateComponent implements OnInit {
       name: this.editForm.get(['name']).value,
       rating: this.editForm.get(['rating']).value,
       url: this.editForm.get(['url']).value,
-      explicit: this.editForm.get(['explicit']).value,
-      reference: this.editForm.get(['reference']).value,
+      popularity: this.editForm.get(['popularity']).value,
+      thumbnail: this.editForm.get(['thumbnail']).value,
+      createdAt:
+        this.editForm.get(['createdAt']).value != null ? moment(this.editForm.get(['createdAt']).value, DATE_TIME_FORMAT) : undefined,
       duration: this.editForm.get(['duration']).value,
-      primaryColor: this.editForm.get(['primaryColor']).value
+      primaryColor: this.editForm.get(['primaryColor']).value,
+      userId: this.editForm.get(['userId']).value
     };
   }
 
@@ -119,6 +139,10 @@ export class TrackSfUpdateComponent implements OnInit {
   }
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  trackUserById(index: number, item: IUser) {
+    return item.id;
   }
 
   trackPlaylistById(index: number, item: IPlaylistSf) {

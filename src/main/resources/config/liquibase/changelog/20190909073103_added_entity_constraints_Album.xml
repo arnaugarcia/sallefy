@@ -8,6 +8,12 @@
     -->
     <changeSet id="20190909073103-2" author="jhipster">
         
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="album"
+                                 constraintName="fk_album_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
         <addForeignKeyConstraint baseColumnNames="album_id"
                                  baseTableName="album_track"
                                  constraintName="fk_album_track_album_id"

@@ -19,11 +19,13 @@
       "name": "Name",
       "rating": "Rating",
       "url": "Url",
-      "explicit": "Explicit",
-      "reference": "Reference",
+      "popularity": "Popularity",
+      "thumbnail": "Thumbnail",
+      "createdAt": "Created At",
       "duration": "Duration",
       "primaryColor": "Primary Color",
-      "images": "Images",
+      "likeTrack": "Like Track",
+      "user": "User",
       "playlist": "Playlist",
       "album": "Album"
     }

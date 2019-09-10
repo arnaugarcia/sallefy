@@ -26,14 +26,15 @@ export class PlaylistSfUpdateComponent implements OnInit {
     id: [],
     name: [],
     collaborative: [],
-    reference: [],
     description: [],
     primaryColor: [],
+    cover: [],
+    thumbnail: [],
     publicAccessible: [],
     numberSongs: [],
     followers: [],
     rating: [],
-    ownerId: [],
+    userId: [],
     tracks: []
   });
 
@@ -73,14 +74,15 @@ export class PlaylistSfUpdateComponent implements OnInit {
       id: playlist.id,
       name: playlist.name,
       collaborative: playlist.collaborative,
-      reference: playlist.reference,
       description: playlist.description,
       primaryColor: playlist.primaryColor,
+      cover: playlist.cover,
+      thumbnail: playlist.thumbnail,
       publicAccessible: playlist.publicAccessible,
       numberSongs: playlist.numberSongs,
       followers: playlist.followers,
       rating: playlist.rating,
-      ownerId: playlist.ownerId,
+      userId: playlist.userId,
       tracks: playlist.tracks
     });
   }
@@ -137,14 +139,15 @@ export class PlaylistSfUpdateComponent implements OnInit {
       id: this.editForm.get(['id']).value,
       name: this.editForm.get(['name']).value,
       collaborative: this.editForm.get(['collaborative']).value,
-      reference: this.editForm.get(['reference']).value,
       description: this.editForm.get(['description']).value,
       primaryColor: this.editForm.get(['primaryColor']).value,
+      cover: this.editForm.get(['cover']).value,
+      thumbnail: this.editForm.get(['thumbnail']).value,
       publicAccessible: this.editForm.get(['publicAccessible']).value,
       numberSongs: this.editForm.get(['numberSongs']).value,
       followers: this.editForm.get(['followers']).value,
       rating: this.editForm.get(['rating']).value,
-      ownerId: this.editForm.get(['ownerId']).value,
+      userId: this.editForm.get(['userId']).value,
       tracks: this.editForm.get(['tracks']).value
     };
   }

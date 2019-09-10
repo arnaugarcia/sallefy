@@ -73,8 +73,8 @@ class AlbumGatlingTest extends Simulation {
             .body(StringBody("""{
                 "id":null
                 , "title":"SAMPLE_TEXT"
-                , "reference":"SAMPLE_TEXT"
                 , "year":"0"
+                , "thumbnail":"SAMPLE_TEXT"
                 , "totalTracks":"0"
                 }""")).asJson
             .check(status.is(201))

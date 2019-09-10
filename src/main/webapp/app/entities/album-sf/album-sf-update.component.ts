@@ -7,6 +7,7 @@ import { filter, map } from 'rxjs/operators';
 import { JhiAlertService } from 'ng-jhipster';
 import { IAlbumSf, AlbumSf } from 'app/shared/model/album-sf.model';
 import { AlbumSfService } from './album-sf.service';
+import { IUser, UserService } from 'app/core';
 import { ITrackSf } from 'app/shared/model/track-sf.model';
 import { TrackSfService } from 'app/entities/track-sf';
 
@@ -17,20 +18,24 @@ import { TrackSfService } from 'app/entities/track-sf';
 export class AlbumSfUpdateComponent implements OnInit {
   isSaving: boolean;
 
+  users: IUser[];
+
   tracks: ITrackSf[];
 
   editForm = this.fb.group({
     id: [],
     title: [],
-    reference: [],
     year: [],
+    thumbnail: [],
     totalTracks: [],
+    userId: [],
     tracks: []
   });
 
   constructor(
     protected jhiAlertService: JhiAlertService,
     protected albumService: AlbumSfService,
+    protected userService: UserService,
     protected trackService: TrackSfService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -41,6 +46,13 @@ export class AlbumSfUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ album }) => {
       this.updateForm(album);
     });
+    this.userService
+      .query()
+      .pipe(
+        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IUser[]>) => response.body)
+      )
+      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
     this.trackService
       .query()
       .pipe(
@@ -54,9 +66,10 @@ export class AlbumSfUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: album.id,
       title: album.title,
-      reference: album.reference,
       year: album.year,
+      thumbnail: album.thumbnail,
       totalTracks: album.totalTracks,
+      userId: album.userId,
       tracks: album.tracks
     });
   }
@@ -80,9 +93,10 @@ export class AlbumSfUpdateComponent implements OnInit {
       ...new AlbumSf(),
       id: this.editForm.get(['id']).value,
       title: this.editForm.get(['title']).value,
-      reference: this.editForm.get(['reference']).value,
       year: this.editForm.get(['year']).value,
+      thumbnail: this.editForm.get(['thumbnail']).value,
       totalTracks: this.editForm.get(['totalTracks']).value,
+      userId: this.editForm.get(['userId']).value,
       tracks: this.editForm.get(['tracks']).value
     };
   }
@@ -101,6 +115,10 @@ export class AlbumSfUpdateComponent implements OnInit {
   }
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  trackUserById(index: number, item: IUser) {
+    return item.id;
   }
 
   trackTrackById(index: number, item: ITrackSf) {

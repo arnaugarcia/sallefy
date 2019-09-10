@@ -6,12 +6,12 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "reference",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "year",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "thumbnail",
+            "fieldType": "String"
         },
         {
             "fieldName": "totalTracks",
@@ -20,10 +20,11 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "image",
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
             "otherEntityRelationshipName": "album",
-            "relationshipName": "images"
+            "relationshipName": "user",
+            "otherEntityField": "login"
         },
         {
             "relationshipType": "many-to-many",

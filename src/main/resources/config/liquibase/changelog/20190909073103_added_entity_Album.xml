@@ -20,15 +20,19 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="reference" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
             <column name="year" type="integer">
                 <constraints nullable="true" />
             </column>
 
+            <column name="thumbnail" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="total_tracks" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
@@ -68,8 +72,8 @@
                   tableName="album">
             <column name="id" type="numeric"/>
             <column name="title" type="string"/>
-            <column name="reference" type="string"/>
             <column name="year" type="numeric"/>
+            <column name="thumbnail" type="string"/>
             <column name="total_tracks" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>

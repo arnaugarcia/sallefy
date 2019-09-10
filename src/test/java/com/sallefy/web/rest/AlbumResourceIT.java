@@ -44,12 +44,12 @@ public class AlbumResourceIT {
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_REFERENCE = "AAAAAAAAAA";
-    private static final String UPDATED_REFERENCE = "BBBBBBBBBB";
-
     private static final Integer DEFAULT_YEAR = 1;
     private static final Integer UPDATED_YEAR = 2;
     private static final Integer SMALLER_YEAR = 1 - 1;
+
+    private static final String DEFAULT_THUMBNAIL = "AAAAAAAAAA";
+    private static final String UPDATED_THUMBNAIL = "BBBBBBBBBB";
 
     private static final Integer DEFAULT_TOTAL_TRACKS = 1;
     private static final Integer UPDATED_TOTAL_TRACKS = 2;
@@ -110,8 +110,8 @@ public class AlbumResourceIT {
     public static Album createEntity(EntityManager em) {
         Album album = new Album()
             .title(DEFAULT_TITLE)
-            .reference(DEFAULT_REFERENCE)
             .year(DEFAULT_YEAR)
+            .thumbnail(DEFAULT_THUMBNAIL)
             .totalTracks(DEFAULT_TOTAL_TRACKS);
         return album;
     }
@@ -124,8 +124,8 @@ public class AlbumResourceIT {
     public static Album createUpdatedEntity(EntityManager em) {
         Album album = new Album()
             .title(UPDATED_TITLE)
-            .reference(UPDATED_REFERENCE)
             .year(UPDATED_YEAR)
+            .thumbnail(UPDATED_THUMBNAIL)
             .totalTracks(UPDATED_TOTAL_TRACKS);
         return album;
     }
@@ -152,8 +152,8 @@ public class AlbumResourceIT {
         assertThat(albumList).hasSize(databaseSizeBeforeCreate + 1);
         Album testAlbum = albumList.get(albumList.size() - 1);
         assertThat(testAlbum.getTitle()).isEqualTo(DEFAULT_TITLE);
-        assertThat(testAlbum.getReference()).isEqualTo(DEFAULT_REFERENCE);
         assertThat(testAlbum.getYear()).isEqualTo(DEFAULT_YEAR);
+        assertThat(testAlbum.getThumbnail()).isEqualTo(DEFAULT_THUMBNAIL);
         assertThat(testAlbum.getTotalTracks()).isEqualTo(DEFAULT_TOTAL_TRACKS);
     }
 
@@ -190,8 +190,8 @@ public class AlbumResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(album.getId().intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
-            .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE.toString())))
             .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)))
+            .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL.toString())))
             .andExpect(jsonPath("$.[*].totalTracks").value(hasItem(DEFAULT_TOTAL_TRACKS)));
     }
     
@@ -240,8 +240,8 @@ public class AlbumResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(album.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
-            .andExpect(jsonPath("$.reference").value(DEFAULT_REFERENCE.toString()))
             .andExpect(jsonPath("$.year").value(DEFAULT_YEAR))
+            .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL.toString()))
             .andExpect(jsonPath("$.totalTracks").value(DEFAULT_TOTAL_TRACKS));
     }
 
@@ -267,8 +267,8 @@ public class AlbumResourceIT {
         em.detach(updatedAlbum);
         updatedAlbum
             .title(UPDATED_TITLE)
-            .reference(UPDATED_REFERENCE)
             .year(UPDATED_YEAR)
+            .thumbnail(UPDATED_THUMBNAIL)
             .totalTracks(UPDATED_TOTAL_TRACKS);
         AlbumDTO albumDTO = albumMapper.toDto(updatedAlbum);
 
@@ -282,8 +282,8 @@ public class AlbumResourceIT {
         assertThat(albumList).hasSize(databaseSizeBeforeUpdate);
         Album testAlbum = albumList.get(albumList.size() - 1);
         assertThat(testAlbum.getTitle()).isEqualTo(UPDATED_TITLE);
-        assertThat(testAlbum.getReference()).isEqualTo(UPDATED_REFERENCE);
         assertThat(testAlbum.getYear()).isEqualTo(UPDATED_YEAR);
+        assertThat(testAlbum.getThumbnail()).isEqualTo(UPDATED_THUMBNAIL);
         assertThat(testAlbum.getTotalTracks()).isEqualTo(UPDATED_TOTAL_TRACKS);
     }
 

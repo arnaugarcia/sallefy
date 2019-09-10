@@ -74,9 +74,10 @@ class PlaylistGatlingTest extends Simulation {
                 "id":null
                 , "name":"SAMPLE_TEXT"
                 , "collaborative":null
-                , "reference":"SAMPLE_TEXT"
                 , "description":null
                 , "primaryColor":"SAMPLE_TEXT"
+                , "cover":"SAMPLE_TEXT"
+                , "thumbnail":"SAMPLE_TEXT"
                 , "publicAccessible":null
                 , "numberSongs":"0"
                 , "followers":"0"
