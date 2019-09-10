@@ -2,6 +2,8 @@ entity Track {
 	name String,
     rating Double,
     url String,
+    popularity String,
+    rating String,
     thumbnail String,
     createdAt ZonedDateTime,
     duration Integer,
