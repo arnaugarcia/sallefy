@@ -24,10 +24,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="user_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <column name="track_id" type="bigint">
                 <constraints nullable="true" />
             </column>

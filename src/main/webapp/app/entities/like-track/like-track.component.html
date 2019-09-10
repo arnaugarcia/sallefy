@@ -20,7 +20,6 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="sallefyApp.likeTrack.liked">Liked</span></th>
             <th><span jhiTranslate="sallefyApp.likeTrack.date">Date</span></th>
-            <th><span jhiTranslate="sallefyApp.likeTrack.user">User</span></th>
             <th><span jhiTranslate="sallefyApp.likeTrack.track">Track</span></th>
             <th></th>
             </tr>
@@ -30,9 +29,6 @@
                 <td><a [routerLink]="['/like-track', likeTrack.id, 'view' ]">{{likeTrack.id}}</a></td>
                 <td>{{likeTrack.liked}}</td>
                 <td>{{likeTrack.date | date:'medium'}}</td>
-                <td>
-                    {{likeTrack.userLogin}}
-                </td>
                 <td>
                     <div *ngIf="likeTrack.trackId">
                         <a [routerLink]="['/track-sf', likeTrack.trackId , 'view' ]" >{{likeTrack.trackName}}</a>

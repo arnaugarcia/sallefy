@@ -11,6 +11,7 @@
         "playlistSf": "Playlist",
         "albumSf": "Album",
         "likeTrack": "Like Track",
+        "likeUser": "Like User",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

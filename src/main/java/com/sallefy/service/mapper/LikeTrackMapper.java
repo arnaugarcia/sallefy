@@ -8,16 +8,13 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link LikeTrack} and its DTO {@link LikeTrackDTO}.
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class, TrackMapper.class})
+@Mapper(componentModel = "spring", uses = {TrackMapper.class})
 public interface LikeTrackMapper extends EntityMapper<LikeTrackDTO, LikeTrack> {
 
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "user.login", target = "userLogin")
     @Mapping(source = "track.id", target = "trackId")
     @Mapping(source = "track.name", target = "trackName")
     LikeTrackDTO toDto(LikeTrack likeTrack);
 
-    @Mapping(source = "userId", target = "user")
     @Mapping(source = "trackId", target = "track")
     LikeTrack toEntity(LikeTrackDTO likeTrackDTO);
 

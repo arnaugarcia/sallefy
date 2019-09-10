@@ -35,11 +35,17 @@ entity LikeTrack {
     date ZonedDateTime,
 }
 
+entity LikeUser {
+	liked Boolean,
+    date ZonedDateTime,
+}
+
 relationship ManyToOne {
     Playlist{user(login)} to User,
     Album{user(login)} to User,
     Track{user(login)} to User,
-    LikeTrack{user(login)} to User
+    LikeUser{likedUser(login)} to User,
+    LikeUser{user(login)} to User
 }
 
 relationship ManyToMany {

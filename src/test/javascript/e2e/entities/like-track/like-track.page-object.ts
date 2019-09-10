@@ -28,7 +28,6 @@ export class LikeTrackUpdatePage {
   cancelButton = element(by.id('cancel-save'));
   likedInput = element(by.id('field_liked'));
   dateInput = element(by.id('field_date'));
-  userSelect = element(by.id('field_user'));
   trackSelect = element(by.id('field_track'));
 
   async getPageTitle() {
@@ -44,25 +43,6 @@ export class LikeTrackUpdatePage {
 
   async getDateInput() {
     return await this.dateInput.getAttribute('value');
-  }
-
-  async userSelectLastOption(timeout?: number) {
-    await this.userSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async userSelectOption(option) {
-    await this.userSelect.sendKeys(option);
-  }
-
-  getUserSelect(): ElementFinder {
-    return this.userSelect;
-  }
-
-  async getUserSelectedOption() {
-    return await this.userSelect.element(by.css('option:checked')).getText();
   }
 
   async trackSelectLastOption(timeout?: number) {

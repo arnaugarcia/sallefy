@@ -15,10 +15,6 @@ public class LikeTrackDTO implements Serializable {
     private ZonedDateTime date;
 
 
-    private Long userId;
-
-    private String userLogin;
-
     private Long trackId;
 
     private String trackName;
@@ -45,22 +41,6 @@ public class LikeTrackDTO implements Serializable {
 
     public void setDate(ZonedDateTime date) {
         this.date = date;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUserLogin() {
-        return userLogin;
-    }
-
-    public void setUserLogin(String userLogin) {
-        this.userLogin = userLogin;
     }
 
     public Long getTrackId() {
@@ -106,8 +86,6 @@ public class LikeTrackDTO implements Serializable {
             "id=" + getId() +
             ", liked='" + isLiked() + "'" +
             ", date='" + getDate() + "'" +
-            ", user=" + getUserId() +
-            ", user='" + getUserLogin() + "'" +
             ", track=" + getTrackId() +
             ", track='" + getTrackName() + "'" +
             "}";

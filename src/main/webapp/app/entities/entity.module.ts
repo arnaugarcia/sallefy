@@ -19,6 +19,10 @@ import { RouterModule } from '@angular/router';
       {
         path: 'like-track',
         loadChildren: () => import('./like-track/like-track.module').then(m => m.SallefyLikeTrackModule)
+      },
+      {
+        path: 'like-user',
+        loadChildren: () => import('./like-user/like-user.module').then(m => m.SallefyLikeUserModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

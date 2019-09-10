@@ -30,10 +30,6 @@ public class LikeTrack implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("likeTracks")
-    private User user;
-
-    @ManyToOne
-    @JsonIgnoreProperties("likeTracks")
     private Track track;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -69,19 +65,6 @@ public class LikeTrack implements Serializable {
 
     public void setDate(ZonedDateTime date) {
         this.date = date;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public LikeTrack user(User user) {
-        this.user = user;
-        return this;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Track getTrack() {

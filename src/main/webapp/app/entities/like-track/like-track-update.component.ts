@@ -9,7 +9,6 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 import { ILikeTrack, LikeTrack } from 'app/shared/model/like-track.model';
 import { LikeTrackService } from './like-track.service';
-import { IUser, UserService } from 'app/core';
 import { ITrackSf } from 'app/shared/model/track-sf.model';
 import { TrackSfService } from 'app/entities/track-sf';
 
@@ -20,22 +19,18 @@ import { TrackSfService } from 'app/entities/track-sf';
 export class LikeTrackUpdateComponent implements OnInit {
   isSaving: boolean;
 
-  users: IUser[];
-
   tracks: ITrackSf[];
 
   editForm = this.fb.group({
     id: [],
     liked: [],
     date: [],
-    userId: [],
     trackId: []
   });
 
   constructor(
     protected jhiAlertService: JhiAlertService,
     protected likeTrackService: LikeTrackService,
-    protected userService: UserService,
     protected trackService: TrackSfService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -46,13 +41,6 @@ export class LikeTrackUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ likeTrack }) => {
       this.updateForm(likeTrack);
     });
-    this.userService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IUser[]>) => response.body)
-      )
-      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
     this.trackService
       .query()
       .pipe(
@@ -67,7 +55,6 @@ export class LikeTrackUpdateComponent implements OnInit {
       id: likeTrack.id,
       liked: likeTrack.liked,
       date: likeTrack.date != null ? likeTrack.date.format(DATE_TIME_FORMAT) : null,
-      userId: likeTrack.userId,
       trackId: likeTrack.trackId
     });
   }
@@ -92,7 +79,6 @@ export class LikeTrackUpdateComponent implements OnInit {
       id: this.editForm.get(['id']).value,
       liked: this.editForm.get(['liked']).value,
       date: this.editForm.get(['date']).value != null ? moment(this.editForm.get(['date']).value, DATE_TIME_FORMAT) : undefined,
-      userId: this.editForm.get(['userId']).value,
       trackId: this.editForm.get(['trackId']).value
     };
   }
@@ -111,10 +97,6 @@ export class LikeTrackUpdateComponent implements OnInit {
   }
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
-  }
-
-  trackUserById(index: number, item: IUser) {
-    return item.id;
   }
 
   trackTrackById(index: number, item: ITrackSf) {

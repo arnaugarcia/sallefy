@@ -41,7 +41,6 @@ describe('LikeTrack e2e test', () => {
     await likeTrackComponentsPage.clickOnCreateButton();
     await promise.all([
       likeTrackUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-      likeTrackUpdatePage.userSelectLastOption(),
       likeTrackUpdatePage.trackSelectLastOption()
     ]);
     const selectedLiked = likeTrackUpdatePage.getLikedInput();
