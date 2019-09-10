@@ -28,13 +28,6 @@ entity Album {
     totalTracks Integer
 }
 
-entity Profile {
-	artist Boolean,
-    name String,
-    photo String,
-    biography TextBlob
-}
-
 relationship ManyToOne {
     Playlist{user(login)} to User,
     Album{user(login)} to User
