@@ -20,6 +20,12 @@
     ],
     "relationships": [
         {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "likeAlbum",
+            "otherEntityRelationshipName": "album",
+            "relationshipName": "likeAlbum"
+        },
+        {
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "album",

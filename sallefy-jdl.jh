@@ -40,12 +40,19 @@ entity FollowUser {
     date ZonedDateTime,
 }
 
+entity LikeAlbum {
+	liked Boolean,
+    date ZonedDateTime,
+}
+
 relationship ManyToOne {
     Playlist{user(login)} to User,
     Album{user(login)} to User,
     Track{user(login)} to User,
     FollowUser{followed(login)} to User,
-    FollowUser{user(login)} to User
+    FollowUser{user(login)} to User,
+    LikeTrack{user(login)} to User,
+    LikeAlbum {user(login)} to User
 }
 
 relationship ManyToMany {
@@ -57,7 +64,9 @@ relationship OneToMany {
 	/**
      * LikeTrack Relationships
      */
-	Track to LikeTrack{track(name)}
+	Track{likeTrack} to LikeTrack{track(name)},
+    Album{likeAlbum} to LikeAlbum{album(title)},
+
 }
 
 // Set pagination options

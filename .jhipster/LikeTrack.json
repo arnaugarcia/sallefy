@@ -13,6 +13,13 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "likeTrack",
+            "relationshipName": "user",
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipType": "many-to-one",
             "otherEntityName": "track",
             "otherEntityRelationshipName": "likeTrack",
             "relationshipName": "track",
@@ -23,7 +30,7 @@
     "entityTableName": "like_track",
     "dto": "mapstruct",
     "pagination": "no",
-    "service": "serviceClass",
+    "service": "serviceImpl",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "",

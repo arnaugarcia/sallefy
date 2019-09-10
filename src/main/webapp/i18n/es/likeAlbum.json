@@ -1,0 +1,25 @@
+{
+  "sallefyApp": {
+    "likeAlbum": {
+      "home": {
+        "title": "Like Albums",
+        "createLabel": "Crear nuevo Like Album",
+        "createOrEditLabel": "Crear o editar Like Album",
+        "notFound": "No Like Albums found"
+      },
+      "created": "Un nuevo Like Album ha sido creado con el identificador {{ param }}",
+      "updated": "Un Like Album ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Like Album ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Like Album {{ id }}?"
+      },
+      "detail": {
+        "title": "Like Album"
+      },
+      "liked": "Liked",
+      "date": "Date",
+      "user": "User",
+      "album": "Album"
+    }
+  }
+}
