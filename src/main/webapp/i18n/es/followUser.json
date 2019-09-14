@@ -1,0 +1,25 @@
+{
+  "sallefyApp": {
+    "followUser": {
+      "home": {
+        "title": "Follow Users",
+        "createLabel": "Crear nuevo Follow User",
+        "createOrEditLabel": "Crear o editar Follow User",
+        "notFound": "No Follow Users found"
+      },
+      "created": "Un nuevo Follow User ha sido creado con el identificador {{ param }}",
+      "updated": "Un Follow User ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Follow User ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Follow User {{ id }}?"
+      },
+      "detail": {
+        "title": "Follow User"
+      },
+      "liked": "Liked",
+      "date": "Date",
+      "followed": "Followed",
+      "user": "User"
+    }
+  }
+}

@@ -20,8 +20,7 @@ public class CacheConfiguration {
     private final javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration;
 
     public CacheConfiguration(JHipsterProperties jHipsterProperties) {
-        JHipsterProperties.Cache.Ehcache ehcache =
-            jHipsterProperties.getCache().getEhcache();
+        JHipsterProperties.Cache.Ehcache ehcache = jHipsterProperties.getCache().getEhcache();
 
         jcacheConfiguration = Eh107Configuration.fromEhcacheCacheConfiguration(
             CacheConfigurationBuilder.newCacheConfigurationBuilder(Object.class, Object.class,
@@ -43,16 +42,6 @@ public class CacheConfiguration {
             createCache(cm, com.sallefy.domain.User.class.getName());
             createCache(cm, com.sallefy.domain.Authority.class.getName());
             createCache(cm, com.sallefy.domain.User.class.getName() + ".authorities");
-            createCache(cm, com.sallefy.domain.Track.class.getName());
-            createCache(cm, com.sallefy.domain.Track.class.getName() + ".likeTracks");
-            createCache(cm, com.sallefy.domain.Track.class.getName() + ".playlists");
-            createCache(cm, com.sallefy.domain.Track.class.getName() + ".albums");
-            createCache(cm, com.sallefy.domain.Playlist.class.getName());
-            createCache(cm, com.sallefy.domain.Playlist.class.getName() + ".tracks");
-            createCache(cm, com.sallefy.domain.Album.class.getName());
-            createCache(cm, com.sallefy.domain.Album.class.getName() + ".tracks");
-            createCache(cm, com.sallefy.domain.LikeTrack.class.getName());
-            createCache(cm, com.sallefy.domain.LikeTrack.class.getName() + ".users");
             // jhipster-needle-ehcache-add-entry
         };
     }

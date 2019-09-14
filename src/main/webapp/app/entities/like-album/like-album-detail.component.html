@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="likeAlbum">
+            <h2><span jhiTranslate="sallefyApp.likeAlbum.detail.title">Like Album</span> {{likeAlbum.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sallefyApp.likeAlbum.liked">Liked</span></dt>
+                <dd>
+                    <span>{{likeAlbum.liked}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.likeAlbum.date">Date</span></dt>
+                <dd>
+                    <span>{{likeAlbum.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.likeAlbum.user">User</span></dt>
+                <dd>
+                    {{likeAlbum.userLogin}}
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.likeAlbum.album">Album</span></dt>
+                <dd>
+                    <div *ngIf="likeAlbum.albumId">
+                        <a [routerLink]="['/album-sf', likeAlbum.albumId, 'view']">{{likeAlbum.albumTitle}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/like-album', likeAlbum.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="followUser">
+            <h2><span jhiTranslate="sallefyApp.followUser.detail.title">Follow User</span> {{followUser.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sallefyApp.followUser.liked">Liked</span></dt>
+                <dd>
+                    <span>{{followUser.liked}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.followUser.date">Date</span></dt>
+                <dd>
+                    <span>{{followUser.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.followUser.followed">Followed</span></dt>
+                <dd>
+                    {{followUser.followedLogin}}
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.followUser.user">User</span></dt>
+                <dd>
+                    {{followUser.userLogin}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/follow-user', followUser.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

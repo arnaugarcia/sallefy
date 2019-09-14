@@ -1,6 +1,7 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
+import io.github.jhipster.config.JHipsterProperties;
 import com.sallefy.config.audit.AuditEventConverter;
 import com.sallefy.domain.PersistentAuditEvent;
 import com.sallefy.repository.PersistenceAuditEventRepository;
@@ -46,6 +47,9 @@ public class AuditResourceIT {
     private AuditEventConverter auditEventConverter;
 
     @Autowired
+    private JHipsterProperties jhipsterProperties;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class AuditResourceIT {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         AuditEventService auditEventService =
-            new AuditEventService(auditEventRepository, auditEventConverter);
+            new AuditEventService(auditEventRepository, auditEventConverter, jhipsterProperties);
         AuditResource auditResource = new AuditResource(auditEventService);
         this.restAuditMockMvc = MockMvcBuilders.standaloneSetup(auditResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)

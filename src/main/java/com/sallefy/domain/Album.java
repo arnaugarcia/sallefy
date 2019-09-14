@@ -35,6 +35,10 @@ public class Album implements Serializable {
     @Column(name = "total_tracks")
     private Integer totalTracks;
 
+    @OneToMany(mappedBy = "album")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<LikeAlbum> likeAlbums = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties("albums")
     private User user;
@@ -105,6 +109,31 @@ public class Album implements Serializable {
 
     public void setTotalTracks(Integer totalTracks) {
         this.totalTracks = totalTracks;
+    }
+
+    public Set<LikeAlbum> getLikeAlbums() {
+        return likeAlbums;
+    }
+
+    public Album likeAlbums(Set<LikeAlbum> likeAlbums) {
+        this.likeAlbums = likeAlbums;
+        return this;
+    }
+
+    public Album addLikeAlbum(LikeAlbum likeAlbum) {
+        this.likeAlbums.add(likeAlbum);
+        likeAlbum.setAlbum(this);
+        return this;
+    }
+
+    public Album removeLikeAlbum(LikeAlbum likeAlbum) {
+        this.likeAlbums.remove(likeAlbum);
+        likeAlbum.setAlbum(null);
+        return this;
+    }
+
+    public void setLikeAlbums(Set<LikeAlbum> likeAlbums) {
+        this.likeAlbums = likeAlbums;
     }
 
     public User getUser() {

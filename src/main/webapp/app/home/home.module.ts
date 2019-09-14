@@ -1,12 +1,12 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SallefySharedModule } from 'app/shared';
-import { HOME_ROUTE, HomeComponent } from './';
+import { SallefySharedModule } from 'app/shared/shared.module';
+import { HOME_ROUTE } from './home.route';
+import { HomeComponent } from './home.component';
 
 @NgModule({
   imports: [SallefySharedModule, RouterModule.forChild([HOME_ROUTE])],
-  declarations: [HomeComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  declarations: [HomeComponent]
 })
 export class SallefyHomeModule {}
