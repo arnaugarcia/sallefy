@@ -1,18 +1,12 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
-import { JhiLanguageHelper } from 'app/core';
 
-import { SallefySharedModule } from 'app/shared';
-import {
-  FollowUserComponent,
-  FollowUserDetailComponent,
-  FollowUserUpdateComponent,
-  FollowUserDeletePopupComponent,
-  FollowUserDeleteDialogComponent,
-  followUserRoute,
-  followUserPopupRoute
-} from './';
+import { SallefySharedModule } from 'app/shared/shared.module';
+import { FollowUserComponent } from './follow-user.component';
+import { FollowUserDetailComponent } from './follow-user-detail.component';
+import { FollowUserUpdateComponent } from './follow-user-update.component';
+import { FollowUserDeletePopupComponent, FollowUserDeleteDialogComponent } from './follow-user-delete-dialog.component';
+import { followUserRoute, followUserPopupRoute } from './follow-user.route';
 
 const ENTITY_STATES = [...followUserRoute, ...followUserPopupRoute];
 
@@ -25,16 +19,6 @@ const ENTITY_STATES = [...followUserRoute, ...followUserPopupRoute];
     FollowUserDeleteDialogComponent,
     FollowUserDeletePopupComponent
   ],
-  entryComponents: [FollowUserComponent, FollowUserUpdateComponent, FollowUserDeleteDialogComponent, FollowUserDeletePopupComponent],
-  providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  entryComponents: [FollowUserComponent, FollowUserUpdateComponent, FollowUserDeleteDialogComponent, FollowUserDeletePopupComponent]
 })
-export class SallefyFollowUserModule {
-  constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
-    this.languageHelper.language.subscribe((languageKey: string) => {
-      if (languageKey) {
-        this.languageService.changeLanguage(languageKey);
-      }
-    });
-  }
-}
+export class SallefyFollowUserModule {}

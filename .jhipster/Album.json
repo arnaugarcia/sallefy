@@ -41,7 +41,7 @@
             "ownerSide": true
         }
     ],
-    "changelogDate": "20190909073103",
+    "changelogDate": "20190914163200",
     "entityTableName": "album",
     "dto": "mapstruct",
     "pagination": "no",

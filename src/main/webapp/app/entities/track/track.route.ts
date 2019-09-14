@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiResolvePagingParams } from 'ng-jhipster';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -33,12 +32,8 @@ export const trackRoute: Routes = [
   {
     path: '',
     component: TrackComponent,
-    resolve: {
-      pagingParams: JhiResolvePagingParams
-    },
     data: {
       authorities: ['ROLE_USER'],
-      defaultSort: 'id,asc',
       pageTitle: 'sallefyApp.track.home.title'
     },
     canActivate: [UserRouteAccessService]

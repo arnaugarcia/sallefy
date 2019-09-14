@@ -5,16 +5,10 @@ import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.service.dto.TrackDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -87,22 +81,13 @@ public class TrackResource {
     /**
      * {@code GET  /tracks} : get all the tracks.
      *
-
-     * @param pageable the pagination information.
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tracks in body.
      */
     @GetMapping("/tracks")
-    public ResponseEntity<List<TrackDTO>> getAllTracks(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
-        log.debug("REST request to get a page of Tracks");
-        Page<TrackDTO> page;
-        if (eagerload) {
-            page = trackService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = trackService.findAll(pageable);
-        }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public List<TrackDTO> getAllTracks(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+        log.debug("REST request to get all Tracks");
+        return trackService.findAll();
     }
 
     /**

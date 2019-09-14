@@ -80,10 +80,10 @@
             "ownerSide": false
         }
     ],
-    "changelogDate": "20190909073100",
+    "changelogDate": "20190914163158",
     "entityTableName": "track",
     "dto": "mapstruct",
-    "pagination": "pagination",
+    "pagination": "no",
     "service": "serviceImpl",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,

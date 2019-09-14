@@ -88,5 +88,5 @@ relationship OneToMany {
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct
 
-service all with serviceImpl except FollowUser, LikeTrack, LikeAlbum, Playback
+service all with serviceImpl
 

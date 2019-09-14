@@ -8,7 +8,10 @@
       "entities": {
         "main": "Entitats",
         "track": "Track",
+        "playlist": "Playlist",
+        "album": "Album",
         "likeTrack": "Like Track",
+        "followUser": "Follow User",
         "likeAlbum": "Like Album",
         "genre": "Genre",
         "playback": "Playback",

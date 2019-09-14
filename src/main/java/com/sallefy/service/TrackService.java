@@ -5,6 +5,7 @@ import com.sallefy.service.dto.TrackDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -23,10 +24,9 @@ public interface TrackService {
     /**
      * Get all the tracks.
      *
-     * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<TrackDTO> findAll(Pageable pageable);
+    List<TrackDTO> findAll();
 
     /**
      * Get all the tracks with eager load of many-to-many relationships.

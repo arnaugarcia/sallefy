@@ -13,7 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link Track}.
@@ -50,15 +53,15 @@ public class TrackServiceImpl implements TrackService {
     /**
      * Get all the tracks.
      *
-     * @param pageable the pagination information.
      * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<TrackDTO> findAll(Pageable pageable) {
+    public List<TrackDTO> findAll() {
         log.debug("Request to get all Tracks");
-        return trackRepository.findAll(pageable)
-            .map(trackMapper::toDto);
+        return trackRepository.findAllWithEagerRelationships().stream()
+            .map(trackMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

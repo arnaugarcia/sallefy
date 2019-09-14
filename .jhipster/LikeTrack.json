@@ -26,11 +26,11 @@
             "otherEntityField": "name"
         }
     ],
-    "changelogDate": "20190910120954",
+    "changelogDate": "20190914163201",
     "entityTableName": "like_track",
     "dto": "mapstruct",
     "pagination": "no",
-    "service": "serviceClass",
+    "service": "serviceImpl",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "",

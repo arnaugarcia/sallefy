@@ -34,9 +34,27 @@
                         </a>
                     </li>
                     <li>
+                        <a class="dropdown-item" routerLink="playlist" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.playlist">Playlist</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="album" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.album">Album</span>
+                        </a>
+                    </li>
+                    <li>
                         <a class="dropdown-item" routerLink="like-track" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
                             <span jhiTranslate="global.menu.entities.likeTrack">Like Track</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="follow-user" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.followUser">Follow User</span>
                         </a>
                     </li>
                     <li>

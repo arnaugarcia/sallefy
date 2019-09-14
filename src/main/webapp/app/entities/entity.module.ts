@@ -9,8 +9,20 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./track/track.module').then(m => m.SallefyTrackModule)
       },
       {
+        path: 'playlist',
+        loadChildren: () => import('./playlist/playlist.module').then(m => m.SallefyPlaylistModule)
+      },
+      {
+        path: 'album',
+        loadChildren: () => import('./album/album.module').then(m => m.SallefyAlbumModule)
+      },
+      {
         path: 'like-track',
         loadChildren: () => import('./like-track/like-track.module').then(m => m.SallefyLikeTrackModule)
+      },
+      {
+        path: 'follow-user',
+        loadChildren: () => import('./follow-user/follow-user.module').then(m => m.SallefyFollowUserModule)
       },
       {
         path: 'like-album',

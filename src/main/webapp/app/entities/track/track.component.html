@@ -16,17 +16,18 @@
     <div class="table-responsive" *ngIf="tracks?.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="name"><span jhiTranslate="sallefyApp.track.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="rating"><span jhiTranslate="sallefyApp.track.rating">Rating</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="url"><span jhiTranslate="sallefyApp.track.url">Url</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="popularity"><span jhiTranslate="sallefyApp.track.popularity">Popularity</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="thumbnail"><span jhiTranslate="sallefyApp.track.thumbnail">Thumbnail</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="createdAt"><span jhiTranslate="sallefyApp.track.createdAt">Created At</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="duration"><span jhiTranslate="sallefyApp.track.duration">Duration</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="primaryColor"><span jhiTranslate="sallefyApp.track.primaryColor">Primary Color</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="userLogin"><span jhiTranslate="sallefyApp.track.user">User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="sallefyApp.track.name">Name</span></th>
+            <th><span jhiTranslate="sallefyApp.track.rating">Rating</span></th>
+            <th><span jhiTranslate="sallefyApp.track.url">Url</span></th>
+            <th><span jhiTranslate="sallefyApp.track.popularity">Popularity</span></th>
+            <th><span jhiTranslate="sallefyApp.track.thumbnail">Thumbnail</span></th>
+            <th><span jhiTranslate="sallefyApp.track.createdAt">Created At</span></th>
+            <th><span jhiTranslate="sallefyApp.track.duration">Duration</span></th>
+            <th><span jhiTranslate="sallefyApp.track.primaryColor">Primary Color</span></th>
+            <th><span jhiTranslate="sallefyApp.track.user">User</span></th>
+            <th><span jhiTranslate="sallefyApp.track.genre">Genre</span></th>
             <th></th>
             </tr>
             </thead>
@@ -43,6 +44,11 @@
                 <td>{{track.primaryColor}}</td>
                 <td>
                     {{track.userLogin}}
+                </td>
+                <td>
+                    <span *ngFor="let genre of track.genres; let last = last">
+                            <a class="form-control-static" [routerLink]="['/genre', genre?.id, 'view' ]">{{genre.name}}</a>{{last ? '' : ', '}}
+                        </span>
                 </td>
                 <td class="text-right">
                     <div class="btn-group">
@@ -71,13 +77,5 @@
             </tr>
             </tbody>
         </table>
-    </div>
-    <div [hidden]="tracks?.length === 0">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-        </div>
     </div>
 </div>

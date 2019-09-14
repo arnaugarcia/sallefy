@@ -48,7 +48,13 @@ public class CacheConfiguration {
             createCache(cm, com.sallefy.domain.Track.class.getName() + ".playbacks");
             createCache(cm, com.sallefy.domain.Track.class.getName() + ".playlists");
             createCache(cm, com.sallefy.domain.Track.class.getName() + ".albums");
+            createCache(cm, com.sallefy.domain.Playlist.class.getName());
+            createCache(cm, com.sallefy.domain.Playlist.class.getName() + ".tracks");
+            createCache(cm, com.sallefy.domain.Album.class.getName());
+            createCache(cm, com.sallefy.domain.Album.class.getName() + ".likeAlbums");
+            createCache(cm, com.sallefy.domain.Album.class.getName() + ".tracks");
             createCache(cm, com.sallefy.domain.LikeTrack.class.getName());
+            createCache(cm, com.sallefy.domain.FollowUser.class.getName());
             createCache(cm, com.sallefy.domain.LikeAlbum.class.getName());
             createCache(cm, com.sallefy.domain.Genre.class.getName());
             createCache(cm, com.sallefy.domain.Genre.class.getName() + ".tracks");

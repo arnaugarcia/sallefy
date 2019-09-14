@@ -1,5 +1,4 @@
 package com.sallefy.repository;
-
 import com.sallefy.domain.Playlist;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

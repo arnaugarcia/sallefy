@@ -26,11 +26,11 @@
             "otherEntityField": "login"
         }
     ],
-    "changelogDate": "20190910151521",
+    "changelogDate": "20190914163202",
     "entityTableName": "follow_user",
     "dto": "mapstruct",
     "pagination": "no",
-    "service": "serviceClass",
+    "service": "serviceImpl",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "",
