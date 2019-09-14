@@ -2,6 +2,8 @@ package com.sallefy.service.dto;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.ZonedDateTime;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -35,6 +37,8 @@ public class TrackDTO implements Serializable {
     private Long userId;
 
     private String userLogin;
+
+    private Set<GenreDTO> genres = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -122,6 +126,14 @@ public class TrackDTO implements Serializable {
 
     public void setUserLogin(String userLogin) {
         this.userLogin = userLogin;
+    }
+
+    public Set<GenreDTO> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<GenreDTO> genres) {
+        this.genres = genres;
     }
 
     @Override

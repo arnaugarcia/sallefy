@@ -1,5 +1,4 @@
 package com.sallefy.repository;
-
 import com.sallefy.domain.LikeAlbum;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;

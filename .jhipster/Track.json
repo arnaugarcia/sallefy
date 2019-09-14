@@ -51,6 +51,20 @@
         },
         {
             "relationshipType": "many-to-many",
+            "otherEntityName": "genre",
+            "otherEntityRelationshipName": "track",
+            "relationshipName": "genre",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "playback",
+            "otherEntityRelationshipName": "track",
+            "relationshipName": "playback"
+        },
+        {
+            "relationshipType": "many-to-many",
             "otherEntityName": "playlist",
             "otherEntityRelationshipName": "track",
             "relationshipName": "playlist",
@@ -74,6 +88,5 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "",
-    "applications": "*",
-    "angularJSSuffix": "sf"
+    "applications": "*"
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -9,9 +11,10 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 import { ILikeAlbum, LikeAlbum } from 'app/shared/model/like-album.model';
 import { LikeAlbumService } from './like-album.service';
-import { IUser, UserService } from 'app/core';
-import { IAlbumSf } from 'app/shared/model/album-sf.model';
-import { AlbumSfService } from 'app/entities/album-sf';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
+import { IAlbum } from 'app/shared/model/album.model';
+import { AlbumService } from 'app/entities/album/album.service';
 
 @Component({
   selector: 'jhi-like-album-update',
@@ -22,7 +25,7 @@ export class LikeAlbumUpdateComponent implements OnInit {
 
   users: IUser[];
 
-  albums: IAlbumSf[];
+  albums: IAlbum[];
 
   editForm = this.fb.group({
     id: [],
@@ -36,7 +39,7 @@ export class LikeAlbumUpdateComponent implements OnInit {
     protected jhiAlertService: JhiAlertService,
     protected likeAlbumService: LikeAlbumService,
     protected userService: UserService,
-    protected albumService: AlbumSfService,
+    protected albumService: AlbumService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -56,10 +59,10 @@ export class LikeAlbumUpdateComponent implements OnInit {
     this.albumService
       .query()
       .pipe(
-        filter((mayBeOk: HttpResponse<IAlbumSf[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IAlbumSf[]>) => response.body)
+        filter((mayBeOk: HttpResponse<IAlbum[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IAlbum[]>) => response.body)
       )
-      .subscribe((res: IAlbumSf[]) => (this.albums = res), (res: HttpErrorResponse) => this.onError(res.message));
+      .subscribe((res: IAlbum[]) => (this.albums = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(likeAlbum: ILikeAlbum) {
@@ -117,7 +120,7 @@ export class LikeAlbumUpdateComponent implements OnInit {
     return item.id;
   }
 
-  trackAlbumById(index: number, item: IAlbumSf) {
+  trackAlbumById(index: number, item: IAlbum) {
     return item.id;
   }
 }

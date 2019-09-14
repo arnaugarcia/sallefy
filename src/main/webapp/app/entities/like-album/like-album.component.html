@@ -14,7 +14,7 @@
         <span jhiTranslate="sallefyApp.likeAlbum.home.notFound">No likeAlbums found</span>
     </div>
     <div class="table-responsive" *ngIf="likeAlbums?.length > 0">
-        <table class="table table-striped">
+        <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
@@ -35,7 +35,7 @@
                 </td>
                 <td>
                     <div *ngIf="likeAlbum.albumId">
-                        <a [routerLink]="['/album-sf', likeAlbum.albumId , 'view' ]" >{{likeAlbum.albumTitle}}</a>
+                        <a [routerLink]="['/album', likeAlbum.albumId , 'view' ]" >{{likeAlbum.albumTitle}}</a>
                     </div>
                 </td>
                 <td class="text-right">

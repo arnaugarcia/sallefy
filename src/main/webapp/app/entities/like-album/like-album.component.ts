@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { ILikeAlbum } from 'app/shared/model/like-album.model';
-import { AccountService } from 'app/core';
+import { AccountService } from 'app/core/auth/account.service';
 import { LikeAlbumService } from './like-album.service';
 
 @Component({

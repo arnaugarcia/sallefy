@@ -60,6 +60,17 @@ public class Track implements Serializable {
     @JsonIgnoreProperties("tracks")
     private User user;
 
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "track_genre",
+               joinColumns = @JoinColumn(name = "track_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
+    private Set<Genre> genres = new HashSet<>();
+
+    @OneToMany(mappedBy = "track")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Playback> playbacks = new HashSet<>();
+
     @ManyToMany(mappedBy = "tracks")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
@@ -219,6 +230,56 @@ public class Track implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public Track genres(Set<Genre> genres) {
+        this.genres = genres;
+        return this;
+    }
+
+    public Track addGenre(Genre genre) {
+        this.genres.add(genre);
+        genre.getTracks().add(this);
+        return this;
+    }
+
+    public Track removeGenre(Genre genre) {
+        this.genres.remove(genre);
+        genre.getTracks().remove(this);
+        return this;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public Set<Playback> getPlaybacks() {
+        return playbacks;
+    }
+
+    public Track playbacks(Set<Playback> playbacks) {
+        this.playbacks = playbacks;
+        return this;
+    }
+
+    public Track addPlayback(Playback playback) {
+        this.playbacks.add(playback);
+        playback.setTrack(this);
+        return this;
+    }
+
+    public Track removePlayback(Playback playback) {
+        this.playbacks.remove(playback);
+        playback.setTrack(null);
+        return this;
+    }
+
+    public void setPlaybacks(Set<Playback> playbacks) {
+        this.playbacks = playbacks;
     }
 
     public Set<Playlist> getPlaylists() {

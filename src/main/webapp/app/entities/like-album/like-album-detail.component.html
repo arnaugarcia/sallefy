@@ -20,7 +20,7 @@
                 <dt><span jhiTranslate="sallefyApp.likeAlbum.album">Album</span></dt>
                 <dd>
                     <div *ngIf="likeAlbum.albumId">
-                        <a [routerLink]="['/album-sf', likeAlbum.albumId, 'view']">{{likeAlbum.albumTitle}}</a>
+                        <a [routerLink]="['/album', likeAlbum.albumId, 'view']">{{likeAlbum.albumTitle}}</a>
                     </div>
                 </dd>
             </dl>

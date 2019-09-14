@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -9,9 +11,10 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 import { ILikeTrack, LikeTrack } from 'app/shared/model/like-track.model';
 import { LikeTrackService } from './like-track.service';
-import { IUser, UserService } from 'app/core';
-import { ITrackSf } from 'app/shared/model/track-sf.model';
-import { TrackSfService } from 'app/entities/track-sf';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
+import { ITrack } from 'app/shared/model/track.model';
+import { TrackService } from 'app/entities/track/track.service';
 
 @Component({
   selector: 'jhi-like-track-update',
@@ -22,7 +25,7 @@ export class LikeTrackUpdateComponent implements OnInit {
 
   users: IUser[];
 
-  tracks: ITrackSf[];
+  tracks: ITrack[];
 
   editForm = this.fb.group({
     id: [],
@@ -36,7 +39,7 @@ export class LikeTrackUpdateComponent implements OnInit {
     protected jhiAlertService: JhiAlertService,
     protected likeTrackService: LikeTrackService,
     protected userService: UserService,
-    protected trackService: TrackSfService,
+    protected trackService: TrackService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -56,10 +59,10 @@ export class LikeTrackUpdateComponent implements OnInit {
     this.trackService
       .query()
       .pipe(
-        filter((mayBeOk: HttpResponse<ITrackSf[]>) => mayBeOk.ok),
-        map((response: HttpResponse<ITrackSf[]>) => response.body)
+        filter((mayBeOk: HttpResponse<ITrack[]>) => mayBeOk.ok),
+        map((response: HttpResponse<ITrack[]>) => response.body)
       )
-      .subscribe((res: ITrackSf[]) => (this.tracks = res), (res: HttpErrorResponse) => this.onError(res.message));
+      .subscribe((res: ITrack[]) => (this.tracks = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(likeTrack: ILikeTrack) {
@@ -117,7 +120,7 @@ export class LikeTrackUpdateComponent implements OnInit {
     return item.id;
   }
 
-  trackTrackById(index: number, item: ITrackSf) {
+  trackTrackById(index: number, item: ITrack) {
     return item.id;
   }
 }

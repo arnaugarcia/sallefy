@@ -26,6 +26,8 @@
       "primaryColor": "Primary Color",
       "likeTrack": "Like Track",
       "user": "User",
+      "genre": "Genre",
+      "playback": "Playback",
       "playlist": "Playlist",
       "album": "Album"
     }

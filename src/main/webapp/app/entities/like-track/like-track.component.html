@@ -14,7 +14,7 @@
         <span jhiTranslate="sallefyApp.likeTrack.home.notFound">No likeTracks found</span>
     </div>
     <div class="table-responsive" *ngIf="likeTracks?.length > 0">
-        <table class="table table-striped">
+        <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
@@ -35,7 +35,7 @@
                 </td>
                 <td>
                     <div *ngIf="likeTrack.trackId">
-                        <a [routerLink]="['/track-sf', likeTrack.trackId , 'view' ]" >{{likeTrack.trackName}}</a>
+                        <a [routerLink]="['/track', likeTrack.trackId , 'view' ]" >{{likeTrack.trackName}}</a>
                     </div>
                 </td>
                 <td class="text-right">

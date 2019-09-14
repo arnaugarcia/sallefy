@@ -42,6 +42,17 @@ public class CacheConfiguration {
             createCache(cm, com.sallefy.domain.User.class.getName());
             createCache(cm, com.sallefy.domain.Authority.class.getName());
             createCache(cm, com.sallefy.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.sallefy.domain.Track.class.getName());
+            createCache(cm, com.sallefy.domain.Track.class.getName() + ".likeTracks");
+            createCache(cm, com.sallefy.domain.Track.class.getName() + ".genres");
+            createCache(cm, com.sallefy.domain.Track.class.getName() + ".playbacks");
+            createCache(cm, com.sallefy.domain.Track.class.getName() + ".playlists");
+            createCache(cm, com.sallefy.domain.Track.class.getName() + ".albums");
+            createCache(cm, com.sallefy.domain.LikeTrack.class.getName());
+            createCache(cm, com.sallefy.domain.LikeAlbum.class.getName());
+            createCache(cm, com.sallefy.domain.Genre.class.getName());
+            createCache(cm, com.sallefy.domain.Genre.class.getName() + ".tracks");
+            createCache(cm, com.sallefy.domain.Playback.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

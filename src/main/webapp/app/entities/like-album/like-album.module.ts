@@ -1,18 +1,12 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
-import { JhiLanguageHelper } from 'app/core';
 
-import { SallefySharedModule } from 'app/shared';
-import {
-  LikeAlbumComponent,
-  LikeAlbumDetailComponent,
-  LikeAlbumUpdateComponent,
-  LikeAlbumDeletePopupComponent,
-  LikeAlbumDeleteDialogComponent,
-  likeAlbumRoute,
-  likeAlbumPopupRoute
-} from './';
+import { SallefySharedModule } from 'app/shared/shared.module';
+import { LikeAlbumComponent } from './like-album.component';
+import { LikeAlbumDetailComponent } from './like-album-detail.component';
+import { LikeAlbumUpdateComponent } from './like-album-update.component';
+import { LikeAlbumDeletePopupComponent, LikeAlbumDeleteDialogComponent } from './like-album-delete-dialog.component';
+import { likeAlbumRoute, likeAlbumPopupRoute } from './like-album.route';
 
 const ENTITY_STATES = [...likeAlbumRoute, ...likeAlbumPopupRoute];
 
@@ -25,16 +19,6 @@ const ENTITY_STATES = [...likeAlbumRoute, ...likeAlbumPopupRoute];
     LikeAlbumDeleteDialogComponent,
     LikeAlbumDeletePopupComponent
   ],
-  entryComponents: [LikeAlbumComponent, LikeAlbumUpdateComponent, LikeAlbumDeleteDialogComponent, LikeAlbumDeletePopupComponent],
-  providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  entryComponents: [LikeAlbumComponent, LikeAlbumUpdateComponent, LikeAlbumDeleteDialogComponent, LikeAlbumDeletePopupComponent]
 })
-export class SallefyLikeAlbumModule {
-  constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
-    this.languageHelper.language.subscribe((languageKey: string) => {
-      if (languageKey) {
-        this.languageService.changeLanguage(languageKey);
-      }
-    });
-  }
-}
+export class SallefyLikeAlbumModule {}

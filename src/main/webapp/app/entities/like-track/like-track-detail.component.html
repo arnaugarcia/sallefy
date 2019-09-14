@@ -20,7 +20,7 @@
                 <dt><span jhiTranslate="sallefyApp.likeTrack.track">Track</span></dt>
                 <dd>
                     <div *ngIf="likeTrack.trackId">
-                        <a [routerLink]="['/track-sf', likeTrack.trackId, 'view']">{{likeTrack.trackName}}</a>
+                        <a [routerLink]="['/track', likeTrack.trackId, 'view']">{{likeTrack.trackName}}</a>
                     </div>
                 </dd>
             </dl>

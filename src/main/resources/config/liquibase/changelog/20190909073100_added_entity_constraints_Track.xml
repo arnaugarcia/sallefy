@@ -14,5 +14,17 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
+        <addForeignKeyConstraint baseColumnNames="track_id"
+                                 baseTableName="track_genre"
+                                 constraintName="fk_track_genre_track_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="track"/>
+
+        <addForeignKeyConstraint baseColumnNames="genre_id"
+                                 baseTableName="track_genre"
+                                 constraintName="fk_track_genre_genre_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="genre"/>
+        
     </changeSet>
 </databaseChangeLog>

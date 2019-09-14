@@ -6,7 +6,8 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <property name="autoIncrement" value="true"/>
+    <property name="now" value="now()" dbms="h2"/>
+        <property name="autoIncrement" value="true"/>
 
     <!--
         Added the entity Track.
@@ -60,6 +61,17 @@
 
     <changeSet id="20190909073100-1-relations" author="jhipster">
 
+        <createTable tableName="track_genre">
+            <column name="genre_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="track_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="track_id, genre_id" tableName="track_genre"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 

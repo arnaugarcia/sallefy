@@ -1,14 +1,37 @@
 package com.sallefy.service;
 
+import com.sallefy.domain.LikeAlbum;
+import com.sallefy.repository.LikeAlbumRepository;
 import com.sallefy.service.dto.LikeAlbumDTO;
+import com.sallefy.service.mapper.LikeAlbumMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
- * Service Interface for managing {@link com.sallefy.domain.LikeAlbum}.
+ * Service Implementation for managing {@link LikeAlbum}.
  */
-public interface LikeAlbumService {
+@Service
+@Transactional
+public class LikeAlbumService {
+
+    private final Logger log = LoggerFactory.getLogger(LikeAlbumService.class);
+
+    private final LikeAlbumRepository likeAlbumRepository;
+
+    private final LikeAlbumMapper likeAlbumMapper;
+
+    public LikeAlbumService(LikeAlbumRepository likeAlbumRepository, LikeAlbumMapper likeAlbumMapper) {
+        this.likeAlbumRepository = likeAlbumRepository;
+        this.likeAlbumMapper = likeAlbumMapper;
+    }
 
     /**
      * Save a likeAlbum.
@@ -16,28 +39,47 @@ public interface LikeAlbumService {
      * @param likeAlbumDTO the entity to save.
      * @return the persisted entity.
      */
-    LikeAlbumDTO save(LikeAlbumDTO likeAlbumDTO);
+    public LikeAlbumDTO save(LikeAlbumDTO likeAlbumDTO) {
+        log.debug("Request to save LikeAlbum : {}", likeAlbumDTO);
+        LikeAlbum likeAlbum = likeAlbumMapper.toEntity(likeAlbumDTO);
+        likeAlbum = likeAlbumRepository.save(likeAlbum);
+        return likeAlbumMapper.toDto(likeAlbum);
+    }
 
     /**
      * Get all the likeAlbums.
      *
      * @return the list of entities.
      */
-    List<LikeAlbumDTO> findAll();
+    @Transactional(readOnly = true)
+    public List<LikeAlbumDTO> findAll() {
+        log.debug("Request to get all LikeAlbums");
+        return likeAlbumRepository.findAll().stream()
+            .map(likeAlbumMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 
 
     /**
-     * Get the "id" likeAlbum.
+     * Get one likeAlbum by id.
      *
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<LikeAlbumDTO> findOne(Long id);
+    @Transactional(readOnly = true)
+    public Optional<LikeAlbumDTO> findOne(Long id) {
+        log.debug("Request to get LikeAlbum : {}", id);
+        return likeAlbumRepository.findById(id)
+            .map(likeAlbumMapper::toDto);
+    }
 
     /**
-     * Delete the "id" likeAlbum.
+     * Delete the likeAlbum by id.
      *
      * @param id the id of the entity.
      */
-    void delete(Long id);
+    public void delete(Long id) {
+        log.debug("Request to delete LikeAlbum : {}", id);
+        likeAlbumRepository.deleteById(id);
+    }
 }
