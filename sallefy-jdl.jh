@@ -52,7 +52,7 @@ entity Genre {
 }
 
 entity Playback {
-	ip String required,
+	ip String,
     latitude Double,
     longitude Double,
     date ZonedDateTime
@@ -91,4 +91,4 @@ paginate Track with pagination
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct
 
-service all with serviceImpl except FollowUser
+service all with serviceImpl except FollowUser, LikeTrack, LikeAlbum, Playback

@@ -21,27 +21,20 @@
     "buildTool": "maven",
     "useSass": true,
     "clientPackageManager": "npm",
-    "testFrameworks": [
-      "gatling",
-      "cucumber",
-      "protractor"
-    ],
+    "testFrameworks": ["gatling", "cucumber", "protractor"],
     "enableTranslation": true,
     "nativeLanguage": "en",
-    "languages": [
-      "ca",
-      "es",
-      "en"
-    ],
+    "languages": ["ca", "es", "en"],
     "clientFramework": "angularX",
     "jhiPrefix": "jhi",
-    "jhipsterVersion": "6.2.0",
+    "jhipsterVersion": "6.3.0",
     "jwtSecretKey": "ZGI3MTQyY2I3YTNiMGZiNGUwMDU0ODdhMzYzNjRhNWNmZWRiMTcxOWYwNmMyZDU4ZGQyZDA1MGI4ZDlmNTdiYzQ4ZWViYzBjODI3ODBmNTFiOWJmZTY1NmQ0NWNmMGFlODQzOGJmNmY3NWM3ZDc3Y2ExNTg3ZGIwYTIzZmNlMzE=",
     "clientTheme": "none",
     "entitySuffix": "",
     "dtoSuffix": "DTO",
     "otherModules": [],
-    "blueprints": []
+    "blueprints": [],
+    "embeddableLaunchScript": false
   },
   "git-provider": "GitHub",
   "git-company": "arnaugarcia",
