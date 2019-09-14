@@ -1,0 +1,27 @@
+{
+  "sallefyApp": {
+    "playback": {
+      "home": {
+        "title": "Playbacks",
+        "createLabel": "Crear nuevo Playback",
+        "createOrEditLabel": "Crear o editar Playback",
+        "notFound": "No Playbacks found"
+      },
+      "created": "Un nuevo Playback ha sido creado con el identificador {{ param }}",
+      "updated": "Un Playback ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Playback ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Playback {{ id }}?"
+      },
+      "detail": {
+        "title": "Playback"
+      },
+      "ip": "Ip",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "date": "Date",
+      "user": "User",
+      "track": "Track"
+    }
+  }
+}

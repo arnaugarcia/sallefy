@@ -1,0 +1,49 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="playback">
+            <h2><span jhiTranslate="sallefyApp.playback.detail.title">Playback</span> {{playback.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sallefyApp.playback.ip">Ip</span></dt>
+                <dd>
+                    <span>{{playback.ip}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playback.latitude">Latitude</span></dt>
+                <dd>
+                    <span>{{playback.latitude}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playback.longitude">Longitude</span></dt>
+                <dd>
+                    <span>{{playback.longitude}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playback.date">Date</span></dt>
+                <dd>
+                    <span>{{playback.date}}</span>
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playback.user">User</span></dt>
+                <dd>
+                    {{playback.userLogin}}
+                </dd>
+                <dt><span jhiTranslate="sallefyApp.playback.track">Track</span></dt>
+                <dd>
+                    <div *ngIf="playback.trackId">
+                        <a [routerLink]="['/track', playback.trackId, 'view']">{{playback.trackName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/playback', playback.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
