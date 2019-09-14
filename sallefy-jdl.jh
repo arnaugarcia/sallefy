@@ -1,3 +1,4 @@
+
 entity Track {
 	name String,
     rating Double,
@@ -50,6 +51,13 @@ entity Genre {
     popularity Integer
 }
 
+entity Playback {
+	ip String required,
+    latitude Double,
+    longitude Double,
+    date ZonedDateTime
+}
+
 relationship ManyToOne {
     Playlist{user(login)} to User,
     Album{user(login)} to User,
@@ -57,7 +65,9 @@ relationship ManyToOne {
     FollowUser{followed(login)} to User,
     FollowUser{user(login)} to User,
     LikeTrack{user(login)} to User,
-    LikeAlbum {user(login)} to User
+    LikeAlbum {user(login)} to User,
+    Playback{user(login)} to User,
+    Playback{track(name)} to Track{playback(ip)}
 }
 
 relationship ManyToMany {
