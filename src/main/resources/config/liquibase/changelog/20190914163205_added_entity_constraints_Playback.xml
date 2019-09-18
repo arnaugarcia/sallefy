@@ -4,19 +4,19 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <!--
-        Added the constraints for entity LikeTrack.
+        Added the constraints for entity Playback.
     -->
-    <changeSet id="20190918084035-2" author="jhipster">
+    <changeSet id="20190914163205-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="like_track"
-                                 constraintName="fk_like_track_user_id"
+                                 baseTableName="playback"
+                                 constraintName="fk_playback_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
         <addForeignKeyConstraint baseColumnNames="track_id"
-                                 baseTableName="like_track"
-                                 constraintName="fk_like_track_track_id"
+                                 baseTableName="playback"
+                                 constraintName="fk_playback_track_id"
                                  referencedColumnNames="id"
                                  referencedTableName="track"/>
 

@@ -14,21 +14,21 @@
     <property name="uuidType" value="varchar(36)" dbms="h2, mysql, mariadb"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084032_added_entity_Track.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084033_added_entity_Playlist.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084034_added_entity_Album.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084035_added_entity_LikeTrack.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084036_added_entity_FollowUser.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084037_added_entity_LikeAlbum.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084038_added_entity_Genre.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084039_added_entity_Playback.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163158_added_entity_Track.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163159_added_entity_Playlist.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163200_added_entity_Album.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163201_added_entity_LikeTrack.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163202_added_entity_FollowUser.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163203_added_entity_LikeAlbum.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163204_added_entity_Genre.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163205_added_entity_Playback.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20190918084032_added_entity_constraints_Track.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084033_added_entity_constraints_Playlist.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084034_added_entity_constraints_Album.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084035_added_entity_constraints_LikeTrack.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084036_added_entity_constraints_FollowUser.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084037_added_entity_constraints_LikeAlbum.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190918084039_added_entity_constraints_Playback.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163158_added_entity_constraints_Track.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163159_added_entity_constraints_Playlist.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163200_added_entity_constraints_Album.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163201_added_entity_constraints_LikeTrack.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163202_added_entity_constraints_FollowUser.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163203_added_entity_constraints_LikeAlbum.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190914163205_added_entity_constraints_Playback.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

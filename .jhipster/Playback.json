@@ -34,7 +34,7 @@
             "otherEntityField": "name"
         }
     ],
-    "changelogDate": "20190918084039",
+    "changelogDate": "20190914163205",
     "entityTableName": "playback",
     "dto": "mapstruct",
     "pagination": "no",

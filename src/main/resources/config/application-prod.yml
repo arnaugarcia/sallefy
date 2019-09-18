@@ -33,9 +33,9 @@ spring:
       enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/Sallefy?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
-    username: root
-    password:
+    url: jdbc:mysql://${SALLEFY_DB_HOST}:${SALLEFY_DB_PORT}/${SALLEFY_DB_NAME}?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: ${SALLEFY_DB_USER}
+    password: ${SALLEFY_DB_PASSWORD}
     hikari:
       poolName: Hikari
       auto-commit: false

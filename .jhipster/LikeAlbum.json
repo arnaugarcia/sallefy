@@ -26,7 +26,7 @@
             "otherEntityField": "title"
         }
     ],
-    "changelogDate": "20190918084037",
+    "changelogDate": "20190914163203",
     "entityTableName": "like_album",
     "dto": "mapstruct",
     "pagination": "no",
