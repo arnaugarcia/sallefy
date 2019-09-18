@@ -1,5 +1,6 @@
 package com.sallefy.service;
 
+import com.sallefy.service.dto.LikeTrackDTO;
 import com.sallefy.service.dto.TrackDTO;
 
 import org.springframework.data.domain.Page;
@@ -34,7 +35,7 @@ public interface TrackService {
      * @return the list of entities.
      */
     Page<TrackDTO> findAllWithEagerRelationships(Pageable pageable);
-    
+
     /**
      * Get the "id" track.
      *
@@ -49,4 +50,11 @@ public interface TrackService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Method to like a Track by "id"
+     * @param id the id of the Track
+     * @return a LikeTrackDTO with the liked boolean
+     */
+    Optional<LikeTrackDTO> toggleLike(Long id);
 }

@@ -1,8 +1,10 @@
 package com.sallefy.service.impl;
 
+import com.sallefy.security.SecurityUtils;
 import com.sallefy.service.TrackService;
 import com.sallefy.domain.Track;
 import com.sallefy.repository.TrackRepository;
+import com.sallefy.service.dto.LikeTrackDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.TrackMapper;
 import org.slf4j.Logger;
@@ -72,7 +74,7 @@ public class TrackServiceImpl implements TrackService {
     public Page<TrackDTO> findAllWithEagerRelationships(Pageable pageable) {
         return trackRepository.findAllWithEagerRelationships(pageable).map(trackMapper::toDto);
     }
-    
+
 
     /**
      * Get one track by id.
@@ -97,5 +99,11 @@ public class TrackServiceImpl implements TrackService {
     public void delete(Long id) {
         log.debug("Request to delete Track : {}", id);
         trackRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<LikeTrackDTO> toggleLike(Long id) {
+        SecurityUtils.getCurrentUserLogin();
+        return Optional.empty();
     }
 }
