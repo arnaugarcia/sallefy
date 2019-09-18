@@ -1,6 +1,7 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.service.TrackService;
+import com.sallefy.service.dto.LikeTrackDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.service.dto.TrackDTO;
 
@@ -101,6 +102,19 @@ public class TrackResource {
         log.debug("REST request to get Track : {}", id);
         Optional<TrackDTO> trackDTO = trackService.findOne(id);
         return ResponseUtil.wrapOrNotFound(trackDTO);
+    }
+
+    /**
+     * {@code PUT  /tracks/:id} : like the track by "id".
+     *
+     * @param id the id of the trackDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the trackDTO, or with status {@code 404 (Not Found)}.
+     */
+    @PutMapping("/tracks/{id}/like")
+    public ResponseEntity<LikeTrackDTO> toggleLikeTrack(@PathVariable Long id) {
+        log.debug("REST request to like a Track : {}", id);
+        Optional<LikeTrackDTO> likeTrackDTO = trackService.toggleLike(id);
+        return ResponseUtil.wrapOrNotFound(likeTrackDTO);
     }
 
     /**
