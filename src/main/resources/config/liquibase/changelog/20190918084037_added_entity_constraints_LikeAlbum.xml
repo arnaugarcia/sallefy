@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity LikeAlbum.
     -->
-    <changeSet id="20190914163203-2" author="jhipster">
+    <changeSet id="20190918084037-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="like_album"

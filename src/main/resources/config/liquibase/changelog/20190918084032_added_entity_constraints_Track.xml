@@ -4,27 +4,27 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <!--
-        Added the constraints for entity Playlist.
+        Added the constraints for entity Track.
     -->
-    <changeSet id="20190914163159-2" author="jhipster">
+    <changeSet id="20190918084032-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="playlist"
-                                 constraintName="fk_playlist_user_id"
+                                 baseTableName="track"
+                                 constraintName="fk_track_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
-        <addForeignKeyConstraint baseColumnNames="playlist_id"
-                                 baseTableName="playlist_track"
-                                 constraintName="fk_playlist_track_playlist_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="playlist"/>
-
         <addForeignKeyConstraint baseColumnNames="track_id"
-                                 baseTableName="playlist_track"
-                                 constraintName="fk_playlist_track_track_id"
+                                 baseTableName="track_genre"
+                                 constraintName="fk_track_genre_track_id"
                                  referencedColumnNames="id"
                                  referencedTableName="track"/>
+
+        <addForeignKeyConstraint baseColumnNames="genre_id"
+                                 baseTableName="track_genre"
+                                 constraintName="fk_track_genre_genre_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="genre"/>
         
     </changeSet>
 </databaseChangeLog>

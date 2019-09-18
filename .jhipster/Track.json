@@ -80,7 +80,7 @@
             "ownerSide": false
         }
     ],
-    "changelogDate": "20190914163158",
+    "changelogDate": "20190918084032",
     "entityTableName": "track",
     "dto": "mapstruct",
     "pagination": "no",
