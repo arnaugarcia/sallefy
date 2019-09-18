@@ -1,5 +1,6 @@
 package com.sallefy.web.rest;
 
+import com.sallefy.service.LikeService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.LikeTrackDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
@@ -35,8 +36,11 @@ public class TrackResource {
 
     private final TrackService trackService;
 
-    public TrackResource(TrackService trackService) {
+    private final LikeService likeService;
+
+    public TrackResource(TrackService trackService, LikeService likeService) {
         this.trackService = trackService;
+        this.likeService = likeService;
     }
 
     /**
@@ -113,7 +117,7 @@ public class TrackResource {
     @PutMapping("/tracks/{id}/like")
     public ResponseEntity<LikeTrackDTO> toggleLikeTrack(@PathVariable Long id) {
         log.debug("REST request to like a Track : {}", id);
-        Optional<LikeTrackDTO> likeTrackDTO = trackService.toggleLike(id);
+        Optional<LikeTrackDTO> likeTrackDTO = likeService.toggleLikeTrack(id);
         return ResponseUtil.wrapOrNotFound(likeTrackDTO);
     }
 
