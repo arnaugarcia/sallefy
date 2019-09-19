@@ -18,7 +18,6 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="sallefyApp.followUser.liked">Liked</span></th>
             <th><span jhiTranslate="sallefyApp.followUser.date">Date</span></th>
             <th><span jhiTranslate="sallefyApp.followUser.followed">Followed</span></th>
             <th><span jhiTranslate="sallefyApp.followUser.user">User</span></th>
@@ -28,7 +27,6 @@
             <tbody>
             <tr *ngFor="let followUser of followUsers ;trackBy: trackId">
                 <td><a [routerLink]="['/follow-user', followUser.id, 'view' ]">{{followUser.id}}</a></td>
-                <td>{{followUser.liked}}</td>
                 <td>{{followUser.date | date:'medium'}}</td>
                 <td>
                     {{followUser.followedLogin}}

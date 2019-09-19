@@ -4,21 +4,21 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <!--
-        Added the constraints for entity Playback.
+        Added the constraints for entity FollowPlaylist.
     -->
-    <changeSet id="20190919064657-2" author="jhipster">
+    <changeSet id="20190919065625-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="playback"
-                                 constraintName="fk_playback_user_id"
+                                 baseTableName="follow_playlist"
+                                 constraintName="fk_follow_playlist_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
-        <addForeignKeyConstraint baseColumnNames="track_id"
-                                 baseTableName="playback"
-                                 constraintName="fk_playback_track_id"
+        <addForeignKeyConstraint baseColumnNames="playlist_id"
+                                 baseTableName="follow_playlist"
+                                 constraintName="fk_follow_playlist_playlist_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="track"/>
+                                 referencedTableName="playlist"/>
 
     </changeSet>
 </databaseChangeLog>

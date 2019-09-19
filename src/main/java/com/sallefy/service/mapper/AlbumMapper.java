@@ -15,10 +15,10 @@ public interface AlbumMapper extends EntityMapper<AlbumDTO, Album> {
     @Mapping(source = "user.login", target = "userLogin")
     AlbumDTO toDto(Album album);
 
-    @Mapping(target = "likeAlbums", ignore = true)
-    @Mapping(target = "removeLikeAlbum", ignore = true)
     @Mapping(source = "userId", target = "user")
     @Mapping(target = "removeTrack", ignore = true)
+    @Mapping(target = "likeAlbums", ignore = true)
+    @Mapping(target = "removeLikeAlbum", ignore = true)
     Album toEntity(AlbumDTO albumDTO);
 
     default Album fromId(Long id) {

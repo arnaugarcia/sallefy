@@ -36,13 +36,6 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "likeTrack",
-            "otherEntityRelationshipName": "track",
-            "javadoc": "LikeTrack Relationships",
-            "relationshipName": "likeTrack"
-        },
-        {
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "track",
@@ -64,6 +57,12 @@
             "relationshipName": "playback"
         },
         {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "likeTrack",
+            "otherEntityRelationshipName": "track",
+            "relationshipName": "likeTrack"
+        },
+        {
             "relationshipType": "many-to-many",
             "otherEntityName": "playlist",
             "otherEntityRelationshipName": "track",
@@ -80,7 +79,7 @@
             "ownerSide": false
         }
     ],
-    "changelogDate": "20190919064649",
+    "changelogDate": "20190919065620",
     "entityTableName": "track",
     "dto": "mapstruct",
     "pagination": "no",

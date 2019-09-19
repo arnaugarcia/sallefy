@@ -26,11 +26,11 @@
             "otherEntityField": "title"
         }
     ],
-    "changelogDate": "20190919064655",
+    "changelogDate": "20190919065626",
     "entityTableName": "like_album",
     "dto": "mapstruct",
     "pagination": "no",
-    "service": "serviceImpl",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "",

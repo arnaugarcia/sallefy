@@ -4,27 +4,21 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <!--
-        Added the constraints for entity Album.
+        Added the constraints for entity LikeTrack.
     -->
-    <changeSet id="20190919064651-2" author="jhipster">
+    <changeSet id="20190919065623-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="album"
-                                 constraintName="fk_album_user_id"
+                                 baseTableName="like_track"
+                                 constraintName="fk_like_track_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
-        <addForeignKeyConstraint baseColumnNames="album_id"
-                                 baseTableName="album_track"
-                                 constraintName="fk_album_track_album_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="album"/>
-
         <addForeignKeyConstraint baseColumnNames="track_id"
-                                 baseTableName="album_track"
-                                 constraintName="fk_album_track_track_id"
+                                 baseTableName="like_track"
+                                 constraintName="fk_like_track_track_id"
                                  referencedColumnNames="id"
                                  referencedTableName="track"/>
-        
+
     </changeSet>
 </databaseChangeLog>

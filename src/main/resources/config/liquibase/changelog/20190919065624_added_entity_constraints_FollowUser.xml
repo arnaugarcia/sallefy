@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity FollowUser.
     -->
-    <changeSet id="20190919064653-2" author="jhipster">
+    <changeSet id="20190919065624-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="followed_id"
                                  baseTableName="follow_user"

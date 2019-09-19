@@ -45,14 +45,6 @@ describe('FollowUser e2e test', () => {
       followUserUpdatePage.followedSelectLastOption(),
       followUserUpdatePage.userSelectLastOption()
     ]);
-    const selectedLiked = followUserUpdatePage.getLikedInput();
-    if (await selectedLiked.isSelected()) {
-      await followUserUpdatePage.getLikedInput().click();
-      expect(await followUserUpdatePage.getLikedInput().isSelected(), 'Expected liked not to be selected').to.be.false;
-    } else {
-      await followUserUpdatePage.getLikedInput().click();
-      expect(await followUserUpdatePage.getLikedInput().isSelected(), 'Expected liked to be selected').to.be.true;
-    }
     expect(await followUserUpdatePage.getDateInput()).to.contain('2001-01-01T02:30', 'Expected date value to be equals to 2000-12-31');
     await followUserUpdatePage.save();
     expect(await followUserUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

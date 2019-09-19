@@ -34,11 +34,11 @@
             "otherEntityField": "name"
         }
     ],
-    "changelogDate": "20190919064657",
+    "changelogDate": "20190919065628",
     "entityTableName": "playback",
     "dto": "mapstruct",
     "pagination": "no",
-    "service": "serviceImpl",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "",

@@ -22,7 +22,7 @@
             "otherEntityField": "name"
         }
     ],
-    "changelogDate": "20190919064654",
+    "changelogDate": "20190919065625",
     "entityTableName": "follow_playlist",
     "dto": "mapstruct",
     "pagination": "no",

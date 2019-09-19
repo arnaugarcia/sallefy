@@ -35,10 +35,6 @@ public class Album implements Serializable {
     @Column(name = "total_tracks")
     private Integer totalTracks;
 
-    @OneToMany(mappedBy = "album")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<LikeAlbum> likeAlbums = new HashSet<>();
-
     @ManyToOne
     @JsonIgnoreProperties("albums")
     private User user;
@@ -49,6 +45,10 @@ public class Album implements Serializable {
                joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "track_id", referencedColumnName = "id"))
     private Set<Track> tracks = new HashSet<>();
+
+    @OneToMany(mappedBy = "album")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<LikeAlbum> likeAlbums = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -111,31 +111,6 @@ public class Album implements Serializable {
         this.totalTracks = totalTracks;
     }
 
-    public Set<LikeAlbum> getLikeAlbums() {
-        return likeAlbums;
-    }
-
-    public Album likeAlbums(Set<LikeAlbum> likeAlbums) {
-        this.likeAlbums = likeAlbums;
-        return this;
-    }
-
-    public Album addLikeAlbum(LikeAlbum likeAlbum) {
-        this.likeAlbums.add(likeAlbum);
-        likeAlbum.setAlbum(this);
-        return this;
-    }
-
-    public Album removeLikeAlbum(LikeAlbum likeAlbum) {
-        this.likeAlbums.remove(likeAlbum);
-        likeAlbum.setAlbum(null);
-        return this;
-    }
-
-    public void setLikeAlbums(Set<LikeAlbum> likeAlbums) {
-        this.likeAlbums = likeAlbums;
-    }
-
     public User getUser() {
         return user;
     }
@@ -172,6 +147,31 @@ public class Album implements Serializable {
 
     public void setTracks(Set<Track> tracks) {
         this.tracks = tracks;
+    }
+
+    public Set<LikeAlbum> getLikeAlbums() {
+        return likeAlbums;
+    }
+
+    public Album likeAlbums(Set<LikeAlbum> likeAlbums) {
+        this.likeAlbums = likeAlbums;
+        return this;
+    }
+
+    public Album addLikeAlbum(LikeAlbum likeAlbum) {
+        this.likeAlbums.add(likeAlbum);
+        likeAlbum.setAlbum(this);
+        return this;
+    }
+
+    public Album removeLikeAlbum(LikeAlbum likeAlbum) {
+        this.likeAlbums.remove(likeAlbum);
+        likeAlbum.setAlbum(null);
+        return this;
+    }
+
+    public void setLikeAlbums(Set<LikeAlbum> likeAlbums) {
+        this.likeAlbums = likeAlbums;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
