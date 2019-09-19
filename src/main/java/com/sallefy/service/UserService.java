@@ -8,6 +8,9 @@ import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.security.SecurityUtils;
 import com.sallefy.service.dto.UserDTO;
+import com.sallefy.service.exception.EmailAlreadyUsedException;
+import com.sallefy.service.exception.InvalidPasswordException;
+import com.sallefy.service.exception.UsernameAlreadyUsedException;
 import com.sallefy.service.util.RandomUtil;
 
 import org.slf4j.Logger;
