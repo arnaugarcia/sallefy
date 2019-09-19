@@ -1,10 +1,6 @@
 {
-    "name": "LikeAlbum",
+    "name": "FollowPlaylist",
     "fields": [
-        {
-            "fieldName": "liked",
-            "fieldType": "Boolean"
-        },
         {
             "fieldName": "date",
             "fieldType": "ZonedDateTime"
@@ -14,23 +10,23 @@
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
-            "otherEntityRelationshipName": "likeAlbum",
+            "otherEntityRelationshipName": "followPlaylist",
             "relationshipName": "user",
             "otherEntityField": "login"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "album",
-            "otherEntityRelationshipName": "likeAlbum",
-            "relationshipName": "album",
-            "otherEntityField": "title"
+            "otherEntityName": "playlist",
+            "otherEntityRelationshipName": "followPlaylist",
+            "relationshipName": "playlist",
+            "otherEntityField": "name"
         }
     ],
-    "changelogDate": "20190919064655",
-    "entityTableName": "like_album",
+    "changelogDate": "20190919064654",
+    "entityTableName": "follow_playlist",
     "dto": "mapstruct",
     "pagination": "no",
-    "service": "serviceImpl",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "",

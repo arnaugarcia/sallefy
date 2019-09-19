@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Playback.
     -->
-    <changeSet id="20190914163205-2" author="jhipster">
+    <changeSet id="20190919064657-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="playback"

@@ -60,7 +60,7 @@
             "ownerSide": true
         }
     ],
-    "changelogDate": "20190914163159",
+    "changelogDate": "20190919064650",
     "entityTableName": "playlist",
     "dto": "mapstruct",
     "pagination": "no",

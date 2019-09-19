@@ -25,6 +25,10 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./follow-user/follow-user.module').then(m => m.SallefyFollowUserModule)
       },
       {
+        path: 'follow-playlist',
+        loadChildren: () => import('./follow-playlist/follow-playlist.module').then(m => m.SallefyFollowPlaylistModule)
+      },
+      {
         path: 'like-album',
         loadChildren: () => import('./like-album/like-album.module').then(m => m.SallefyLikeAlbumModule)
       },

@@ -26,7 +26,7 @@
             "otherEntityField": "name"
         }
     ],
-    "changelogDate": "20190914163201",
+    "changelogDate": "20190919064652",
     "entityTableName": "like_track",
     "dto": "mapstruct",
     "pagination": "no",
