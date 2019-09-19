@@ -3,11 +3,9 @@ package com.sallefy.web.rest;
 import com.sallefy.service.LikeService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.LikeTrackDTO;
-import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.service.dto.TrackDTO;
-
+import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
-import java.util.Optional;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 /**
  * REST controller for managing {@link com.sallefy.domain.Track}.
@@ -78,7 +76,7 @@ public class TrackResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         TrackDTO result = trackService.save(trackDTO);
-        return ResponseEntity.ok()
+        return ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, trackDTO.getId().toString()))
             .body(result);
     }
@@ -104,8 +102,8 @@ public class TrackResource {
     @GetMapping("/tracks/{id}")
     public ResponseEntity<TrackDTO> getTrack(@PathVariable Long id) {
         log.debug("REST request to get Track : {}", id);
-        Optional<TrackDTO> trackDTO = trackService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(trackDTO);
+        TrackDTO trackDTO = trackService.findOne(id);
+        return ok(trackDTO);
     }
 
     /**
@@ -117,8 +115,8 @@ public class TrackResource {
     @PutMapping("/tracks/{id}/like")
     public ResponseEntity<LikeTrackDTO> toggleLikeTrack(@PathVariable Long id) {
         log.debug("REST request to like a Track : {}", id);
-        Optional<LikeTrackDTO> likeTrackDTO = likeService.toggleLikeTrack(id);
-        return ResponseUtil.wrapOrNotFound(likeTrackDTO);
+        LikeTrackDTO likeTrackDTO = likeService.toggleLikeTrack(id);
+        return ok(likeTrackDTO);
     }
 
     /**
