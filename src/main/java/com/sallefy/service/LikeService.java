@@ -16,5 +16,5 @@ public interface LikeService {
      * @param trackId the id of the Track
      * @return a LikeTrackDTO with the liked boolean
      */
-    Optional<LikeTrackDTO> toggleLikeTrack(Long trackId) throws BadRequestException;
+    Optional<LikeTrackDTO> toggleLikeTrack(Long trackId);
 }
