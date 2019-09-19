@@ -2,6 +2,7 @@ package com.sallefy.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 
@@ -26,6 +27,7 @@ public class LikeTrack implements Serializable {
     private Boolean liked;
 
     @Column(name = "date")
+    @UpdateTimestamp
     private ZonedDateTime date;
 
     @ManyToOne
