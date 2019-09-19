@@ -2,10 +2,6 @@
     "name": "FollowUser",
     "fields": [
         {
-            "fieldName": "liked",
-            "fieldType": "Boolean"
-        },
-        {
             "fieldName": "date",
             "fieldType": "ZonedDateTime"
         }
@@ -26,11 +22,11 @@
             "otherEntityField": "login"
         }
     ],
-    "changelogDate": "20190914163202",
+    "changelogDate": "20190919065624",
     "entityTableName": "follow_user",
     "dto": "mapstruct",
     "pagination": "no",
-    "service": "serviceImpl",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "",

@@ -20,12 +20,6 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "likeAlbum",
-            "otherEntityRelationshipName": "album",
-            "relationshipName": "likeAlbum"
-        },
-        {
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "album",
@@ -39,9 +33,15 @@
             "relationshipName": "track",
             "otherEntityField": "name",
             "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "likeAlbum",
+            "otherEntityRelationshipName": "album",
+            "relationshipName": "likeAlbum"
         }
     ],
-    "changelogDate": "20190914163200",
+    "changelogDate": "20190919065622",
     "entityTableName": "album",
     "dto": "mapstruct",
     "pagination": "no",

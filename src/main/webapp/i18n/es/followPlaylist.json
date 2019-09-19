@@ -1,0 +1,24 @@
+{
+  "sallefyApp": {
+    "followPlaylist": {
+      "home": {
+        "title": "Follow Playlists",
+        "createLabel": "Crear nuevo Follow Playlist",
+        "createOrEditLabel": "Crear o editar Follow Playlist",
+        "notFound": "No Follow Playlists found"
+      },
+      "created": "Un nuevo Follow Playlist ha sido creado con el identificador {{ param }}",
+      "updated": "Un Follow Playlist ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Follow Playlist ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Follow Playlist {{ id }}?"
+      },
+      "detail": {
+        "title": "Follow Playlist"
+      },
+      "date": "Date",
+      "user": "User",
+      "playlist": "Playlist"
+    }
+  }
+}

@@ -49,13 +49,6 @@ public class Track implements Serializable {
     @Column(name = "primary_color")
     private String primaryColor;
 
-    /**
-     * LikeTrack Relationships
-     */
-    @OneToMany(mappedBy = "track")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<LikeTrack> likeTracks = new HashSet<>();
-
     @ManyToOne
     @JsonIgnoreProperties("tracks")
     private User user;
@@ -70,6 +63,10 @@ public class Track implements Serializable {
     @OneToMany(mappedBy = "track")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Playback> playbacks = new HashSet<>();
+
+    @OneToMany(mappedBy = "track")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<LikeTrack> likeTracks = new HashSet<>();
 
     @ManyToMany(mappedBy = "tracks")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -194,31 +191,6 @@ public class Track implements Serializable {
         this.primaryColor = primaryColor;
     }
 
-    public Set<LikeTrack> getLikeTracks() {
-        return likeTracks;
-    }
-
-    public Track likeTracks(Set<LikeTrack> likeTracks) {
-        this.likeTracks = likeTracks;
-        return this;
-    }
-
-    public Track addLikeTrack(LikeTrack likeTrack) {
-        this.likeTracks.add(likeTrack);
-        likeTrack.setTrack(this);
-        return this;
-    }
-
-    public Track removeLikeTrack(LikeTrack likeTrack) {
-        this.likeTracks.remove(likeTrack);
-        likeTrack.setTrack(null);
-        return this;
-    }
-
-    public void setLikeTracks(Set<LikeTrack> likeTracks) {
-        this.likeTracks = likeTracks;
-    }
-
     public User getUser() {
         return user;
     }
@@ -280,6 +252,31 @@ public class Track implements Serializable {
 
     public void setPlaybacks(Set<Playback> playbacks) {
         this.playbacks = playbacks;
+    }
+
+    public Set<LikeTrack> getLikeTracks() {
+        return likeTracks;
+    }
+
+    public Track likeTracks(Set<LikeTrack> likeTracks) {
+        this.likeTracks = likeTracks;
+        return this;
+    }
+
+    public Track addLikeTrack(LikeTrack likeTrack) {
+        this.likeTracks.add(likeTrack);
+        likeTrack.setTrack(this);
+        return this;
+    }
+
+    public Track removeLikeTrack(LikeTrack likeTrack) {
+        this.likeTracks.remove(likeTrack);
+        likeTrack.setTrack(null);
+        return this;
+    }
+
+    public void setLikeTracks(Set<LikeTrack> likeTracks) {
+        this.likeTracks = likeTracks;
     }
 
     public Set<Playlist> getPlaylists() {

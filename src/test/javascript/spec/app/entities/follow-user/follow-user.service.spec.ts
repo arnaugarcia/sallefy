@@ -24,7 +24,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new FollowUser(0, false, currentDate);
+      elemDefault = new FollowUser(0, currentDate);
     });
 
     describe('Service methods', () => {
@@ -71,7 +71,6 @@ describe('Service Tests', () => {
       it('should update a FollowUser', () => {
         const returnedFromService = Object.assign(
           {
-            liked: true,
             date: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
@@ -95,7 +94,6 @@ describe('Service Tests', () => {
       it('should return a list of FollowUser', () => {
         const returnedFromService = Object.assign(
           {
-            liked: true,
             date: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault

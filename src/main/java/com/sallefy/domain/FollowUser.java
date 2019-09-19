@@ -22,9 +22,6 @@ public class FollowUser implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "liked")
-    private Boolean liked;
-
     @Column(name = "date")
     private ZonedDateTime date;
 
@@ -43,19 +40,6 @@ public class FollowUser implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Boolean isLiked() {
-        return liked;
-    }
-
-    public FollowUser liked(Boolean liked) {
-        this.liked = liked;
-        return this;
-    }
-
-    public void setLiked(Boolean liked) {
-        this.liked = liked;
     }
 
     public ZonedDateTime getDate() {
@@ -118,7 +102,6 @@ public class FollowUser implements Serializable {
     public String toString() {
         return "FollowUser{" +
             "id=" + getId() +
-            ", liked='" + isLiked() + "'" +
             ", date='" + getDate() + "'" +
             "}";
     }

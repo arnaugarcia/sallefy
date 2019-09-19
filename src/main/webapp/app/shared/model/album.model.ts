@@ -1,5 +1,5 @@
-import { ILikeAlbum } from 'app/shared/model/like-album.model';
 import { ITrack } from 'app/shared/model/track.model';
+import { ILikeAlbum } from 'app/shared/model/like-album.model';
 
 export interface IAlbum {
   id?: number;
@@ -7,10 +7,10 @@ export interface IAlbum {
   year?: number;
   thumbnail?: string;
   totalTracks?: number;
-  likeAlbums?: ILikeAlbum[];
   userLogin?: string;
   userId?: number;
   tracks?: ITrack[];
+  likeAlbums?: ILikeAlbum[];
 }
 
 export class Album implements IAlbum {
@@ -20,9 +20,9 @@ export class Album implements IAlbum {
     public year?: number,
     public thumbnail?: string,
     public totalTracks?: number,
-    public likeAlbums?: ILikeAlbum[],
     public userLogin?: string,
     public userId?: number,
-    public tracks?: ITrack[]
+    public tracks?: ITrack[],
+    public likeAlbums?: ILikeAlbum[]
   ) {}
 }
