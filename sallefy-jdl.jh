@@ -37,7 +37,10 @@ entity LikeTrack {
 }
 
 entity FollowUser {
-	liked Boolean,
+    date ZonedDateTime,
+}
+
+entity FollowPlaylist {
     date ZonedDateTime,
 }
 
@@ -62,12 +65,23 @@ relationship ManyToOne {
     Playlist{user(login)} to User,
     Album{user(login)} to User,
     Track{user(login)} to User,
+
     FollowUser{followed(login)} to User,
     FollowUser{user(login)} to User,
+
     LikeTrack{user(login)} to User,
     LikeAlbum {user(login)} to User,
+
     Playback{user(login)} to User,
-    Playback{track(name)} to Track{playback(ip)}
+    Playback{track(name)} to Track{playback(ip)},
+
+    LikeTrack{track(name)} to Track{likeTrack},
+
+    LikeAlbum{album(title)} to Album{likeAlbum},
+
+    FollowPlaylist{user(login)} to User,
+
+    FollowPlaylist{playlist(name)} to Playlist
 }
 
 relationship ManyToMany {
@@ -76,17 +90,7 @@ relationship ManyToMany {
     Track{genre(name)} to Genre{track(name)}
 }
 
-relationship OneToMany {
-	/**
-     * LikeTrack Relationships
-     */
-	Track{likeTrack} to LikeTrack{track(name)},
-    Album{likeAlbum} to LikeAlbum{album(title)},
-
-}
-
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct
 
 service all with serviceImpl
-
