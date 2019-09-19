@@ -101,9 +101,4 @@ public class TrackServiceImpl implements TrackService {
         trackRepository.deleteById(id);
     }
 
-    @Override
-    public Optional<LikeTrackDTO> toggleLike(Long id) {
-        SecurityUtils.getCurrentUserLogin();
-        return Optional.empty();
-    }
 }
