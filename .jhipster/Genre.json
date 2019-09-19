@@ -20,11 +20,11 @@
             "ownerSide": false
         }
     ],
-    "changelogDate": "20190914163204",
+    "changelogDate": "20190919065627",
     "entityTableName": "genre",
     "dto": "mapstruct",
     "pagination": "no",
-    "service": "serviceImpl",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "",

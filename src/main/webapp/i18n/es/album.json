@@ -20,9 +20,9 @@
       "year": "Year",
       "thumbnail": "Thumbnail",
       "totalTracks": "Total Tracks",
-      "likeAlbum": "Like Album",
       "user": "User",
-      "track": "Track"
+      "track": "Track",
+      "likeAlbum": "Like Album"
     }
   }
 }

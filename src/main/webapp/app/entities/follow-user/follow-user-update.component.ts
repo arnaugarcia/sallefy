@@ -25,7 +25,6 @@ export class FollowUserUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    liked: [],
     date: [],
     followedId: [],
     userId: []
@@ -56,7 +55,6 @@ export class FollowUserUpdateComponent implements OnInit {
   updateForm(followUser: IFollowUser) {
     this.editForm.patchValue({
       id: followUser.id,
-      liked: followUser.liked,
       date: followUser.date != null ? followUser.date.format(DATE_TIME_FORMAT) : null,
       followedId: followUser.followedId,
       userId: followUser.userId
@@ -81,7 +79,6 @@ export class FollowUserUpdateComponent implements OnInit {
     return {
       ...new FollowUser(),
       id: this.editForm.get(['id']).value,
-      liked: this.editForm.get(['liked']).value,
       date: this.editForm.get(['date']).value != null ? moment(this.editForm.get(['date']).value, DATE_TIME_FORMAT) : undefined,
       followedId: this.editForm.get(['followedId']).value,
       userId: this.editForm.get(['userId']).value

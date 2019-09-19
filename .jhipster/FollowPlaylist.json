@@ -1,0 +1,34 @@
+{
+    "name": "FollowPlaylist",
+    "fields": [
+        {
+            "fieldName": "date",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "followPlaylist",
+            "relationshipName": "user",
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "playlist",
+            "otherEntityRelationshipName": "followPlaylist",
+            "relationshipName": "playlist",
+            "otherEntityField": "name"
+        }
+    ],
+    "changelogDate": "20190919065625",
+    "entityTableName": "follow_playlist",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

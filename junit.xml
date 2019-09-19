@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="185" failures="0" time="43.341">
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:27" time="19.59" tests="5">
+    <testcase classname="Component Tests LoginComponent should authenticate the user upon login when previous state was set" name="Component Tests LoginComponent should authenticate the user upon login when previous state was set" time="0.104">
+    </testcase>
+    <testcase classname="Component Tests LoginComponent should authenticate the user upon login when previous state was not set" name="Component Tests LoginComponent should authenticate the user upon login when previous state was not set" time="0.029">
+    </testcase>
+    <testcase classname="Component Tests LoginComponent should empty the credentials upon cancel" name="Component Tests LoginComponent should empty the credentials upon cancel" time="0.019">
+    </testcase>
+    <testcase classname="Component Tests LoginComponent should redirect user when register" name="Component Tests LoginComponent should redirect user when register" time="0.019">
+    </testcase>
+    <testcase classname="Component Tests LoginComponent should redirect user when request password" name="Component Tests LoginComponent should redirect user when request password" time="0.017">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:27" time="19.892" tests="12">
+    <testcase classname="Component Tests JhiHealthCheckComponent baseName and subSystemName should return the basename when it has no sub system" name="Component Tests JhiHealthCheckComponent baseName and subSystemName should return the basename when it has no sub system" time="0.095">
+    </testcase>
+    <testcase classname="Component Tests JhiHealthCheckComponent baseName and subSystemName should return the basename when it has sub systems" name="Component Tests JhiHealthCheckComponent baseName and subSystemName should return the basename when it has sub systems" time="0.024">
+    </testcase>
+    <testcase classname="Component Tests JhiHealthCheckComponent baseName and subSystemName should return the sub system name" name="Component Tests JhiHealthCheckComponent baseName and subSystemName should return the sub system name" time="0.016">
+    </testcase>
+    <testcase classname="Component Tests JhiHealthCheckComponent baseName and subSystemName should return the subsystem when it has multiple keys" name="Component Tests JhiHealthCheckComponent baseName and subSystemName should return the subsystem when it has multiple keys" time="0.017">
+    </testcase>
+    <testcase classname="Component Tests JhiHealthCheckComponent transformHealthData should flatten empty health data" name="Component Tests JhiHealthCheckComponent transformHealthData should flatten empty health data" time="0.019">
+    </testcase>
+    <testcase classname="Component Tests JhiHealthCheckComponent transformHealthData should flatten health data with no subsystems" name="Component Tests JhiHealthCheckComponent transformHealthData should flatten health data with no subsystems" time="0.026">
+    </testcase>
+    <testcase classname="Component Tests JhiHealthCheckComponent transformHealthData should flatten health data with subsystems at level 1, main system has no additional information" name="Component Tests JhiHealthCheckComponent transformHealthData should flatten health data with subsystems at level 1, main system has no additional information" time="0.018">
+    </testcase>
+    <testcase classname="Component Tests JhiHealthCheckComponent transformHealthData should flatten health data with subsystems at level 1, main system has additional information" name="Component Tests JhiHealthCheckComponent transformHealthData should flatten health data with subsystems at level 1, main system has additional information" time="0.015">
+    </testcase>
+    <testcase classname="Component Tests JhiHealthCheckComponent transformHealthData should flatten health data with subsystems at level 1, main system has additional error" name="Component Tests JhiHealthCheckComponent transformHealthData should flatten health data with subsystems at level 1, main system has additional error" time="0.016">
+    </testcase>
+    <testcase classname="Component Tests JhiHealthCheckComponent getBadgeClass should get badge class" name="Component Tests JhiHealthCheckComponent getBadgeClass should get badge class" time="0.017">
+    </testcase>
+    <testcase classname="Component Tests JhiHealthCheckComponent refresh should call refresh on init" name="Component Tests JhiHealthCheckComponent refresh should call refresh on init" time="0.02">
+    </testcase>
+    <testcase classname="Component Tests JhiHealthCheckComponent refresh should handle a 503 on refreshing health data" name="Component Tests JhiHealthCheckComponent refresh should handle a 503 on refreshing health data" time="0.023">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:46" time="1.54" tests="7">
+    <testcase classname="Component Tests Alert Error Component Error Handling Should display an alert on status 0" name="Component Tests Alert Error Component Error Handling Should display an alert on status 0" time="0.05">
+    </testcase>
+    <testcase classname="Component Tests Alert Error Component Error Handling Should display an alert on status 404" name="Component Tests Alert Error Component Error Handling Should display an alert on status 404" time="0.027">
+    </testcase>
+    <testcase classname="Component Tests Alert Error Component Error Handling Should display an alert on generic error" name="Component Tests Alert Error Component Error Handling Should display an alert on generic error" time="0.021">
+    </testcase>
+    <testcase classname="Component Tests Alert Error Component Error Handling Should display an alert on status 400 for generic error" name="Component Tests Alert Error Component Error Handling Should display an alert on status 400 for generic error" time="0.033">
+    </testcase>
+    <testcase classname="Component Tests Alert Error Component Error Handling Should display an alert on status 400 for generic error without message" name="Component Tests Alert Error Component Error Handling Should display an alert on status 400 for generic error without message" time="0.023">
+    </testcase>
+    <testcase classname="Component Tests Alert Error Component Error Handling Should display an alert on status 400 for invalid parameters" name="Component Tests Alert Error Component Error Handling Should display an alert on status 400 for invalid parameters" time="0.022">
+    </testcase>
+    <testcase classname="Component Tests Alert Error Component Error Handling Should display an alert on status 400 for error headers" name="Component Tests Alert Error Component Error Handling Should display an alert on status 400 for error headers" time="0.035">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:47" time="1.986" tests="5">
+    <testcase classname="Service Tests Track Service Service methods should find an element" name="Service Tests Track Service Service methods should find an element" time="0.036">
+    </testcase>
+    <testcase classname="Service Tests Track Service Service methods should create a Track" name="Service Tests Track Service Service methods should create a Track" time="0.067">
+    </testcase>
+    <testcase classname="Service Tests Track Service Service methods should update a Track" name="Service Tests Track Service Service methods should update a Track" time="0.017">
+    </testcase>
+    <testcase classname="Service Tests Track Service Service methods should return a list of Track" name="Service Tests Track Service Service methods should return a list of Track" time="0.023">
+    </testcase>
+    <testcase classname="Service Tests Track Service Service methods should delete a Track" name="Service Tests Track Service Service methods should delete a Track" time="0.012">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:48" time="0.88" tests="5">
+    <testcase classname="Service Tests Playback Service Service methods should find an element" name="Service Tests Playback Service Service methods should find an element" time="0.027">
+    </testcase>
+    <testcase classname="Service Tests Playback Service Service methods should create a Playback" name="Service Tests Playback Service Service methods should create a Playback" time="0.072">
+    </testcase>
+    <testcase classname="Service Tests Playback Service Service methods should update a Playback" name="Service Tests Playback Service Service methods should update a Playback" time="0.017">
+    </testcase>
+    <testcase classname="Service Tests Playback Service Service methods should return a list of Playback" name="Service Tests Playback Service Service methods should return a list of Playback" time="0.014">
+    </testcase>
+    <testcase classname="Service Tests Playback Service Service methods should delete a Playback" name="Service Tests Playback Service Service methods should delete a Playback" time="0.017">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:49" time="0.788" tests="5">
+    <testcase classname="Component Tests RegisterComponent should ensure the two passwords entered match" name="Component Tests RegisterComponent should ensure the two passwords entered match" time="0.037">
+    </testcase>
+    <testcase classname="Component Tests RegisterComponent should update success to OK after creating an account" name="Component Tests RegisterComponent should update success to OK after creating an account" time="0.027">
+    </testcase>
+    <testcase classname="Component Tests RegisterComponent should notify of user existence upon 400/login already in use" name="Component Tests RegisterComponent should notify of user existence upon 400/login already in use" time="0.03">
+    </testcase>
+    <testcase classname="Component Tests RegisterComponent should notify of email existence upon 400/email address already in use" name="Component Tests RegisterComponent should notify of email existence upon 400/email address already in use" time="0.018">
+    </testcase>
+    <testcase classname="Component Tests RegisterComponent should notify of generic error" name="Component Tests RegisterComponent should notify of generic error" time="0.02">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:49" time="0.611" tests="5">
+    <testcase classname="Service Tests FollowPlaylist Service Service methods should find an element" name="Service Tests FollowPlaylist Service Service methods should find an element" time="0.021">
+    </testcase>
+    <testcase classname="Service Tests FollowPlaylist Service Service methods should create a FollowPlaylist" name="Service Tests FollowPlaylist Service Service methods should create a FollowPlaylist" time="0.02">
+    </testcase>
+    <testcase classname="Service Tests FollowPlaylist Service Service methods should update a FollowPlaylist" name="Service Tests FollowPlaylist Service Service methods should update a FollowPlaylist" time="0.015">
+    </testcase>
+    <testcase classname="Service Tests FollowPlaylist Service Service methods should return a list of FollowPlaylist" name="Service Tests FollowPlaylist Service Service methods should return a list of FollowPlaylist" time="0.016">
+    </testcase>
+    <testcase classname="Service Tests FollowPlaylist Service Service methods should delete a FollowPlaylist" name="Service Tests FollowPlaylist Service Service methods should delete a FollowPlaylist" time="0.015">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:50" time="0.619" tests="5">
+    <testcase classname="Service Tests LikeAlbum Service Service methods should find an element" name="Service Tests LikeAlbum Service Service methods should find an element" time="0.021">
+    </testcase>
+    <testcase classname="Service Tests LikeAlbum Service Service methods should create a LikeAlbum" name="Service Tests LikeAlbum Service Service methods should create a LikeAlbum" time="0.015">
+    </testcase>
+    <testcase classname="Service Tests LikeAlbum Service Service methods should update a LikeAlbum" name="Service Tests LikeAlbum Service Service methods should update a LikeAlbum" time="0.014">
+    </testcase>
+    <testcase classname="Service Tests LikeAlbum Service Service methods should return a list of LikeAlbum" name="Service Tests LikeAlbum Service Service methods should return a list of LikeAlbum" time="0.012">
+    </testcase>
+    <testcase classname="Service Tests LikeAlbum Service Service methods should delete a LikeAlbum" name="Service Tests LikeAlbum Service Service methods should delete a LikeAlbum" time="0.018">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:50" time="0.614" tests="5">
+    <testcase classname="Service Tests LikeTrack Service Service methods should find an element" name="Service Tests LikeTrack Service Service methods should find an element" time="0.021">
+    </testcase>
+    <testcase classname="Service Tests LikeTrack Service Service methods should create a LikeTrack" name="Service Tests LikeTrack Service Service methods should create a LikeTrack" time="0.015">
+    </testcase>
+    <testcase classname="Service Tests LikeTrack Service Service methods should update a LikeTrack" name="Service Tests LikeTrack Service Service methods should update a LikeTrack" time="0.013">
+    </testcase>
+    <testcase classname="Service Tests LikeTrack Service Service methods should return a list of LikeTrack" name="Service Tests LikeTrack Service Service methods should return a list of LikeTrack" time="0.014">
+    </testcase>
+    <testcase classname="Service Tests LikeTrack Service Service methods should delete a LikeTrack" name="Service Tests LikeTrack Service Service methods should delete a LikeTrack" time="0.013">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:50" time="0.573" tests="5">
+    <testcase classname="Service Tests FollowUser Service Service methods should find an element" name="Service Tests FollowUser Service Service methods should find an element" time="0.02">
+    </testcase>
+    <testcase classname="Service Tests FollowUser Service Service methods should create a FollowUser" name="Service Tests FollowUser Service Service methods should create a FollowUser" time="0.016">
+    </testcase>
+    <testcase classname="Service Tests FollowUser Service Service methods should update a FollowUser" name="Service Tests FollowUser Service Service methods should update a FollowUser" time="0.019">
+    </testcase>
+    <testcase classname="Service Tests FollowUser Service Service methods should return a list of FollowUser" name="Service Tests FollowUser Service Service methods should return a list of FollowUser" time="0.013">
+    </testcase>
+    <testcase classname="Service Tests FollowUser Service Service methods should delete a FollowUser" name="Service Tests FollowUser Service Service methods should delete a FollowUser" time="0.014">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:50" time="0.799" tests="6">
+    <testcase classname="Component Tests AuditsComponent today function  should set toDate to current date" name="Component Tests AuditsComponent today function  should set toDate to current date" time="0.041">
+    </testcase>
+    <testcase classname="Component Tests AuditsComponent previousMonth function  should set fromDate to current date" name="Component Tests AuditsComponent previousMonth function  should set fromDate to current date" time="0.022">
+    </testcase>
+    <testcase classname="Component Tests AuditsComponent By default, on init should set all default values correctly" name="Component Tests AuditsComponent By default, on init should set all default values correctly" time="0.022">
+    </testcase>
+    <testcase classname="Component Tests AuditsComponent OnInit Should call load all on init" name="Component Tests AuditsComponent OnInit Should call load all on init" time="0.019">
+    </testcase>
+    <testcase classname="Component Tests AuditsComponent Create sort object Should sort only by id asc" name="Component Tests AuditsComponent Create sort object Should sort only by id asc" time="0.017">
+    </testcase>
+    <testcase classname="Component Tests AuditsComponent Create sort object Should sort by timestamp asc then by id" name="Component Tests AuditsComponent Create sort object Should sort by timestamp asc then by id" time="0.019">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:51" time="0.529" tests="5">
+    <testcase classname="Service Tests Playlist Service Service methods should find an element" name="Service Tests Playlist Service Service methods should find an element" time="0.02">
+    </testcase>
+    <testcase classname="Service Tests Playlist Service Service methods should create a Playlist" name="Service Tests Playlist Service Service methods should create a Playlist" time="0.02">
+    </testcase>
+    <testcase classname="Service Tests Playlist Service Service methods should update a Playlist" name="Service Tests Playlist Service Service methods should update a Playlist" time="0.013">
+    </testcase>
+    <testcase classname="Service Tests Playlist Service Service methods should return a list of Playlist" name="Service Tests Playlist Service Service methods should return a list of Playlist" time="0.012">
+    </testcase>
+    <testcase classname="Service Tests Playlist Service Service methods should delete a Playlist" name="Service Tests Playlist Service Service methods should delete a Playlist" time="0.012">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:51" time="0.642" tests="5">
+    <testcase classname="Component Tests PasswordResetInitComponent should define its initial state" name="Component Tests PasswordResetInitComponent should define its initial state" time="0.039">
+    </testcase>
+    <testcase classname="Component Tests PasswordResetInitComponent sets focus after the view has been initialized" name="Component Tests PasswordResetInitComponent sets focus after the view has been initialized" time="0.023">
+    </testcase>
+    <testcase classname="Component Tests PasswordResetInitComponent notifies of success upon successful requestReset" name="Component Tests PasswordResetInitComponent notifies of success upon successful requestReset" time="0.019">
+    </testcase>
+    <testcase classname="Component Tests PasswordResetInitComponent notifies of unknown email upon email address not registered/400" name="Component Tests PasswordResetInitComponent notifies of unknown email upon email address not registered/400" time="0.018">
+    </testcase>
+    <testcase classname="Component Tests PasswordResetInitComponent notifies of error upon error response" name="Component Tests PasswordResetInitComponent notifies of error upon error response" time="0.019">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:51" time="0.667" tests="5">
+    <testcase classname="Component Tests PasswordResetFinishComponent should define its initial state" name="Component Tests PasswordResetFinishComponent should define its initial state" time="0.034">
+    </testcase>
+    <testcase classname="Component Tests PasswordResetFinishComponent sets focus after the view has been initialized" name="Component Tests PasswordResetFinishComponent sets focus after the view has been initialized" time="0.024">
+    </testcase>
+    <testcase classname="Component Tests PasswordResetFinishComponent should ensure the two passwords entered match" name="Component Tests PasswordResetFinishComponent should ensure the two passwords entered match" time="0.02">
+    </testcase>
+    <testcase classname="Component Tests PasswordResetFinishComponent should update success to OK after resetting password" name="Component Tests PasswordResetFinishComponent should update success to OK after resetting password" time="0.029">
+    </testcase>
+    <testcase classname="Component Tests PasswordResetFinishComponent should notify of generic error" name="Component Tests PasswordResetFinishComponent should notify of generic error" time="0.02">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:52" time="0.555" tests="5">
+    <testcase classname="Service Tests Album Service Service methods should find an element" name="Service Tests Album Service Service methods should find an element" time="0.02">
+    </testcase>
+    <testcase classname="Service Tests Album Service Service methods should create a Album" name="Service Tests Album Service Service methods should create a Album" time="0.015">
+    </testcase>
+    <testcase classname="Service Tests Album Service Service methods should update a Album" name="Service Tests Album Service Service methods should update a Album" time="0.014">
+    </testcase>
+    <testcase classname="Service Tests Album Service Service methods should return a list of Album" name="Service Tests Album Service Service methods should return a list of Album" time="0.013">
+    </testcase>
+    <testcase classname="Service Tests Album Service Service methods should delete a Album" name="Service Tests Album Service Service methods should delete a Album" time="0.018">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:52" time="0.562" tests="8">
+    <testcase classname="Service Tests Account Service Service methods should call /account if user is undefined" name="Service Tests Account Service Service methods should call /account if user is undefined" time="0.026">
+    </testcase>
+    <testcase classname="Service Tests Account Service Service methods should call /account only once" name="Service Tests Account Service Service methods should call /account only once" time="0.017">
+    </testcase>
+    <testcase classname="Service Tests Account Service Service methods hasAuthority should return false if user is not logged" name="Service Tests Account Service Service methods hasAuthority should return false if user is not logged" time="0.014">
+    </testcase>
+    <testcase classname="Service Tests Account Service Service methods hasAuthority should return false if user is logged and has not authority" name="Service Tests Account Service Service methods hasAuthority should return false if user is logged and has not authority" time="0.024">
+    </testcase>
+    <testcase classname="Service Tests Account Service Service methods hasAuthority should return true if user is logged and has authority" name="Service Tests Account Service Service methods hasAuthority should return true if user is logged and has authority" time="0.013">
+    </testcase>
+    <testcase classname="Service Tests Account Service Service methods hasAnyAuthority should return false if user is not logged" name="Service Tests Account Service Service methods hasAnyAuthority should return false if user is not logged" time="0.012">
+    </testcase>
+    <testcase classname="Service Tests Account Service Service methods hasAnyAuthority should return false if user is logged and has not authority" name="Service Tests Account Service Service methods hasAnyAuthority should return false if user is logged and has not authority" time="0.011">
+    </testcase>
+    <testcase classname="Service Tests Account Service Service methods hasAnyAuthority should return true if user is logged and has authority" name="Service Tests Account Service Service methods hasAnyAuthority should return true if user is logged and has authority" time="0.011">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:52" time="0.863" tests="3">
+    <testcase classname="Component Tests User Management Update Component OnInit Should load authorities and language on init" name="Component Tests User Management Update Component OnInit Should load authorities and language on init" time="0.036">
+    </testcase>
+    <testcase classname="Component Tests User Management Update Component save Should call update service on save for existing user" name="Component Tests User Management Update Component save Should call update service on save for existing user" time="0.036">
+    </testcase>
+    <testcase classname="Component Tests User Management Update Component save Should call create service on save for new user" name="Component Tests User Management Update Component save Should call create service on save for new user" time="0.021">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:53" time="0.747" tests="5">
+    <testcase classname="Service Tests Genre Service Service methods should find an element" name="Service Tests Genre Service Service methods should find an element" time="0.021">
+    </testcase>
+    <testcase classname="Service Tests Genre Service Service methods should create a Genre" name="Service Tests Genre Service Service methods should create a Genre" time="0.018">
+    </testcase>
+    <testcase classname="Service Tests Genre Service Service methods should update a Genre" name="Service Tests Genre Service Service methods should update a Genre" time="0.019">
+    </testcase>
+    <testcase classname="Service Tests Genre Service Service methods should return a list of Genre" name="Service Tests Genre Service Service methods should return a list of Genre" time="0.013">
+    </testcase>
+    <testcase classname="Service Tests Genre Service Service methods should delete a Genre" name="Service Tests Genre Service Service methods should delete a Genre" time="0.014">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:53" time="0.654" tests="4">
+    <testcase classname="Component Tests PasswordComponent should show error if passwords do not match" name="Component Tests PasswordComponent should show error if passwords do not match" time="0.032">
+    </testcase>
+    <testcase classname="Component Tests PasswordComponent should call Auth.changePassword when passwords match" name="Component Tests PasswordComponent should call Auth.changePassword when passwords match" time="0.022">
+    </testcase>
+    <testcase classname="Component Tests PasswordComponent should set success to OK upon success" name="Component Tests PasswordComponent should set success to OK upon success" time="0.019">
+    </testcase>
+    <testcase classname="Component Tests PasswordComponent should notify of error if change password fails" name="Component Tests PasswordComponent should notify of error if change password fails" time="0.022">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:53" time="0.667" tests="3">
+    <testcase classname="Component Tests LogsComponent OnInit should set all default values correctly" name="Component Tests LogsComponent OnInit should set all default values correctly" time="0.033">
+    </testcase>
+    <testcase classname="Component Tests LogsComponent OnInit Should call load all on init" name="Component Tests LogsComponent OnInit Should call load all on init" time="0.024">
+    </testcase>
+    <testcase classname="Component Tests LogsComponent change log level should change log level correctly" name="Component Tests LogsComponent change log level should change log level correctly" time="0.02">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:54" time="0.623" tests="2">
+    <testcase classname="Component Tests User Management Component OnInit Should call load all on init" name="Component Tests User Management Component OnInit Should call load all on init" time="0.033">
+    </testcase>
+    <testcase classname="Component Tests User Management Component setActive Should update user and call load all" name="Component Tests User Management Component setActive Should update user and call load all" time="0.023">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:54" time="0.564" tests="3">
+    <testcase classname="Component Tests SettingsComponent should send the current identity upon save" name="Component Tests SettingsComponent should send the current identity upon save" time="0.033">
+    </testcase>
+    <testcase classname="Component Tests SettingsComponent should notify of success upon successful save" name="Component Tests SettingsComponent should notify of success upon successful save" time="0.023">
+    </testcase>
+    <testcase classname="Component Tests SettingsComponent should notify of error upon failed save" name="Component Tests SettingsComponent should notify of error upon failed save" time="0.027">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:55" time="0.673" tests="3">
+    <testcase classname="Component Tests JhiConfigurationComponent OnInit should set all default values correctly" name="Component Tests JhiConfigurationComponent OnInit should set all default values correctly" time="0.039">
+    </testcase>
+    <testcase classname="Component Tests JhiConfigurationComponent OnInit Should call load all on init" name="Component Tests JhiConfigurationComponent OnInit Should call load all on init" time="0.025">
+    </testcase>
+    <testcase classname="Component Tests JhiConfigurationComponent keys method should return the keys of an Object" name="Component Tests JhiConfigurationComponent keys method should return the keys of an Object" time="0.018">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:55" time="0.669" tests="2">
+    <testcase classname="Component Tests FollowPlaylist Management Update Component save Should call update service on save for existing entity" name="Component Tests FollowPlaylist Management Update Component save Should call update service on save for existing entity" time="0.047">
+    </testcase>
+    <testcase classname="Component Tests FollowPlaylist Management Update Component save Should call create service on save for new entity" name="Component Tests FollowPlaylist Management Update Component save Should call create service on save for new entity" time="0.033">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:55" time="0.537" tests="4">
+    <testcase classname="Service Tests User Service Service methods should call correct URL" name="Service Tests User Service Service methods should call correct URL" time="0.021">
+    </testcase>
+    <testcase classname="Service Tests User Service Service methods should return User" name="Service Tests User Service Service methods should return User" time="0.014">
+    </testcase>
+    <testcase classname="Service Tests User Service Service methods should return Authorities" name="Service Tests User Service Service methods should return Authorities" time="0.011">
+    </testcase>
+    <testcase classname="Service Tests User Service Service methods should propagate not found response" name="Service Tests User Service Service methods should propagate not found response" time="0.011">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:55" time="0.588" tests="2">
+    <testcase classname="Component Tests FollowUser Management Update Component save Should call update service on save for existing entity" name="Component Tests FollowUser Management Update Component save Should call update service on save for existing entity" time="0.054">
+    </testcase>
+    <testcase classname="Component Tests FollowUser Management Update Component save Should call create service on save for new entity" name="Component Tests FollowUser Management Update Component save Should call create service on save for new entity" time="0.034">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:56" time="0.648" tests="2">
+    <testcase classname="Component Tests LikeAlbum Management Update Component save Should call update service on save for existing entity" name="Component Tests LikeAlbum Management Update Component save Should call update service on save for existing entity" time="0.057">
+    </testcase>
+    <testcase classname="Component Tests LikeAlbum Management Update Component save Should call create service on save for new entity" name="Component Tests LikeAlbum Management Update Component save Should call create service on save for new entity" time="0.032">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:56" time="0.666" tests="2">
+    <testcase classname="Component Tests LikeTrack Management Update Component save Should call update service on save for existing entity" name="Component Tests LikeTrack Management Update Component save Should call update service on save for existing entity" time="0.051">
+    </testcase>
+    <testcase classname="Component Tests LikeTrack Management Update Component save Should call create service on save for new entity" name="Component Tests LikeTrack Management Update Component save Should call create service on save for new entity" time="0.045">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:57" time="0.729" tests="2">
+    <testcase classname="Component Tests Playlist Management Update Component save Should call update service on save for existing entity" name="Component Tests Playlist Management Update Component save Should call update service on save for existing entity" time="0.05">
+    </testcase>
+    <testcase classname="Component Tests Playlist Management Update Component save Should call create service on save for new entity" name="Component Tests Playlist Management Update Component save Should call create service on save for new entity" time="0.036">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:56" time="1.085" tests="2">
+    <testcase classname="Component Tests Playback Management Update Component save Should call update service on save for existing entity" name="Component Tests Playback Management Update Component save Should call update service on save for existing entity" time="0.05">
+    </testcase>
+    <testcase classname="Component Tests Playback Management Update Component save Should call create service on save for new entity" name="Component Tests Playback Management Update Component save Should call create service on save for new entity" time="0.034">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:57" time="0.426" tests="3">
+    <testcase classname="Service Tests Logs Service Service methods should call correct URL" name="Service Tests Logs Service Service methods should call correct URL" time="0.02">
+    </testcase>
+    <testcase classname="Service Tests Logs Service Service methods should get the config" name="Service Tests Logs Service Service methods should get the config" time="0.022">
+    </testcase>
+    <testcase classname="Service Tests Logs Service Service methods should get the env" name="Service Tests Logs Service Service methods should get the env" time="0.014">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:58" time="0.692" tests="3">
+    <testcase classname="Component Tests ActivateComponent calls activate.get with the key from params" name="Component Tests ActivateComponent calls activate.get with the key from params" time="0.04">
+    </testcase>
+    <testcase classname="Component Tests ActivateComponent should set set success to OK upon successful activation" name="Component Tests ActivateComponent should set set success to OK upon successful activation" time="0.023">
+    </testcase>
+    <testcase classname="Component Tests ActivateComponent should set set error to ERROR upon activation failure" name="Component Tests ActivateComponent should set set error to ERROR upon activation failure" time="0.022">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:58" time="0.794" tests="2">
+    <testcase classname="Component Tests Genre Management Update Component save Should call update service on save for existing entity" name="Component Tests Genre Management Update Component save Should call update service on save for existing entity" time="0.058">
+    </testcase>
+    <testcase classname="Component Tests Genre Management Update Component save Should call create service on save for new entity" name="Component Tests Genre Management Update Component save Should call create service on save for new entity" time="0.034">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:58" time="0.653" tests="2">
+    <testcase classname="Component Tests Track Management Update Component save Should call update service on save for existing entity" name="Component Tests Track Management Update Component save Should call update service on save for existing entity" time="0.056">
+    </testcase>
+    <testcase classname="Component Tests Track Management Update Component save Should call create service on save for new entity" name="Component Tests Track Management Update Component save Should call create service on save for new entity" time="0.032">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:59" time="0.667" tests="2">
+    <testcase classname="Component Tests Album Management Update Component save Should call update service on save for existing entity" name="Component Tests Album Management Update Component save Should call update service on save for existing entity" time="0.048">
+    </testcase>
+    <testcase classname="Component Tests Album Management Update Component save Should call create service on save for new entity" name="Component Tests Album Management Update Component save Should call create service on save for new entity" time="0.041">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:59" time="0.499" tests="3">
+    <testcase classname="Component Tests PasswordStrengthBarComponent PasswordStrengthBarComponents should initialize with default values" name="Component Tests PasswordStrengthBarComponent PasswordStrengthBarComponents should initialize with default values" time="0.039">
+    </testcase>
+    <testcase classname="Component Tests PasswordStrengthBarComponent PasswordStrengthBarComponents should increase strength upon password value change" name="Component Tests PasswordStrengthBarComponent PasswordStrengthBarComponents should increase strength upon password value change" time="0.021">
+    </testcase>
+    <testcase classname="Component Tests PasswordStrengthBarComponent PasswordStrengthBarComponents should change the color based on strength" name="Component Tests PasswordStrengthBarComponent PasswordStrengthBarComponents should change the color based on strength" time="0.016">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:59" time="0.535" tests="1">
+    <testcase classname="Component Tests FollowPlaylist Management Delete Component confirmDelete Should call delete service on confirmDelete" name="Component Tests FollowPlaylist Management Delete Component confirmDelete Should call delete service on confirmDelete" time="0.056">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:20:59" time="0.482" tests="1">
+    <testcase classname="Component Tests User Management Detail Component OnInit Should call load all on init" name="Component Tests User Management Detail Component OnInit Should call load all on init" time="0.029">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:00" time="0.386" tests="3">
+    <testcase classname="Service Tests Audits Service Service methods should call correct URL" name="Service Tests Audits Service Service methods should call correct URL" time="0.027">
+    </testcase>
+    <testcase classname="Service Tests Audits Service Service methods should return Audits" name="Service Tests Audits Service Service methods should return Audits" time="0.012">
+    </testcase>
+    <testcase classname="Service Tests Audits Service Service methods should propagate not found response" name="Service Tests Audits Service Service methods should propagate not found response" time="0.013">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:00" time="0.43" tests="1">
+    <testcase classname="Component Tests User Management Delete Component confirmDelete Should call delete service on confirmDelete" name="Component Tests User Management Delete Component confirmDelete Should call delete service on confirmDelete" time="0.032">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:00" time="0.527" tests="1">
+    <testcase classname="Component Tests FollowUser Management Delete Component confirmDelete Should call delete service on confirmDelete" name="Component Tests FollowUser Management Delete Component confirmDelete Should call delete service on confirmDelete" time="0.057">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:00" time="0.522" tests="1">
+    <testcase classname="Component Tests LikeAlbum Management Delete Component confirmDelete Should call delete service on confirmDelete" name="Component Tests LikeAlbum Management Delete Component confirmDelete Should call delete service on confirmDelete" time="0.046">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:01" time="0.525" tests="1">
+    <testcase classname="Component Tests LikeTrack Management Delete Component confirmDelete Should call delete service on confirmDelete" name="Component Tests LikeTrack Management Delete Component confirmDelete Should call delete service on confirmDelete" time="0.057">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:01" time="0.514" tests="1">
+    <testcase classname="Component Tests Playlist Management Delete Component confirmDelete Should call delete service on confirmDelete" name="Component Tests Playlist Management Delete Component confirmDelete Should call delete service on confirmDelete" time="0.047">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:01" time="0.52" tests="1">
+    <testcase classname="Component Tests Playback Management Delete Component confirmDelete Should call delete service on confirmDelete" name="Component Tests Playback Management Delete Component confirmDelete Should call delete service on confirmDelete" time="0.061">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:01" time="0.508" tests="1">
+    <testcase classname="Component Tests Genre Management Delete Component confirmDelete Should call delete service on confirmDelete" name="Component Tests Genre Management Delete Component confirmDelete Should call delete service on confirmDelete" time="0.048">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:02" time="0.524" tests="1">
+    <testcase classname="Component Tests Album Management Delete Component confirmDelete Should call delete service on confirmDelete" name="Component Tests Album Management Delete Component confirmDelete Should call delete service on confirmDelete" time="0.045">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:02" time="0.52" tests="1">
+    <testcase classname="Component Tests Track Management Delete Component confirmDelete Should call delete service on confirmDelete" name="Component Tests Track Management Delete Component confirmDelete Should call delete service on confirmDelete" time="0.044">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:02" time="0.483" tests="3">
+    <testcase classname="Service Tests Logs Service Service methods should call correct URL" name="Service Tests Logs Service Service methods should call correct URL" time="0.027">
+    </testcase>
+    <testcase classname="Service Tests Logs Service Service methods should return Metrics" name="Service Tests Logs Service Service methods should return Metrics" time="0.014">
+    </testcase>
+    <testcase classname="Service Tests Logs Service Service methods should return Thread Dump" name="Service Tests Logs Service Service methods should return Thread Dump" time="0.014">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:03" time="0.853" tests="1">
+    <testcase classname="Component Tests FollowPlaylist Management Component Should call load all on init" name="Component Tests FollowPlaylist Management Component Should call load all on init" time="0.073">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:03" time="0.74" tests="1">
+    <testcase classname="Component Tests FollowUser Management Component Should call load all on init" name="Component Tests FollowUser Management Component Should call load all on init" time="0.052">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:03" time="0.549" tests="1">
+    <testcase classname="Component Tests JhiMetricsMonitoringComponent refresh should call refresh on init" name="Component Tests JhiMetricsMonitoringComponent refresh should call refresh on init" time="0.04">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:04" time="0.552" tests="1">
+    <testcase classname="Component Tests LikeAlbum Management Component Should call load all on init" name="Component Tests LikeAlbum Management Component Should call load all on init" time="0.048">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:04" time="0.541" tests="1">
+    <testcase classname="Component Tests LikeTrack Management Component Should call load all on init" name="Component Tests LikeTrack Management Component Should call load all on init" time="0.044">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:04" time="0.518" tests="1">
+    <testcase classname="Component Tests Playback Management Component Should call load all on init" name="Component Tests Playback Management Component Should call load all on init" time="0.044">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:05" time="0.535" tests="1">
+    <testcase classname="Component Tests Playlist Management Component Should call load all on init" name="Component Tests Playlist Management Component Should call load all on init" time="0.046">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:05" time="0.517" tests="1">
+    <testcase classname="Component Tests Genre Management Component Should call load all on init" name="Component Tests Genre Management Component Should call load all on init" time="0.046">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:05" time="0.515" tests="1">
+    <testcase classname="Component Tests Album Management Component Should call load all on init" name="Component Tests Album Management Component Should call load all on init" time="0.047">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:05" time="0.515" tests="1">
+    <testcase classname="Component Tests Track Management Component Should call load all on init" name="Component Tests Track Management Component Should call load all on init" time="0.048">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:06" time="0.5" tests="1">
+    <testcase classname="Component Tests FollowPlaylist Management Detail Component OnInit Should call load all on init" name="Component Tests FollowPlaylist Management Detail Component OnInit Should call load all on init" time="0.044">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:06" time="0.499" tests="1">
+    <testcase classname="Component Tests FollowUser Management Detail Component OnInit Should call load all on init" name="Component Tests FollowUser Management Detail Component OnInit Should call load all on init" time="0.055">
+    </testcase>
+  </testsuite>
+  <testsuite name="Service Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:06" time="0.37" tests="2">
+    <testcase classname="Service Tests Logs Service Service methods should call correct URL" name="Service Tests Logs Service Service methods should call correct URL" time="0.019">
+    </testcase>
+    <testcase classname="Service Tests Logs Service Service methods should change log level" name="Service Tests Logs Service Service methods should change log level" time="0.016">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:06" time="0.497" tests="1">
+    <testcase classname="Component Tests LikeTrack Management Detail Component OnInit Should call load all on init" name="Component Tests LikeTrack Management Detail Component OnInit Should call load all on init" time="0.05">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:07" time="0.511" tests="1">
+    <testcase classname="Component Tests LikeAlbum Management Detail Component OnInit Should call load all on init" name="Component Tests LikeAlbum Management Detail Component OnInit Should call load all on init" time="0.045">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:07" time="0.495" tests="1">
+    <testcase classname="Component Tests Playlist Management Detail Component OnInit Should call load all on init" name="Component Tests Playlist Management Detail Component OnInit Should call load all on init" time="0.043">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:07" time="0.489" tests="1">
+    <testcase classname="Component Tests Playback Management Detail Component OnInit Should call load all on init" name="Component Tests Playback Management Detail Component OnInit Should call load all on init" time="0.045">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:07" time="0.489" tests="1">
+    <testcase classname="Component Tests Genre Management Detail Component OnInit Should call load all on init" name="Component Tests Genre Management Detail Component OnInit Should call load all on init" time="0.044">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:08" time="0.498" tests="1">
+    <testcase classname="Component Tests Album Management Detail Component OnInit Should call load all on init" name="Component Tests Album Management Detail Component OnInit Should call load all on init" time="0.055">
+    </testcase>
+  </testsuite>
+  <testsuite name="Component Tests" errors="0" failures="0" skipped="0" timestamp="2019-09-19T07:21:08" time="0.484" tests="1">
+    <testcase classname="Component Tests Track Management Detail Component OnInit Should call load all on init" name="Component Tests Track Management Detail Component OnInit Should call load all on init" time="0.045">
+    </testcase>
+  </testsuite>
+</testsuites>

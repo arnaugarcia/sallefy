@@ -41,9 +41,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = SallefyApp.class)
 public class FollowUserResourceIT {
 
-    private static final Boolean DEFAULT_LIKED = false;
-    private static final Boolean UPDATED_LIKED = true;
-
     private static final ZonedDateTime DEFAULT_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
     private static final ZonedDateTime SMALLER_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
@@ -96,7 +93,6 @@ public class FollowUserResourceIT {
      */
     public static FollowUser createEntity(EntityManager em) {
         FollowUser followUser = new FollowUser()
-            .liked(DEFAULT_LIKED)
             .date(DEFAULT_DATE);
         return followUser;
     }
@@ -108,7 +104,6 @@ public class FollowUserResourceIT {
      */
     public static FollowUser createUpdatedEntity(EntityManager em) {
         FollowUser followUser = new FollowUser()
-            .liked(UPDATED_LIKED)
             .date(UPDATED_DATE);
         return followUser;
     }
@@ -134,7 +129,6 @@ public class FollowUserResourceIT {
         List<FollowUser> followUserList = followUserRepository.findAll();
         assertThat(followUserList).hasSize(databaseSizeBeforeCreate + 1);
         FollowUser testFollowUser = followUserList.get(followUserList.size() - 1);
-        assertThat(testFollowUser.isLiked()).isEqualTo(DEFAULT_LIKED);
         assertThat(testFollowUser.getDate()).isEqualTo(DEFAULT_DATE);
     }
 
@@ -170,7 +164,6 @@ public class FollowUserResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(followUser.getId().intValue())))
-            .andExpect(jsonPath("$.[*].liked").value(hasItem(DEFAULT_LIKED.booleanValue())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(sameInstant(DEFAULT_DATE))));
     }
     
@@ -185,7 +178,6 @@ public class FollowUserResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(followUser.getId().intValue()))
-            .andExpect(jsonPath("$.liked").value(DEFAULT_LIKED.booleanValue()))
             .andExpect(jsonPath("$.date").value(sameInstant(DEFAULT_DATE)));
     }
 
@@ -210,7 +202,6 @@ public class FollowUserResourceIT {
         // Disconnect from session so that the updates on updatedFollowUser are not directly saved in db
         em.detach(updatedFollowUser);
         updatedFollowUser
-            .liked(UPDATED_LIKED)
             .date(UPDATED_DATE);
         FollowUserDTO followUserDTO = followUserMapper.toDto(updatedFollowUser);
 
@@ -223,7 +214,6 @@ public class FollowUserResourceIT {
         List<FollowUser> followUserList = followUserRepository.findAll();
         assertThat(followUserList).hasSize(databaseSizeBeforeUpdate);
         FollowUser testFollowUser = followUserList.get(followUserList.size() - 1);
-        assertThat(testFollowUser.isLiked()).isEqualTo(UPDATED_LIKED);
         assertThat(testFollowUser.getDate()).isEqualTo(UPDATED_DATE);
     }
 

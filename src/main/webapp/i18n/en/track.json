@@ -24,10 +24,10 @@
       "createdAt": "Created At",
       "duration": "Duration",
       "primaryColor": "Primary Color",
-      "likeTrack": "Like Track",
       "user": "User",
       "genre": "Genre",
       "playback": "Playback",
+      "likeTrack": "Like Track",
       "playlist": "Playlist",
       "album": "Album"
     }

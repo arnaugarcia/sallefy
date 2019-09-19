@@ -10,8 +10,6 @@ public class FollowUserDTO implements Serializable {
 
     private Long id;
 
-    private Boolean liked;
-
     private ZonedDateTime date;
 
 
@@ -29,14 +27,6 @@ public class FollowUserDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Boolean isLiked() {
-        return liked;
-    }
-
-    public void setLiked(Boolean liked) {
-        this.liked = liked;
     }
 
     public ZonedDateTime getDate() {
@@ -104,7 +94,6 @@ public class FollowUserDTO implements Serializable {
     public String toString() {
         return "FollowUserDTO{" +
             "id=" + getId() +
-            ", liked='" + isLiked() + "'" +
             ", date='" + getDate() + "'" +
             ", followed=" + getFollowedId() +
             ", followed='" + getFollowedLogin() + "'" +

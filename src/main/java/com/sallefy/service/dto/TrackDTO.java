@@ -1,5 +1,4 @@
 package com.sallefy.service.dto;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.ZonedDateTime;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -29,10 +28,6 @@ public class TrackDTO implements Serializable {
 
     private String primaryColor;
 
-    /**
-     * LikeTrack Relationships
-     */
-    @ApiModelProperty(value = "LikeTrack Relationships")
 
     private Long userId;
 

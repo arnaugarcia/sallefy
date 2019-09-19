@@ -58,6 +58,12 @@
                         </a>
                     </li>
                     <li>
+                        <a class="dropdown-item" routerLink="follow-playlist" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.followPlaylist">Follow Playlist</span>
+                        </a>
+                    </li>
+                    <li>
                         <a class="dropdown-item" routerLink="like-album" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
                             <span jhiTranslate="global.menu.entities.likeAlbum">Like Album</span>

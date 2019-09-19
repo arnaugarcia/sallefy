@@ -26,7 +26,6 @@ export class FollowUserUpdatePage {
   pageTitle = element(by.id('jhi-follow-user-heading'));
   saveButton = element(by.id('save-entity'));
   cancelButton = element(by.id('cancel-save'));
-  likedInput = element(by.id('field_liked'));
   dateInput = element(by.id('field_date'));
   followedSelect = element(by.id('field_followed'));
   userSelect = element(by.id('field_user'));
@@ -35,9 +34,6 @@ export class FollowUserUpdatePage {
     return this.pageTitle.getAttribute('jhiTranslate');
   }
 
-  getLikedInput(timeout?: number) {
-    return this.likedInput;
-  }
   async setDateInput(date) {
     await this.dateInput.sendKeys(date);
   }
