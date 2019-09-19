@@ -1,16 +1,13 @@
 package com.sallefy.service.impl;
 
-import com.sallefy.security.SecurityUtils;
-import com.sallefy.service.TrackService;
 import com.sallefy.domain.Track;
 import com.sallefy.repository.TrackRepository;
-import com.sallefy.service.dto.LikeTrackDTO;
+import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.exception.TrackNotFoundException;
 import com.sallefy.service.mapper.TrackMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**

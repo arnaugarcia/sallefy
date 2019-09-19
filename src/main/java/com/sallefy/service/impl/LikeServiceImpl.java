@@ -7,7 +7,7 @@ import com.sallefy.repository.LikeTrackRepository;
 import com.sallefy.service.LikeService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
-import com.sallefy.service.dto.LikeTrackDTO;
+import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.LikeTrackMapper;
 import com.sallefy.service.mapper.TrackMapper;
@@ -44,7 +44,7 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public LikeTrackDTO toggleLikeTrack(Long trackId) {
+    public LikeDTO toggleLikeTrack(Long trackId) {
         final User user = findCurrentUser();
 
         final TrackDTO trackDTO = trackService.findOne(trackId);
@@ -55,8 +55,11 @@ public class LikeServiceImpl implements LikeService {
         likeTrack.setUser(user);
         likeTrack.setLiked(true);
 
-        likeTrackRepository.save(likeTrack);
+        return saveAndTransform(likeTrack);
+    }
 
+    private LikeDTO saveAndTransform(LikeTrack likeTrack) {
+        likeTrackRepository.save(likeTrack);
         return likeTrackMapper.toDto(likeTrack);
     }
 
