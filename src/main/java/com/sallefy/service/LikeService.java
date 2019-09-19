@@ -1,9 +1,6 @@
 package com.sallefy.service;
 
-import com.sallefy.service.dto.LikeTrackDTO;
-import io.undertow.util.BadRequestException;
-
-import java.util.Optional;
+import com.sallefy.service.dto.LikeDTO;
 
 /**
  * Service Interface for managing likes in Albums and Tracks.
@@ -16,5 +13,5 @@ public interface LikeService {
      * @param trackId the id of the Track
      * @return a LikeTrackDTO with the liked boolean
      */
-    LikeTrackDTO toggleLikeTrack(Long trackId);
+    LikeDTO toggleLikeTrack(Long trackId);
 }

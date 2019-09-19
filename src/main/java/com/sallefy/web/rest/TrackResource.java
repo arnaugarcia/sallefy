@@ -2,7 +2,7 @@ package com.sallefy.web.rest;
 
 import com.sallefy.service.LikeService;
 import com.sallefy.service.TrackService;
-import com.sallefy.service.dto.LikeTrackDTO;
+import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
@@ -113,10 +113,10 @@ public class TrackResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the trackDTO, or with status {@code 404 (Not Found)}.
      */
     @PutMapping("/tracks/{id}/like")
-    public ResponseEntity<LikeTrackDTO> toggleLikeTrack(@PathVariable Long id) {
+    public ResponseEntity<LikeDTO> toggleLikeTrack(@PathVariable Long id) {
         log.debug("REST request to like a Track : {}", id);
-        LikeTrackDTO likeTrackDTO = likeService.toggleLikeTrack(id);
-        return ok(likeTrackDTO);
+        LikeDTO likeDTO = likeService.toggleLikeTrack(id);
+        return ok(likeDTO);
     }
 
     /**
