@@ -40,7 +40,7 @@ public interface TrackService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<TrackDTO> findOne(Long id);
+    TrackDTO findOne(Long id);
 
     /**
      * Delete the "id" track.

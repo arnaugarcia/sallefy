@@ -6,6 +6,7 @@ import com.sallefy.domain.Track;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.service.dto.LikeTrackDTO;
 import com.sallefy.service.dto.TrackDTO;
+import com.sallefy.service.exception.TrackNotFoundException;
 import com.sallefy.service.mapper.TrackMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,10 +85,11 @@ public class TrackServiceImpl implements TrackService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<TrackDTO> findOne(Long id) {
+    public TrackDTO findOne(Long id) {
         log.debug("Request to get Track : {}", id);
-        return trackRepository.findOneWithEagerRelationships(id)
-            .map(trackMapper::toDto);
+        return trackRepository.findById(id)
+            .map(trackMapper::toDto)
+            .orElseThrow(TrackNotFoundException::new);
     }
 
     /**
