@@ -3,6 +3,7 @@ package com.sallefy.web.rest;
 import com.sallefy.SallefyApp;
 import com.sallefy.domain.Track;
 import com.sallefy.repository.TrackRepository;
+import com.sallefy.service.LikeService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.TrackMapper;
@@ -75,6 +76,9 @@ public class TrackResourceIT {
     @Autowired
     private TrackRepository trackRepository;
 
+    @Autowired
+    private LikeService likeService;
+
     @Mock
     private TrackRepository trackRepositoryMock;
 
@@ -109,7 +113,7 @@ public class TrackResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TrackResource trackResource = new TrackResource(trackService);
+        final TrackResource trackResource = new TrackResource(trackService, likeService);
         this.restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -125,7 +129,7 @@ public class TrackResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Track createEntity(EntityManager em) {
-        Track track = new Track()
+        return new Track()
             .name(DEFAULT_NAME)
             .rating(DEFAULT_RATING)
             .url(DEFAULT_URL)
@@ -134,7 +138,6 @@ public class TrackResourceIT {
             .createdAt(DEFAULT_CREATED_AT)
             .duration(DEFAULT_DURATION)
             .primaryColor(DEFAULT_PRIMARY_COLOR);
-        return track;
     }
     /**
      * Create an updated entity for this test.
@@ -143,7 +146,7 @@ public class TrackResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Track createUpdatedEntity(EntityManager em) {
-        Track track = new Track()
+        return new Track()
             .name(UPDATED_NAME)
             .rating(UPDATED_RATING)
             .url(UPDATED_URL)
@@ -152,7 +155,6 @@ public class TrackResourceIT {
             .createdAt(UPDATED_CREATED_AT)
             .duration(UPDATED_DURATION)
             .primaryColor(UPDATED_PRIMARY_COLOR);
-        return track;
     }
 
     @BeforeEach
@@ -227,10 +229,10 @@ public class TrackResourceIT {
             .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION)))
             .andExpect(jsonPath("$.[*].primaryColor").value(hasItem(DEFAULT_PRIMARY_COLOR.toString())));
     }
-    
+
     @SuppressWarnings({"unchecked"})
     public void getAllTracksWithEagerRelationshipsIsEnabled() throws Exception {
-        TrackResource trackResource = new TrackResource(trackServiceMock);
+        TrackResource trackResource = new TrackResource(trackServiceMock, likeService);
         when(trackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         MockMvc restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
@@ -247,7 +249,7 @@ public class TrackResourceIT {
 
     @SuppressWarnings({"unchecked"})
     public void getAllTracksWithEagerRelationshipsIsNotEnabled() throws Exception {
-        TrackResource trackResource = new TrackResource(trackServiceMock);
+        TrackResource trackResource = new TrackResource(trackServiceMock, likeService);
             when(trackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
             MockMvc restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
