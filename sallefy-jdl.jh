@@ -9,7 +9,7 @@ entity Track {
     createdAt ZonedDateTime,
     released ZonedDateTime,
     duration Integer,
-    primaryColor String
+    color String
 }
 
 entity Playlist {
