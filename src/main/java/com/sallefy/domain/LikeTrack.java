@@ -13,8 +13,11 @@ import java.time.ZonedDateTime;
  * A LikeTrack.
  */
 @Entity
-@Table(name = "like_track")
+@Table(name = "like_track", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"user_id", "track_id"})
+})
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+
 public class LikeTrack implements Serializable {
 
     private static final long serialVersionUID = 1L;
