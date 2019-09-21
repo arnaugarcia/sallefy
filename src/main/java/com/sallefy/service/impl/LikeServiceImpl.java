@@ -1,6 +1,7 @@
 package com.sallefy.service.impl;
 
 import com.sallefy.domain.LikeTrack;
+import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
 import com.sallefy.repository.LikeAlbumRepository;
 import com.sallefy.repository.LikeTrackRepository;
@@ -11,8 +12,14 @@ import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.LikeTrackMapper;
 import com.sallefy.service.mapper.TrackMapper;
+import com.sallefy.service.mapper.UserMapper;
 import com.sallefy.web.rest.errors.UserNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class LikeServiceImpl implements LikeService {
@@ -47,20 +54,32 @@ public class LikeServiceImpl implements LikeService {
     public LikeDTO toggleLikeTrack(Long trackId) {
         final User user = findCurrentUser();
 
-        final TrackDTO trackDTO = trackService.findOne(trackId);
+        findTrackById(trackId);
 
-        final LikeTrack likeTrack = new LikeTrack();
+        final Optional<LikeTrack> isTrackLikedByUser = likeTrackRepository.findTrackByUserIsCurrentUser(createTrackFromId(trackId));
 
-        likeTrack.setTrack(trackMapper.toEntity(trackDTO));
-        likeTrack.setUser(user);
-        likeTrack.setLiked(true);
+        final LikeDTO likeDTO = new LikeDTO();
 
-        return saveAndTransform(likeTrack);
+        if (isTrackLikedByUser.isPresent()) {
+            likeTrackRepository.delete(isTrackLikedByUser.get());
+            likeDTO.setLiked(false);
+        } else {
+            LikeTrack likeTrack = new LikeTrack();
+            likeTrack.setTrack(createTrackFromId(trackId));
+            likeTrack.setUser(user);
+            likeTrack.setLiked(true);
+            likeTrackRepository.save(likeTrack);
+        }
+
+        return likeDTO;
     }
 
-    private LikeDTO saveAndTransform(LikeTrack likeTrack) {
-        likeTrackRepository.save(likeTrack);
-        return likeTrackMapper.toDto(likeTrack);
+    private TrackDTO findTrackById(Long trackId) {
+        return trackService.findOne(trackId);
+    }
+
+    private Track createTrackFromId(Long trackId) {
+        return trackMapper.fromId(trackId);
     }
 
     private User findCurrentUser() {
