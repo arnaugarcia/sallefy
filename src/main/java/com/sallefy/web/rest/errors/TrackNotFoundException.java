@@ -1,4 +1,4 @@
-package com.sallefy.service.exception;
+package com.sallefy.web.rest.errors;
 
 public class TrackNotFoundException extends RuntimeException {
 

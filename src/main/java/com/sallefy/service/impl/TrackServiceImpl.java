@@ -4,8 +4,9 @@ import com.sallefy.domain.Track;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.TrackDTO;
-import com.sallefy.service.exception.TrackNotFoundException;
 import com.sallefy.service.mapper.TrackMapper;
+import com.sallefy.web.rest.errors.BadRequestAlertException;
+import com.sallefy.web.rest.errors.ErrorConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link Track}.
@@ -85,7 +89,11 @@ public class TrackServiceImpl implements TrackService {
         log.debug("Request to get Track : {}", id);
         return trackRepository.findById(id)
             .map(trackMapper::toDto)
-            .orElseThrow(TrackNotFoundException::new);
+            .orElseThrow(trackNotFound());
+    }
+
+    private Supplier<BadRequestAlertException> trackNotFound() {
+        throw new BadRequestAlertException("Invalid id", Track.class.getName(), "notFound");
     }
 
     /**
