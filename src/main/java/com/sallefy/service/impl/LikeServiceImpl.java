@@ -81,7 +81,7 @@ public class LikeServiceImpl implements LikeService {
     public LikeDTO toggleLikeAlbum(Long albumId) {
         final User user = findCurrentUser();
 
-        albumService.findOne(albumId);
+        findAlbumById(albumId);
 
         final LikeDTO likeDTO = new LikeDTO();
 
@@ -100,6 +100,10 @@ public class LikeServiceImpl implements LikeService {
         }
 
         return likeDTO;
+    }
+
+    private void findAlbumById(Long albumId) {
+        albumService.findOne(albumId);
     }
 
     private TrackDTO findTrackById(Long trackId) {
