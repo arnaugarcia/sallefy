@@ -47,8 +47,9 @@ describe('Track e2e test', () => {
       trackUpdatePage.setPopularityInput('popularity'),
       trackUpdatePage.setThumbnailInput('thumbnail'),
       trackUpdatePage.setCreatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+      trackUpdatePage.setReleasedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       trackUpdatePage.setDurationInput('5'),
-      trackUpdatePage.setPrimaryColorInput('primaryColor'),
+      trackUpdatePage.setColorInput('color'),
       trackUpdatePage.userSelectLastOption()
       // trackUpdatePage.genreSelectLastOption(),
     ]);
@@ -58,8 +59,9 @@ describe('Track e2e test', () => {
     expect(await trackUpdatePage.getPopularityInput()).to.eq('popularity', 'Expected Popularity value to be equals to popularity');
     expect(await trackUpdatePage.getThumbnailInput()).to.eq('thumbnail', 'Expected Thumbnail value to be equals to thumbnail');
     expect(await trackUpdatePage.getCreatedAtInput()).to.contain('2001-01-01T02:30', 'Expected createdAt value to be equals to 2000-12-31');
+    expect(await trackUpdatePage.getReleasedInput()).to.contain('2001-01-01T02:30', 'Expected released value to be equals to 2000-12-31');
     expect(await trackUpdatePage.getDurationInput()).to.eq('5', 'Expected duration value to be equals to 5');
-    expect(await trackUpdatePage.getPrimaryColorInput()).to.eq('primaryColor', 'Expected PrimaryColor value to be equals to primaryColor');
+    expect(await trackUpdatePage.getColorInput()).to.eq('color', 'Expected Color value to be equals to color');
     await trackUpdatePage.save();
     expect(await trackUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 

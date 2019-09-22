@@ -24,14 +24,15 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Track(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', currentDate, 0, 'AAAAAAA');
+      elemDefault = new Track(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', currentDate, currentDate, 0, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
         const returnedFromService = Object.assign(
           {
-            createdAt: currentDate.format(DATE_TIME_FORMAT)
+            createdAt: currentDate.format(DATE_TIME_FORMAT),
+            released: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
@@ -49,13 +50,15 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
-            createdAt: currentDate.format(DATE_TIME_FORMAT)
+            createdAt: currentDate.format(DATE_TIME_FORMAT),
+            released: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
         const expected = Object.assign(
           {
-            createdAt: currentDate
+            createdAt: currentDate,
+            released: currentDate
           },
           returnedFromService
         );
@@ -77,15 +80,17 @@ describe('Service Tests', () => {
             popularity: 'BBBBBB',
             thumbnail: 'BBBBBB',
             createdAt: currentDate.format(DATE_TIME_FORMAT),
+            released: currentDate.format(DATE_TIME_FORMAT),
             duration: 1,
-            primaryColor: 'BBBBBB'
+            color: 'BBBBBB'
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            createdAt: currentDate
+            createdAt: currentDate,
+            released: currentDate
           },
           returnedFromService
         );
@@ -107,14 +112,16 @@ describe('Service Tests', () => {
             popularity: 'BBBBBB',
             thumbnail: 'BBBBBB',
             createdAt: currentDate.format(DATE_TIME_FORMAT),
+            released: currentDate.format(DATE_TIME_FORMAT),
             duration: 1,
-            primaryColor: 'BBBBBB'
+            color: 'BBBBBB'
           },
           elemDefault
         );
         const expected = Object.assign(
           {
-            createdAt: currentDate
+            createdAt: currentDate,
+            released: currentDate
           },
           returnedFromService
         );

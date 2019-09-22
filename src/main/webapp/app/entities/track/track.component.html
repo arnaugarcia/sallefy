@@ -24,8 +24,9 @@
             <th><span jhiTranslate="sallefyApp.track.popularity">Popularity</span></th>
             <th><span jhiTranslate="sallefyApp.track.thumbnail">Thumbnail</span></th>
             <th><span jhiTranslate="sallefyApp.track.createdAt">Created At</span></th>
+            <th><span jhiTranslate="sallefyApp.track.released">Released</span></th>
             <th><span jhiTranslate="sallefyApp.track.duration">Duration</span></th>
-            <th><span jhiTranslate="sallefyApp.track.primaryColor">Primary Color</span></th>
+            <th><span jhiTranslate="sallefyApp.track.color">Color</span></th>
             <th><span jhiTranslate="sallefyApp.track.user">User</span></th>
             <th><span jhiTranslate="sallefyApp.track.genre">Genre</span></th>
             <th></th>
@@ -40,8 +41,9 @@
                 <td>{{track.popularity}}</td>
                 <td>{{track.thumbnail}}</td>
                 <td>{{track.createdAt | date:'medium'}}</td>
+                <td>{{track.released | date:'medium'}}</td>
                 <td>{{track.duration}}</td>
-                <td>{{track.primaryColor}}</td>
+                <td>{{track.color}}</td>
                 <td>
                     {{track.userLogin}}
                 </td>

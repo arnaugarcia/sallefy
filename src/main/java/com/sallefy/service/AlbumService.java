@@ -34,14 +34,14 @@ public interface AlbumService {
      * @return the list of entities.
      */
     Page<AlbumDTO> findAllWithEagerRelationships(Pageable pageable);
-    
+
     /**
      * Get the "id" album.
      *
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<AlbumDTO> findOne(Long id);
+   AlbumDTO findOne(Long id);
 
     /**
      * Delete the "id" album.

@@ -43,8 +43,9 @@ export class TrackUpdateComponent implements OnInit {
     popularity: [],
     thumbnail: [],
     createdAt: [],
+    released: [],
     duration: [],
-    primaryColor: [],
+    color: [],
     userId: [],
     genres: []
   });
@@ -104,8 +105,9 @@ export class TrackUpdateComponent implements OnInit {
       popularity: track.popularity,
       thumbnail: track.thumbnail,
       createdAt: track.createdAt != null ? track.createdAt.format(DATE_TIME_FORMAT) : null,
+      released: track.released != null ? track.released.format(DATE_TIME_FORMAT) : null,
       duration: track.duration,
-      primaryColor: track.primaryColor,
+      color: track.color,
       userId: track.userId,
       genres: track.genres
     });
@@ -136,8 +138,9 @@ export class TrackUpdateComponent implements OnInit {
       thumbnail: this.editForm.get(['thumbnail']).value,
       createdAt:
         this.editForm.get(['createdAt']).value != null ? moment(this.editForm.get(['createdAt']).value, DATE_TIME_FORMAT) : undefined,
+      released: this.editForm.get(['released']).value != null ? moment(this.editForm.get(['released']).value, DATE_TIME_FORMAT) : undefined,
       duration: this.editForm.get(['duration']).value,
-      primaryColor: this.editForm.get(['primaryColor']).value,
+      color: this.editForm.get(['color']).value,
       userId: this.editForm.get(['userId']).value,
       genres: this.editForm.get(['genres']).value
     };

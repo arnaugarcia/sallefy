@@ -1,0 +1,16 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.7.xsd">
+    <changeSet author="sallefy" id="1569162165343-1">
+        <addColumn tableName="track">
+            <column name="color" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="sallefy" id="1569162165343-2">
+        <addColumn tableName="track">
+            <column name="released" type="datetime"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="sallefy" id="1569162165343-3">
+        <dropColumn columnName="primary_color" tableName="track"/>
+    </changeSet>
+</databaseChangeLog>

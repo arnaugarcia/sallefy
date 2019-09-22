@@ -43,11 +43,14 @@ public class Track implements Serializable {
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
+    @Column(name = "released")
+    private ZonedDateTime released;
+
     @Column(name = "duration")
     private Integer duration;
 
-    @Column(name = "primary_color")
-    private String primaryColor;
+    @Column(name = "color")
+    private String color;
 
     @ManyToOne
     @JsonIgnoreProperties("tracks")
@@ -165,6 +168,19 @@ public class Track implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public ZonedDateTime getReleased() {
+        return released;
+    }
+
+    public Track released(ZonedDateTime released) {
+        this.released = released;
+        return this;
+    }
+
+    public void setReleased(ZonedDateTime released) {
+        this.released = released;
+    }
+
     public Integer getDuration() {
         return duration;
     }
@@ -178,17 +194,17 @@ public class Track implements Serializable {
         this.duration = duration;
     }
 
-    public String getPrimaryColor() {
-        return primaryColor;
+    public String getColor() {
+        return color;
     }
 
-    public Track primaryColor(String primaryColor) {
-        this.primaryColor = primaryColor;
+    public Track color(String color) {
+        this.color = color;
         return this;
     }
 
-    public void setPrimaryColor(String primaryColor) {
-        this.primaryColor = primaryColor;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public User getUser() {
@@ -356,8 +372,9 @@ public class Track implements Serializable {
             ", popularity='" + getPopularity() + "'" +
             ", thumbnail='" + getThumbnail() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
+            ", released='" + getReleased() + "'" +
             ", duration=" + getDuration() +
-            ", primaryColor='" + getPrimaryColor() + "'" +
+            ", color='" + getColor() + "'" +
             "}";
     }
 }

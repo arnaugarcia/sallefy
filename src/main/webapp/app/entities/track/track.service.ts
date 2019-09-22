@@ -52,7 +52,8 @@ export class TrackService {
 
   protected convertDateFromClient(track: ITrack): ITrack {
     const copy: ITrack = Object.assign({}, track, {
-      createdAt: track.createdAt != null && track.createdAt.isValid() ? track.createdAt.toJSON() : null
+      createdAt: track.createdAt != null && track.createdAt.isValid() ? track.createdAt.toJSON() : null,
+      released: track.released != null && track.released.isValid() ? track.released.toJSON() : null
     });
     return copy;
   }
@@ -60,6 +61,7 @@ export class TrackService {
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
       res.body.createdAt = res.body.createdAt != null ? moment(res.body.createdAt) : null;
+      res.body.released = res.body.released != null ? moment(res.body.released) : null;
     }
     return res;
   }
@@ -68,6 +70,7 @@ export class TrackService {
     if (res.body) {
       res.body.forEach((track: ITrack) => {
         track.createdAt = track.createdAt != null ? moment(track.createdAt) : null;
+        track.released = track.released != null ? moment(track.released) : null;
       });
     }
     return res;

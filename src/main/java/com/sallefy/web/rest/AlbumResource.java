@@ -1,6 +1,8 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.service.AlbumService;
+import com.sallefy.service.LikeService;
+import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.service.dto.AlbumDTO;
 
@@ -16,7 +18,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.List;
-import java.util.Optional;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 /**
  * REST controller for managing {@link com.sallefy.domain.Album}.
@@ -34,8 +37,11 @@ public class AlbumResource {
 
     private final AlbumService albumService;
 
-    public AlbumResource(AlbumService albumService) {
+    private final LikeService likeService;
+
+    public AlbumResource(AlbumService albumService, LikeService likeService) {
         this.albumService = albumService;
+        this.likeService = likeService;
     }
 
     /**
@@ -73,7 +79,7 @@ public class AlbumResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         AlbumDTO result = albumService.save(albumDTO);
-        return ResponseEntity.ok()
+        return ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, albumDTO.getId().toString()))
             .body(result);
     }
@@ -99,8 +105,21 @@ public class AlbumResource {
     @GetMapping("/albums/{id}")
     public ResponseEntity<AlbumDTO> getAlbum(@PathVariable Long id) {
         log.debug("REST request to get Album : {}", id);
-        Optional<AlbumDTO> albumDTO = albumService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(albumDTO);
+        AlbumDTO albumDTO = albumService.findOne(id);
+        return ok(albumDTO);
+    }
+
+    /**
+     * {@code PUT  /albums/:id/like} : like an album by "id".
+     *
+     * @param id the id of the album to like.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the likeDTO, or with status {@code 404 (Not Found)}.
+     */
+    @PutMapping("/albums/{id}/like")
+    public ResponseEntity<LikeDTO> toggleLikeAlbum(@PathVariable Long id) {
+        log.debug("REST request to like an Album : {}", id);
+        LikeDTO likeDTO = likeService.toggleLikeAlbum(id);
+        return ok(likeDTO);
     }
 
     /**

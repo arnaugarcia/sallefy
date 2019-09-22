@@ -4,10 +4,10 @@ import com.sallefy.SallefyApp;
 import com.sallefy.domain.Album;
 import com.sallefy.repository.AlbumRepository;
 import com.sallefy.service.AlbumService;
+import com.sallefy.service.LikeService;
 import com.sallefy.service.dto.AlbumDTO;
 import com.sallefy.service.mapper.AlbumMapper;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -15,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -71,6 +70,9 @@ public class AlbumResourceIT {
     private AlbumService albumService;
 
     @Autowired
+    private LikeService likeService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -92,7 +94,7 @@ public class AlbumResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AlbumResource albumResource = new AlbumResource(albumService);
+        final AlbumResource albumResource = new AlbumResource(albumService, likeService);
         this.restAlbumMockMvc = MockMvcBuilders.standaloneSetup(albumResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -103,7 +105,7 @@ public class AlbumResourceIT {
 
     /**
      * Create an entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
@@ -115,9 +117,10 @@ public class AlbumResourceIT {
             .totalTracks(DEFAULT_TOTAL_TRACKS);
         return album;
     }
+
     /**
      * Create an updated entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
@@ -194,10 +197,10 @@ public class AlbumResourceIT {
             .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL.toString())))
             .andExpect(jsonPath("$.[*].totalTracks").value(hasItem(DEFAULT_TOTAL_TRACKS)));
     }
-    
+
     @SuppressWarnings({"unchecked"})
     public void getAllAlbumsWithEagerRelationshipsIsEnabled() throws Exception {
-        AlbumResource albumResource = new AlbumResource(albumServiceMock);
+        AlbumResource albumResource = new AlbumResource(albumServiceMock, likeService);
         when(albumServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         MockMvc restAlbumMockMvc = MockMvcBuilders.standaloneSetup(albumResource)
@@ -207,25 +210,25 @@ public class AlbumResourceIT {
             .setMessageConverters(jacksonMessageConverter).build();
 
         restAlbumMockMvc.perform(get("/api/albums?eagerload=true"))
-        .andExpect(status().isOk());
+            .andExpect(status().isOk());
 
         verify(albumServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @SuppressWarnings({"unchecked"})
     public void getAllAlbumsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        AlbumResource albumResource = new AlbumResource(albumServiceMock);
-            when(albumServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-            MockMvc restAlbumMockMvc = MockMvcBuilders.standaloneSetup(albumResource)
+        AlbumResource albumResource = new AlbumResource(albumServiceMock, likeService);
+        when(albumServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        MockMvc restAlbumMockMvc = MockMvcBuilders.standaloneSetup(albumResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter).build();
 
         restAlbumMockMvc.perform(get("/api/albums?eagerload=true"))
-        .andExpect(status().isOk());
+            .andExpect(status().isOk());
 
-            verify(albumServiceMock, times(1)).findAllWithEagerRelationships(any());
+        verify(albumServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test

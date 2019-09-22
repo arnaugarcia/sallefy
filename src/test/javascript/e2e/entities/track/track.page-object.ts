@@ -32,8 +32,9 @@ export class TrackUpdatePage {
   popularityInput = element(by.id('field_popularity'));
   thumbnailInput = element(by.id('field_thumbnail'));
   createdAtInput = element(by.id('field_createdAt'));
+  releasedInput = element(by.id('field_released'));
   durationInput = element(by.id('field_duration'));
-  primaryColorInput = element(by.id('field_primaryColor'));
+  colorInput = element(by.id('field_color'));
   userSelect = element(by.id('field_user'));
   genreSelect = element(by.id('field_genre'));
 
@@ -89,6 +90,14 @@ export class TrackUpdatePage {
     return await this.createdAtInput.getAttribute('value');
   }
 
+  async setReleasedInput(released) {
+    await this.releasedInput.sendKeys(released);
+  }
+
+  async getReleasedInput() {
+    return await this.releasedInput.getAttribute('value');
+  }
+
   async setDurationInput(duration) {
     await this.durationInput.sendKeys(duration);
   }
@@ -97,12 +106,12 @@ export class TrackUpdatePage {
     return await this.durationInput.getAttribute('value');
   }
 
-  async setPrimaryColorInput(primaryColor) {
-    await this.primaryColorInput.sendKeys(primaryColor);
+  async setColorInput(color) {
+    await this.colorInput.sendKeys(color);
   }
 
-  async getPrimaryColorInput() {
-    return await this.primaryColorInput.getAttribute('value');
+  async getColorInput() {
+    return await this.colorInput.getAttribute('value');
   }
 
   async userSelectLastOption(timeout?: number) {

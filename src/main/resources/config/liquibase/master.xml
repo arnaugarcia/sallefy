@@ -33,4 +33,6 @@
     <include file="config/liquibase/changelog/20190919065626_added_entity_constraints_LikeAlbum.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190919065628_added_entity_constraints_Playback.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <include file="config/liquibase/changelog/20190922142239_added_unique_constraints_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190922163334_added_track_columns.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

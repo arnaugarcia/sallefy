@@ -12,7 +12,9 @@ import java.time.ZonedDateTime;
  * A LikeAlbum.
  */
 @Entity
-@Table(name = "like_album")
+@Table(name = "like_album", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"user_id", "album_id"})
+})
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class LikeAlbum implements Serializable {
 
