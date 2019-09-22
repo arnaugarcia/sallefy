@@ -5,6 +5,7 @@ import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
 import com.sallefy.repository.LikeAlbumRepository;
 import com.sallefy.repository.LikeTrackRepository;
+import com.sallefy.service.AlbumService;
 import com.sallefy.service.LikeService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
@@ -23,6 +24,8 @@ public class LikeServiceImpl implements LikeService {
 
     private final LikeAlbumRepository likeAlbumRepository;
 
+    private final AlbumService albumService;
+
     private final TrackMapper trackMapper;
 
     private final TrackService trackService;
@@ -31,11 +34,12 @@ public class LikeServiceImpl implements LikeService {
 
     public LikeServiceImpl(LikeTrackRepository likeTrackRepository,
                            LikeAlbumRepository likeAlbumRepository,
-                           TrackMapper trackMapper,
+                           AlbumService albumService, TrackMapper trackMapper,
                            TrackService trackService,
                            UserService userService) {
         this.likeTrackRepository = likeTrackRepository;
         this.likeAlbumRepository = likeAlbumRepository;
+        this.albumService = albumService;
         this.trackMapper = trackMapper;
         this.trackService = trackService;
         this.userService = userService;
@@ -64,6 +68,12 @@ public class LikeServiceImpl implements LikeService {
         }
 
         return likeDTO;
+    }
+
+    @Override
+    public LikeDTO toggleLikeAlbum(Long albumId) {
+        final User user = findCurrentUser();
+        albumService.findOne(albumId);
     }
 
     private TrackDTO findTrackById(Long trackId) {

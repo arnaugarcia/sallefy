@@ -8,10 +8,17 @@ import com.sallefy.service.dto.LikeDTO;
 public interface LikeService {
 
     /**
-     * Method to like a Track by "id"
+     * Method to like or dislike a Track by "id"
      *
      * @param trackId the id of the Track
-     * @return a LikeTrackDTO with the liked boolean
+     * @return a LikeDTO with the liked boolean
      */
     LikeDTO toggleLikeTrack(Long trackId);
+
+    /**
+     * Method to like or dislike an Album by "id"
+     * @param albumId the id of the album
+     * @return a LikeDTO with the liked boolean
+     */
+    LikeDTO toggleLikeAlbum(Long albumId);
 }
