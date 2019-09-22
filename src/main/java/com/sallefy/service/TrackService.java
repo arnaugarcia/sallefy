@@ -1,7 +1,6 @@
 package com.sallefy.service;
 
 import com.sallefy.service.dto.TrackDTO;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -34,14 +33,14 @@ public interface TrackService {
      * @return the list of entities.
      */
     Page<TrackDTO> findAllWithEagerRelationships(Pageable pageable);
-    
+
     /**
      * Get the "id" track.
      *
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<TrackDTO> findOne(Long id);
+    TrackDTO findOne(Long id);
 
     /**
      * Delete the "id" track.

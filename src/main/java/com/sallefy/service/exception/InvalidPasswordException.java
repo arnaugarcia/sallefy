@@ -1,4 +1,4 @@
-package com.sallefy.service;
+package com.sallefy.service.exception;
 
 public class InvalidPasswordException extends RuntimeException {
 
