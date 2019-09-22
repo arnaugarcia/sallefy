@@ -107,9 +107,9 @@ public class TrackResource {
     }
 
     /**
-     * {@code PUT  /tracks/:id/like} : like the track by "id".
+     * {@code PUT  /tracks/:id/like} : like a track by "id".
      *
-     * @param id the id of the trackDTO to retrieve.
+     * @param id the id of the trackDTO to like.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the likeDTO, or with status {@code 404 (Not Found)}.
      */
     @PutMapping("/tracks/{id}/like")
