@@ -1,5 +1,6 @@
 package com.sallefy.service.impl;
 
+import com.sallefy.domain.LikeAlbum;
 import com.sallefy.domain.LikeTrack;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
@@ -11,6 +12,7 @@ import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.service.dto.TrackDTO;
+import com.sallefy.service.mapper.AlbumMapper;
 import com.sallefy.service.mapper.TrackMapper;
 import com.sallefy.web.rest.errors.UserNotFoundException;
 import org.springframework.stereotype.Service;
@@ -28,19 +30,24 @@ public class LikeServiceImpl implements LikeService {
 
     private final TrackMapper trackMapper;
 
+    private final AlbumMapper albumMapper;
+
     private final TrackService trackService;
 
     private final UserService userService;
 
     public LikeServiceImpl(LikeTrackRepository likeTrackRepository,
                            LikeAlbumRepository likeAlbumRepository,
-                           AlbumService albumService, TrackMapper trackMapper,
+                           AlbumService albumService,
+                           TrackMapper trackMapper,
+                           AlbumMapper albumMapper,
                            TrackService trackService,
                            UserService userService) {
         this.likeTrackRepository = likeTrackRepository;
         this.likeAlbumRepository = likeAlbumRepository;
         this.albumService = albumService;
         this.trackMapper = trackMapper;
+        this.albumMapper = albumMapper;
         this.trackService = trackService;
         this.userService = userService;
     }
@@ -73,7 +80,26 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public LikeDTO toggleLikeAlbum(Long albumId) {
         final User user = findCurrentUser();
+
         albumService.findOne(albumId);
+
+        final LikeDTO likeDTO = new LikeDTO();
+
+        final Optional<LikeAlbum> userLikeAlbum = likeAlbumRepository.findAlbumByUserIsCurrentUser(albumMapper.fromId(albumId));
+
+        if (userLikeAlbum.isPresent()) {
+            likeAlbumRepository.delete(userLikeAlbum.get());
+            likeDTO.setLiked(false);
+        } else {
+            LikeAlbum likeAlbum = new LikeAlbum();
+            likeAlbum.setAlbum(albumMapper.fromId(albumId));
+            likeAlbum.setUser(user);
+            likeAlbum.setLiked(true);
+            likeAlbumRepository.save(likeAlbum);
+            likeDTO.setLiked(true);
+        }
+
+        return likeDTO;
     }
 
     private TrackDTO findTrackById(Long trackId) {
