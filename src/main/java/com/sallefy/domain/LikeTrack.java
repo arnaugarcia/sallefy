@@ -1,4 +1,5 @@
 package com.sallefy.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -17,7 +18,6 @@ import java.time.ZonedDateTime;
     @UniqueConstraint(columnNames = {"user_id", "track_id"})
 })
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-
 public class LikeTrack implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,6 +40,15 @@ public class LikeTrack implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("likeTracks")
     private Track track;
+
+    public LikeTrack() {
+    }
+
+    public LikeTrack(Boolean liked, User user, Track track) {
+        this.liked = liked;
+        this.user = user;
+        this.track = track;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
