@@ -26,11 +26,15 @@
             "fieldType": "ZonedDateTime"
         },
         {
+            "fieldName": "released",
+            "fieldType": "ZonedDateTime"
+        },
+        {
             "fieldName": "duration",
             "fieldType": "Integer"
         },
         {
-            "fieldName": "primaryColor",
+            "fieldName": "color",
             "fieldType": "String"
         }
     ],

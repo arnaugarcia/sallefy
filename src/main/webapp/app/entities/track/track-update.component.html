@@ -41,14 +41,20 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.released" for="field_released">Released</label>
+                    <div class="d-flex">
+                        <input id="field_released" type="datetime-local" class="form-control" name="released" formControlName="released" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="sallefyApp.track.duration" for="field_duration">Duration</label>
                     <input type="number" class="form-control" name="duration" id="field_duration"
                            formControlName="duration"/>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="sallefyApp.track.primaryColor" for="field_primaryColor">Primary Color</label>
-                    <input type="text" class="form-control" name="primaryColor" id="field_primaryColor"
-                           formControlName="primaryColor"/>
+                    <label class="form-control-label" jhiTranslate="sallefyApp.track.color" for="field_color">Color</label>
+                    <input type="text" class="form-control" name="color" id="field_color"
+                           formControlName="color"/>
                 </div>
 
                 <div class="form-group">

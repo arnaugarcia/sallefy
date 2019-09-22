@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -65,18 +66,19 @@ public class TrackResourceIT {
     private static final ZonedDateTime UPDATED_CREATED_AT = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
     private static final ZonedDateTime SMALLER_CREATED_AT = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
 
+    private static final ZonedDateTime DEFAULT_RELEASED = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_RELEASED = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final ZonedDateTime SMALLER_RELEASED = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
+
     private static final Integer DEFAULT_DURATION = 1;
     private static final Integer UPDATED_DURATION = 2;
     private static final Integer SMALLER_DURATION = 1 - 1;
 
-    private static final String DEFAULT_PRIMARY_COLOR = "AAAAAAAAAA";
-    private static final String UPDATED_PRIMARY_COLOR = "BBBBBBBBBB";
+    private static final String DEFAULT_COLOR = "AAAAAAAAAA";
+    private static final String UPDATED_COLOR = "BBBBBBBBBB";
 
     @Autowired
     private TrackRepository trackRepository;
-
-    @Autowired
-    private LikeService likeService;
 
     @Mock
     private TrackRepository trackRepositoryMock;
@@ -86,6 +88,12 @@ public class TrackResourceIT {
 
     @Mock
     private TrackService trackServiceMock;
+
+    @Autowired
+    private LikeService likeService;
+
+    @Mock
+    private LikeService likeServiceMock;
 
     @Autowired
     private TrackService trackService;
@@ -128,15 +136,17 @@ public class TrackResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Track createEntity(EntityManager em) {
-        return new Track()
+        Track track = new Track()
             .name(DEFAULT_NAME)
             .rating(DEFAULT_RATING)
             .url(DEFAULT_URL)
             .popularity(DEFAULT_POPULARITY)
             .thumbnail(DEFAULT_THUMBNAIL)
             .createdAt(DEFAULT_CREATED_AT)
+            .released(DEFAULT_RELEASED)
             .duration(DEFAULT_DURATION)
-            .primaryColor(DEFAULT_PRIMARY_COLOR);
+            .color(DEFAULT_COLOR);
+        return track;
     }
     /**
      * Create an updated entity for this test.
@@ -145,15 +155,17 @@ public class TrackResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Track createUpdatedEntity(EntityManager em) {
-        return new Track()
+        Track track = new Track()
             .name(UPDATED_NAME)
             .rating(UPDATED_RATING)
             .url(UPDATED_URL)
             .popularity(UPDATED_POPULARITY)
             .thumbnail(UPDATED_THUMBNAIL)
             .createdAt(UPDATED_CREATED_AT)
+            .released(UPDATED_RELEASED)
             .duration(UPDATED_DURATION)
-            .primaryColor(UPDATED_PRIMARY_COLOR);
+            .color(UPDATED_COLOR);
+        return track;
     }
 
     @BeforeEach
@@ -183,8 +195,9 @@ public class TrackResourceIT {
         assertThat(testTrack.getPopularity()).isEqualTo(DEFAULT_POPULARITY);
         assertThat(testTrack.getThumbnail()).isEqualTo(DEFAULT_THUMBNAIL);
         assertThat(testTrack.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
+        assertThat(testTrack.getReleased()).isEqualTo(DEFAULT_RELEASED);
         assertThat(testTrack.getDuration()).isEqualTo(DEFAULT_DURATION);
-        assertThat(testTrack.getPrimaryColor()).isEqualTo(DEFAULT_PRIMARY_COLOR);
+        assertThat(testTrack.getColor()).isEqualTo(DEFAULT_COLOR);
     }
 
     @Test
@@ -225,13 +238,14 @@ public class TrackResourceIT {
             .andExpect(jsonPath("$.[*].popularity").value(hasItem(DEFAULT_POPULARITY.toString())))
             .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL.toString())))
             .andExpect(jsonPath("$.[*].createdAt").value(hasItem(sameInstant(DEFAULT_CREATED_AT))))
+            .andExpect(jsonPath("$.[*].released").value(hasItem(sameInstant(DEFAULT_RELEASED))))
             .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION)))
-            .andExpect(jsonPath("$.[*].primaryColor").value(hasItem(DEFAULT_PRIMARY_COLOR.toString())));
+            .andExpect(jsonPath("$.[*].color").value(hasItem(DEFAULT_COLOR.toString())));
     }
 
     @SuppressWarnings({"unchecked"})
     public void getAllTracksWithEagerRelationshipsIsEnabled() throws Exception {
-        TrackResource trackResource = new TrackResource(trackServiceMock, likeService);
+        TrackResource trackResource = new TrackResource(trackServiceMock, likeServiceMock);
         when(trackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         MockMvc restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
@@ -248,7 +262,7 @@ public class TrackResourceIT {
 
     @SuppressWarnings({"unchecked"})
     public void getAllTracksWithEagerRelationshipsIsNotEnabled() throws Exception {
-        TrackResource trackResource = new TrackResource(trackServiceMock, likeService);
+        TrackResource trackResource = new TrackResource(trackServiceMock, likeServiceMock);
             when(trackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
             MockMvc restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
@@ -279,8 +293,9 @@ public class TrackResourceIT {
             .andExpect(jsonPath("$.popularity").value(DEFAULT_POPULARITY.toString()))
             .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL.toString()))
             .andExpect(jsonPath("$.createdAt").value(sameInstant(DEFAULT_CREATED_AT)))
+            .andExpect(jsonPath("$.released").value(sameInstant(DEFAULT_RELEASED)))
             .andExpect(jsonPath("$.duration").value(DEFAULT_DURATION))
-            .andExpect(jsonPath("$.primaryColor").value(DEFAULT_PRIMARY_COLOR.toString()));
+            .andExpect(jsonPath("$.color").value(DEFAULT_COLOR.toString()));
     }
 
     @Test
@@ -310,8 +325,9 @@ public class TrackResourceIT {
             .popularity(UPDATED_POPULARITY)
             .thumbnail(UPDATED_THUMBNAIL)
             .createdAt(UPDATED_CREATED_AT)
+            .released(UPDATED_RELEASED)
             .duration(UPDATED_DURATION)
-            .primaryColor(UPDATED_PRIMARY_COLOR);
+            .color(UPDATED_COLOR);
         TrackDTO trackDTO = trackMapper.toDto(updatedTrack);
 
         restTrackMockMvc.perform(put("/api/tracks")
@@ -329,8 +345,9 @@ public class TrackResourceIT {
         assertThat(testTrack.getPopularity()).isEqualTo(UPDATED_POPULARITY);
         assertThat(testTrack.getThumbnail()).isEqualTo(UPDATED_THUMBNAIL);
         assertThat(testTrack.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
+        assertThat(testTrack.getReleased()).isEqualTo(UPDATED_RELEASED);
         assertThat(testTrack.getDuration()).isEqualTo(UPDATED_DURATION);
-        assertThat(testTrack.getPrimaryColor()).isEqualTo(UPDATED_PRIMARY_COLOR);
+        assertThat(testTrack.getColor()).isEqualTo(UPDATED_COLOR);
     }
 
     @Test

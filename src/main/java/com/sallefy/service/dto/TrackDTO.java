@@ -24,9 +24,11 @@ public class TrackDTO implements Serializable {
 
     private ZonedDateTime createdAt;
 
+    private ZonedDateTime released;
+
     private Integer duration;
 
-    private String primaryColor;
+    private String color;
 
 
     private Long userId;
@@ -91,6 +93,14 @@ public class TrackDTO implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public ZonedDateTime getReleased() {
+        return released;
+    }
+
+    public void setReleased(ZonedDateTime released) {
+        this.released = released;
+    }
+
     public Integer getDuration() {
         return duration;
     }
@@ -99,12 +109,12 @@ public class TrackDTO implements Serializable {
         this.duration = duration;
     }
 
-    public String getPrimaryColor() {
-        return primaryColor;
+    public String getColor() {
+        return color;
     }
 
-    public void setPrimaryColor(String primaryColor) {
-        this.primaryColor = primaryColor;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public Long getUserId() {
@@ -162,8 +172,9 @@ public class TrackDTO implements Serializable {
             ", popularity='" + getPopularity() + "'" +
             ", thumbnail='" + getThumbnail() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
+            ", released='" + getReleased() + "'" +
             ", duration=" + getDuration() +
-            ", primaryColor='" + getPrimaryColor() + "'" +
+            ", color='" + getColor() + "'" +
             ", user=" + getUserId() +
             ", user='" + getUserLogin() + "'" +
             "}";

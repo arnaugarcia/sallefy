@@ -78,8 +78,9 @@ class TrackGatlingTest extends Simulation {
                 , "popularity":"SAMPLE_TEXT"
                 , "thumbnail":"SAMPLE_TEXT"
                 , "createdAt":"2020-01-01T00:00:00.000Z"
+                , "released":"2020-01-01T00:00:00.000Z"
                 , "duration":"0"
-                , "primaryColor":"SAMPLE_TEXT"
+                , "color":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_track_url"))).exitHereIfFailed

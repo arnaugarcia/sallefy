@@ -13,8 +13,9 @@ export interface ITrack {
   popularity?: string;
   thumbnail?: string;
   createdAt?: Moment;
+  released?: Moment;
   duration?: number;
-  primaryColor?: string;
+  color?: string;
   userLogin?: string;
   userId?: number;
   genres?: IGenre[];
@@ -33,8 +34,9 @@ export class Track implements ITrack {
     public popularity?: string,
     public thumbnail?: string,
     public createdAt?: Moment,
+    public released?: Moment,
     public duration?: number,
-    public primaryColor?: string,
+    public color?: string,
     public userLogin?: string,
     public userId?: number,
     public genres?: IGenre[],
