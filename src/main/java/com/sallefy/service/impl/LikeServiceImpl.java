@@ -12,14 +12,10 @@ import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.LikeTrackMapper;
 import com.sallefy.service.mapper.TrackMapper;
-import com.sallefy.service.mapper.UserMapper;
 import com.sallefy.web.rest.errors.UserNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 public class LikeServiceImpl implements LikeService {
@@ -56,22 +52,24 @@ public class LikeServiceImpl implements LikeService {
 
         findTrackById(trackId);
 
-        final Optional<LikeTrack> isTrackLikedByUser = likeTrackRepository.findTrackByUserIsCurrentUser(createTrackFromId(trackId));
+        final Optional<LikeTrack> userLikeTrack = likeTrackRepository.findTrackByUserIsCurrentUser(createTrackFromId(trackId));
 
-        final LikeDTO likeDTO = new LikeDTO();
-
-        if (isTrackLikedByUser.isPresent()) {
-            likeTrackRepository.delete(isTrackLikedByUser.get());
+        if (userLikeTrack.isPresent()) {
+            final LikeDTO likeDTO = new LikeDTO();
+            likeTrackRepository.delete(userLikeTrack.get());
             likeDTO.setLiked(false);
+            return likeDTO;
         } else {
             LikeTrack likeTrack = new LikeTrack();
             likeTrack.setTrack(createTrackFromId(trackId));
             likeTrack.setUser(user);
             likeTrack.setLiked(true);
-            likeTrackRepository.save(likeTrack);
+            return saveAndTransform(likeTrack);
         }
+    }
 
-        return likeDTO;
+    private LikeDTO saveAndTransform(LikeTrack likeTrack) {
+        return likeTrackMapper.toDto(likeTrackRepository.save(likeTrack));
     }
 
     private TrackDTO findTrackById(Long trackId) {

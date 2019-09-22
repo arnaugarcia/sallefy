@@ -41,15 +41,6 @@ public class LikeTrack implements Serializable {
     @JsonIgnoreProperties("likeTracks")
     private Track track;
 
-    public LikeTrack() {
-    }
-
-    public LikeTrack(Boolean liked, User user, Track track) {
-        this.liked = liked;
-        this.user = user;
-        this.track = track;
-    }
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
