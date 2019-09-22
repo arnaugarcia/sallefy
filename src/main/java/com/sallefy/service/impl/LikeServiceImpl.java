@@ -106,8 +106,8 @@ public class LikeServiceImpl implements LikeService {
         albumService.findOne(albumId);
     }
 
-    private TrackDTO findTrackById(Long trackId) {
-        return trackService.findOne(trackId);
+    private void findTrackById(Long trackId) {
+        trackService.findOne(trackId);
     }
 
     private Track createTrackFromId(Long trackId) {
