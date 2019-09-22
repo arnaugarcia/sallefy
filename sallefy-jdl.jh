@@ -93,5 +93,5 @@ relationship ManyToMany {
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct
 
-service all with serviceImpl
+service Album, Track, Playlist with serviceImpl
 
