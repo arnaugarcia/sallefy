@@ -4,6 +4,7 @@ import com.sallefy.service.AlbumService;
 import com.sallefy.domain.Album;
 import com.sallefy.repository.AlbumRepository;
 import com.sallefy.service.dto.AlbumDTO;
+import com.sallefy.service.exception.AlbumNotFoundException;
 import com.sallefy.service.mapper.AlbumMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +73,7 @@ public class AlbumServiceImpl implements AlbumService {
     public Page<AlbumDTO> findAllWithEagerRelationships(Pageable pageable) {
         return albumRepository.findAllWithEagerRelationships(pageable).map(albumMapper::toDto);
     }
-    
+
 
     /**
      * Get one album by id.
@@ -82,10 +83,11 @@ public class AlbumServiceImpl implements AlbumService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<AlbumDTO> findOne(Long id) {
+    public AlbumDTO findOne(Long id) {
         log.debug("Request to get Album : {}", id);
         return albumRepository.findOneWithEagerRelationships(id)
-            .map(albumMapper::toDto);
+            .map(albumMapper::toDto)
+            .orElseThrow(AlbumNotFoundException::new);
     }
 
     /**
