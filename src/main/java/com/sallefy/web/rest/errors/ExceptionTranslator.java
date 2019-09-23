@@ -23,11 +23,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import static com.sallefy.web.rest.errors.ErrorConstants.ENTITY_NOT_FOUND_TYPE;
+import static com.sallefy.web.rest.errors.ErrorConstants.*;
+import static org.zalando.problem.Status.CONFLICT;
 import static org.zalando.problem.Status.NOT_FOUND;
+
 
 /**
  * Controller advice to translate the server side exceptions to client-friendly json structures.
@@ -40,6 +41,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     private static final String MESSAGE_KEY = "message";
     private static final String PATH_KEY = "path";
     private static final String VIOLATIONS_KEY = "violations";
+    private static final String CODE_KEY = "code";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -65,7 +67,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
         if (problem instanceof ConstraintViolationProblem) {
             builder
                 .with(VIOLATIONS_KEY, ((ConstraintViolationProblem) problem).getViolations())
-                .with(MESSAGE_KEY, ErrorConstants.ERR_VALIDATION);
+                .with(MESSAGE_KEY, ERR_VALIDATION);
         } else {
             builder
                 .withCause(((DefaultProblem) problem).getCause())
@@ -87,10 +89,10 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
             .collect(Collectors.toList());
 
         Problem problem = Problem.builder()
-            .withType(ErrorConstants.CONSTRAINT_VIOLATION_TYPE)
+            .withType(CONSTRAINT_VIOLATION_TYPE)
             .withTitle("Method argument not valid")
             .withStatus(defaultConstraintViolationStatus())
-            .with(MESSAGE_KEY, ErrorConstants.ERR_VALIDATION)
+            .with(MESSAGE_KEY, ERR_VALIDATION)
             .with(FIELD_ERRORS_KEY, fieldErrors)
             .build();
         return create(ex, problem, request);
@@ -120,8 +122,18 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     @ExceptionHandler
     public ResponseEntity<Problem> handleConcurrencyFailure(ConcurrencyFailureException ex, NativeWebRequest request) {
         Problem problem = Problem.builder()
-            .withStatus(Status.CONFLICT)
-            .with(MESSAGE_KEY, ErrorConstants.ERR_CONCURRENCY_FAILURE)
+            .withStatus(CONFLICT)
+            .with(MESSAGE_KEY, ERR_CONCURRENCY_FAILURE)
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleNotFoundException(NotFoundAlertException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withStatus(NOT_FOUND)
+            .with(MESSAGE_KEY, ex.getMessage())
+            .with(CODE_KEY, ex.getErrorKey())
             .build();
         return create(ex, problem, request);
     }
