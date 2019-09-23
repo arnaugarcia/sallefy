@@ -5,8 +5,7 @@ import com.sallefy.repository.TrackRepository;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.TrackMapper;
-import com.sallefy.web.rest.errors.BadRequestAlertException;
-import com.sallefy.web.rest.errors.ErrorConstants;
+import com.sallefy.web.rest.errors.TrackNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -89,11 +88,7 @@ public class TrackServiceImpl implements TrackService {
         log.debug("Request to get Track : {}", id);
         return trackRepository.findById(id)
             .map(trackMapper::toDto)
-            .orElseThrow(trackNotFound());
-    }
-
-    private Supplier<BadRequestAlertException> trackNotFound() {
-        throw new BadRequestAlertException("Invalid id", Track.class.getName(), "notFound");
+            .orElseThrow(TrackNotFoundException::new);
     }
 
     /**
@@ -104,6 +99,7 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Track : {}", id);
+        findOne(id);
         trackRepository.deleteById(id);
     }
 
