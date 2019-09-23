@@ -6,7 +6,6 @@ import com.sallefy.repository.AlbumRepository;
 import com.sallefy.service.dto.AlbumDTO;
 import com.sallefy.service.mapper.AlbumMapper;
 import com.sallefy.web.rest.errors.AlbumNotFoundException;
-import com.sallefy.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

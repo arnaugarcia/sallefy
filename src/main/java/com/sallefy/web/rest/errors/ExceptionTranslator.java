@@ -14,7 +14,6 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.zalando.problem.DefaultProblem;
 import org.zalando.problem.Problem;
 import org.zalando.problem.ProblemBuilder;
-import org.zalando.problem.Status;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
 import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
 import org.zalando.problem.violations.ConstraintViolationProblem;
@@ -131,6 +130,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     @ExceptionHandler
     public ResponseEntity<Problem> handleNotFoundException(NotFoundAlertException ex, NativeWebRequest request) {
         Problem problem = Problem.builder()
+            .withType(ex.getType())
             .withStatus(NOT_FOUND)
             .with(MESSAGE_KEY, ex.getMessage())
             .with(CODE_KEY, ex.getErrorKey())
