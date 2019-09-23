@@ -74,7 +74,6 @@ public class AlbumServiceImpl implements AlbumService {
         return albumRepository.findAllWithEagerRelationships(pageable).map(albumMapper::toDto);
     }
 
-
     /**
      * Get one album by id.
      *
@@ -98,6 +97,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Album : {}", id);
+        findOne(id);
         albumRepository.deleteById(id);
     }
 }
