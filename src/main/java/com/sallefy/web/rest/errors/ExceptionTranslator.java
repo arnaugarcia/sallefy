@@ -98,7 +98,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     }
 
     @ExceptionHandler
-    public ResponseEntity<Problem> handleEmailAreadyUsedException(EmailAlreadyUsedException ex, NativeWebRequest request) {
+    public ResponseEntity<Problem> handleEmailAlreadyUsedException(com.sallefy.service.exception.EmailAlreadyUsedException ex, NativeWebRequest request) {
         EmailAlreadyUsedException problem = new EmailAlreadyUsedException();
         return create(problem, request, HeaderUtil.createFailureAlert(applicationName,  true, problem.getEntityName(), problem.getErrorKey(), problem.getMessage()));
     }
