@@ -1,11 +1,10 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.service.GenreService;
-import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.service.dto.GenreDTO;
-
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +43,7 @@ public class GenreResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new genreDTO, or with status {@code 400 (Bad Request)} if the genre has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @ApiOperation(value = "Creates a Genre")
     @PostMapping("/genres")
     public ResponseEntity<GenreDTO> createGenre(@RequestBody GenreDTO genreDTO) throws URISyntaxException {
         log.debug("REST request to save Genre : {}", genreDTO);
