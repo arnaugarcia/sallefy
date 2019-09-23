@@ -16,7 +16,7 @@ public class NotFoundAlertException extends AbstractThrowableProblem {
     private final String errorKey;
 
     public NotFoundAlertException(String defaultMessage, String entityName, String errorKey) {
-        this(ErrorConstants.DEFAULT_TYPE, defaultMessage, entityName, errorKey);
+        this(ErrorConstants.NOT_FOUND_TYPE, defaultMessage, entityName, errorKey);
     }
 
     public NotFoundAlertException(URI type, String defaultMessage, String entityName, String errorKey) {
