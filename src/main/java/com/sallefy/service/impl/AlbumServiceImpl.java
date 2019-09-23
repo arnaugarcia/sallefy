@@ -4,8 +4,8 @@ import com.sallefy.service.AlbumService;
 import com.sallefy.domain.Album;
 import com.sallefy.repository.AlbumRepository;
 import com.sallefy.service.dto.AlbumDTO;
-import com.sallefy.service.exception.AlbumNotFoundException;
 import com.sallefy.service.mapper.AlbumMapper;
+import com.sallefy.web.rest.errors.AlbumNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -74,7 +74,6 @@ public class AlbumServiceImpl implements AlbumService {
         return albumRepository.findAllWithEagerRelationships(pageable).map(albumMapper::toDto);
     }
 
-
     /**
      * Get one album by id.
      *
@@ -98,6 +97,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Album : {}", id);
+        findOne(id);
         albumRepository.deleteById(id);
     }
 }
