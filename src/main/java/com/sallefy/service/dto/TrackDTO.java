@@ -1,4 +1,7 @@
 package com.sallefy.service.dto;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -12,14 +15,18 @@ public class TrackDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String url;
 
     private String thumbnail;
 
     private ZonedDateTime released;
 
+    @Min(0)
+    @Max(1000)
     private Integer duration;
 
     private String color;
