@@ -9,10 +9,8 @@ import com.sallefy.service.UserService;
 import com.sallefy.service.dto.GenreDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.TrackMapper;
-import com.sallefy.web.rest.errors.BadRequestAlertException;
-import com.sallefy.web.rest.errors.ErrorConstants;
+import com.sallefy.web.rest.errors.ForbiddenAlertException;
 import com.sallefy.web.rest.errors.TrackNotFoundException;
-import com.sallefy.web.rest.errors.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -23,8 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.sallefy.web.rest.errors.ErrorConstants.ERR_OWNER_DIFFERS;
+import static java.util.stream.Collectors.toCollection;
 
 /**
  * Service Implementation for managing {@link Track}.
@@ -67,7 +67,9 @@ public class TrackServiceImpl implements TrackService {
 
         if (isUpdating(trackDTO)) {
             Track track = findTrack(trackDTO.getId());
-            checkUserIsTheOwner(track, currentUser);
+            if (!currentUser.isAdmin()) {
+                checkUserIsTheOwner(track, currentUser);
+            }
         }
 
         filterGenresExist(trackDTO);
@@ -89,7 +91,7 @@ public class TrackServiceImpl implements TrackService {
         log.debug("Request to get all Tracks");
         return trackRepository.findAllWithEagerRelationships().stream()
             .map(trackMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+            .collect(toCollection(LinkedList::new));
     }
 
     /**
@@ -162,7 +164,7 @@ public class TrackServiceImpl implements TrackService {
 
     private void checkUserIsTheOwner(Track track, User user) {
         if (!user.getLogin().equals(track.getUser().getLogin())) {
-            throw new BadRequestAlertException("Don't touch this, this Track isn't yours..." , "Track", ErrorConstants.ERR_TRACK_NOT_FOUND);
+            throw new ForbiddenAlertException("Don't touch this, this Track isn't yours..." , "Track", ERR_OWNER_DIFFERS);
         }
     }
 
