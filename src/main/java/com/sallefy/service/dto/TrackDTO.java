@@ -1,4 +1,6 @@
 package com.sallefy.service.dto;
+import org.hibernate.validator.constraints.URL;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -7,6 +9,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
+
+import static com.sallefy.config.Constants.CLOUDINARY_HOST_URL;
 
 /**
  * A DTO for the {@link com.sallefy.domain.Track} entity.
@@ -19,6 +23,7 @@ public class TrackDTO implements Serializable {
     private String name;
 
     @NotNull
+    @URL(host = CLOUDINARY_HOST_URL)
     private String url;
 
     private String thumbnail;
