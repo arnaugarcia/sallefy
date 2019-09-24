@@ -89,7 +89,16 @@ public class TrackServiceImpl implements TrackService {
     @Transactional(readOnly = true)
     public List<TrackDTO> findAll() {
         log.debug("Request to get all Tracks");
-        return trackRepository.findAllWithEagerRelationships().stream()
+        final User user = userService.getUserWithAuthorities();
+
+        List<Track> tracks;
+
+        if (user.isAdmin()) {
+            tracks = trackRepository.findAllWithEagerRelationships();
+        } else {
+            tracks = trackRepository.findByUserIsCurrentUser();
+        }
+        return tracks.stream()
             .map(trackMapper::toDto)
             .collect(toCollection(LinkedList::new));
     }
@@ -122,13 +131,21 @@ public class TrackServiceImpl implements TrackService {
     /**
      * Delete the track by id.
      *
-     * @param id the id of the entity.
+     * @param trackId the id of the entity.
      */
     @Override
-    public void delete(Long id) {
-        log.debug("Request to delete Track : {}", id);
-        findOne(id);
-        trackRepository.deleteById(id);
+    public void delete(Long trackId) {
+        log.debug("Request to delete Track : {}", trackId);
+
+        final User currentUser = userService.getUserWithAuthorities();
+
+        Track track = findTrack(trackId);
+
+        if (!currentUser.isAdmin()) {
+            checkUserIsTheOwner(track, currentUser);
+        }
+
+        trackRepository.deleteById(trackId);
     }
 
     private void filterGenresExist(TrackDTO trackDTO) {
