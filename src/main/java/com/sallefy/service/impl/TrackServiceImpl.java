@@ -1,11 +1,18 @@
 package com.sallefy.service.impl;
 
 import com.sallefy.domain.Track;
+import com.sallefy.domain.User;
 import com.sallefy.repository.TrackRepository;
+import com.sallefy.service.GenreService;
 import com.sallefy.service.TrackService;
+import com.sallefy.service.UserService;
+import com.sallefy.service.dto.GenreDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.TrackMapper;
+import com.sallefy.web.rest.errors.BadRequestAlertException;
+import com.sallefy.web.rest.errors.ErrorConstants;
 import com.sallefy.web.rest.errors.TrackNotFoundException;
+import com.sallefy.web.rest.errors.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -13,12 +20,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Service Implementation for managing {@link Track}.
@@ -33,9 +38,18 @@ public class TrackServiceImpl implements TrackService {
 
     private final TrackMapper trackMapper;
 
-    public TrackServiceImpl(TrackRepository trackRepository, TrackMapper trackMapper) {
+    private final GenreService genreService;
+
+    private final UserService userService;
+
+    public TrackServiceImpl(TrackRepository trackRepository,
+                            TrackMapper trackMapper,
+                            GenreService genreService,
+                            UserService userService) {
         this.trackRepository = trackRepository;
         this.trackMapper = trackMapper;
+        this.genreService = genreService;
+        this.userService = userService;
     }
 
     /**
@@ -47,9 +61,17 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public TrackDTO save(TrackDTO trackDTO) {
         log.debug("Request to save Track : {}", trackDTO);
+        if (isUpdating(trackDTO)) {
+            findOne(trackDTO.getId());
+            checkUserIsTheOwner(trackDTO);
+        }
+        filterGenresExist(trackDTO);
         Track track = trackMapper.toEntity(trackDTO);
-        track = trackRepository.save(track);
-        return trackMapper.toDto(track);
+        return saveAndTransform(track);
+    }
+
+    private boolean isUpdating(TrackDTO trackDTO) {
+        return trackDTO.getId() != null;
     }
 
     /**
@@ -101,6 +123,30 @@ public class TrackServiceImpl implements TrackService {
         log.debug("Request to delete Track : {}", id);
         findOne(id);
         trackRepository.deleteById(id);
+    }
+
+    private void filterGenresExist(TrackDTO trackDTO) {
+        List<Long> genresIds = trackDTO.getGenres()
+            .stream()
+            .map(GenreDTO::getId)
+            .collect(Collectors.toList());
+
+        List<GenreDTO> genreDTOList = genreService.findAllById(genresIds);
+
+        trackDTO.setGenres(new HashSet<>(genreDTOList));
+    }
+
+    private TrackDTO saveAndTransform(Track track) {
+        trackRepository.save(track);
+        return trackMapper.toDto(track);
+    }
+
+    private void checkUserIsTheOwner(TrackDTO trackDTO) {
+        final User user = userService.getUserWithAuthorities()
+            .orElseThrow(UserNotFoundException::new);
+        if (!user.getLogin().equals(trackDTO.getUserLogin())) {
+            throw new BadRequestAlertException("Don't touch this, this Track isn't yours..." , "Track", ErrorConstants.ERR_TRACK_NOT_FOUND);
+        }
     }
 
 }

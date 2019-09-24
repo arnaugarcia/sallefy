@@ -30,7 +30,6 @@ public class TrackDTO implements Serializable {
 
     private String color;
 
-
     private Long userId;
 
     private String userLogin;

@@ -2,6 +2,7 @@ package com.sallefy.web.rest;
 
 import com.sallefy.service.GenreService;
 import com.sallefy.service.dto.GenreDTO;
+import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
@@ -47,9 +48,12 @@ public class GenreResource {
     @PostMapping("/genres")
     public ResponseEntity<GenreDTO> createGenre(@RequestBody GenreDTO genreDTO) throws URISyntaxException {
         log.debug("REST request to save Genre : {}", genreDTO);
+        if (genreDTO.getId() != null) {
+            throw new BadRequestAlertException("A new genre cannot already have an ID", ENTITY_NAME, "idexists");
+        }
         GenreDTO result = genreService.save(genreDTO);
-        return ResponseEntity.created(new URI("/api/genres/" + result.getName()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getName()))
+        return ResponseEntity.created(new URI("/api/genres/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -60,14 +64,16 @@ public class GenreResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated genreDTO,
      * or with status {@code 400 (Bad Request)} if the genreDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the genreDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/genres")
-    public ResponseEntity<GenreDTO> updateGenre(@RequestBody GenreDTO genreDTO) throws URISyntaxException {
+    public ResponseEntity<GenreDTO> updateGenre(@RequestBody GenreDTO genreDTO) {
         log.debug("REST request to update Genre : {}", genreDTO);
+        if (genreDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
         GenreDTO result = genreService.save(genreDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, genreDTO.getName()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, genreDTO.getId().toString()))
             .body(result);
     }
 
