@@ -54,7 +54,7 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public LikeDTO toggleLikeTrack(Long trackId) {
-        final User user = findCurrentUser();
+        final User user = userService.getUserWithAuthorities();
 
         findTrackById(trackId);
 
@@ -79,7 +79,7 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public LikeDTO toggleLikeAlbum(Long albumId) {
-        final User user = findCurrentUser();
+        final User user = userService.getUserWithAuthorities();
 
         findAlbumById(albumId);
 
@@ -112,11 +112,6 @@ public class LikeServiceImpl implements LikeService {
 
     private Track createTrackFromId(Long trackId) {
         return trackMapper.fromId(trackId);
-    }
-
-    private User findCurrentUser() {
-        return userService.getUserWithAuthorities()
-            .orElseThrow(UserNotFoundException::new);
     }
 
 }

@@ -12,6 +12,7 @@ import com.sallefy.service.UserService;
 import com.sallefy.service.dto.PasswordChangeDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
+import com.sallefy.web.rest.errors.UserNotFoundException;
 import com.sallefy.web.rest.vm.KeyAndPasswordVM;
 import com.sallefy.web.rest.vm.ManagedUserVM;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -127,7 +128,7 @@ public class AccountResourceIT {
         user.setImageUrl("http://placehold.it/50x50");
         user.setLangKey("en");
         user.setAuthorities(authorities);
-        when(mockUserService.getUserWithAuthorities()).thenReturn(Optional.of(user));
+        when(mockUserService.getUserWithAuthorities()).thenReturn(user);
 
         restUserMockMvc.perform(get("/api/account")
             .accept(MediaType.APPLICATION_JSON))
@@ -144,7 +145,7 @@ public class AccountResourceIT {
 
     @Test
     public void testGetUnknownAccount() throws Exception {
-        when(mockUserService.getUserWithAuthorities()).thenReturn(Optional.empty());
+        when(mockUserService.getUserWithAuthorities()).thenThrow(new UserNotFoundException());
 
         restUserMockMvc.perform(get("/api/account")
             .accept(MediaType.APPLICATION_PROBLEM_JSON))

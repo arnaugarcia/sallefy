@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -61,9 +62,14 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public TrackDTO save(TrackDTO trackDTO) {
         log.debug("Request to save Track : {}", trackDTO);
+
+        final User user = userService.getUserWithAuthorities();
+
         if (isUpdating(trackDTO)) {
-            findOne(trackDTO.getId());
-            checkUserIsTheOwner(trackDTO);
+            Track track = trackRepository
+                .findById(trackDTO.getId())
+                .orElseThrow(TrackNotFoundException::new);
+            checkUserIsTheOwner(track, user);
         }
         filterGenresExist(trackDTO);
         Track track = trackMapper.toEntity(trackDTO);
@@ -126,14 +132,18 @@ public class TrackServiceImpl implements TrackService {
     }
 
     private void filterGenresExist(TrackDTO trackDTO) {
-        List<Long> genresIds = trackDTO.getGenres()
-            .stream()
-            .map(GenreDTO::getId)
-            .collect(Collectors.toList());
+        List<Long> genresIds = extractGenresIds(trackDTO);
 
         List<GenreDTO> genreDTOList = genreService.findAllById(genresIds);
 
         trackDTO.setGenres(new HashSet<>(genreDTOList));
+    }
+
+    private List<Long> extractGenresIds(TrackDTO trackDTO) {
+        return trackDTO.getGenres()
+            .stream()
+            .map(GenreDTO::getId)
+            .collect(Collectors.toList());
     }
 
     private TrackDTO saveAndTransform(Track track) {
@@ -141,10 +151,8 @@ public class TrackServiceImpl implements TrackService {
         return trackMapper.toDto(track);
     }
 
-    private void checkUserIsTheOwner(TrackDTO trackDTO) {
-        final User user = userService.getUserWithAuthorities()
-            .orElseThrow(UserNotFoundException::new);
-        if (!user.getLogin().equals(trackDTO.getUserLogin())) {
+    private void checkUserIsTheOwner(Track track, User user) {
+        if (!user.getLogin().equals(track.getUser().getLogin())) {
             throw new BadRequestAlertException("Don't touch this, this Track isn't yours..." , "Track", ErrorConstants.ERR_TRACK_NOT_FOUND);
         }
     }
