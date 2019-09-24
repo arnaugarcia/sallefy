@@ -12,7 +12,7 @@ describe('LikeAlbum e2e test', () => {
   let signInPage: SignInPage;
   let likeAlbumUpdatePage: LikeAlbumUpdatePage;
   let likeAlbumComponentsPage: LikeAlbumComponentsPage;
-  let likeAlbumDeleteDialog: LikeAlbumDeleteDialog;
+  /* let likeAlbumDeleteDialog: LikeAlbumDeleteDialog; */
 
   before(async () => {
     await browser.get('/');
@@ -36,40 +36,41 @@ describe('LikeAlbum e2e test', () => {
     await likeAlbumUpdatePage.cancel();
   });
 
-  it('should create and save LikeAlbums', async () => {
-    const nbButtonsBeforeCreate = await likeAlbumComponentsPage.countDeleteButtons();
+  /*  it('should create and save LikeAlbums', async () => {
+        const nbButtonsBeforeCreate = await likeAlbumComponentsPage.countDeleteButtons();
 
-    await likeAlbumComponentsPage.clickOnCreateButton();
-    await promise.all([
-      likeAlbumUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-      likeAlbumUpdatePage.userSelectLastOption(),
-      likeAlbumUpdatePage.albumSelectLastOption()
-    ]);
-    const selectedLiked = likeAlbumUpdatePage.getLikedInput();
-    if (await selectedLiked.isSelected()) {
-      await likeAlbumUpdatePage.getLikedInput().click();
-      expect(await likeAlbumUpdatePage.getLikedInput().isSelected(), 'Expected liked not to be selected').to.be.false;
-    } else {
-      await likeAlbumUpdatePage.getLikedInput().click();
-      expect(await likeAlbumUpdatePage.getLikedInput().isSelected(), 'Expected liked to be selected').to.be.true;
-    }
-    expect(await likeAlbumUpdatePage.getDateInput()).to.contain('2001-01-01T02:30', 'Expected date value to be equals to 2000-12-31');
-    await likeAlbumUpdatePage.save();
-    expect(await likeAlbumUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
+        await likeAlbumComponentsPage.clickOnCreateButton();
+        await promise.all([
+            likeAlbumUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+            likeAlbumUpdatePage.userSelectLastOption(),
+            likeAlbumUpdatePage.albumSelectLastOption(),
+        ]);
+        const selectedLiked = likeAlbumUpdatePage.getLikedInput();
+        if (await selectedLiked.isSelected()) {
+            await likeAlbumUpdatePage.getLikedInput().click();
+            expect(await likeAlbumUpdatePage.getLikedInput().isSelected(), 'Expected liked not to be selected').to.be.false;
+        } else {
+            await likeAlbumUpdatePage.getLikedInput().click();
+            expect(await likeAlbumUpdatePage.getLikedInput().isSelected(), 'Expected liked to be selected').to.be.true;
+        }
+        expect(await likeAlbumUpdatePage.getDateInput()).to.contain('2001-01-01T02:30', 'Expected date value to be equals to 2000-12-31');
+        await likeAlbumUpdatePage.save();
+        expect(await likeAlbumUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
-    expect(await likeAlbumComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
-  });
+        expect(await likeAlbumComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
+    }); */
 
-  it('should delete last LikeAlbum', async () => {
-    const nbButtonsBeforeDelete = await likeAlbumComponentsPage.countDeleteButtons();
-    await likeAlbumComponentsPage.clickOnLastDeleteButton();
+  /*  it('should delete last LikeAlbum', async () => {
+        const nbButtonsBeforeDelete = await likeAlbumComponentsPage.countDeleteButtons();
+        await likeAlbumComponentsPage.clickOnLastDeleteButton();
 
-    likeAlbumDeleteDialog = new LikeAlbumDeleteDialog();
-    expect(await likeAlbumDeleteDialog.getDialogTitle()).to.eq('sallefyApp.likeAlbum.delete.question');
-    await likeAlbumDeleteDialog.clickOnConfirmButton();
+        likeAlbumDeleteDialog = new LikeAlbumDeleteDialog();
+        expect(await likeAlbumDeleteDialog.getDialogTitle())
+            .to.eq('sallefyApp.likeAlbum.delete.question');
+        await likeAlbumDeleteDialog.clickOnConfirmButton();
 
-    expect(await likeAlbumComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-  });
+        expect(await likeAlbumComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
+    }); */
 
   after(async () => {
     await navBarPage.autoSignOut();

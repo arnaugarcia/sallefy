@@ -33,8 +33,8 @@ export class PlaybackUpdateComponent implements OnInit {
     latitude: [],
     longitude: [],
     date: [],
-    userId: [],
-    trackId: []
+    userId: [null, Validators.required],
+    trackId: [null, Validators.required]
   });
 
   constructor(

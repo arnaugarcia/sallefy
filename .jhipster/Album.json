@@ -23,6 +23,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "album",
+            "relationshipValidateRules": "required",
             "relationshipName": "user",
             "otherEntityField": "login"
         },

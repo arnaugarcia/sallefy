@@ -12,7 +12,7 @@ describe('FollowPlaylist e2e test', () => {
   let signInPage: SignInPage;
   let followPlaylistUpdatePage: FollowPlaylistUpdatePage;
   let followPlaylistComponentsPage: FollowPlaylistComponentsPage;
-  let followPlaylistDeleteDialog: FollowPlaylistDeleteDialog;
+  /* let followPlaylistDeleteDialog: FollowPlaylistDeleteDialog; */
 
   before(async () => {
     await browser.get('/');
@@ -36,35 +36,33 @@ describe('FollowPlaylist e2e test', () => {
     await followPlaylistUpdatePage.cancel();
   });
 
-  it('should create and save FollowPlaylists', async () => {
-    const nbButtonsBeforeCreate = await followPlaylistComponentsPage.countDeleteButtons();
+  /*  it('should create and save FollowPlaylists', async () => {
+        const nbButtonsBeforeCreate = await followPlaylistComponentsPage.countDeleteButtons();
 
-    await followPlaylistComponentsPage.clickOnCreateButton();
-    await promise.all([
-      followPlaylistUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-      followPlaylistUpdatePage.userSelectLastOption(),
-      followPlaylistUpdatePage.playlistSelectLastOption()
-    ]);
-    expect(await followPlaylistUpdatePage.getDateInput()).to.contain('2001-01-01T02:30', 'Expected date value to be equals to 2000-12-31');
-    await followPlaylistUpdatePage.save();
-    expect(await followPlaylistUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
+        await followPlaylistComponentsPage.clickOnCreateButton();
+        await promise.all([
+            followPlaylistUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+            followPlaylistUpdatePage.userSelectLastOption(),
+            followPlaylistUpdatePage.playlistSelectLastOption(),
+        ]);
+        expect(await followPlaylistUpdatePage.getDateInput()).to.contain('2001-01-01T02:30', 'Expected date value to be equals to 2000-12-31');
+        await followPlaylistUpdatePage.save();
+        expect(await followPlaylistUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
-    expect(await followPlaylistComponentsPage.countDeleteButtons()).to.eq(
-      nbButtonsBeforeCreate + 1,
-      'Expected one more entry in the table'
-    );
-  });
+        expect(await followPlaylistComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
+    }); */
 
-  it('should delete last FollowPlaylist', async () => {
-    const nbButtonsBeforeDelete = await followPlaylistComponentsPage.countDeleteButtons();
-    await followPlaylistComponentsPage.clickOnLastDeleteButton();
+  /*  it('should delete last FollowPlaylist', async () => {
+        const nbButtonsBeforeDelete = await followPlaylistComponentsPage.countDeleteButtons();
+        await followPlaylistComponentsPage.clickOnLastDeleteButton();
 
-    followPlaylistDeleteDialog = new FollowPlaylistDeleteDialog();
-    expect(await followPlaylistDeleteDialog.getDialogTitle()).to.eq('sallefyApp.followPlaylist.delete.question');
-    await followPlaylistDeleteDialog.clickOnConfirmButton();
+        followPlaylistDeleteDialog = new FollowPlaylistDeleteDialog();
+        expect(await followPlaylistDeleteDialog.getDialogTitle())
+            .to.eq('sallefyApp.followPlaylist.delete.question');
+        await followPlaylistDeleteDialog.clickOnConfirmButton();
 
-    expect(await followPlaylistComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-  });
+        expect(await followPlaylistComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
+    }); */
 
   after(async () => {
     await navBarPage.autoSignOut();

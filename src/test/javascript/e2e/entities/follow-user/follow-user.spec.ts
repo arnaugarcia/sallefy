@@ -12,7 +12,7 @@ describe('FollowUser e2e test', () => {
   let signInPage: SignInPage;
   let followUserUpdatePage: FollowUserUpdatePage;
   let followUserComponentsPage: FollowUserComponentsPage;
-  let followUserDeleteDialog: FollowUserDeleteDialog;
+  /* let followUserDeleteDialog: FollowUserDeleteDialog; */
 
   before(async () => {
     await browser.get('/');
@@ -36,32 +36,33 @@ describe('FollowUser e2e test', () => {
     await followUserUpdatePage.cancel();
   });
 
-  it('should create and save FollowUsers', async () => {
-    const nbButtonsBeforeCreate = await followUserComponentsPage.countDeleteButtons();
+  /*  it('should create and save FollowUsers', async () => {
+        const nbButtonsBeforeCreate = await followUserComponentsPage.countDeleteButtons();
 
-    await followUserComponentsPage.clickOnCreateButton();
-    await promise.all([
-      followUserUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-      followUserUpdatePage.followedSelectLastOption(),
-      followUserUpdatePage.userSelectLastOption()
-    ]);
-    expect(await followUserUpdatePage.getDateInput()).to.contain('2001-01-01T02:30', 'Expected date value to be equals to 2000-12-31');
-    await followUserUpdatePage.save();
-    expect(await followUserUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
+        await followUserComponentsPage.clickOnCreateButton();
+        await promise.all([
+            followUserUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+            followUserUpdatePage.followedSelectLastOption(),
+            followUserUpdatePage.userSelectLastOption(),
+        ]);
+        expect(await followUserUpdatePage.getDateInput()).to.contain('2001-01-01T02:30', 'Expected date value to be equals to 2000-12-31');
+        await followUserUpdatePage.save();
+        expect(await followUserUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
-    expect(await followUserComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
-  });
+        expect(await followUserComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
+    }); */
 
-  it('should delete last FollowUser', async () => {
-    const nbButtonsBeforeDelete = await followUserComponentsPage.countDeleteButtons();
-    await followUserComponentsPage.clickOnLastDeleteButton();
+  /*  it('should delete last FollowUser', async () => {
+        const nbButtonsBeforeDelete = await followUserComponentsPage.countDeleteButtons();
+        await followUserComponentsPage.clickOnLastDeleteButton();
 
-    followUserDeleteDialog = new FollowUserDeleteDialog();
-    expect(await followUserDeleteDialog.getDialogTitle()).to.eq('sallefyApp.followUser.delete.question');
-    await followUserDeleteDialog.clickOnConfirmButton();
+        followUserDeleteDialog = new FollowUserDeleteDialog();
+        expect(await followUserDeleteDialog.getDialogTitle())
+            .to.eq('sallefyApp.followUser.delete.question');
+        await followUserDeleteDialog.clickOnConfirmButton();
 
-    expect(await followUserComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-  });
+        expect(await followUserComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
+    }); */
 
   after(async () => {
     await navBarPage.autoSignOut();

@@ -24,16 +24,28 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="sallefyApp.likeAlbum.user" for="field_user">User</label>
                     <select class="form-control" id="field_user" name="user" formControlName="userId">
-                        <option [ngValue]="null"></option>
+                        <option *ngIf="!editForm.get('userId').value" [ngValue]="null" selected></option>
                         <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
                     </select>
+                </div>
+                <div *ngIf="editForm.get('userId').invalid && (editForm.get('userId').dirty || editForm.get('userId').touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('userId').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="sallefyApp.likeAlbum.album" for="field_album">Album</label>
                     <select class="form-control" id="field_album" name="album" formControlName="albumId">
-                        <option [ngValue]="null"></option>
+                        <option *ngIf="!editForm.get('albumId').value" [ngValue]="null" selected></option>
                         <option [ngValue]="albumOption.id" *ngFor="let albumOption of albums; trackBy: trackAlbumById">{{albumOption.title}}</option>
                     </select>
+                </div>
+                <div *ngIf="editForm.get('albumId').invalid && (editForm.get('albumId').dirty || editForm.get('albumId').touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('albumId').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
                 </div>
             </div>
             <div>

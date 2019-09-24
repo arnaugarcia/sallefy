@@ -15,6 +15,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "likeTrack",
+            "relationshipValidateRules": "required",
             "relationshipName": "user",
             "otherEntityField": "login"
         },
@@ -22,6 +23,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "track",
             "otherEntityRelationshipName": "likeTrack",
+            "relationshipValidateRules": "required",
             "relationshipName": "track",
             "otherEntityField": "name"
         }

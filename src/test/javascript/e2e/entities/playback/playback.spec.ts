@@ -12,7 +12,7 @@ describe('Playback e2e test', () => {
   let signInPage: SignInPage;
   let playbackUpdatePage: PlaybackUpdatePage;
   let playbackComponentsPage: PlaybackComponentsPage;
-  let playbackDeleteDialog: PlaybackDeleteDialog;
+  /* let playbackDeleteDialog: PlaybackDeleteDialog; */
 
   before(async () => {
     await browser.get('/');
@@ -36,38 +36,39 @@ describe('Playback e2e test', () => {
     await playbackUpdatePage.cancel();
   });
 
-  it('should create and save Playbacks', async () => {
-    const nbButtonsBeforeCreate = await playbackComponentsPage.countDeleteButtons();
+  /*  it('should create and save Playbacks', async () => {
+        const nbButtonsBeforeCreate = await playbackComponentsPage.countDeleteButtons();
 
-    await playbackComponentsPage.clickOnCreateButton();
-    await promise.all([
-      playbackUpdatePage.setIpInput('ip'),
-      playbackUpdatePage.setLatitudeInput('5'),
-      playbackUpdatePage.setLongitudeInput('5'),
-      playbackUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-      playbackUpdatePage.userSelectLastOption(),
-      playbackUpdatePage.trackSelectLastOption()
-    ]);
-    expect(await playbackUpdatePage.getIpInput()).to.eq('ip', 'Expected Ip value to be equals to ip');
-    expect(await playbackUpdatePage.getLatitudeInput()).to.eq('5', 'Expected latitude value to be equals to 5');
-    expect(await playbackUpdatePage.getLongitudeInput()).to.eq('5', 'Expected longitude value to be equals to 5');
-    expect(await playbackUpdatePage.getDateInput()).to.contain('2001-01-01T02:30', 'Expected date value to be equals to 2000-12-31');
-    await playbackUpdatePage.save();
-    expect(await playbackUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
+        await playbackComponentsPage.clickOnCreateButton();
+        await promise.all([
+            playbackUpdatePage.setIpInput('ip'),
+            playbackUpdatePage.setLatitudeInput('5'),
+            playbackUpdatePage.setLongitudeInput('5'),
+            playbackUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+            playbackUpdatePage.userSelectLastOption(),
+            playbackUpdatePage.trackSelectLastOption(),
+        ]);
+        expect(await playbackUpdatePage.getIpInput()).to.eq('ip', 'Expected Ip value to be equals to ip');
+        expect(await playbackUpdatePage.getLatitudeInput()).to.eq('5', 'Expected latitude value to be equals to 5');
+        expect(await playbackUpdatePage.getLongitudeInput()).to.eq('5', 'Expected longitude value to be equals to 5');
+        expect(await playbackUpdatePage.getDateInput()).to.contain('2001-01-01T02:30', 'Expected date value to be equals to 2000-12-31');
+        await playbackUpdatePage.save();
+        expect(await playbackUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
-    expect(await playbackComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
-  });
+        expect(await playbackComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
+    }); */
 
-  it('should delete last Playback', async () => {
-    const nbButtonsBeforeDelete = await playbackComponentsPage.countDeleteButtons();
-    await playbackComponentsPage.clickOnLastDeleteButton();
+  /*  it('should delete last Playback', async () => {
+        const nbButtonsBeforeDelete = await playbackComponentsPage.countDeleteButtons();
+        await playbackComponentsPage.clickOnLastDeleteButton();
 
-    playbackDeleteDialog = new PlaybackDeleteDialog();
-    expect(await playbackDeleteDialog.getDialogTitle()).to.eq('sallefyApp.playback.delete.question');
-    await playbackDeleteDialog.clickOnConfirmButton();
+        playbackDeleteDialog = new PlaybackDeleteDialog();
+        expect(await playbackDeleteDialog.getDialogTitle())
+            .to.eq('sallefyApp.playback.delete.question');
+        await playbackDeleteDialog.clickOnConfirmButton();
 
-    expect(await playbackComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-  });
+        expect(await playbackComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
+    }); */
 
   after(async () => {
     await navBarPage.autoSignOut();

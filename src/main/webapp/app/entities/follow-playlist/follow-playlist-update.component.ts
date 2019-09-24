@@ -30,8 +30,8 @@ export class FollowPlaylistUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     date: [],
-    userId: [],
-    playlistId: []
+    userId: [null, Validators.required],
+    playlistId: [null, Validators.required]
   });
 
   constructor(

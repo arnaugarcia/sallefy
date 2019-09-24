@@ -43,6 +43,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "track",
+            "relationshipValidateRules": "required",
             "relationshipName": "user",
             "otherEntityField": "login"
         },
@@ -58,6 +59,7 @@
             "relationshipType": "one-to-many",
             "otherEntityName": "playback",
             "otherEntityRelationshipName": "track",
+            "relationshipValidateRules": "required",
             "relationshipName": "playback"
         },
         {

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -49,7 +50,7 @@ public class TrackResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/tracks")
-    public ResponseEntity<TrackDTO> createTrack(@RequestBody TrackDTO trackDTO) throws URISyntaxException {
+    public ResponseEntity<TrackDTO> createTrack(@Valid @RequestBody TrackDTO trackDTO) throws URISyntaxException {
         log.debug("REST request to save Track : {}", trackDTO);
         if (trackDTO.getId() != null) {
             throw new BadRequestAlertException("A new track cannot already have an ID", ENTITY_NAME, "idexists");
@@ -70,7 +71,7 @@ public class TrackResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/tracks")
-    public ResponseEntity<TrackDTO> updateTrack(@RequestBody TrackDTO trackDTO) throws URISyntaxException {
+    public ResponseEntity<TrackDTO> updateTrack(@Valid @RequestBody TrackDTO trackDTO) throws URISyntaxException {
         log.debug("REST request to update Track : {}", trackDTO);
         if (trackDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
