@@ -68,12 +68,12 @@ public class Track implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
     private Set<Genre> genres = new HashSet<>();
 
-    @OneToMany(mappedBy = "track")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @OneToMany(mappedBy = "track", orphanRemoval = true)
+    @JsonIgnore
     private Set<Playback> playbacks = new HashSet<>();
 
-    @OneToMany(mappedBy = "track")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @OneToMany(mappedBy = "track", orphanRemoval = true)
+    @JsonIgnore
     private Set<LikeTrack> likeTracks = new HashSet<>();
 
     @ManyToMany(mappedBy = "tracks")
