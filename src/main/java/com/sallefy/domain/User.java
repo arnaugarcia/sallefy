@@ -19,6 +19,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import static com.sallefy.security.AuthoritiesConstants.ADMIN;
+
 /**
  * A user.
  */
@@ -196,6 +198,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public boolean isAdmin() {
+        if (authorities != null) {
+            return authorities.stream()
+                .anyMatch(authority -> authority.getName().equals(ADMIN));
+        }
+        return false;
     }
 
     @Override
