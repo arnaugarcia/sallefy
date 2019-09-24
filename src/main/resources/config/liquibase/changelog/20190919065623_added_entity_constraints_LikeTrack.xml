@@ -7,7 +7,7 @@
         Added the constraints for entity LikeTrack.
     -->
     <changeSet id="20190919065623-2" author="jhipster">
-
+        
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="like_track"
                                  constraintName="fk_like_track_user_id"
@@ -20,14 +20,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="track"/>
 
-
-
-    </changeSet>
-
-    <changeSet id="20190919065623-3" author="sallefy">
-
-        <addUniqueConstraint columnNames="user_id, track_id"
-                             constraintName="user_track_constraint"
-                             tableName="like_track"/>
     </changeSet>
 </databaseChangeLog>

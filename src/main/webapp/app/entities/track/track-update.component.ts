@@ -46,7 +46,7 @@ export class TrackUpdateComponent implements OnInit {
     released: [],
     duration: [],
     color: [],
-    userId: [],
+    userId: [null, Validators.required],
     genres: []
   });
 

@@ -12,7 +12,7 @@ describe('LikeTrack e2e test', () => {
   let signInPage: SignInPage;
   let likeTrackUpdatePage: LikeTrackUpdatePage;
   let likeTrackComponentsPage: LikeTrackComponentsPage;
-  let likeTrackDeleteDialog: LikeTrackDeleteDialog;
+  /* let likeTrackDeleteDialog: LikeTrackDeleteDialog; */
 
   before(async () => {
     await browser.get('/');
@@ -36,40 +36,41 @@ describe('LikeTrack e2e test', () => {
     await likeTrackUpdatePage.cancel();
   });
 
-  it('should create and save LikeTracks', async () => {
-    const nbButtonsBeforeCreate = await likeTrackComponentsPage.countDeleteButtons();
+  /*  it('should create and save LikeTracks', async () => {
+        const nbButtonsBeforeCreate = await likeTrackComponentsPage.countDeleteButtons();
 
-    await likeTrackComponentsPage.clickOnCreateButton();
-    await promise.all([
-      likeTrackUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-      likeTrackUpdatePage.userSelectLastOption(),
-      likeTrackUpdatePage.trackSelectLastOption()
-    ]);
-    const selectedLiked = likeTrackUpdatePage.getLikedInput();
-    if (await selectedLiked.isSelected()) {
-      await likeTrackUpdatePage.getLikedInput().click();
-      expect(await likeTrackUpdatePage.getLikedInput().isSelected(), 'Expected liked not to be selected').to.be.false;
-    } else {
-      await likeTrackUpdatePage.getLikedInput().click();
-      expect(await likeTrackUpdatePage.getLikedInput().isSelected(), 'Expected liked to be selected').to.be.true;
-    }
-    expect(await likeTrackUpdatePage.getDateInput()).to.contain('2001-01-01T02:30', 'Expected date value to be equals to 2000-12-31');
-    await likeTrackUpdatePage.save();
-    expect(await likeTrackUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
+        await likeTrackComponentsPage.clickOnCreateButton();
+        await promise.all([
+            likeTrackUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+            likeTrackUpdatePage.userSelectLastOption(),
+            likeTrackUpdatePage.trackSelectLastOption(),
+        ]);
+        const selectedLiked = likeTrackUpdatePage.getLikedInput();
+        if (await selectedLiked.isSelected()) {
+            await likeTrackUpdatePage.getLikedInput().click();
+            expect(await likeTrackUpdatePage.getLikedInput().isSelected(), 'Expected liked not to be selected').to.be.false;
+        } else {
+            await likeTrackUpdatePage.getLikedInput().click();
+            expect(await likeTrackUpdatePage.getLikedInput().isSelected(), 'Expected liked to be selected').to.be.true;
+        }
+        expect(await likeTrackUpdatePage.getDateInput()).to.contain('2001-01-01T02:30', 'Expected date value to be equals to 2000-12-31');
+        await likeTrackUpdatePage.save();
+        expect(await likeTrackUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
-    expect(await likeTrackComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
-  });
+        expect(await likeTrackComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
+    }); */
 
-  it('should delete last LikeTrack', async () => {
-    const nbButtonsBeforeDelete = await likeTrackComponentsPage.countDeleteButtons();
-    await likeTrackComponentsPage.clickOnLastDeleteButton();
+  /*  it('should delete last LikeTrack', async () => {
+        const nbButtonsBeforeDelete = await likeTrackComponentsPage.countDeleteButtons();
+        await likeTrackComponentsPage.clickOnLastDeleteButton();
 
-    likeTrackDeleteDialog = new LikeTrackDeleteDialog();
-    expect(await likeTrackDeleteDialog.getDialogTitle()).to.eq('sallefyApp.likeTrack.delete.question');
-    await likeTrackDeleteDialog.clickOnConfirmButton();
+        likeTrackDeleteDialog = new LikeTrackDeleteDialog();
+        expect(await likeTrackDeleteDialog.getDialogTitle())
+            .to.eq('sallefyApp.likeTrack.delete.question');
+        await likeTrackDeleteDialog.clickOnConfirmButton();
 
-    expect(await likeTrackComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-  });
+        expect(await likeTrackComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
+    }); */
 
   after(async () => {
     await navBarPage.autoSignOut();

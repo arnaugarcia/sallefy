@@ -13,6 +13,7 @@ import com.sallefy.service.exception.InvalidPasswordException;
 import com.sallefy.service.exception.UsernameAlreadyUsedException;
 import com.sallefy.service.util.RandomUtil;
 
+import com.sallefy.web.rest.errors.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -262,8 +263,10 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<User> getUserWithAuthorities() {
-        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithAuthoritiesByLogin);
+    public User getUserWithAuthorities() {
+        return SecurityUtils.getCurrentUserLogin()
+            .flatMap(userRepository::findOneWithAuthoritiesByLogin)
+            .orElseThrow(UserNotFoundException::new);
     }
 
     /**

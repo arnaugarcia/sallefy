@@ -1,10 +1,15 @@
 package com.sallefy.service.impl;
 
 import com.sallefy.domain.Track;
+import com.sallefy.domain.User;
 import com.sallefy.repository.TrackRepository;
+import com.sallefy.service.GenreService;
 import com.sallefy.service.TrackService;
+import com.sallefy.service.UserService;
+import com.sallefy.service.dto.GenreDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.TrackMapper;
+import com.sallefy.web.rest.errors.ForbiddenAlertException;
 import com.sallefy.web.rest.errors.TrackNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +18,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
+import static com.sallefy.web.rest.errors.ErrorConstants.ERR_OWNER_DIFFERS;
+import static java.util.stream.Collectors.toCollection;
 
 /**
  * Service Implementation for managing {@link Track}.
@@ -33,9 +39,18 @@ public class TrackServiceImpl implements TrackService {
 
     private final TrackMapper trackMapper;
 
-    public TrackServiceImpl(TrackRepository trackRepository, TrackMapper trackMapper) {
+    private final GenreService genreService;
+
+    private final UserService userService;
+
+    public TrackServiceImpl(TrackRepository trackRepository,
+                            TrackMapper trackMapper,
+                            GenreService genreService,
+                            UserService userService) {
         this.trackRepository = trackRepository;
         this.trackMapper = trackMapper;
+        this.genreService = genreService;
+        this.userService = userService;
     }
 
     /**
@@ -47,9 +62,22 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public TrackDTO save(TrackDTO trackDTO) {
         log.debug("Request to save Track : {}", trackDTO);
+
+        final User currentUser = userService.getUserWithAuthorities();
+
+        if (isUpdating(trackDTO)) {
+            Track track = findTrack(trackDTO.getId());
+            if (!currentUser.isAdmin()) {
+                checkUserIsTheOwner(track, currentUser);
+            }
+        }
+
+        filterGenresExist(trackDTO);
+
         Track track = trackMapper.toEntity(trackDTO);
-        track = trackRepository.save(track);
-        return trackMapper.toDto(track);
+        track.setUser(currentUser);
+
+        return saveAndTransform(track);
     }
 
     /**
@@ -61,9 +89,18 @@ public class TrackServiceImpl implements TrackService {
     @Transactional(readOnly = true)
     public List<TrackDTO> findAll() {
         log.debug("Request to get all Tracks");
-        return trackRepository.findAllWithEagerRelationships().stream()
+        final User user = userService.getUserWithAuthorities();
+
+        List<Track> tracks;
+
+        if (user.isAdmin()) {
+            tracks = trackRepository.findAllWithEagerRelationships();
+        } else {
+            tracks = trackRepository.findByUserIsCurrentUser();
+        }
+        return tracks.stream()
             .map(trackMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+            .collect(toCollection(LinkedList::new));
     }
 
     /**
@@ -94,13 +131,58 @@ public class TrackServiceImpl implements TrackService {
     /**
      * Delete the track by id.
      *
-     * @param id the id of the entity.
+     * @param trackId the id of the entity.
      */
     @Override
-    public void delete(Long id) {
-        log.debug("Request to delete Track : {}", id);
-        findOne(id);
-        trackRepository.deleteById(id);
+    public void delete(Long trackId) {
+        log.debug("Request to delete Track : {}", trackId);
+
+        final User currentUser = userService.getUserWithAuthorities();
+
+        Track track = findTrack(trackId);
+
+        if (!currentUser.isAdmin()) {
+            checkUserIsTheOwner(track, currentUser);
+        }
+
+        trackRepository.deleteById(trackId);
+    }
+
+    private void filterGenresExist(TrackDTO trackDTO) {
+        List<Long> genresIds = extractGenresIds(trackDTO);
+
+        List<GenreDTO> genreDTOList = genreService.findAllById(genresIds);
+
+        trackDTO.setGenres(new HashSet<>(genreDTOList));
+    }
+
+    private List<Long> extractGenresIds(TrackDTO trackDTO) {
+        return trackDTO.getGenres()
+            .stream()
+            .map(GenreDTO::getId)
+            .collect(Collectors.toList());
+    }
+
+
+    private Track findTrack(Long trackId) {
+        return trackRepository
+            .findById(trackId)
+            .orElseThrow(TrackNotFoundException::new);
+    }
+
+    private boolean isUpdating(TrackDTO trackDTO) {
+        return trackDTO.getId() != null;
+    }
+
+    private TrackDTO saveAndTransform(Track track) {
+        trackRepository.save(track);
+        return trackMapper.toDto(track);
+    }
+
+    private void checkUserIsTheOwner(Track track, User user) {
+        if (!user.getLogin().equals(track.getUser().getLogin())) {
+            throw new ForbiddenAlertException("Don't touch this, this Track isn't yours..." , "Track", ERR_OWNER_DIFFERS);
+        }
     }
 
 }

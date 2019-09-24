@@ -58,7 +58,7 @@
             </column>
 
             <column name="user_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
@@ -106,6 +106,7 @@
             <column name="number_songs" type="numeric"/>
             <column name="followers" type="numeric"/>
             <column name="rating" type="numeric"/>
+            <column name="user_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

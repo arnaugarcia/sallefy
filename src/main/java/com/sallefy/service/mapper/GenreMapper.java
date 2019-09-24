@@ -11,10 +11,11 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {})
 public interface GenreMapper extends EntityMapper<GenreDTO, Genre> {
 
-
     @Mapping(target = "tracks", ignore = true)
     @Mapping(target = "removeTrack", ignore = true)
     Genre toEntity(GenreDTO genreDTO);
+
+    GenreDTO toDto(Genre genre);
 
     default Genre fromId(Long id) {
         if (id == null) {

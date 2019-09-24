@@ -20,7 +20,7 @@
             "ownerSide": false
         }
     ],
-    "changelogDate": "20190919065627",
+    "changelogDate": "20190924102642",
     "entityTableName": "genre",
     "dto": "mapstruct",
     "pagination": "no",

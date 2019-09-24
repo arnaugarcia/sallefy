@@ -11,9 +11,6 @@ public class GenreDTO implements Serializable {
 
     private String name;
 
-    private Integer popularity;
-
-
     public Long getId() {
         return id;
     }
@@ -28,14 +25,6 @@ public class GenreDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(Integer popularity) {
-        this.popularity = popularity;
     }
 
     @Override
@@ -63,8 +52,7 @@ public class GenreDTO implements Serializable {
     public String toString() {
         return "GenreDTO{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", popularity=" + getPopularity() +
+            ", name='" + getName() +
             "}";
     }
 }

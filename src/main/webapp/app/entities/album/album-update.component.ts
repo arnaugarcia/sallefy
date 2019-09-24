@@ -31,7 +31,7 @@ export class AlbumUpdateComponent implements OnInit {
     year: [],
     thumbnail: [],
     totalTracks: [],
-    userId: [],
+    userId: [null, Validators.required],
     tracks: []
   });
 

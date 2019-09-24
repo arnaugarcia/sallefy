@@ -3,8 +3,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -40,6 +43,7 @@ public class Track implements Serializable {
     @Column(name = "thumbnail")
     private String thumbnail;
 
+    @CreationTimestamp
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
@@ -52,7 +56,8 @@ public class Track implements Serializable {
     @Column(name = "color")
     private String color;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties("tracks")
     private User user;
 
@@ -63,12 +68,12 @@ public class Track implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
     private Set<Genre> genres = new HashSet<>();
 
-    @OneToMany(mappedBy = "track")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @OneToMany(mappedBy = "track", orphanRemoval = true)
+    @JsonIgnore
     private Set<Playback> playbacks = new HashSet<>();
 
-    @OneToMany(mappedBy = "track")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @OneToMany(mappedBy = "track", orphanRemoval = true)
+    @JsonIgnore
     private Set<LikeTrack> likeTracks = new HashSet<>();
 
     @ManyToMany(mappedBy = "tracks")

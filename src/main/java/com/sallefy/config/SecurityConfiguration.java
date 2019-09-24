@@ -3,6 +3,7 @@ package com.sallefy.config;
 import com.sallefy.security.*;
 import com.sallefy.security.jwt.*;
 
+import io.micrometer.core.ipc.http.HttpSender;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
+
+import static com.sallefy.security.AuthoritiesConstants.ADMIN;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -78,6 +81,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
             .authorizeRequests()
+
+            .antMatchers(HttpMethod.POST, "/api/genres").hasAuthority(ADMIN)
+            .antMatchers(HttpMethod.PUT, "/api/genres/**").hasAuthority(ADMIN)
+            .antMatchers(HttpMethod.DELETE, "/api/genres/**").hasAuthority(ADMIN)
+
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
@@ -87,7 +95,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/prometheus").permitAll()
-            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/management/**").hasAuthority(ADMIN)
         .and()
             .httpBasic()
         .and()

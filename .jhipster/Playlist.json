@@ -48,6 +48,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "playlist",
+            "relationshipValidateRules": "required",
             "relationshipName": "user",
             "otherEntityField": "login"
         },

@@ -37,7 +37,7 @@ export class PlaylistUpdateComponent implements OnInit {
     numberSongs: [],
     followers: [],
     rating: [],
-    userId: [],
+    userId: [null, Validators.required],
     tracks: []
   });
 

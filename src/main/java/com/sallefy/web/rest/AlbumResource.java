@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -52,7 +53,7 @@ public class AlbumResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/albums")
-    public ResponseEntity<AlbumDTO> createAlbum(@RequestBody AlbumDTO albumDTO) throws URISyntaxException {
+    public ResponseEntity<AlbumDTO> createAlbum(@Valid @RequestBody AlbumDTO albumDTO) throws URISyntaxException {
         log.debug("REST request to save Album : {}", albumDTO);
         if (albumDTO.getId() != null) {
             throw new BadRequestAlertException("A new album cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +74,7 @@ public class AlbumResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/albums")
-    public ResponseEntity<AlbumDTO> updateAlbum(@RequestBody AlbumDTO albumDTO) throws URISyntaxException {
+    public ResponseEntity<AlbumDTO> updateAlbum(@Valid @RequestBody AlbumDTO albumDTO) throws URISyntaxException {
         log.debug("REST request to update Album : {}", albumDTO);
         if (albumDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

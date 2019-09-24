@@ -21,8 +21,8 @@
     <include file="config/liquibase/changelog/20190919065624_added_entity_FollowUser.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190919065625_added_entity_FollowPlaylist.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190919065626_added_entity_LikeAlbum.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190919065627_added_entity_Genre.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190919065628_added_entity_Playback.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190924102642_added_entity_Genre.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20190919065620_added_entity_constraints_Track.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190919065621_added_entity_constraints_Playlist.xml" relativeToChangelogFile="false"/>
@@ -33,6 +33,4 @@
     <include file="config/liquibase/changelog/20190919065626_added_entity_constraints_LikeAlbum.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190919065628_added_entity_constraints_Playback.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
-    <include file="config/liquibase/changelog/20190922142239_added_unique_constraints_changelog.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190922163334_added_track_columns.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

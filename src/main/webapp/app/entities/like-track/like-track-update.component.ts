@@ -31,8 +31,8 @@ export class LikeTrackUpdateComponent implements OnInit {
     id: [],
     liked: [],
     date: [],
-    userId: [],
-    trackId: []
+    userId: [null, Validators.required],
+    trackId: [null, Validators.required]
   });
 
   constructor(

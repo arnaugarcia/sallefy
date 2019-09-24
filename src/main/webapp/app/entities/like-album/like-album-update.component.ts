@@ -31,8 +31,8 @@ export class LikeAlbumUpdateComponent implements OnInit {
     id: [],
     liked: [],
     date: [],
-    userId: [],
-    albumId: []
+    userId: [null, Validators.required],
+    albumId: [null, Validators.required]
   });
 
   constructor(

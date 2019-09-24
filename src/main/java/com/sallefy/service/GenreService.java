@@ -54,9 +54,24 @@ public class GenreService {
     @Transactional(readOnly = true)
     public List<GenreDTO> findAll() {
         log.debug("Request to get all Genres");
-        return genreRepository.findAll().stream()
+        return genreRepository.findAll()
+            .stream()
             .map(genreMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     * Get genres by list of Ids.
+     *
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<GenreDTO> findAllById(List<Long> genresIds) {
+        log.debug("Request to get genres by list of Ids");
+        return genreRepository.findAllById(genresIds)
+            .stream()
+            .map(genreMapper::toDto)
+            .collect(Collectors.toList());
     }
 
 

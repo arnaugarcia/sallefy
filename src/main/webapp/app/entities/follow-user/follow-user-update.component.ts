@@ -26,8 +26,8 @@ export class FollowUserUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     date: [],
-    followedId: [],
-    userId: []
+    followedId: [null, Validators.required],
+    userId: [null, Validators.required]
   });
 
   constructor(

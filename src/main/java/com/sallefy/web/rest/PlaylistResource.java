@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -46,7 +47,7 @@ public class PlaylistResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/playlists")
-    public ResponseEntity<PlaylistDTO> createPlaylist(@RequestBody PlaylistDTO playlistDTO) throws URISyntaxException {
+    public ResponseEntity<PlaylistDTO> createPlaylist(@Valid @RequestBody PlaylistDTO playlistDTO) throws URISyntaxException {
         log.debug("REST request to save Playlist : {}", playlistDTO);
         if (playlistDTO.getId() != null) {
             throw new BadRequestAlertException("A new playlist cannot already have an ID", ENTITY_NAME, "idexists");
@@ -67,7 +68,7 @@ public class PlaylistResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/playlists")
-    public ResponseEntity<PlaylistDTO> updatePlaylist(@RequestBody PlaylistDTO playlistDTO) throws URISyntaxException {
+    public ResponseEntity<PlaylistDTO> updatePlaylist(@Valid @RequestBody PlaylistDTO playlistDTO) {
         log.debug("REST request to update Playlist : {}", playlistDTO);
         if (playlistDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
