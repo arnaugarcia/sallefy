@@ -63,21 +63,19 @@ public class TrackServiceImpl implements TrackService {
     public TrackDTO save(TrackDTO trackDTO) {
         log.debug("Request to save Track : {}", trackDTO);
 
-        final User user = userService.getUserWithAuthorities();
+        final User currentUser = userService.getUserWithAuthorities();
 
         if (isUpdating(trackDTO)) {
-            Track track = trackRepository
-                .findById(trackDTO.getId())
-                .orElseThrow(TrackNotFoundException::new);
-            checkUserIsTheOwner(track, user);
+            Track track = findTrack(trackDTO.getId());
+            checkUserIsTheOwner(track, currentUser);
         }
-        filterGenresExist(trackDTO);
-        Track track = trackMapper.toEntity(trackDTO);
-        return saveAndTransform(track);
-    }
 
-    private boolean isUpdating(TrackDTO trackDTO) {
-        return trackDTO.getId() != null;
+        filterGenresExist(trackDTO);
+
+        Track track = trackMapper.toEntity(trackDTO);
+        track.setUser(currentUser);
+
+        return saveAndTransform(track);
     }
 
     /**
@@ -144,6 +142,17 @@ public class TrackServiceImpl implements TrackService {
             .stream()
             .map(GenreDTO::getId)
             .collect(Collectors.toList());
+    }
+
+
+    private Track findTrack(Long trackId) {
+        return trackRepository
+            .findById(trackId)
+            .orElseThrow(TrackNotFoundException::new);
+    }
+
+    private boolean isUpdating(TrackDTO trackDTO) {
+        return trackDTO.getId() != null;
     }
 
     private TrackDTO saveAndTransform(Track track) {
