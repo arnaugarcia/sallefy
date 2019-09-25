@@ -16,7 +16,7 @@ public class ForbiddenAlertException extends AbstractThrowableProblem {
     private final String errorKey;
 
     public ForbiddenAlertException(String defaultMessage, String entityName, String errorKey) {
-        this(ErrorConstants.DEFAULT_TYPE, defaultMessage, entityName, errorKey);
+        this(ErrorConstants.FORBIDDEN_TYPE, defaultMessage, entityName, errorKey);
     }
 
     public ForbiddenAlertException(URI type, String defaultMessage, String entityName, String errorKey) {

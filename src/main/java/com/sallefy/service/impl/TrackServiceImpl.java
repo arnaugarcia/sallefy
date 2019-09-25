@@ -8,9 +8,10 @@ import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.GenreDTO;
 import com.sallefy.service.dto.TrackDTO;
+import com.sallefy.service.exception.BadOwnerException;
 import com.sallefy.service.mapper.TrackMapper;
 import com.sallefy.web.rest.errors.ForbiddenAlertException;
-import com.sallefy.web.rest.errors.TrackNotFoundException;
+import com.sallefy.service.exception.TrackNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -181,7 +182,7 @@ public class TrackServiceImpl implements TrackService {
 
     private void checkUserIsTheOwner(Track track, User user) {
         if (!user.getLogin().equals(track.getUser().getLogin())) {
-            throw new ForbiddenAlertException("Don't touch this, this Track isn't yours..." , "Track", ERR_OWNER_DIFFERS);
+            throw new BadOwnerException();
         }
     }
 

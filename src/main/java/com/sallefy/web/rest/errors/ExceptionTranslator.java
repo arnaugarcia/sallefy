@@ -2,7 +2,6 @@ package com.sallefy.web.rest.errors;
 
 import com.sallefy.service.exception.UsernameAlreadyUsedException;
 import io.github.jhipster.web.util.HeaderUtil;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.sallefy.web.rest.errors.ErrorConstants.*;
-import static org.zalando.problem.Status.CONFLICT;
-import static org.zalando.problem.Status.NOT_FOUND;
+import static org.zalando.problem.Status.*;
 
 
 /**
@@ -100,19 +98,20 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     @ExceptionHandler
     public ResponseEntity<Problem> handleEmailAlreadyUsedException(com.sallefy.service.exception.EmailAlreadyUsedException ex, NativeWebRequest request) {
         EmailAlreadyUsedException problem = new EmailAlreadyUsedException();
-        return create(problem, request, HeaderUtil.createFailureAlert(applicationName,  true, problem.getEntityName(), problem.getErrorKey(), problem.getMessage()));
+        return create(problem, request, HeaderUtil.createFailureAlert(applicationName, true, problem.getEntityName(), problem.getErrorKey(), problem.getMessage()));
     }
 
     @ExceptionHandler
     public ResponseEntity<Problem> handleUsernameAreadyUsedException(UsernameAlreadyUsedException ex, NativeWebRequest request) {
         LoginAlreadyUsedException problem = new LoginAlreadyUsedException();
-        return create(problem, request, HeaderUtil.createFailureAlert(applicationName,  true, problem.getEntityName(), problem.getErrorKey(), problem.getMessage()));
+        return create(problem, request, HeaderUtil.createFailureAlert(applicationName, true, problem.getEntityName(), problem.getErrorKey(), problem.getMessage()));
     }
 
     @ExceptionHandler
     public ResponseEntity<Problem> handleInvalidPasswordException(com.sallefy.service.exception.InvalidPasswordException ex, NativeWebRequest request) {
         return create(new InvalidPasswordException(), request);
     }
+
     @ExceptionHandler
     public ResponseEntity<Problem> handleBadRequestAlertException(BadRequestAlertException ex, NativeWebRequest request) {
         return create(ex, request, HeaderUtil.createFailureAlert(applicationName, true, ex.getEntityName(), ex.getErrorKey(), ex.getMessage()));
@@ -134,6 +133,27 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
             .withStatus(NOT_FOUND)
             .with(MESSAGE_KEY, ex.getMessage())
             .with(CODE_KEY, ex.getErrorKey())
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleTrackNotFoundException(com.sallefy.service.exception.TrackNotFoundException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withType(NOT_FOUND_TYPE)
+            .withStatus(NOT_FOUND)
+            .with(MESSAGE_KEY, ex.getMessage())
+            .with(CODE_KEY, ERR_TRACK_NOT_FOUND)
+            .build();
+        return create(ex, problem, request);    }
+
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleBadOwnerException(com.sallefy.service.exception.BadOwnerException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withType(ErrorConstants.FORBIDDEN_TYPE)
+            .withStatus(FORBIDDEN)
+            .with(MESSAGE_KEY, ex.getMessage())
+            .with(CODE_KEY, ERR_OWNER_DIFFERS)
             .build();
         return create(ex, problem, request);
     }
