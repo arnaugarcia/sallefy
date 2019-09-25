@@ -1,0 +1,36 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.7.xsd">
+    <changeSet author="sallefy" id="1569412306976-5">
+        <addUniqueConstraint columnNames="user_id, album_id" constraintName="UKphebb6fh4agomysvomcm6xakg" tableName="like_album"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1569412306976-6">
+        <addUniqueConstraint columnNames="user_id, track_id" constraintName="UKqfx87gtvd2no8gyna7yce5n4f" tableName="like_track"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1569412306976-7">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="playback" constraintName="FK2n9ctrfgm3rs85k9u2u0gls26" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1569412306976-8">
+        <addForeignKeyConstraint baseColumnNames="track_id" baseTableName="like_track" constraintName="FK808jebgfc35wjoxi6l5g44xyv" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="track" validate="true"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1569412306976-9">
+        <addForeignKeyConstraint baseColumnNames="playlist_id" baseTableName="follow_playlist" constraintName="FKckfmvq669nl9104fybjj3g81l" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="playlist" validate="true"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1569412306976-10">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="follow_playlist" constraintName="FKeg3ecpaoacc2xedg5a1wi8f31" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1569412306976-11">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="like_album" constraintName="FKimol6otev5n5oe14gsc7nf8ka" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1569412306976-12">
+        <addForeignKeyConstraint baseColumnNames="followed_id" baseTableName="follow_user" constraintName="FKknchfy50xojdofbcx8s2y25dq" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1569412306976-13">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="follow_user" constraintName="FKly53shqnt8mtr9udq7xpg5kcy" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1569412306976-14">
+        <addForeignKeyConstraint baseColumnNames="album_id" baseTableName="like_album" constraintName="FKp7f5p0aj7eyt4hcfebegvehvu" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="album" validate="true"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1569412306976-15">
+        <addForeignKeyConstraint baseColumnNames="track_id" baseTableName="playback" constraintName="FKs5w66er7a3xxqlbslff1b0rfd" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="track" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
