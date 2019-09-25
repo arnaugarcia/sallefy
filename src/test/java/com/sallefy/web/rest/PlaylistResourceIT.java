@@ -2,6 +2,7 @@ package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
 import com.sallefy.domain.Playlist;
+import com.sallefy.domain.User;
 import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.dto.PlaylistDTO;
@@ -139,6 +140,11 @@ public class PlaylistResourceIT {
             .numberSongs(DEFAULT_NUMBER_SONGS)
             .followers(DEFAULT_FOLLOWERS)
             .rating(DEFAULT_RATING);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        playlist.setUser(user);
         return playlist;
     }
     /**
@@ -227,18 +233,18 @@ public class PlaylistResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(playlist.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].collaborative").value(hasItem(DEFAULT_COLLABORATIVE.booleanValue())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-            .andExpect(jsonPath("$.[*].primaryColor").value(hasItem(DEFAULT_PRIMARY_COLOR.toString())))
-            .andExpect(jsonPath("$.[*].cover").value(hasItem(DEFAULT_COVER.toString())))
-            .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].primaryColor").value(hasItem(DEFAULT_PRIMARY_COLOR)))
+            .andExpect(jsonPath("$.[*].cover").value(hasItem(DEFAULT_COVER)))
+            .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL)))
             .andExpect(jsonPath("$.[*].publicAccessible").value(hasItem(DEFAULT_PUBLIC_ACCESSIBLE.booleanValue())))
             .andExpect(jsonPath("$.[*].numberSongs").value(hasItem(DEFAULT_NUMBER_SONGS)))
             .andExpect(jsonPath("$.[*].followers").value(hasItem(DEFAULT_FOLLOWERS)))
             .andExpect(jsonPath("$.[*].rating").value(hasItem(DEFAULT_RATING.doubleValue())));
     }
-    
+
     @SuppressWarnings({"unchecked"})
     public void getAllPlaylistsWithEagerRelationshipsIsEnabled() throws Exception {
         PlaylistResource playlistResource = new PlaylistResource(playlistServiceMock);
@@ -283,12 +289,12 @@ public class PlaylistResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(playlist.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.collaborative").value(DEFAULT_COLLABORATIVE.booleanValue()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
-            .andExpect(jsonPath("$.primaryColor").value(DEFAULT_PRIMARY_COLOR.toString()))
-            .andExpect(jsonPath("$.cover").value(DEFAULT_COVER.toString()))
-            .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL.toString()))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
+            .andExpect(jsonPath("$.primaryColor").value(DEFAULT_PRIMARY_COLOR))
+            .andExpect(jsonPath("$.cover").value(DEFAULT_COVER))
+            .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL))
             .andExpect(jsonPath("$.publicAccessible").value(DEFAULT_PUBLIC_ACCESSIBLE.booleanValue()))
             .andExpect(jsonPath("$.numberSongs").value(DEFAULT_NUMBER_SONGS))
             .andExpect(jsonPath("$.followers").value(DEFAULT_FOLLOWERS))

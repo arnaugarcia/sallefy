@@ -2,6 +2,7 @@ package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
 import com.sallefy.domain.Album;
+import com.sallefy.domain.User;
 import com.sallefy.repository.AlbumRepository;
 import com.sallefy.service.AlbumService;
 import com.sallefy.service.LikeService;
@@ -115,6 +116,11 @@ public class AlbumResourceIT {
             .year(DEFAULT_YEAR)
             .thumbnail(DEFAULT_THUMBNAIL)
             .totalTracks(DEFAULT_TOTAL_TRACKS);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        album.setUser(user);
         return album;
     }
 
@@ -192,9 +198,9 @@ public class AlbumResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(album.getId().intValue())))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)))
-            .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL.toString())))
+            .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL)))
             .andExpect(jsonPath("$.[*].totalTracks").value(hasItem(DEFAULT_TOTAL_TRACKS)));
     }
 
@@ -242,9 +248,9 @@ public class AlbumResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(album.getId().intValue()))
-            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.year").value(DEFAULT_YEAR))
-            .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL.toString()))
+            .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL))
             .andExpect(jsonPath("$.totalTracks").value(DEFAULT_TOTAL_TRACKS));
     }
 

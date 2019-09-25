@@ -149,7 +149,7 @@ public class AccountResourceIT {
 
         restUserMockMvc.perform(get("/api/account")
             .accept(MediaType.APPLICATION_PROBLEM_JSON))
-            .andExpect(status().isInternalServerError());
+            .andExpect(status().isBadRequest());
     }
 
     @Test
