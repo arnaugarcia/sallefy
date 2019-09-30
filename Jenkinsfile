@@ -10,7 +10,7 @@ node {
     }
 
     stage('check java') {
-        sh "${jdk}/java -version"
+        sh "${jdk}/bin/java -version"
     }
 
     stage('clean') {
