@@ -1,15 +1,15 @@
 #!/usr/bin/env groovy
 
 node {
-    tools {
-        jdk "JDK9"
-    }
 
     stage('checkout') {
         checkout scm
     }
 
     stage('check java') {
+        tools {
+            jdk "JDK9"
+        }
         sh "java -version"
     }
 
