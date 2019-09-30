@@ -2,9 +2,11 @@ package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
 import com.sallefy.domain.Track;
+import com.sallefy.domain.User;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.service.LikeService;
 import com.sallefy.service.TrackService;
+import com.sallefy.service.UserService;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.TrackMapper;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
@@ -93,6 +95,9 @@ public class TrackResourceIT {
     private LikeService likeService;
 
     @Mock
+    private UserService userService;
+
+    @Mock
     private LikeService likeServiceMock;
 
     @Autowired
@@ -146,6 +151,11 @@ public class TrackResourceIT {
             .released(DEFAULT_RELEASED)
             .duration(DEFAULT_DURATION)
             .color(DEFAULT_COLOR);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        track.setUser(user);
         return track;
     }
     /**
@@ -232,15 +242,12 @@ public class TrackResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(track.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].rating").value(hasItem(DEFAULT_RATING.toString())))
-            .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())))
-            .andExpect(jsonPath("$.[*].popularity").value(hasItem(DEFAULT_POPULARITY.toString())))
-            .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL.toString())))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(sameInstant(DEFAULT_CREATED_AT))))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
+            .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL)))
             .andExpect(jsonPath("$.[*].released").value(hasItem(sameInstant(DEFAULT_RELEASED))))
             .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION)))
-            .andExpect(jsonPath("$.[*].color").value(hasItem(DEFAULT_COLOR.toString())));
+            .andExpect(jsonPath("$.[*].color").value(hasItem(DEFAULT_COLOR)));
     }
 
     @SuppressWarnings({"unchecked"})
@@ -287,15 +294,12 @@ public class TrackResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(track.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.rating").value(DEFAULT_RATING.toString()))
-            .andExpect(jsonPath("$.url").value(DEFAULT_URL.toString()))
-            .andExpect(jsonPath("$.popularity").value(DEFAULT_POPULARITY.toString()))
-            .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL.toString()))
-            .andExpect(jsonPath("$.createdAt").value(sameInstant(DEFAULT_CREATED_AT)))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.url").value(DEFAULT_URL))
+            .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL))
             .andExpect(jsonPath("$.released").value(sameInstant(DEFAULT_RELEASED)))
             .andExpect(jsonPath("$.duration").value(DEFAULT_DURATION))
-            .andExpect(jsonPath("$.color").value(DEFAULT_COLOR.toString()));
+            .andExpect(jsonPath("$.color").value(DEFAULT_COLOR));
     }
 
     @Test
@@ -355,6 +359,8 @@ public class TrackResourceIT {
     public void updateNonExistingTrack() throws Exception {
         int databaseSizeBeforeUpdate = trackRepository.findAll().size();
 
+        when(userService.getUserWithAuthorities()).thenReturn(track.getUser());
+
         // Create the Track
         TrackDTO trackDTO = trackMapper.toDto(track);
 
@@ -374,6 +380,8 @@ public class TrackResourceIT {
     public void deleteTrack() throws Exception {
         // Initialize the database
         trackRepository.saveAndFlush(track);
+
+        when(userService.getUserWithAuthorities()).thenReturn(track.getUser());
 
         int databaseSizeBeforeDelete = trackRepository.findAll().size();
 

@@ -130,6 +130,8 @@ public class TrackResource {
     public ResponseEntity<Void> deleteTrack(@PathVariable Long id) {
         log.debug("REST request to delete Track : {}", id);
         trackService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
     }
 }
