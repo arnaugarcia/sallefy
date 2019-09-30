@@ -1,6 +1,8 @@
 #!/usr/bin/env groovy
 
 node {
+    tool 'JDK9'
+
     stage('checkout') {
         checkout scm
     }
