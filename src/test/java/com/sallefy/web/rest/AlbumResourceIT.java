@@ -117,7 +117,7 @@ public class AlbumResourceIT {
             .thumbnail(DEFAULT_THUMBNAIL)
             .totalTracks(DEFAULT_TOTAL_TRACKS);
         // Add required entity
-        User user = UserResourceIT.createEntity(em);
+        User user = UserResourceIT.createEntity();
         em.persist(user);
         em.flush();
         album.setUser(user);

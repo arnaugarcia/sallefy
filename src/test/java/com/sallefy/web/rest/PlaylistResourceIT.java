@@ -141,7 +141,7 @@ public class PlaylistResourceIT {
             .followers(DEFAULT_FOLLOWERS)
             .rating(DEFAULT_RATING);
         // Add required entity
-        User user = UserResourceIT.createEntity(em);
+        User user = UserResourceIT.createEntity();
         em.persist(user);
         em.flush();
         playlist.setUser(user);
