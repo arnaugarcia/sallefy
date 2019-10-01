@@ -11,11 +11,8 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {UserMapper.class, TrackMapper.class})
 public interface PlaylistMapper extends EntityMapper<PlaylistDTO, Playlist> {
 
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "user.login", target = "userLogin")
     PlaylistDTO toDto(Playlist playlist);
 
-    @Mapping(source = "userId", target = "user")
     @Mapping(target = "removeTrack", ignore = true)
     Playlist toEntity(PlaylistDTO playlistDTO);
 
