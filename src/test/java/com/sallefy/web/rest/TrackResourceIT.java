@@ -4,13 +4,13 @@ import com.sallefy.SallefyApp;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
 import com.sallefy.repository.TrackRepository;
+import com.sallefy.repository.UserRepository;
 import com.sallefy.service.LikeService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.TrackMapper;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -18,10 +18,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,16 +29,18 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sallefy.web.rest.TestUtil.sameInstant;
 import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
+import static com.sallefy.web.rest.TestUtil.sameInstant;
+import static com.sallefy.web.rest.UserResourceIT.createBasicUserWithUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -55,8 +57,8 @@ public class TrackResourceIT {
     private static final String DEFAULT_RATING = "AAAAAAAAAA";
     private static final String UPDATED_RATING = "BBBBBBBBBB";
 
-    private static final String DEFAULT_URL = "AAAAAAAAAA";
-    private static final String UPDATED_URL = "BBBBBBBBBB";
+    private static final String DEFAULT_URL = "http://cloudinary.com";
+    private static final String UPDATED_URL = "http://cloudinary.com/updated";
 
     private static final String DEFAULT_POPULARITY = "AAAAAAAAAA";
     private static final String UPDATED_POPULARITY = "BBBBBBBBBB";
@@ -74,7 +76,7 @@ public class TrackResourceIT {
 
     private static final Integer DEFAULT_DURATION = 1;
     private static final Integer UPDATED_DURATION = 2;
-    private static final Integer SMALLER_DURATION = 1 - 1;
+    private static final Integer SMALLER_DURATION = 0;
 
     private static final String DEFAULT_COLOR = "AAAAAAAAAA";
     private static final String UPDATED_COLOR = "BBBBBBBBBB";
@@ -122,6 +124,9 @@ public class TrackResourceIT {
 
     private Track track;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -131,16 +136,17 @@ public class TrackResourceIT {
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setValidator(validator)
+            .build();
     }
 
     /**
      * Create an entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Track createEntity(EntityManager em) {
+    public static Track createEntity() {
         Track track = new Track()
             .name(DEFAULT_NAME)
             .rating(DEFAULT_RATING)
@@ -151,16 +157,12 @@ public class TrackResourceIT {
             .released(DEFAULT_RELEASED)
             .duration(DEFAULT_DURATION)
             .color(DEFAULT_COLOR);
-        // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        track.setUser(user);
         return track;
     }
+
     /**
      * Create an updated entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
@@ -180,12 +182,18 @@ public class TrackResourceIT {
 
     @BeforeEach
     public void initTest() {
-        track = createEntity(em);
+        track = createEntity();
     }
 
     @Test
     @Transactional
+    @WithMockUser("track-owner")
     public void createTrack() throws Exception {
+
+        User owner = createBasicUserWithUsername("track-owner");
+
+        track.setUser(userRepository.save(owner));
+
         int databaseSizeBeforeCreate = trackRepository.findAll().size();
 
         // Create the Track
@@ -200,11 +208,8 @@ public class TrackResourceIT {
         assertThat(trackList).hasSize(databaseSizeBeforeCreate + 1);
         Track testTrack = trackList.get(trackList.size() - 1);
         assertThat(testTrack.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testTrack.getRating()).isEqualTo(DEFAULT_RATING);
         assertThat(testTrack.getUrl()).isEqualTo(DEFAULT_URL);
-        assertThat(testTrack.getPopularity()).isEqualTo(DEFAULT_POPULARITY);
         assertThat(testTrack.getThumbnail()).isEqualTo(DEFAULT_THUMBNAIL);
-        assertThat(testTrack.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
         assertThat(testTrack.getReleased()).isEqualTo(DEFAULT_RELEASED);
         assertThat(testTrack.getDuration()).isEqualTo(DEFAULT_DURATION);
         assertThat(testTrack.getColor()).isEqualTo(DEFAULT_COLOR);
@@ -230,24 +235,66 @@ public class TrackResourceIT {
         assertThat(trackList).hasSize(databaseSizeBeforeCreate);
     }
 
-
     @Test
     @Transactional
-    public void getAllTracks() throws Exception {
+    @WithMockUser("admin")
+    public void getAllTracksAsAdmin() throws Exception {
+
         // Initialize the database
-        trackRepository.saveAndFlush(track);
+        User basicUser1 = UserResourceIT.createEntity();
+        userRepository.save(basicUser1);
+
+        User basicUser2 = UserResourceIT.createEntity();
+        userRepository.save(basicUser2);
+
+        Track track1 = createEntity();
+        track1.setUser(basicUser1);
+        trackRepository.save(track1);
+
+        Track track2 = createEntity();
+        track2.setUser(basicUser2);
+        trackRepository.save(track2);
 
         // Get all the trackList
         restTrackMockMvc.perform(get("/api/tracks?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(track.getId().intValue())))
+            .andExpect(jsonPath("$", hasSize(2)))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
             .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL)))
             .andExpect(jsonPath("$.[*].released").value(hasItem(sameInstant(DEFAULT_RELEASED))))
             .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION)))
             .andExpect(jsonPath("$.[*].color").value(hasItem(DEFAULT_COLOR)));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("track-owner")
+    public void getOwnTracks() throws Exception {
+
+        // Initialize the database
+        User owner = UserResourceIT.createBasicUserWithUsername("track-owner");
+        userRepository.save(owner);
+
+        User basicUser2 = UserResourceIT.createEntity();
+        userRepository.save(basicUser2);
+
+        Track track1 = createEntity();
+        track1.setUser(owner);
+        trackRepository.save(track1);
+
+        Track track2 = createEntity();
+        track2.setUser(basicUser2);
+        trackRepository.save(track2);
+
+        // Get all the trackList
+        restTrackMockMvc.perform(get("/api/tracks?sort=id,desc"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(1)))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)));
     }
 
     @SuppressWarnings({"unchecked"})
@@ -262,7 +309,7 @@ public class TrackResourceIT {
             .setMessageConverters(jacksonMessageConverter).build();
 
         restTrackMockMvc.perform(get("/api/tracks?eagerload=true"))
-        .andExpect(status().isOk());
+            .andExpect(status().isOk());
 
         verify(trackServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
@@ -270,22 +317,30 @@ public class TrackResourceIT {
     @SuppressWarnings({"unchecked"})
     public void getAllTracksWithEagerRelationshipsIsNotEnabled() throws Exception {
         TrackResource trackResource = new TrackResource(trackServiceMock, likeServiceMock);
-            when(trackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-            MockMvc restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
+        when(trackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        MockMvc restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter).build();
 
         restTrackMockMvc.perform(get("/api/tracks?eagerload=true"))
-        .andExpect(status().isOk());
+            .andExpect(status().isOk());
 
-            verify(trackServiceMock, times(1)).findAllWithEagerRelationships(any());
+        verify(trackServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test
     @Transactional
+    @WithMockUser("track-owner")
     public void getTrack() throws Exception {
+
+        // Initialize the database
+        User owner = UserResourceIT.createBasicUserWithUsername("track-owner");
+        userRepository.save(owner);
+
+        track.setUser(owner);
+
         // Initialize the database
         trackRepository.saveAndFlush(track);
 
@@ -312,7 +367,12 @@ public class TrackResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser("update-track-user")
     public void updateTrack() throws Exception {
+        User owner = createBasicUserWithUsername("update-track-user");
+
+        track.setUser(userRepository.save(owner));
+
         // Initialize the database
         trackRepository.saveAndFlush(track);
 
@@ -344,11 +404,8 @@ public class TrackResourceIT {
         assertThat(trackList).hasSize(databaseSizeBeforeUpdate);
         Track testTrack = trackList.get(trackList.size() - 1);
         assertThat(testTrack.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testTrack.getRating()).isEqualTo(UPDATED_RATING);
         assertThat(testTrack.getUrl()).isEqualTo(UPDATED_URL);
-        assertThat(testTrack.getPopularity()).isEqualTo(UPDATED_POPULARITY);
         assertThat(testTrack.getThumbnail()).isEqualTo(UPDATED_THUMBNAIL);
-        assertThat(testTrack.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
         assertThat(testTrack.getReleased()).isEqualTo(UPDATED_RELEASED);
         assertThat(testTrack.getDuration()).isEqualTo(UPDATED_DURATION);
         assertThat(testTrack.getColor()).isEqualTo(UPDATED_COLOR);
@@ -377,7 +434,13 @@ public class TrackResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser("delete-track-user")
     public void deleteTrack() throws Exception {
+
+        User user = createBasicUserWithUsername("delete-track-user");
+
+        track.setUser(userRepository.save(user));
+
         // Initialize the database
         trackRepository.saveAndFlush(track);
 

@@ -1,14 +1,16 @@
 #!/usr/bin/env groovy
 
 node {
-    tool 'JDK9'
+
+    jdk = tool name: 'JDK9'
+    env.JAVA_HOME = "${jdk}"
 
     stage('checkout') {
         checkout scm
     }
 
     stage('check java') {
-        sh "java -version"
+        sh "${jdk}/bin/java -version"
     }
 
     stage('clean') {
@@ -34,18 +36,8 @@ node {
         }
     }
 
-    stage('frontend tests') {
-        try {
-            sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test'"
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/test-results/TESTS-*.xml'
-        }
-    }
-
     stage('packaging') {
-        sh "./mvnw -ntp verify -Pprod -DskipTests"
+        sh "./mvnw -ntp verify -Pprod,swagger -DskipTests"
         archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
     }
 }
