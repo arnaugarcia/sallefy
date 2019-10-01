@@ -69,13 +69,10 @@ public class UserResource {
 
     private final UserRepository userRepository;
 
-    private final MailService mailService;
-
-    public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
+    public UserResource(UserService userService, UserRepository userRepository) {
 
         this.userService = userService;
         this.userRepository = userRepository;
-        this.mailService = mailService;
     }
 
     /**
@@ -104,7 +101,6 @@ public class UserResource {
             throw new EmailAlreadyUsedException();
         } else {
             User newUser = userService.createUser(userDTO);
-            mailService.sendCreationEmail(newUser);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert(applicationName,  "userManagement.created", newUser.getLogin()))
                 .body(newUser);

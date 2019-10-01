@@ -67,9 +67,6 @@ public class UserResourceIT {
     private UserRepository userRepository;
 
     @Autowired
-    private MailService mailService;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
@@ -98,7 +95,7 @@ public class UserResourceIT {
     public void setup() {
         cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).clear();
         cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).clear();
-        UserResource userResource = new UserResource(userService, userRepository, mailService);
+        UserResource userResource = new UserResource(userService, userRepository);
 
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
