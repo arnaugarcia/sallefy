@@ -25,6 +25,9 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
     @Query("select distinct playlist from Playlist playlist left join fetch playlist.tracks")
     List<Playlist> findAllWithEagerRelationships();
 
+    @Query("select distinct playlist from Playlist playlist left join fetch playlist.tracks where playlist.publicAccessible = true")
+    List<Playlist> findAllWithEagerRelationshipsAndPublicAccessibleTrue();
+
     @Query("select playlist from Playlist playlist left join fetch playlist.tracks where playlist.id =:id")
     Optional<Playlist> findOneWithEagerRelationships(@Param("id") Long id);
 
