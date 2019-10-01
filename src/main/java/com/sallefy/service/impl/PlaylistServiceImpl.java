@@ -1,19 +1,19 @@
 package com.sallefy.service.impl;
 
-import com.sallefy.service.PlaylistService;
 import com.sallefy.domain.Playlist;
+import com.sallefy.domain.User;
 import com.sallefy.repository.PlaylistRepository;
+import com.sallefy.service.PlaylistService;
+import com.sallefy.service.UserService;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.mapper.PlaylistMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,9 +31,12 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     private final PlaylistMapper playlistMapper;
 
-    public PlaylistServiceImpl(PlaylistRepository playlistRepository, PlaylistMapper playlistMapper) {
+    private final UserService userService;
+
+    public PlaylistServiceImpl(PlaylistRepository playlistRepository, PlaylistMapper playlistMapper, UserService userService) {
         this.playlistRepository = playlistRepository;
         this.playlistMapper = playlistMapper;
+        this.userService = userService;
     }
 
     /**
@@ -59,9 +62,20 @@ public class PlaylistServiceImpl implements PlaylistService {
     @Transactional(readOnly = true)
     public List<PlaylistDTO> findAll() {
         log.debug("Request to get all Playlists");
-        return playlistRepository.findAllWithEagerRelationships().stream()
+
+        final User user = userService.getUserWithAuthorities();
+
+        List<Playlist> playlists;
+
+        if (user.isAdmin()) {
+            playlists = playlistRepository.findAllWithEagerRelationships();
+        } else {
+            playlists = playlistRepository.findAllWithEagerRelationshipsAndPublicAccessibleTrue();
+        }
+
+        return playlists.stream()
             .map(playlistMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+            .collect(Collectors.toList());
     }
 
     /**
@@ -72,7 +86,7 @@ public class PlaylistServiceImpl implements PlaylistService {
     public Page<PlaylistDTO> findAllWithEagerRelationships(Pageable pageable) {
         return playlistRepository.findAllWithEagerRelationships(pageable).map(playlistMapper::toDto);
     }
-    
+
 
     /**
      * Get one playlist by id.
