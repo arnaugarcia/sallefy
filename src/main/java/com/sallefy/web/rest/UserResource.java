@@ -11,6 +11,7 @@ import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.web.rest.errors.EmailAlreadyUsedException;
 import com.sallefy.web.rest.errors.LoginAlreadyUsedException;
 
+import com.sallefy.web.rest.errors.NotYetImplementedException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -168,6 +169,54 @@ public class UserResource {
         return ResponseUtil.wrapOrNotFound(
             userService.getUserWithAuthoritiesByLogin(login)
                 .map(UserDTO::new));
+    }
+
+    /**
+     * {@code GET /users/:login/tracks} : get the tracks of the desired user.
+     *
+     * @param login the login of the user to find.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the tracks of the desired user, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/tracks")
+    public ResponseEntity<UserDTO> getTracksOfUser(@PathVariable String login) {
+        log.debug("REST request to get {} user tracks", login);
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * {@code GET /users/:login/albums} : get the albums of the current user.
+     *
+     * @param login the login of the user to find.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the tracks of the current user, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/albums")
+    public ResponseEntity<UserDTO> getTracksOfCurrentUser(@PathVariable String login) {
+        log.debug("REST request to get {} user albums", login);
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * {@code GET /users/:login/playlists} : get the playlists of the desired user.
+     *
+     * @param login the login of the user to find.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the playlists of the desired user, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/playlists")
+    public ResponseEntity<UserDTO> getPlaylistsOfUser(@PathVariable String login) {
+        log.debug("REST request to get {} user playlists", login);
+        throw new NotYetImplementedException();
+    }
+
+    /**
+     * {@code GET /users/:login/follow} : follow the desired user.
+     *
+     * @param login the login of the user to find.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
+     */
+    @PutMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/follow")
+    public ResponseEntity<UserDTO> toggleFollowUser(@PathVariable String login) {
+        log.debug("REST request to follow the user {}", login);
+        throw new NotYetImplementedException();
     }
 
     /**
