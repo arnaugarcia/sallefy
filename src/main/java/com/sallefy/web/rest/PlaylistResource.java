@@ -65,7 +65,6 @@ public class PlaylistResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated playlistDTO,
      * or with status {@code 400 (Bad Request)} if the playlistDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the playlistDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/playlists")
     public ResponseEntity<PlaylistDTO> updatePlaylist(@Valid @RequestBody PlaylistDTO playlistDTO) {
