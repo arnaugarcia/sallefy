@@ -1,10 +1,10 @@
 package com.sallefy.web.rest.errors;
 
-public class NotImplementedException extends NotImplementedAlertException {
+public class NotYetImplementedException extends NotImplementedAlertException {
 
     private static final long serialVersionUID = 1L;
 
-    public NotImplementedException() {
+    public NotYetImplementedException() {
         super(ErrorConstants.NOT_IMPLEMENTED, "Not implemented!", "sallefy", ErrorConstants.NOT_YET_IMPLEMENTED);
     }
 }
