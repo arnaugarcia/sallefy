@@ -220,6 +220,10 @@ public class TrackResourceIT {
     public void createTrackWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = trackRepository.findAll().size();
 
+        User owner = createBasicUserWithUsername("track-owner");
+
+        track.setUser(userRepository.save(owner));
+
         // Create the Track with an existing ID
         track.setId(1L);
         TrackDTO trackDTO = trackMapper.toDto(track);
@@ -415,6 +419,10 @@ public class TrackResourceIT {
     @Transactional
     public void updateNonExistingTrack() throws Exception {
         int databaseSizeBeforeUpdate = trackRepository.findAll().size();
+
+        User owner = createBasicUserWithUsername("track-owner");
+
+        track.setUser(userRepository.save(owner));
 
         when(userService.getUserWithAuthorities()).thenReturn(track.getUser());
 
