@@ -4,10 +4,10 @@ import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.AlbumDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.UserDTO;
+import com.sallefy.web.rest.errors.NotYetImplementedException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,7 +76,7 @@ public class MeResource {
     @GetMapping("/me/tracks/{id}")
     public ResponseEntity<TrackDTO> getOwnTrackById(@PathVariable Long id) {
         log.debug("REST request to get a Track with id: {}", id);
-        throw new NotYetImplementedException("Not yet implemented");
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -94,7 +94,7 @@ public class MeResource {
     @GetMapping("/me/tracks/liked")
     public ResponseEntity<List<TrackDTO>> getLikedTracks() {
         log.debug("REST request to get the list of liked Tracks");
-        throw new NotYetImplementedException("Not yet implemented");
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -112,7 +112,7 @@ public class MeResource {
     @GetMapping("/me/albums")
     public ResponseEntity<List<TrackDTO>> getOwnAlbums() {
         log.debug("REST request to get own albums");
-        throw new NotYetImplementedException("Not yet implemented");
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -133,7 +133,7 @@ public class MeResource {
     @GetMapping("/me/albums/{id}")
     public ResponseEntity<TrackDTO> getOwnAlbumById(@PathVariable Long id) {
         log.debug("REST request to get a Album with id: {}", id);
-        throw new NotYetImplementedException("Not yet implemented");
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -151,7 +151,7 @@ public class MeResource {
     @GetMapping("/me/albums/liked")
     public ResponseEntity<List<AlbumDTO>> getLikedAlbums() {
         log.debug("REST request to get the list of liked Albums");
-        throw new NotYetImplementedException("Not yet implemented");
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -169,7 +169,7 @@ public class MeResource {
     @GetMapping("/me/playlists")
     public ResponseEntity<List<TrackDTO>> getOwnPlaylists() {
         log.debug("REST request to get own playlists");
-        throw new NotYetImplementedException("Not yet implemented");
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -190,7 +190,7 @@ public class MeResource {
     @GetMapping("/me/playlists/{id}")
     public ResponseEntity<TrackDTO> getOwnPlaylist(@PathVariable Long id) {
         log.debug("REST request to get a Playlist with id: {}", id);
-        throw new NotYetImplementedException("Not yet implemented");
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -208,7 +208,7 @@ public class MeResource {
     @GetMapping("/me/tracks/followed")
     public ResponseEntity<List<TrackDTO>> getFollowedTracks() {
         log.debug("REST request to get the list of followed Playlists");
-        throw new NotYetImplementedException("Not yet implemented");
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -226,7 +226,7 @@ public class MeResource {
     @GetMapping("/me/users/followings")
     public ResponseEntity<List<UserDTO>> getFollowingUsers() {
         log.debug("REST request to get the list of following Users");
-        throw new NotYetImplementedException("Not yet implemented");
+        throw new NotYetImplementedException();
     }
 
     /**
@@ -244,7 +244,7 @@ public class MeResource {
     @GetMapping("/me/users/followers")
     public ResponseEntity<List<UserDTO>> getFollowersOfTheUser() {
         log.debug("REST request to get the list of the current user followers");
-        throw new NotYetImplementedException("Not yet implemented");
+        throw new NotYetImplementedException();
     }
 
 }
