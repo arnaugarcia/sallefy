@@ -33,10 +33,7 @@ public class PlaylistDTO implements Serializable {
 
     private Double rating;
 
-
-    private Long userId;
-
-    private String userLogin;
+    private UserDTO owner;
 
     private Set<TrackDTO> tracks = new HashSet<>();
 
@@ -128,20 +125,12 @@ public class PlaylistDTO implements Serializable {
         this.rating = rating;
     }
 
-    public Long getUserId() {
-        return userId;
+    public UserDTO getOwner() {
+        return owner;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUserLogin() {
-        return userLogin;
-    }
-
-    public void setUserLogin(String userLogin) {
-        this.userLogin = userLogin;
+    public void setOwner(UserDTO owner) {
+        this.owner = owner;
     }
 
     public Set<TrackDTO> getTracks() {
@@ -187,8 +176,7 @@ public class PlaylistDTO implements Serializable {
             ", numberSongs=" + getNumberSongs() +
             ", followers=" + getFollowers() +
             ", rating=" + getRating() +
-            ", user=" + getUserId() +
-            ", user='" + getUserLogin() + "'" +
+            ", owner='" + getOwner() + "'" +
             "}";
     }
 }

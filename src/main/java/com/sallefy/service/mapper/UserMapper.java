@@ -78,4 +78,13 @@ public class UserMapper {
         user.setId(id);
         return user;
     }
+
+    public User userFromLogin(String login) {
+        if (login == null) {
+            return null;
+        }
+        User user = new User();
+        user.setLogin(login);
+        return user;
+    }
 }

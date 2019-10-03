@@ -1,14 +1,15 @@
 package com.sallefy.service.dto;
+
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.time.ZonedDateTime;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 import static com.sallefy.config.Constants.CLOUDINARY_HOST_URL;
 
@@ -35,6 +36,8 @@ public class TrackDTO implements Serializable {
     private Integer duration;
 
     private String color;
+
+    private UserDTO owner;
 
     private Set<GenreDTO> genres = new HashSet<>();
 
@@ -100,6 +103,14 @@ public class TrackDTO implements Serializable {
 
     public void setGenres(Set<GenreDTO> genres) {
         this.genres = genres;
+    }
+
+    public UserDTO getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserDTO owner) {
+        this.owner = owner;
     }
 
     @Override
