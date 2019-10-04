@@ -6,6 +6,7 @@ import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.PlaylistDTO;
+import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.service.mapper.PlaylistMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,15 +43,13 @@ public class PlaylistServiceImpl implements PlaylistService {
     /**
      * Save a playlist.
      *
-     * @param playlistDTO the entity to save.
+     * @param playlistRequestDTO of the entity to save.
      * @return the persisted entity.
      */
     @Override
-    public PlaylistDTO save(PlaylistDTO playlistDTO) {
-        log.debug("Request to save Playlist : {}", playlistDTO);
-        Playlist playlist = playlistMapper.toEntity(playlistDTO);
-        playlist = playlistRepository.save(playlist);
-        return playlistMapper.toDto(playlist);
+    public PlaylistDTO save(PlaylistRequestDTO playlistRequestDTO) {
+        log.debug("Request to save Playlist : {}", playlistRequestDTO);
+
     }
 
     /**

@@ -2,6 +2,7 @@ package com.sallefy.web.rest;
 
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.dto.PlaylistDTO;
+import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.web.rest.errors.NotYetImplementedException;
@@ -61,20 +62,20 @@ public class PlaylistResource {
     /**
      * {@code PUT  /playlists} : Updates an existing playlist.
      *
-     * @param playlistDTO the playlistDTO to update.
+     * @param playlistRequest the request of the playlist to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated playlistDTO,
      * or with status {@code 400 (Bad Request)} if the playlistDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the playlistDTO couldn't be updated.
      */
     @PutMapping("/playlists")
-    public ResponseEntity<PlaylistDTO> updatePlaylist(@Valid @RequestBody PlaylistDTO playlistDTO) {
-        log.debug("REST request to update Playlist : {}", playlistDTO);
-        if (playlistDTO.getId() == null) {
+    public ResponseEntity<PlaylistDTO> updatePlaylist(@Valid @RequestBody PlaylistRequestDTO playlistRequest) {
+        log.debug("REST request to update Playlist : {}", playlistRequest);
+        if (playlistRequest.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        PlaylistDTO result = playlistService.save(playlistDTO);
+        PlaylistDTO result = playlistService.save(playlistRequest);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, playlistDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, playlistRequest.getId().toString()))
             .body(result);
     }
 
