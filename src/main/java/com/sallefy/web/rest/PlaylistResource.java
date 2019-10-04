@@ -1,9 +1,10 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.service.PlaylistService;
-import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.service.dto.PlaylistDTO;
-
+import com.sallefy.service.dto.UserDTO;
+import com.sallefy.web.rest.errors.BadRequestAlertException;
+import com.sallefy.web.rest.errors.NotYetImplementedException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +65,6 @@ public class PlaylistResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated playlistDTO,
      * or with status {@code 400 (Bad Request)} if the playlistDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the playlistDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/playlists")
     public ResponseEntity<PlaylistDTO> updatePlaylist(@Valid @RequestBody PlaylistDTO playlistDTO) {
@@ -82,11 +81,10 @@ public class PlaylistResource {
     /**
      * {@code GET  /playlists} : get all the playlists.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
      */
     @GetMapping("/playlists")
-    public List<PlaylistDTO> getAllPlaylists(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public List<PlaylistDTO> getAllPlaylists() {
         log.debug("REST request to get all Playlists");
         return playlistService.findAll();
     }
@@ -103,6 +101,19 @@ public class PlaylistResource {
         Optional<PlaylistDTO> playlistDTO = playlistService.findOne(id);
         return ResponseUtil.wrapOrNotFound(playlistDTO);
     }
+
+    /**
+     * {@code GET /playlists/:id/follow} : follow the desired playlist.
+     *
+     * @param id the id of the playlist.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
+     */
+    @PutMapping("/playlists/{id}/follow")
+    public ResponseEntity<UserDTO> toggleFollowPlaylist(@PathVariable Integer id) {
+        log.debug("REST request to follow the playlist with id {}", id);
+        throw new NotYetImplementedException();
+    }
+
 
     /**
      * {@code DELETE  /playlists/:id} : delete the "id" playlist.
