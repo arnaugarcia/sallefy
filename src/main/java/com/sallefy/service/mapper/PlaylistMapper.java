@@ -6,7 +6,7 @@ import com.sallefy.service.dto.PlaylistDTO;
 import org.mapstruct.*;
 
 /**
- * Mapper for the entity {@link Playlist} and its DTO {@link PlaylistDTO}.
+ * Mapper for the entity {@link Playlist} and its DTO {@link PlaylistDTO}.o
  */
 @Mapper(componentModel = "spring", uses = {UserMapper.class, TrackMapper.class})
 public interface PlaylistMapper extends EntityMapper<PlaylistDTO, Playlist> {
@@ -14,6 +14,10 @@ public interface PlaylistMapper extends EntityMapper<PlaylistDTO, Playlist> {
     @Mapping(source = "user", target = "owner")
     PlaylistDTO toDto(Playlist playlist);
 
+    @Mapping(target = "primaryColor", ignore = true)
+    @Mapping(target = "rating", ignore = true)
+    @Mapping(target = "numberSongs", ignore = true)
+    @Mapping(target = "collaborative", ignore = true)
     @Mapping(source = "owner", target = "user")
     @Mapping(target = "removeTrack", ignore = true)
     Playlist toEntity(PlaylistDTO playlistDTO);

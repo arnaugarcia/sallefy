@@ -6,6 +6,7 @@ import com.sallefy.domain.User;
 import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.dto.PlaylistDTO;
+import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.service.mapper.PlaylistMapper;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
 
@@ -203,6 +204,21 @@ public class PlaylistResourceIT {
 
     @Test
     @Transactional
+    public void should_not_Create_playlist_with_bad_cover_url() throws Exception {
+
+        // Create the Playlist request
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setName(DEFAULT_NAME);
+        playlistRequest.setCover("http://bad.host.com");
+
+        restPlaylistMockMvc.perform(post("/api/playlists")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(playlistRequest)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
     public void createPlaylistWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = playlistRepository.findAll().size();
 
@@ -321,22 +337,18 @@ public class PlaylistResourceIT {
         Playlist updatedPlaylist = playlistRepository.findById(playlist.getId()).get();
         // Disconnect from session so that the updates on updatedPlaylist are not directly saved in db
         em.detach(updatedPlaylist);
-        updatedPlaylist
-            .name(UPDATED_NAME)
-            .collaborative(UPDATED_COLLABORATIVE)
-            .description(UPDATED_DESCRIPTION)
-            .primaryColor(UPDATED_PRIMARY_COLOR)
-            .cover(UPDATED_COVER)
-            .thumbnail(UPDATED_THUMBNAIL)
-            .publicAccessible(UPDATED_PUBLIC_ACCESSIBLE)
-            .numberSongs(UPDATED_NUMBER_SONGS)
-            .followers(UPDATED_FOLLOWERS)
-            .rating(UPDATED_RATING);
-        PlaylistDTO playlistDTO = playlistMapper.toDto(updatedPlaylist);
+
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setId(updatedPlaylist.getId());
+        playlistRequest.setName(UPDATED_NAME);
+        playlistRequest.setCover(UPDATED_COVER);
+        playlistRequest.setDescription(UPDATED_DESCRIPTION);
+        playlistRequest.setThumbnail(UPDATED_THUMBNAIL);
+        playlistRequest.setPublicAccessible(UPDATED_PUBLIC_ACCESSIBLE);
 
         restPlaylistMockMvc.perform(put("/api/playlists")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(playlistDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(playlistRequest)))
             .andExpect(status().isOk());
 
         // Validate the Playlist in the database
@@ -344,15 +356,11 @@ public class PlaylistResourceIT {
         assertThat(playlistList).hasSize(databaseSizeBeforeUpdate);
         Playlist testPlaylist = playlistList.get(playlistList.size() - 1);
         assertThat(testPlaylist.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testPlaylist.isCollaborative()).isEqualTo(UPDATED_COLLABORATIVE);
         assertThat(testPlaylist.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testPlaylist.getPrimaryColor()).isEqualTo(UPDATED_PRIMARY_COLOR);
         assertThat(testPlaylist.getCover()).isEqualTo(UPDATED_COVER);
         assertThat(testPlaylist.getThumbnail()).isEqualTo(UPDATED_THUMBNAIL);
         assertThat(testPlaylist.isPublicAccessible()).isEqualTo(UPDATED_PUBLIC_ACCESSIBLE);
-        assertThat(testPlaylist.getNumberSongs()).isEqualTo(UPDATED_NUMBER_SONGS);
-        assertThat(testPlaylist.getFollowers()).isEqualTo(UPDATED_FOLLOWERS);
-        assertThat(testPlaylist.getRating()).isEqualTo(UPDATED_RATING);
     }
 
     @Test

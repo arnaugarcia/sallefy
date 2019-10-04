@@ -57,8 +57,8 @@ public class TrackResourceIT {
     private static final String DEFAULT_RATING = "AAAAAAAAAA";
     private static final String UPDATED_RATING = "BBBBBBBBBB";
 
-    private static final String DEFAULT_URL = "http://cloudinary.com";
-    private static final String UPDATED_URL = "http://cloudinary.com/updated";
+    private static final String DEFAULT_URL = "http://res.cloudinary.com";
+    private static final String UPDATED_URL = "http://res.cloudinary.com/updated";
 
     private static final String DEFAULT_POPULARITY = "AAAAAAAAAA";
     private static final String UPDATED_POPULARITY = "BBBBBBBBBB";

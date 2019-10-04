@@ -1,17 +1,18 @@
 package com.sallefy.service.dto;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.sallefy.domain.Playlist} entity.
  */
-public class PlaylistDTO implements Serializable {
+public class PlaylistRequestDTO implements Serializable {
 
     private Long id;
 
@@ -27,10 +28,6 @@ public class PlaylistDTO implements Serializable {
 
     @JsonProperty("public")
     private Boolean publicAccessible;
-
-    private Integer followers;
-
-    private UserDTO owner;
 
     private Set<TrackDTO> tracks = new HashSet<>();
 
@@ -82,22 +79,6 @@ public class PlaylistDTO implements Serializable {
         this.publicAccessible = publicAccessible;
     }
 
-    public Integer getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Integer followers) {
-        this.followers = followers;
-    }
-
-    public UserDTO getOwner() {
-        return owner;
-    }
-
-    public void setOwner(UserDTO owner) {
-        this.owner = owner;
-    }
-
     public Set<TrackDTO> getTracks() {
         return tracks;
     }
@@ -115,7 +96,7 @@ public class PlaylistDTO implements Serializable {
             return false;
         }
 
-        PlaylistDTO playlistDTO = (PlaylistDTO) o;
+        PlaylistRequestDTO playlistDTO = (PlaylistRequestDTO) o;
         if (playlistDTO.getId() == null || getId() == null) {
             return false;
         }
@@ -136,8 +117,6 @@ public class PlaylistDTO implements Serializable {
             ", cover='" + getCover() + "'" +
             ", thumbnail='" + getThumbnail() + "'" +
             ", publicAccessible='" + isPublicAccessible() + "'" +
-            ", followers=" + getFollowers() +
-            ", owner='" + getOwner() + "'" +
             "}";
     }
 }
