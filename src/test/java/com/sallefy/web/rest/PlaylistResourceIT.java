@@ -21,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -191,15 +192,9 @@ public class PlaylistResourceIT {
         assertThat(playlistList).hasSize(databaseSizeBeforeCreate + 1);
         Playlist testPlaylist = playlistList.get(playlistList.size() - 1);
         assertThat(testPlaylist.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testPlaylist.isCollaborative()).isEqualTo(DEFAULT_COLLABORATIVE);
         assertThat(testPlaylist.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testPlaylist.getPrimaryColor()).isEqualTo(DEFAULT_PRIMARY_COLOR);
         assertThat(testPlaylist.getCover()).isEqualTo(DEFAULT_COVER);
         assertThat(testPlaylist.getThumbnail()).isEqualTo(DEFAULT_THUMBNAIL);
-        assertThat(testPlaylist.isPublicAccessible()).isEqualTo(DEFAULT_PUBLIC_ACCESSIBLE);
-        assertThat(testPlaylist.getNumberSongs()).isEqualTo(DEFAULT_NUMBER_SONGS);
-        assertThat(testPlaylist.getFollowers()).isEqualTo(DEFAULT_FOLLOWERS);
-        assertThat(testPlaylist.getRating()).isEqualTo(DEFAULT_RATING);
     }
 
     @Test
@@ -240,6 +235,7 @@ public class PlaylistResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser
     public void getAllPlaylists() throws Exception {
         // Initialize the database
         playlistRepository.saveAndFlush(playlist);
@@ -306,15 +302,9 @@ public class PlaylistResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(playlist.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.collaborative").value(DEFAULT_COLLABORATIVE.booleanValue()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.primaryColor").value(DEFAULT_PRIMARY_COLOR))
             .andExpect(jsonPath("$.cover").value(DEFAULT_COVER))
-            .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL))
-            .andExpect(jsonPath("$.publicAccessible").value(DEFAULT_PUBLIC_ACCESSIBLE.booleanValue()))
-            .andExpect(jsonPath("$.numberSongs").value(DEFAULT_NUMBER_SONGS))
-            .andExpect(jsonPath("$.followers").value(DEFAULT_FOLLOWERS))
-            .andExpect(jsonPath("$.rating").value(DEFAULT_RATING.doubleValue()));
+            .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL));
     }
 
     @Test
@@ -329,17 +319,17 @@ public class PlaylistResourceIT {
     @Transactional
     public void updatePlaylist() throws Exception {
         // Initialize the database
-        playlistRepository.saveAndFlush(playlist);
+        Playlist savedPlaylist = playlistRepository.saveAndFlush(this.playlist);
 
         int databaseSizeBeforeUpdate = playlistRepository.findAll().size();
 
         // Update the playlist
-        Playlist updatedPlaylist = playlistRepository.findById(playlist.getId()).get();
+        Playlist updatedPlaylist = playlistRepository.findById(this.playlist.getId()).get();
         // Disconnect from session so that the updates on updatedPlaylist are not directly saved in db
         em.detach(updatedPlaylist);
 
         PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
-        playlistRequest.setId(updatedPlaylist.getId());
+        playlistRequest.setId(savedPlaylist.getId());
         playlistRequest.setName(UPDATED_NAME);
         playlistRequest.setCover(UPDATED_COVER);
         playlistRequest.setDescription(UPDATED_DESCRIPTION);
