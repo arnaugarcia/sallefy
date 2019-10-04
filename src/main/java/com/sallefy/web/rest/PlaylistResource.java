@@ -43,17 +43,17 @@ public class PlaylistResource {
     /**
      * {@code POST  /playlists} : Create a new playlist.
      *
-     * @param playlistDTO the playlistDTO to create.
+     * @param playlistRequest the request of the playlist to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new playlistDTO, or with status {@code 400 (Bad Request)} if the playlist has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/playlists")
-    public ResponseEntity<PlaylistDTO> createPlaylist(@Valid @RequestBody PlaylistDTO playlistDTO) throws URISyntaxException {
-        log.debug("REST request to save Playlist : {}", playlistDTO);
-        if (playlistDTO.getId() != null) {
+    public ResponseEntity<PlaylistDTO> createPlaylist(@Valid @RequestBody PlaylistRequestDTO playlistRequest) throws URISyntaxException {
+        log.debug("REST request to save Playlist : {}", playlistRequest);
+        if (playlistRequest.getId() != null) {
             throw new BadRequestAlertException("A new playlist cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PlaylistDTO result = playlistService.save(playlistDTO);
+        PlaylistDTO result = playlistService.save(playlistRequest);
         return ResponseEntity.created(new URI("/api/playlists/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
