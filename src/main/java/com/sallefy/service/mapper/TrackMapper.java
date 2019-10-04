@@ -11,8 +11,13 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {UserMapper.class, GenreMapper.class})
 public interface TrackMapper extends EntityMapper<TrackDTO, Track> {
 
+    @Mapping(source = "user", target = "owner")
     TrackDTO toDto(Track track);
 
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "rating", ignore = true)
+    @Mapping(target = "popularity", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "removeGenre", ignore = true)
     @Mapping(target = "playbacks", ignore = true)
     @Mapping(target = "removePlayback", ignore = true)

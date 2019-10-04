@@ -11,6 +11,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {})
 public interface GenreMapper extends EntityMapper<GenreDTO, Genre> {
 
+    @Mapping(target = "popularity", ignore = true)
     @Mapping(target = "tracks", ignore = true)
     @Mapping(target = "removeTrack", ignore = true)
     Genre toEntity(GenreDTO genreDTO);
