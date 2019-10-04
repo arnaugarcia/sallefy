@@ -1,4 +1,6 @@
 package com.sallefy.service.dto;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,24 +16,17 @@ public class PlaylistDTO implements Serializable {
 
     private String name;
 
-    private Boolean collaborative;
-
     @Lob
     private String description;
-
-    private String primaryColor;
 
     private String cover;
 
     private String thumbnail;
 
+    @JsonProperty("public")
     private Boolean publicAccessible;
 
-    private Integer numberSongs;
-
     private Integer followers;
-
-    private Double rating;
 
     private UserDTO owner;
 
@@ -53,28 +48,12 @@ public class PlaylistDTO implements Serializable {
         this.name = name;
     }
 
-    public Boolean isCollaborative() {
-        return collaborative;
-    }
-
-    public void setCollaborative(Boolean collaborative) {
-        this.collaborative = collaborative;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getPrimaryColor() {
-        return primaryColor;
-    }
-
-    public void setPrimaryColor(String primaryColor) {
-        this.primaryColor = primaryColor;
     }
 
     public String getCover() {
@@ -101,28 +80,12 @@ public class PlaylistDTO implements Serializable {
         this.publicAccessible = publicAccessible;
     }
 
-    public Integer getNumberSongs() {
-        return numberSongs;
-    }
-
-    public void setNumberSongs(Integer numberSongs) {
-        this.numberSongs = numberSongs;
-    }
-
     public Integer getFollowers() {
         return followers;
     }
 
     public void setFollowers(Integer followers) {
         this.followers = followers;
-    }
-
-    public Double getRating() {
-        return rating;
-    }
-
-    public void setRating(Double rating) {
-        this.rating = rating;
     }
 
     public UserDTO getOwner() {
@@ -167,15 +130,11 @@ public class PlaylistDTO implements Serializable {
         return "PlaylistDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", collaborative='" + isCollaborative() + "'" +
             ", description='" + getDescription() + "'" +
-            ", primaryColor='" + getPrimaryColor() + "'" +
             ", cover='" + getCover() + "'" +
             ", thumbnail='" + getThumbnail() + "'" +
             ", publicAccessible='" + isPublicAccessible() + "'" +
-            ", numberSongs=" + getNumberSongs() +
             ", followers=" + getFollowers() +
-            ", rating=" + getRating() +
             ", owner='" + getOwner() + "'" +
             "}";
     }
