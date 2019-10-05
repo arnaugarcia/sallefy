@@ -26,7 +26,6 @@ public class PlaylistRequestDTO implements Serializable {
 
     private String thumbnail;
 
-    @JsonProperty("public")
     private Boolean publicAccessible;
 
     private Set<TrackDTO> tracks = new HashSet<>();
