@@ -149,6 +149,14 @@ public class TrackServiceImpl implements TrackService {
         trackRepository.deleteById(trackId);
     }
 
+    @Override
+    public List<TrackDTO> findByIds(List<Long> tracksIds) {
+        return trackRepository.findAllById(tracksIds)
+            .stream()
+            .map(trackMapper::toDto)
+            .collect(Collectors.toList());
+    }
+
     private void filterGenresExist(TrackDTO trackDTO) {
         List<Long> genresIds = extractGenresIds(trackDTO);
 
