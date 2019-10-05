@@ -1,13 +1,18 @@
 package com.sallefy.service.impl;
 
 import com.sallefy.domain.Playlist;
+import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
 import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.service.PlaylistService;
+import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.PlaylistRequestDTO;
+import com.sallefy.service.dto.TrackDTO;
+import com.sallefy.service.exception.PlaylistNotFound;
 import com.sallefy.service.mapper.PlaylistMapper;
+import com.sallefy.service.mapper.TrackMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,9 +20,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Service Implementation for managing {@link Playlist}.
@@ -34,22 +41,78 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     private final UserService userService;
 
-    public PlaylistServiceImpl(PlaylistRepository playlistRepository, PlaylistMapper playlistMapper, UserService userService) {
+    private final TrackService trackService;
+
+    private final TrackMapper trackMapper;
+
+    public PlaylistServiceImpl(PlaylistRepository playlistRepository,
+                               PlaylistMapper playlistMapper,
+                               UserService userService,
+                               TrackService trackService,
+                               TrackMapper trackMapper) {
         this.playlistRepository = playlistRepository;
         this.playlistMapper = playlistMapper;
         this.userService = userService;
+        this.trackService = trackService;
+        this.trackMapper = trackMapper;
     }
 
     /**
      * Save a playlist.
      *
-     * @param playlistRequestDTO of the entity to save.
+     * @param playlistRequest of the entity to save.
      * @return the persisted entity.
      */
     @Override
-    public PlaylistDTO save(PlaylistRequestDTO playlistRequestDTO) {
-        log.debug("Request to save Playlist : {}", playlistRequestDTO);
+    public PlaylistDTO save(PlaylistRequestDTO playlistRequest) {
+        log.debug("Request to save Playlist : {}", playlistRequest);
 
+        final User currentUser = userService.getUserWithAuthorities();
+
+        Playlist playlist = new Playlist();
+
+        if (isUpdating(playlistRequest)) {
+            playlist = findById(playlistRequest.getId());
+        }
+
+        if (!currentUser.isAdmin()) {
+            playlist.setUser(currentUser);
+            // Check the owner
+        }
+
+        updatePlaylistFields(playlistRequest, playlist);
+
+        return saveAndTransform(playlist);
+
+    }
+
+    private void updatePlaylistFields(PlaylistRequestDTO playlistRequest, Playlist playlist) {
+        List<Long> tracksIds = playlistRequest.getTracks()
+            .stream()
+            .map(TrackDTO::getId)
+            .collect(toList());
+
+        List<Track> tracks = trackService.findByIds(tracksIds)
+            .stream()
+            .map(trackMapper::toEntity)
+            .collect(toList());
+
+        playlist.setTracks(new HashSet<>(tracks));
+        playlist.setCover(playlistRequest.getCover());
+        playlist.setName(playlistRequest.getName());
+        playlist.setDescription(playlistRequest.getDescription());
+        playlist.setThumbnail(playlistRequest.getThumbnail());
+        playlist.setPublicAccessible(playlistRequest.isPublicAccessible());
+    }
+
+    private PlaylistDTO saveAndTransform(Playlist playlist) {
+        Playlist result = playlistRepository.save(playlist);
+        return playlistMapper.toDto(result);
+    }
+
+    private Playlist findById(Long playlistId) {
+        return playlistRepository.findById(playlistId)
+            .orElseThrow(PlaylistNotFound::new);
     }
 
     /**
@@ -74,7 +137,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
         return playlists.stream()
             .map(playlistMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
     /**
@@ -110,5 +173,9 @@ public class PlaylistServiceImpl implements PlaylistService {
     public void delete(Long id) {
         log.debug("Request to delete Playlist : {}", id);
         playlistRepository.deleteById(id);
+    }
+
+    private boolean isUpdating(PlaylistRequestDTO playlistRequest) {
+        return playlistRequest.getId() != null;
     }
 }
