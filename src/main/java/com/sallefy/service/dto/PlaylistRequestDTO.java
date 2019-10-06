@@ -1,6 +1,6 @@
 package com.sallefy.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sallefy.service.dto.constraints.CloudinaryHost;
 
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
@@ -22,8 +22,10 @@ public class PlaylistRequestDTO implements Serializable {
     @Lob
     private String description;
 
+    @CloudinaryHost
     private String cover;
 
+    @CloudinaryHost
     private String thumbnail;
 
     private Boolean publicAccessible;
