@@ -7,6 +7,7 @@ import com.sallefy.domain.User;
 import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
+import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.PlaylistRequestDTO;
@@ -124,10 +125,13 @@ public class PlaylistResourceIT {
     @Autowired
     private TrackMapper trackMapper;
 
+    @Autowired
+    private FollowService followService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PlaylistResource playlistResource = new PlaylistResource(playlistService);
+        final PlaylistResource playlistResource = new PlaylistResource(playlistService, followService);
         this.restPlaylistMockMvc = MockMvcBuilders.standaloneSetup(playlistResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -373,6 +377,80 @@ public class PlaylistResourceIT {
         // Validate the Playlist in the database
         List<Playlist> playlistList = playlistRepository.findAll();
         assertThat(playlistList).hasSize(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    public void should_not_follow_because_playlist_not_exists() throws Exception {
+
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        restPlaylistMockMvc.perform(get("/api/playlists/{id}", Long.MAX_VALUE))
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("follow-playlist-user")
+    public void should_follow_playlist() throws Exception {
+
+        User user = createBasicUserWithUsername("follow-playlist-user");
+
+        userRepository.save(user);
+
+        int databaseSizeBeforeUpdate = playlistRepository.findAll().size();
+
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setName(DEFAULT_NAME);
+
+        restPlaylistMockMvc.perform(post("/api/playlists/")
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistRequest)))
+            .andExpect(status().isCreated());
+
+        // Validate the Playlist in the database
+        List<Playlist> playlistList = playlistRepository.findAll();
+        assertThat(playlistList).hasSize(databaseSizeBeforeUpdate + 1);
+        Long playlistId = playlistList.get(0).getId();
+
+        restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.followed").value(true));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("un-follow-playlist-user")
+    public void should_un_follow_playlist() throws Exception {
+
+        User user = createBasicUserWithUsername("un-follow-playlist-user");
+
+        userRepository.save(user);
+
+        int databaseSizeBeforeUpdate = playlistRepository.findAll().size();
+
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setName(DEFAULT_NAME);
+
+        restPlaylistMockMvc.perform(post("/api/playlists/")
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistRequest)))
+            .andExpect(status().isCreated());
+
+        // Validate the Playlist in the database
+        List<Playlist> playlistList = playlistRepository.findAll();
+        assertThat(playlistList).hasSize(databaseSizeBeforeUpdate + 1);
+        Long playlistId = playlistList.get(0).getId();
+
+        restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.followed").value(true));
+
+        restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.followed").value(false));
     }
 
     @Test
