@@ -78,11 +78,13 @@ public class PlaylistServiceImpl implements PlaylistService {
 
         if (isUpdating(playlistRequest)) {
             playlist = findById(playlistRequest.getId());
+            if (!currentUser.isAdmin()) {
+                checkOwnership(currentUser, playlist);
+            }
         }
 
         if (!currentUser.isAdmin()) {
             playlist.setUser(currentUser);
-            // Check the owner
         }
 
         updatePlaylistFields(playlistRequest, playlist);
