@@ -61,6 +61,8 @@ public class PlaylistResourceIT {
     private static final String DEFAULT_PRIMARY_COLOR = "AAAAAAAAAA";
     private static final String UPDATED_PRIMARY_COLOR = "BBBBBBBBBB";
 
+    private static final String DEFAULT_BAD_HOST = "http://bad.host.com";
+
     private static final String DEFAULT_COVER = "AAAAAAAAAA";
     private static final String UPDATED_COVER = "BBBBBBBBBB";
 
@@ -211,12 +213,27 @@ public class PlaylistResourceIT {
 
     @Test
     @Transactional
-    public void should_not_Create_playlist_with_bad_cover_url() throws Exception {
+    public void should_not_create_playlist_with_bad_cover_url() throws Exception {
 
         // Create the Playlist request
         PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
         playlistRequest.setName(DEFAULT_NAME);
-        playlistRequest.setCover("http://bad.host.com");
+        playlistRequest.setCover(DEFAULT_BAD_HOST);
+
+        restPlaylistMockMvc.perform(post("/api/playlists")
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistRequest)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    public void should_not_create_playlist_with_bad_url() throws Exception {
+
+        // Create the Playlist request
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setName(DEFAULT_NAME);
+        playlistRequest.setThumbnail(DEFAULT_BAD_HOST);
 
         restPlaylistMockMvc.perform(post("/api/playlists")
             .contentType(APPLICATION_JSON_UTF8)
@@ -266,39 +283,6 @@ public class PlaylistResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].cover").value(hasItem(DEFAULT_COVER)))
             .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL)));
-    }
-
-    @SuppressWarnings({"unchecked"})
-    public void getAllPlaylistsWithEagerRelationshipsIsEnabled() throws Exception {
-        PlaylistResource playlistResource = new PlaylistResource(playlistServiceMock);
-        when(playlistServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        MockMvc restPlaylistMockMvc = MockMvcBuilders.standaloneSetup(playlistResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        restPlaylistMockMvc.perform(get("/api/playlists?eagerload=true"))
-        .andExpect(status().isOk());
-
-        verify(playlistServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({"unchecked"})
-    public void getAllPlaylistsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        PlaylistResource playlistResource = new PlaylistResource(playlistServiceMock);
-            when(playlistServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-            MockMvc restPlaylistMockMvc = MockMvcBuilders.standaloneSetup(playlistResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        restPlaylistMockMvc.perform(get("/api/playlists?eagerload=true"))
-        .andExpect(status().isOk());
-
-            verify(playlistServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test
