@@ -5,9 +5,7 @@ import com.sallefy.service.dto.constraints.CloudinaryHost;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A DTO for the {@link com.sallefy.domain.Playlist} entity.
@@ -30,7 +28,7 @@ public class PlaylistRequestDTO implements Serializable {
 
     private Boolean publicAccessible;
 
-    private Set<TrackDTO> tracks = new HashSet<>();
+    private List<TrackDTO> tracks = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -80,11 +78,11 @@ public class PlaylistRequestDTO implements Serializable {
         this.publicAccessible = publicAccessible;
     }
 
-    public Set<TrackDTO> getTracks() {
+    public List<TrackDTO> getTracks() {
         return tracks;
     }
 
-    public void setTracks(Set<TrackDTO> tracks) {
+    public void setTracks(List<TrackDTO> tracks) {
         this.tracks = tracks;
     }
 
