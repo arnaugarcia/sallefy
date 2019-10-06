@@ -2,33 +2,31 @@ package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
 import com.sallefy.domain.Playlist;
+import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
 import com.sallefy.repository.PlaylistRepository;
+import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.PlaylistService;
-import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.PlaylistRequestDTO;
+import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.PlaylistMapper;
+import com.sallefy.service.mapper.TrackMapper;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
@@ -39,7 +37,6 @@ import static com.sallefy.web.rest.TestUtil.*;
 import static com.sallefy.web.rest.UserResourceIT.createBasicUserWithUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -121,6 +118,12 @@ public class PlaylistResourceIT {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TrackRepository trackRepository;
+
+    @Autowired
+    private TrackMapper trackMapper;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -135,7 +138,7 @@ public class PlaylistResourceIT {
 
     /**
      * Create an entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
@@ -158,9 +161,10 @@ public class PlaylistResourceIT {
         playlist.setUser(user);
         return playlist;
     }
+
     /**
      * Create an updated entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
@@ -373,21 +377,36 @@ public class PlaylistResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser("user-delete-playlist-tracks")
     public void should_delete_a_playlists_with_tracks() throws Exception {
         int databaseSizeBeforeUpdate = playlistRepository.findAll().size();
 
+        User user = createBasicUserWithUsername("user-delete-playlist-tracks");
+
+        Track track = TrackResourceIT.createEntity();
+        track.setUser(userRepository.save(user));
+        final TrackDTO trackDTO = trackMapper.toDto(trackRepository.save(track));
+        System.out.println(trackDTO.getOwner().getId());
+        List<TrackDTO> tracks = new ArrayList<>();
+        tracks.add(trackDTO);
+
         PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
         playlistRequest.setName(DEFAULT_NAME);
+        playlistRequest.setTracks(tracks);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restPlaylistMockMvc.perform(put("/api/playlists")
+        restPlaylistMockMvc.perform(post("/api/playlists/")
             .contentType(APPLICATION_JSON_UTF8)
             .content(convertObjectToJsonBytes(playlistRequest)))
-            .andExpect(status().isBadRequest());
+            .andExpect(status().isCreated());
 
         // Validate the Playlist in the database
         List<Playlist> playlistList = playlistRepository.findAll();
-        assertThat(playlistList).hasSize(databaseSizeBeforeUpdate);
+        assertThat(playlistList).hasSize(databaseSizeBeforeUpdate + 1);
+        Long playlistId = playlistList.get(0).getId();
+
+        restPlaylistMockMvc.perform(delete("/api/playlists/{id}", playlistId)
+            .accept(APPLICATION_JSON_UTF8))
+            .andExpect(status().isNoContent());
     }
 
 
