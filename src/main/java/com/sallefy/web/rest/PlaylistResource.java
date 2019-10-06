@@ -1,13 +1,12 @@
 package com.sallefy.web.rest;
 
+import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
+import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.PlaylistRequestDTO;
-import com.sallefy.service.dto.UserDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
-import com.sallefy.web.rest.errors.NotYetImplementedException;
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +17,6 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing {@link com.sallefy.domain.Playlist}.
@@ -36,8 +34,11 @@ public class PlaylistResource {
 
     private final PlaylistService playlistService;
 
-    public PlaylistResource(PlaylistService playlistService) {
+    private final FollowService followService;
+
+    public PlaylistResource(PlaylistService playlistService, FollowService followService) {
         this.playlistService = playlistService;
+        this.followService = followService;
     }
 
     /**
@@ -99,8 +100,8 @@ public class PlaylistResource {
     @GetMapping("/playlists/{id}")
     public ResponseEntity<PlaylistDTO> getPlaylist(@PathVariable Long id) {
         log.debug("REST request to get Playlist : {}", id);
-        Optional<PlaylistDTO> playlistDTO = playlistService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(playlistDTO);
+        PlaylistDTO playlistDTO = playlistService.findOne(id);
+        return ResponseEntity.ok(playlistDTO);
     }
 
     /**
@@ -110,9 +111,10 @@ public class PlaylistResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
      */
     @PutMapping("/playlists/{id}/follow")
-    public ResponseEntity<UserDTO> toggleFollowPlaylist(@PathVariable Integer id) {
+    public ResponseEntity<FollowDTO> toggleFollowPlaylist(@PathVariable Long id) {
         log.debug("REST request to follow the playlist with id {}", id);
-        throw new NotYetImplementedException();
+        FollowDTO followDTO = followService.toggleFollowPlaylist(id);
+        return ResponseEntity.ok(followDTO);
     }
 
 
