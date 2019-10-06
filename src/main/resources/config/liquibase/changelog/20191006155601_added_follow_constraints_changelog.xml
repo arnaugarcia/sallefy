@@ -6,16 +6,4 @@
     <changeSet author="sallefy" id="1570377368980-2">
         <addUniqueConstraint columnNames="user_id, followed_id" constraintName="UKo1whd2tdbhjcwf40fwyk4mkg3" tableName="follow_user"/>
     </changeSet>
-    <changeSet author="sallefy" id="1570377368980-3">
-        <dropUniqueConstraint constraintName="UKphebb6fh4agomysvomcm6xakg" tableName="like_album"/>
-    </changeSet>
-    <changeSet author="sallefy" id="1570377368980-4">
-        <addUniqueConstraint columnNames="user_id, album_id" constraintName="UKphebb6fh4agomysvomcm6xakg" tableName="like_album"/>
-    </changeSet>
-    <changeSet author="sallefy" id="1570377368980-5">
-        <dropUniqueConstraint constraintName="UKqfx87gtvd2no8gyna7yce5n4f" tableName="like_track"/>
-    </changeSet>
-    <changeSet author="sallefy" id="1570377368980-6">
-        <addUniqueConstraint columnNames="user_id, track_id" constraintName="UKqfx87gtvd2no8gyna7yce5n4f" tableName="like_track"/>
-    </changeSet>
 </databaseChangeLog>
