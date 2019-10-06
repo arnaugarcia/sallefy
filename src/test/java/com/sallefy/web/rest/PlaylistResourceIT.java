@@ -38,6 +38,7 @@ import static com.sallefy.web.rest.TestUtil.*;
 import static com.sallefy.web.rest.UserResourceIT.createBasicUserWithUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -285,7 +286,7 @@ public class PlaylistResourceIT {
         // Get all the playlistList
         restPlaylistMockMvc.perform(get("/api/playlists?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(playlist.getId().intValue()))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
@@ -302,7 +303,7 @@ public class PlaylistResourceIT {
         // Get the playlist
         restPlaylistMockMvc.perform(get("/api/playlists/{id}", playlist.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(playlist.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
@@ -414,7 +415,7 @@ public class PlaylistResourceIT {
 
         restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
             .contentType(APPLICATION_JSON_UTF8))
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.followed").value(true));
     }
 
@@ -444,17 +445,17 @@ public class PlaylistResourceIT {
 
         restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
             .contentType(APPLICATION_JSON_UTF8))
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.followed").value(true));
 
         restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
             .contentType(APPLICATION_JSON_UTF8))
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.followed").value(false));
 
         restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
             .contentType(APPLICATION_JSON_UTF8))
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.followed").value(true));
     }
 
@@ -492,11 +493,47 @@ public class PlaylistResourceIT {
             .andExpect(status().isNoContent());
     }
 
+    @Test
+    @Transactional
+    @WithMockUser("user-delete-playlist-followers")
+    public void should_delete_a_playlists_with_followers() throws Exception {
+        int databaseSizeBeforeUpdate = playlistRepository.findAll().size();
+
+        User user = createBasicUserWithUsername("user-delete-playlist-followers");
+        userRepository.save(user);
+
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setName(DEFAULT_NAME);
+
+        restPlaylistMockMvc.perform(post("/api/playlists/")
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistRequest)))
+            .andExpect(status().isCreated());
+
+        // Validate the Playlist in the database
+        List<Playlist> playlistList = playlistRepository.findAll();
+        assertThat(playlistList).hasSize(databaseSizeBeforeUpdate + 1);
+        Long playlistId = playlistList.get(0).getId();
+
+        restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.followed").value(true));
+
+        restPlaylistMockMvc.perform(delete("/api/playlists/{id}", playlistId)
+            .accept(APPLICATION_JSON_UTF8))
+            .andExpect(status().isNoContent());
+    }
+
 
     @Test
     @Transactional
+    @WithMockUser("user-delete-playlist")
     public void deletePlaylist() throws Exception {
         // Initialize the database
+
+        User user = createBasicUserWithUsername("user-delete-playlist");
+        playlist.setUser(userRepository.save(user));
         playlistRepository.saveAndFlush(playlist);
 
         int databaseSizeBeforeDelete = playlistRepository.findAll().size();
