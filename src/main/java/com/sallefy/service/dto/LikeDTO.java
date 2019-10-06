@@ -3,7 +3,7 @@ package com.sallefy.service.dto;
 import java.io.Serializable;
 
 /**
- * A DTO for the {@link com.sallefy.domain.LikeTrack} entity.
+ * A DTO for status of liking entity.
  */
 public class LikeDTO implements Serializable {
 
