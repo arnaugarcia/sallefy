@@ -3,11 +3,11 @@ package com.sallefy.service.impl;
 import com.sallefy.domain.FollowPlaylist;
 import com.sallefy.domain.User;
 import com.sallefy.repository.FollowPlaylistRepository;
+import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.service.FollowService;
-import com.sallefy.service.PlaylistService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.FollowDTO;
-import com.sallefy.service.dto.PlaylistDTO;
+import com.sallefy.service.exception.PlaylistNotFound;
 import com.sallefy.service.mapper.PlaylistMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +18,18 @@ public class FollowServiceImpl implements FollowService {
 
     private final UserService userService;
 
-    private final PlaylistService playlistService;
+    private final PlaylistRepository playlistRepository;
 
     private final PlaylistMapper playlistMapper;
 
     private final FollowPlaylistRepository followPlaylistRepository;
 
     public FollowServiceImpl(UserService userService,
-                             PlaylistService playlistService,
+                             PlaylistRepository playlistRepository,
                              PlaylistMapper playlistMapper,
                              FollowPlaylistRepository followPlaylistRepository) {
         this.userService = userService;
-        this.playlistService = playlistService;
+        this.playlistRepository = playlistRepository;
         this.playlistMapper = playlistMapper;
         this.followPlaylistRepository = followPlaylistRepository;
     }
@@ -38,7 +38,7 @@ public class FollowServiceImpl implements FollowService {
     public FollowDTO toggleFollowPlaylist(Long playlistId) {
         final User currentUser = userService.getUserWithAuthorities();
 
-        findPlaylistById(playlistId);
+        checkIfPlaylistExists(playlistId);
 
         final Optional<FollowPlaylist> followedPlaylist = followPlaylistRepository.findByPlaylistAndCurrentUser(playlistId);
 
@@ -60,8 +60,15 @@ public class FollowServiceImpl implements FollowService {
         return followDTO;
     }
 
-    private PlaylistDTO findPlaylistById(Long playlistId) {
-        return playlistService.findOne(playlistId);
+    @Override
+    public void deleteFollowersByPlaylist(Long playlistId) {
+        checkIfPlaylistExists(playlistId);
+        followPlaylistRepository.deleteByPlaylistId(playlistId);
+    }
+
+    private void checkIfPlaylistExists(Long playlistId) {
+        playlistRepository.findById(playlistId)
+            .orElseThrow(PlaylistNotFound::new);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.sallefy.service;
 
 import com.sallefy.service.dto.FollowDTO;
-import org.springframework.stereotype.Service;
 
 /**
  * Service Interface for managing follows in Users and Playlists.
@@ -15,4 +14,11 @@ public interface FollowService {
      * @return a FollowDTO with the followed boolean
      */
     FollowDTO toggleFollowPlaylist(Long playlistId);
+
+    /**
+     * Method to delete all the followers by a Playlist "id"
+     *
+     * @param playlistId the id of the Playlist
+     */
+    void deleteFollowersByPlaylist(Long playlistId);
 }
