@@ -4,12 +4,14 @@ import com.sallefy.domain.Playlist;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
 import com.sallefy.repository.PlaylistRepository;
+import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.service.dto.TrackDTO;
+import com.sallefy.service.exception.BadOwnerException;
 import com.sallefy.service.exception.PlaylistNotFound;
 import com.sallefy.service.mapper.PlaylistMapper;
 import com.sallefy.service.mapper.TrackMapper;
@@ -22,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -45,16 +46,20 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     private final TrackMapper trackMapper;
 
+    private final FollowService followService;
+
     public PlaylistServiceImpl(PlaylistRepository playlistRepository,
                                PlaylistMapper playlistMapper,
                                UserService userService,
                                TrackService trackService,
-                               TrackMapper trackMapper) {
+                               TrackMapper trackMapper,
+                               FollowService followService) {
         this.playlistRepository = playlistRepository;
         this.playlistMapper = playlistMapper;
         this.userService = userService;
         this.trackService = trackService;
         this.trackMapper = trackMapper;
+        this.followService = followService;
     }
 
     /**
@@ -168,12 +173,26 @@ public class PlaylistServiceImpl implements PlaylistService {
     /**
      * Delete the playlist by id.
      *
-     * @param id the id of the entity.
+     * @param playlistId the id of the entity.
      */
     @Override
-    public void delete(Long id) {
-        log.debug("Request to delete Playlist : {}", id);
-        playlistRepository.deleteById(id);
+    public void delete(Long playlistId) {
+        log.debug("Request to delete Playlist : {}", playlistId);
+        final User currentUser = userService.getUserWithAuthorities();
+        final Playlist playlist = findById(playlistId);
+
+        if (!currentUser.isAdmin()) {
+            checkOwnership(currentUser, playlist);
+        }
+
+        followService.deleteFollowersByPlaylist(playlistId);
+        playlistRepository.deleteById(playlistId);
+    }
+
+    private void checkOwnership(User currentUser, Playlist playlist) {
+        if (!currentUser.getLogin().equals(playlist.getUser().getLogin())) {
+            throw new BadOwnerException();
+        }
     }
 
     private boolean isUpdating(PlaylistRequestDTO playlistRequest) {
