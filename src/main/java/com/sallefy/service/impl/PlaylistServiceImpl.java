@@ -158,10 +158,11 @@ public class PlaylistServiceImpl implements PlaylistService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<PlaylistDTO> findOne(Long id) {
+    public PlaylistDTO findOne(Long id) {
         log.debug("Request to get Playlist : {}", id);
         return playlistRepository.findOneWithEagerRelationships(id)
-            .map(playlistMapper::toDto);
+            .map(playlistMapper::toDto)
+            .orElseThrow(PlaylistNotFound::new);
     }
 
     /**

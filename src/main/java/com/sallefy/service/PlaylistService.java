@@ -42,7 +42,7 @@ public interface PlaylistService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<PlaylistDTO> findOne(Long id);
+    PlaylistDTO findOne(Long id);
 
     /**
      * Delete the "id" playlist.
