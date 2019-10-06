@@ -18,6 +18,8 @@ public @interface CloudinaryHost {
 
     String message() default "The host must be of the Cloudinary domain";
 
+    boolean optional() default false;
+
     Class<?>[] groups() default { };
 
     Class<? extends Payload>[] payload() default { };

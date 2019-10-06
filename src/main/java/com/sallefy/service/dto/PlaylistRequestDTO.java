@@ -22,10 +22,10 @@ public class PlaylistRequestDTO implements Serializable {
     @Lob
     private String description;
 
-    @CloudinaryHost
+    @CloudinaryHost(optional = true)
     private String cover;
 
-    @CloudinaryHost
+    @CloudinaryHost(optional = true)
     private String thumbnail;
 
     private Boolean publicAccessible;
