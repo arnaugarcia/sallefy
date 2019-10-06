@@ -2,6 +2,7 @@ package com.sallefy.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -13,7 +14,9 @@ import java.time.ZonedDateTime;
  * A FollowPlaylist.
  */
 @Entity
-@Table(name = "follow_playlist")
+@Table(name = "follow_playlist", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"user_id", "playlist_id"})
+})
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class FollowPlaylist implements Serializable {
 
@@ -23,6 +26,7 @@ public class FollowPlaylist implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @CreationTimestamp
     @Column(name = "date")
     private ZonedDateTime date;
 

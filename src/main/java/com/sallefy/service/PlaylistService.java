@@ -2,6 +2,7 @@ package com.sallefy.service;
 
 import com.sallefy.service.dto.PlaylistDTO;
 
+import com.sallefy.service.dto.PlaylistRequestDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,10 +17,10 @@ public interface PlaylistService {
     /**
      * Save a playlist.
      *
-     * @param playlistDTO the entity to save.
+     * @param playlistRequestDTO of the entity to save.
      * @return the persisted entity.
      */
-    PlaylistDTO save(PlaylistDTO playlistDTO);
+    PlaylistDTO save(PlaylistRequestDTO playlistRequestDTO);
 
     /**
      * Get all the playlists.
@@ -34,14 +35,14 @@ public interface PlaylistService {
      * @return the list of entities.
      */
     Page<PlaylistDTO> findAllWithEagerRelationships(Pageable pageable);
-    
+
     /**
      * Get the "id" playlist.
      *
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<PlaylistDTO> findOne(Long id);
+    PlaylistDTO findOne(Long id);
 
     /**
      * Delete the "id" playlist.

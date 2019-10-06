@@ -1,17 +1,16 @@
 package com.sallefy.service.dto;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
+import com.sallefy.service.dto.constraints.CloudinaryHost;
+
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * A DTO for the {@link com.sallefy.domain.Playlist} entity.
  */
-public class PlaylistDTO implements Serializable {
+public class PlaylistRequestDTO implements Serializable {
 
     private Long id;
 
@@ -21,18 +20,15 @@ public class PlaylistDTO implements Serializable {
     @Lob
     private String description;
 
+    @CloudinaryHost(optional = true)
     private String cover;
 
+    @CloudinaryHost(optional = true)
     private String thumbnail;
 
-    @JsonProperty("public")
     private Boolean publicAccessible;
 
-    private Integer followers;
-
-    private UserDTO owner;
-
-    private Set<TrackDTO> tracks = new HashSet<>();
+    private List<TrackDTO> tracks = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -82,27 +78,11 @@ public class PlaylistDTO implements Serializable {
         this.publicAccessible = publicAccessible;
     }
 
-    public Integer getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Integer followers) {
-        this.followers = followers;
-    }
-
-    public UserDTO getOwner() {
-        return owner;
-    }
-
-    public void setOwner(UserDTO owner) {
-        this.owner = owner;
-    }
-
-    public Set<TrackDTO> getTracks() {
+    public List<TrackDTO> getTracks() {
         return tracks;
     }
 
-    public void setTracks(Set<TrackDTO> tracks) {
+    public void setTracks(List<TrackDTO> tracks) {
         this.tracks = tracks;
     }
 
@@ -115,7 +95,7 @@ public class PlaylistDTO implements Serializable {
             return false;
         }
 
-        PlaylistDTO playlistDTO = (PlaylistDTO) o;
+        PlaylistRequestDTO playlistDTO = (PlaylistRequestDTO) o;
         if (playlistDTO.getId() == null || getId() == null) {
             return false;
         }
@@ -136,8 +116,6 @@ public class PlaylistDTO implements Serializable {
             ", cover='" + getCover() + "'" +
             ", thumbnail='" + getThumbnail() + "'" +
             ", publicAccessible='" + isPublicAccessible() + "'" +
-            ", followers=" + getFollowers() +
-            ", owner='" + getOwner() + "'" +
             "}";
     }
 }

@@ -1,12 +1,15 @@
 package com.sallefy.web.rest;
 
+import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
+import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;
-import com.sallefy.service.dto.UserDTO;
+import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
-import com.sallefy.web.rest.errors.NotYetImplementedException;
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +20,6 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing {@link com.sallefy.domain.Playlist}.
@@ -35,24 +37,27 @@ public class PlaylistResource {
 
     private final PlaylistService playlistService;
 
-    public PlaylistResource(PlaylistService playlistService) {
+    private final FollowService followService;
+
+    public PlaylistResource(PlaylistService playlistService, FollowService followService) {
         this.playlistService = playlistService;
+        this.followService = followService;
     }
 
     /**
      * {@code POST  /playlists} : Create a new playlist.
      *
-     * @param playlistDTO the playlistDTO to create.
+     * @param playlistRequest the request of the playlist to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new playlistDTO, or with status {@code 400 (Bad Request)} if the playlist has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/playlists")
-    public ResponseEntity<PlaylistDTO> createPlaylist(@Valid @RequestBody PlaylistDTO playlistDTO) throws URISyntaxException {
-        log.debug("REST request to save Playlist : {}", playlistDTO);
-        if (playlistDTO.getId() != null) {
+    public ResponseEntity<PlaylistDTO> createPlaylist(@Valid @RequestBody PlaylistRequestDTO playlistRequest) throws URISyntaxException {
+        log.debug("REST request to save Playlist : {}", playlistRequest);
+        if (playlistRequest.getId() != null) {
             throw new BadRequestAlertException("A new playlist cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PlaylistDTO result = playlistService.save(playlistDTO);
+        PlaylistDTO result = playlistService.save(playlistRequest);
         return ResponseEntity.created(new URI("/api/playlists/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -61,20 +66,20 @@ public class PlaylistResource {
     /**
      * {@code PUT  /playlists} : Updates an existing playlist.
      *
-     * @param playlistDTO the playlistDTO to update.
+     * @param playlistRequest the request of the playlist to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated playlistDTO,
      * or with status {@code 400 (Bad Request)} if the playlistDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the playlistDTO couldn't be updated.
      */
     @PutMapping("/playlists")
-    public ResponseEntity<PlaylistDTO> updatePlaylist(@Valid @RequestBody PlaylistDTO playlistDTO) {
-        log.debug("REST request to update Playlist : {}", playlistDTO);
-        if (playlistDTO.getId() == null) {
+    public ResponseEntity<PlaylistDTO> updatePlaylist(@Valid @RequestBody PlaylistRequestDTO playlistRequest) {
+        log.debug("REST request to update Playlist : {}", playlistRequest);
+        if (playlistRequest.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        PlaylistDTO result = playlistService.save(playlistDTO);
+        PlaylistDTO result = playlistService.save(playlistRequest);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, playlistDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, playlistRequest.getId().toString()))
             .body(result);
     }
 
@@ -98,8 +103,8 @@ public class PlaylistResource {
     @GetMapping("/playlists/{id}")
     public ResponseEntity<PlaylistDTO> getPlaylist(@PathVariable Long id) {
         log.debug("REST request to get Playlist : {}", id);
-        Optional<PlaylistDTO> playlistDTO = playlistService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(playlistDTO);
+        PlaylistDTO playlistDTO = playlistService.findOne(id);
+        return ResponseEntity.ok(playlistDTO);
     }
 
     /**
@@ -108,10 +113,19 @@ public class PlaylistResource {
      * @param id the id of the playlist.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
      */
+    @ApiOperation(
+        value = "Follows the playlist by id",
+        notes = "This method is a toggle. It means that if you need to 'unfollow' make the same request and the result will be false."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Successful operation"),
+        @ApiResponse(code = 404, message = "Playlist not found")
+    })
     @PutMapping("/playlists/{id}/follow")
-    public ResponseEntity<UserDTO> toggleFollowPlaylist(@PathVariable Integer id) {
+    public ResponseEntity<FollowDTO> toggleFollowPlaylist(@PathVariable Long id) {
         log.debug("REST request to follow the playlist with id {}", id);
-        throw new NotYetImplementedException();
+        FollowDTO followDTO = followService.toggleFollowPlaylist(id);
+        return ResponseEntity.ok(followDTO);
     }
 
 

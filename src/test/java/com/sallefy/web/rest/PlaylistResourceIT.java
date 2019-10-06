@@ -2,38 +2,43 @@ package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
 import com.sallefy.domain.Playlist;
+import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
 import com.sallefy.repository.PlaylistRepository;
+import com.sallefy.repository.TrackRepository;
+import com.sallefy.repository.UserRepository;
+import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.dto.PlaylistDTO;
+import com.sallefy.service.dto.PlaylistRequestDTO;
+import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.PlaylistMapper;
+import com.sallefy.service.mapper.TrackMapper;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
+import static com.sallefy.web.rest.TestUtil.*;
+import static com.sallefy.web.rest.UserResourceIT.createBasicUserWithUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -55,22 +60,24 @@ public class PlaylistResourceIT {
     private static final String DEFAULT_PRIMARY_COLOR = "AAAAAAAAAA";
     private static final String UPDATED_PRIMARY_COLOR = "BBBBBBBBBB";
 
-    private static final String DEFAULT_COVER = "AAAAAAAAAA";
-    private static final String UPDATED_COVER = "BBBBBBBBBB";
+    private static final String DEFAULT_BAD_HOST = "http://bad.host.com";
 
-    private static final String DEFAULT_THUMBNAIL = "AAAAAAAAAA";
-    private static final String UPDATED_THUMBNAIL = "BBBBBBBBBB";
+    private static final String DEFAULT_COVER = "http://res.cloudinary.com";
+    private static final String UPDATED_COVER = "http://res.cloudinary.com/updated";
 
-    private static final Boolean DEFAULT_PUBLIC_ACCESSIBLE = false;
+    private static final String DEFAULT_THUMBNAIL = "http://res.cloudinary.com";
+    private static final String UPDATED_THUMBNAIL = "http://res.cloudinary.com/updated";
+
+    private static final Boolean DEFAULT_PUBLIC_ACCESSIBLE = true;
     private static final Boolean UPDATED_PUBLIC_ACCESSIBLE = true;
 
     private static final Integer DEFAULT_NUMBER_SONGS = 1;
     private static final Integer UPDATED_NUMBER_SONGS = 2;
-    private static final Integer SMALLER_NUMBER_SONGS = 1 - 1;
+    private static final Integer SMALLER_NUMBER_SONGS = 0;
 
     private static final Integer DEFAULT_FOLLOWERS = 1;
     private static final Integer UPDATED_FOLLOWERS = 2;
-    private static final Integer SMALLER_FOLLOWERS = 1 - 1;
+    private static final Integer SMALLER_FOLLOWERS = 0;
 
     private static final Double DEFAULT_RATING = 1D;
     private static final Double UPDATED_RATING = 2D;
@@ -110,10 +117,22 @@ public class PlaylistResourceIT {
 
     private Playlist playlist;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private TrackRepository trackRepository;
+
+    @Autowired
+    private TrackMapper trackMapper;
+
+    @Autowired
+    private FollowService followService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PlaylistResource playlistResource = new PlaylistResource(playlistService);
+        final PlaylistResource playlistResource = new PlaylistResource(playlistService, followService);
         this.restPlaylistMockMvc = MockMvcBuilders.standaloneSetup(playlistResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -124,7 +143,7 @@ public class PlaylistResourceIT {
 
     /**
      * Create an entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
@@ -147,9 +166,10 @@ public class PlaylistResourceIT {
         playlist.setUser(user);
         return playlist;
     }
+
     /**
      * Create an updated entity for this test.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
@@ -175,14 +195,19 @@ public class PlaylistResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser("save-playlist-user")
     public void createPlaylist() throws Exception {
         int databaseSizeBeforeCreate = playlistRepository.findAll().size();
+
+        User user = createBasicUserWithUsername("save-playlist-user");
+
+        playlist.setUser(userRepository.save(user));
 
         // Create the Playlist
         PlaylistDTO playlistDTO = playlistMapper.toDto(playlist);
         restPlaylistMockMvc.perform(post("/api/playlists")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(playlistDTO)))
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Playlist in the database
@@ -190,15 +215,39 @@ public class PlaylistResourceIT {
         assertThat(playlistList).hasSize(databaseSizeBeforeCreate + 1);
         Playlist testPlaylist = playlistList.get(playlistList.size() - 1);
         assertThat(testPlaylist.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testPlaylist.isCollaborative()).isEqualTo(DEFAULT_COLLABORATIVE);
         assertThat(testPlaylist.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testPlaylist.getPrimaryColor()).isEqualTo(DEFAULT_PRIMARY_COLOR);
         assertThat(testPlaylist.getCover()).isEqualTo(DEFAULT_COVER);
         assertThat(testPlaylist.getThumbnail()).isEqualTo(DEFAULT_THUMBNAIL);
-        assertThat(testPlaylist.isPublicAccessible()).isEqualTo(DEFAULT_PUBLIC_ACCESSIBLE);
-        assertThat(testPlaylist.getNumberSongs()).isEqualTo(DEFAULT_NUMBER_SONGS);
-        assertThat(testPlaylist.getFollowers()).isEqualTo(DEFAULT_FOLLOWERS);
-        assertThat(testPlaylist.getRating()).isEqualTo(DEFAULT_RATING);
+    }
+
+    @Test
+    @Transactional
+    public void should_not_create_playlist_with_bad_cover_url() throws Exception {
+
+        // Create the Playlist request
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setName(DEFAULT_NAME);
+        playlistRequest.setCover(DEFAULT_BAD_HOST);
+
+        restPlaylistMockMvc.perform(post("/api/playlists")
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistRequest)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    public void should_not_create_playlist_with_bad_url() throws Exception {
+
+        // Create the Playlist request
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setName(DEFAULT_NAME);
+        playlistRequest.setThumbnail(DEFAULT_BAD_HOST);
+
+        restPlaylistMockMvc.perform(post("/api/playlists")
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistRequest)))
+            .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -212,8 +261,8 @@ public class PlaylistResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restPlaylistMockMvc.perform(post("/api/playlists")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(playlistDTO)))
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Playlist in the database
@@ -224,58 +273,25 @@ public class PlaylistResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser("get-all-user")
     public void getAllPlaylists() throws Exception {
+
+        User user = createBasicUserWithUsername("get-all-user");
+
+        playlist.setUser(userRepository.save(user));
+
         // Initialize the database
         playlistRepository.saveAndFlush(playlist);
 
         // Get all the playlistList
         restPlaylistMockMvc.perform(get("/api/playlists?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(playlist.getId().intValue())))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(playlist.getId().intValue()))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].collaborative").value(hasItem(DEFAULT_COLLABORATIVE.booleanValue())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].primaryColor").value(hasItem(DEFAULT_PRIMARY_COLOR)))
             .andExpect(jsonPath("$.[*].cover").value(hasItem(DEFAULT_COVER)))
-            .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL)))
-            .andExpect(jsonPath("$.[*].publicAccessible").value(hasItem(DEFAULT_PUBLIC_ACCESSIBLE.booleanValue())))
-            .andExpect(jsonPath("$.[*].numberSongs").value(hasItem(DEFAULT_NUMBER_SONGS)))
-            .andExpect(jsonPath("$.[*].followers").value(hasItem(DEFAULT_FOLLOWERS)))
-            .andExpect(jsonPath("$.[*].rating").value(hasItem(DEFAULT_RATING.doubleValue())));
-    }
-
-    @SuppressWarnings({"unchecked"})
-    public void getAllPlaylistsWithEagerRelationshipsIsEnabled() throws Exception {
-        PlaylistResource playlistResource = new PlaylistResource(playlistServiceMock);
-        when(playlistServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        MockMvc restPlaylistMockMvc = MockMvcBuilders.standaloneSetup(playlistResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        restPlaylistMockMvc.perform(get("/api/playlists?eagerload=true"))
-        .andExpect(status().isOk());
-
-        verify(playlistServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({"unchecked"})
-    public void getAllPlaylistsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        PlaylistResource playlistResource = new PlaylistResource(playlistServiceMock);
-            when(playlistServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-            MockMvc restPlaylistMockMvc = MockMvcBuilders.standaloneSetup(playlistResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        restPlaylistMockMvc.perform(get("/api/playlists?eagerload=true"))
-        .andExpect(status().isOk());
-
-            verify(playlistServiceMock, times(1)).findAllWithEagerRelationships(any());
+            .andExpect(jsonPath("$.[*].thumbnail").value(hasItem(DEFAULT_THUMBNAIL)));
     }
 
     @Test
@@ -287,18 +303,12 @@ public class PlaylistResourceIT {
         // Get the playlist
         restPlaylistMockMvc.perform(get("/api/playlists/{id}", playlist.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(playlist.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.collaborative").value(DEFAULT_COLLABORATIVE.booleanValue()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.primaryColor").value(DEFAULT_PRIMARY_COLOR))
             .andExpect(jsonPath("$.cover").value(DEFAULT_COVER))
-            .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL))
-            .andExpect(jsonPath("$.publicAccessible").value(DEFAULT_PUBLIC_ACCESSIBLE.booleanValue()))
-            .andExpect(jsonPath("$.numberSongs").value(DEFAULT_NUMBER_SONGS))
-            .andExpect(jsonPath("$.followers").value(DEFAULT_FOLLOWERS))
-            .andExpect(jsonPath("$.rating").value(DEFAULT_RATING.doubleValue()));
+            .andExpect(jsonPath("$.thumbnail").value(DEFAULT_THUMBNAIL));
     }
 
     @Test
@@ -311,32 +321,33 @@ public class PlaylistResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser("update-playlist-user")
     public void updatePlaylist() throws Exception {
+
+        User user = createBasicUserWithUsername("update-playlist-user");
+
+        playlist.setUser(userRepository.save(user));
         // Initialize the database
-        playlistRepository.saveAndFlush(playlist);
+        Playlist savedPlaylist = playlistRepository.saveAndFlush(this.playlist);
 
         int databaseSizeBeforeUpdate = playlistRepository.findAll().size();
 
         // Update the playlist
-        Playlist updatedPlaylist = playlistRepository.findById(playlist.getId()).get();
+        Playlist updatedPlaylist = playlistRepository.findById(this.playlist.getId()).get();
         // Disconnect from session so that the updates on updatedPlaylist are not directly saved in db
         em.detach(updatedPlaylist);
-        updatedPlaylist
-            .name(UPDATED_NAME)
-            .collaborative(UPDATED_COLLABORATIVE)
-            .description(UPDATED_DESCRIPTION)
-            .primaryColor(UPDATED_PRIMARY_COLOR)
-            .cover(UPDATED_COVER)
-            .thumbnail(UPDATED_THUMBNAIL)
-            .publicAccessible(UPDATED_PUBLIC_ACCESSIBLE)
-            .numberSongs(UPDATED_NUMBER_SONGS)
-            .followers(UPDATED_FOLLOWERS)
-            .rating(UPDATED_RATING);
-        PlaylistDTO playlistDTO = playlistMapper.toDto(updatedPlaylist);
+
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setId(savedPlaylist.getId());
+        playlistRequest.setName(UPDATED_NAME);
+        playlistRequest.setCover(UPDATED_COVER);
+        playlistRequest.setDescription(UPDATED_DESCRIPTION);
+        playlistRequest.setThumbnail(UPDATED_THUMBNAIL);
+        playlistRequest.setPublicAccessible(UPDATED_PUBLIC_ACCESSIBLE);
 
         restPlaylistMockMvc.perform(put("/api/playlists")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(playlistDTO)))
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistRequest)))
             .andExpect(status().isOk());
 
         // Validate the Playlist in the database
@@ -344,15 +355,10 @@ public class PlaylistResourceIT {
         assertThat(playlistList).hasSize(databaseSizeBeforeUpdate);
         Playlist testPlaylist = playlistList.get(playlistList.size() - 1);
         assertThat(testPlaylist.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testPlaylist.isCollaborative()).isEqualTo(UPDATED_COLLABORATIVE);
         assertThat(testPlaylist.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testPlaylist.getPrimaryColor()).isEqualTo(UPDATED_PRIMARY_COLOR);
         assertThat(testPlaylist.getCover()).isEqualTo(UPDATED_COVER);
         assertThat(testPlaylist.getThumbnail()).isEqualTo(UPDATED_THUMBNAIL);
         assertThat(testPlaylist.isPublicAccessible()).isEqualTo(UPDATED_PUBLIC_ACCESSIBLE);
-        assertThat(testPlaylist.getNumberSongs()).isEqualTo(UPDATED_NUMBER_SONGS);
-        assertThat(testPlaylist.getFollowers()).isEqualTo(UPDATED_FOLLOWERS);
-        assertThat(testPlaylist.getRating()).isEqualTo(UPDATED_RATING);
     }
 
     @Test
@@ -365,8 +371,8 @@ public class PlaylistResourceIT {
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restPlaylistMockMvc.perform(put("/api/playlists")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(playlistDTO)))
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Playlist in the database
@@ -376,15 +382,165 @@ public class PlaylistResourceIT {
 
     @Test
     @Transactional
+    public void should_not_follow_because_playlist_not_exists() throws Exception {
+
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        restPlaylistMockMvc.perform(get("/api/playlists/{id}", Long.MAX_VALUE))
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("follow-playlist-user")
+    public void should_follow_playlist() throws Exception {
+
+        User user = createBasicUserWithUsername("follow-playlist-user");
+
+        userRepository.save(user);
+
+        int databaseSizeBeforeUpdate = playlistRepository.findAll().size();
+
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setName(DEFAULT_NAME);
+
+        restPlaylistMockMvc.perform(post("/api/playlists/")
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistRequest)))
+            .andExpect(status().isCreated());
+
+        // Validate the Playlist in the database
+        List<Playlist> playlistList = playlistRepository.findAll();
+        assertThat(playlistList).hasSize(databaseSizeBeforeUpdate + 1);
+        Long playlistId = playlistList.get(0).getId();
+
+        restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.followed").value(true));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("un-follow-playlist-user")
+    public void should_toggle_follow_playlist() throws Exception {
+
+        User user = createBasicUserWithUsername("un-follow-playlist-user");
+
+        userRepository.save(user);
+
+        int databaseSizeBeforeUpdate = playlistRepository.findAll().size();
+
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setName(DEFAULT_NAME);
+
+        restPlaylistMockMvc.perform(post("/api/playlists/")
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistRequest)))
+            .andExpect(status().isCreated());
+
+        // Validate the Playlist in the database
+        List<Playlist> playlistList = playlistRepository.findAll();
+        assertThat(playlistList).hasSize(databaseSizeBeforeUpdate + 1);
+        Long playlistId = playlistList.get(0).getId();
+
+        restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.followed").value(true));
+
+        restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.followed").value(false));
+
+        restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.followed").value(true));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("user-delete-playlist-tracks")
+    public void should_delete_a_playlists_with_tracks() throws Exception {
+        int databaseSizeBeforeUpdate = playlistRepository.findAll().size();
+
+        User user = createBasicUserWithUsername("user-delete-playlist-tracks");
+
+        Track track = TrackResourceIT.createEntity();
+        track.setUser(userRepository.save(user));
+        final TrackDTO trackDTO = trackMapper.toDto(trackRepository.save(track));
+        System.out.println(trackDTO.getOwner().getId());
+        List<TrackDTO> tracks = new ArrayList<>();
+        tracks.add(trackDTO);
+
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setName(DEFAULT_NAME);
+        playlistRequest.setTracks(tracks);
+
+        restPlaylistMockMvc.perform(post("/api/playlists/")
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistRequest)))
+            .andExpect(status().isCreated());
+
+        // Validate the Playlist in the database
+        List<Playlist> playlistList = playlistRepository.findAll();
+        assertThat(playlistList).hasSize(databaseSizeBeforeUpdate + 1);
+        Long playlistId = playlistList.get(0).getId();
+
+        restPlaylistMockMvc.perform(delete("/api/playlists/{id}", playlistId)
+            .accept(APPLICATION_JSON_UTF8))
+            .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("user-delete-playlist-followers")
+    public void should_delete_a_playlists_with_followers() throws Exception {
+        int databaseSizeBeforeUpdate = playlistRepository.findAll().size();
+
+        User user = createBasicUserWithUsername("user-delete-playlist-followers");
+        userRepository.save(user);
+
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setName(DEFAULT_NAME);
+
+        restPlaylistMockMvc.perform(post("/api/playlists/")
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistRequest)))
+            .andExpect(status().isCreated());
+
+        // Validate the Playlist in the database
+        List<Playlist> playlistList = playlistRepository.findAll();
+        assertThat(playlistList).hasSize(databaseSizeBeforeUpdate + 1);
+        Long playlistId = playlistList.get(0).getId();
+
+        restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.followed").value(true));
+
+        restPlaylistMockMvc.perform(delete("/api/playlists/{id}", playlistId)
+            .accept(APPLICATION_JSON_UTF8))
+            .andExpect(status().isNoContent());
+    }
+
+
+    @Test
+    @Transactional
+    @WithMockUser("user-delete-playlist")
     public void deletePlaylist() throws Exception {
         // Initialize the database
+
+        User user = createBasicUserWithUsername("user-delete-playlist");
+        playlist.setUser(userRepository.save(user));
         playlistRepository.saveAndFlush(playlist);
 
         int databaseSizeBeforeDelete = playlistRepository.findAll().size();
 
         // Delete the playlist
         restPlaylistMockMvc.perform(delete("/api/playlists/{id}", playlist.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .accept(APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item

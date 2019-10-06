@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Service Interface for managing {@link com.sallefy.domain.Track}.
@@ -48,4 +47,12 @@ public interface TrackService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Find the tracks by ids
+     *
+     * @param tracksIds the ids of the entity
+     * @return the list of tracks
+     */
+    List<TrackDTO> findByIds(List<Long> tracksIds);
 }

@@ -7,6 +7,7 @@ public final class ErrorConstants {
     public static final String ERR_CONCURRENCY_FAILURE = "error.concurrencyFailure";
     public static final String ERR_VALIDATION = "error.validation";
     public static final String ERR_ALBUM_NOT_FOUND = "error.album.notFound";
+    public static final String ERR_PLAYLIST_NOT_FOUND = "error.playlist.notFound";
     public static final String ERR_TRACK_NOT_FOUND = "error.track.notFound";
     public static final String ERR_OWNER_DIFFERS = "error.user.differs";
     public static final String NOT_YET_IMPLEMENTED = "error.server.notYetImplemented";
