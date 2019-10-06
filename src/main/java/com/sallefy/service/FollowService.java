@@ -1,6 +1,7 @@
 package com.sallefy.service;
 
 import com.sallefy.service.dto.FollowDTO;
+import org.springframework.stereotype.Service;
 
 /**
  * Service Interface for managing follows in Users and Playlists.
