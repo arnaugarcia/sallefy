@@ -63,11 +63,11 @@ public class PlaylistResourceIT {
 
     private static final String DEFAULT_BAD_HOST = "http://bad.host.com";
 
-    private static final String DEFAULT_COVER = "AAAAAAAAAA";
-    private static final String UPDATED_COVER = "BBBBBBBBBB";
+    private static final String DEFAULT_COVER = "http://res.cloudinary.com";
+    private static final String UPDATED_COVER = "http://res.cloudinary.com/updated";
 
-    private static final String DEFAULT_THUMBNAIL = "AAAAAAAAAA";
-    private static final String UPDATED_THUMBNAIL = "BBBBBBBBBB";
+    private static final String DEFAULT_THUMBNAIL = "http://res.cloudinary.com";
+    private static final String UPDATED_THUMBNAIL = "http://res.cloudinary.com/updated";
 
     private static final Boolean DEFAULT_PUBLIC_ACCESSIBLE = true;
     private static final Boolean UPDATED_PUBLIC_ACCESSIBLE = true;
