@@ -7,6 +7,9 @@ import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -110,6 +113,14 @@ public class PlaylistResource {
      * @param id the id of the playlist.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
      */
+    @ApiOperation(
+        value = "Follows the playlist by id",
+        notes = "This method is a toggle. It means that if you need to 'unfollow' make the same request and the result will be false."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Successful operation"),
+        @ApiResponse(code = 404, message = "Playlist not found")
+    })
     @PutMapping("/playlists/{id}/follow")
     public ResponseEntity<FollowDTO> toggleFollowPlaylist(@PathVariable Long id) {
         log.debug("REST request to follow the playlist with id {}", id);
