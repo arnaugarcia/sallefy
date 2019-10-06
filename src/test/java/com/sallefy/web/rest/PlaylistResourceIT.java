@@ -421,7 +421,7 @@ public class PlaylistResourceIT {
     @Test
     @Transactional
     @WithMockUser("un-follow-playlist-user")
-    public void should_un_follow_playlist() throws Exception {
+    public void should_toggle_follow_playlist() throws Exception {
 
         User user = createBasicUserWithUsername("un-follow-playlist-user");
 
@@ -451,6 +451,11 @@ public class PlaylistResourceIT {
             .contentType(APPLICATION_JSON_UTF8))
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.followed").value(false));
+
+        restPlaylistMockMvc.perform(put("/api/playlists/{id}/follow", playlistId)
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.followed").value(true));
     }
 
     @Test
