@@ -373,6 +373,26 @@ public class PlaylistResourceIT {
 
     @Test
     @Transactional
+    public void should_delete_a_playlists_with_tracks() throws Exception {
+        int databaseSizeBeforeUpdate = playlistRepository.findAll().size();
+
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+        playlistRequest.setName(DEFAULT_NAME);
+
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        restPlaylistMockMvc.perform(put("/api/playlists")
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistRequest)))
+            .andExpect(status().isBadRequest());
+
+        // Validate the Playlist in the database
+        List<Playlist> playlistList = playlistRepository.findAll();
+        assertThat(playlistList).hasSize(databaseSizeBeforeUpdate);
+    }
+
+
+    @Test
+    @Transactional
     public void deletePlaylist() throws Exception {
         // Initialize the database
         playlistRepository.saveAndFlush(playlist);
