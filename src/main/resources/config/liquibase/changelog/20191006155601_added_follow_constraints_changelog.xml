@@ -1,0 +1,21 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.7.xsd">
+    <changeSet author="sallefy" id="1570377368980-1">
+        <addUniqueConstraint columnNames="user_id, playlist_id" constraintName="UKbqwi409uqns6fyno264jpc6ue" tableName="follow_playlist"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1570377368980-2">
+        <addUniqueConstraint columnNames="user_id, followed_id" constraintName="UKo1whd2tdbhjcwf40fwyk4mkg3" tableName="follow_user"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1570377368980-3">
+        <dropUniqueConstraint constraintName="UKphebb6fh4agomysvomcm6xakg" tableName="like_album"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1570377368980-4">
+        <addUniqueConstraint columnNames="user_id, album_id" constraintName="UKphebb6fh4agomysvomcm6xakg" tableName="like_album"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1570377368980-5">
+        <dropUniqueConstraint constraintName="UKqfx87gtvd2no8gyna7yce5n4f" tableName="like_track"/>
+    </changeSet>
+    <changeSet author="sallefy" id="1570377368980-6">
+        <addUniqueConstraint columnNames="user_id, track_id" constraintName="UKqfx87gtvd2no8gyna7yce5n4f" tableName="like_track"/>
+    </changeSet>
+</databaseChangeLog>

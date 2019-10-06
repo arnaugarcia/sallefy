@@ -14,7 +14,9 @@ import java.time.ZonedDateTime;
  * A FollowPlaylist.
  */
 @Entity
-@Table(name = "follow_playlist")
+@Table(name = "follow_playlist", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"user_id", "playlist_id"})
+})
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class FollowPlaylist implements Serializable {
 
