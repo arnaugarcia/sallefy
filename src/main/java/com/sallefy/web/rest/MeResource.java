@@ -207,7 +207,7 @@ public class MeResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/me/playlists/followed")
-    public ResponseEntity<List<TrackDTO>> getFollowedTracks() {
+    public ResponseEntity<List<TrackDTO>> getFollowedPlaylists() {
         log.debug("REST request to get the list of followed Playlists");
         throw new NotYetImplementedException();
     }
