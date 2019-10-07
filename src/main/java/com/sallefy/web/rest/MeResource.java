@@ -214,7 +214,7 @@ public class MeResource {
     }
 
     /**
-     * {@code GET  /me/users/following} : get the following users.
+     * {@code GET  /me/following} : get the following users.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of the following users in the body.
      */
@@ -225,14 +225,14 @@ public class MeResource {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation")
     })
-    @GetMapping("/me/users/followings")
+    @GetMapping("/me/followings")
     public ResponseEntity<List<UserDTO>> getFollowingUsers() {
         log.debug("REST request to get the list of following Users");
         throw new NotYetImplementedException();
     }
 
     /**
-     * {@code GET  /me/users/followers} : get the current user followers.
+     * {@code GET  /me/followers} : get the current user followers.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of the current user followers in the body.
      */
@@ -243,7 +243,7 @@ public class MeResource {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation")
     })
-    @GetMapping("/me/users/followers")
+    @GetMapping("/me/followers")
     public ResponseEntity<List<UserDTO>> getFollowersOfTheUser() {
         log.debug("REST request to get the list of the current user followers");
         throw new NotYetImplementedException();
