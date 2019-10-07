@@ -5,6 +5,7 @@ import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
+import com.sallefy.service.FollowService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.mapper.UserMapper;
@@ -19,17 +20,22 @@ import org.springframework.cache.CacheManager;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import static com.sallefy.web.rest.TestUtil.APPLICATION_JSON_UTF8;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -90,6 +96,9 @@ public class UserResourceIT {
 
     private User user;
 
+    @Autowired
+    private FollowService followService;
+
     @BeforeEach
     public void setup() {
         cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).clear();
@@ -105,7 +114,7 @@ public class UserResourceIT {
 
     /**
      * Create a User.
-     *
+     * <p>
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which has a required relationship to the User entity.
      */
@@ -173,7 +182,7 @@ public class UserResourceIT {
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restUserMockMvc.perform(post("/api/users")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
             .andExpect(status().isCreated());
 
@@ -208,7 +217,7 @@ public class UserResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restUserMockMvc.perform(post("/api/users")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
             .andExpect(status().isBadRequest());
 
@@ -237,13 +246,48 @@ public class UserResourceIT {
 
         // Create the User
         restUserMockMvc.perform(post("/api/users")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
             .andExpect(status().isBadRequest());
 
         // Validate the User in the database
         List<User> userList = userRepository.findAll();
         assertThat(userList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("current-user-follow")
+    public void should_not_follow_user_cause_its_the_current_user() throws Exception {
+        User user = createBasicUserWithUsername("current-user-follow");
+        User savedUser = userRepository.save(user);
+
+        restUserMockMvc.perform(put("/api/users/{login}/follow", savedUser.getLogin())
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("user-follower")
+    public void should_follow_user() throws Exception {
+        User follower = userRepository.save(createBasicUserWithUsername("user-follower"));
+        User followed = userRepository.save(createBasicUserWithUsername("user-followed"));
+
+        restUserMockMvc.perform(put("/api/users/{login}/follow", followed.getLogin())
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.followed").value(true));
+
+        restUserMockMvc.perform(put("/api/users/{login}/follow", followed.getLogin())
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.followed").value(false));
+
+        restUserMockMvc.perform(put("/api/users/{login}/follow", followed.getLogin())
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.followed").value(true));
     }
 
     @Test
@@ -266,7 +310,7 @@ public class UserResourceIT {
 
         // Create the User
         restUserMockMvc.perform(post("/api/users")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
             .andExpect(status().isBadRequest());
 
@@ -350,7 +394,7 @@ public class UserResourceIT {
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restUserMockMvc.perform(put("/api/users")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
             .andExpect(status().isOk());
 
@@ -392,7 +436,7 @@ public class UserResourceIT {
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restUserMockMvc.perform(put("/api/users")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
             .andExpect(status().isOk());
 
@@ -445,7 +489,7 @@ public class UserResourceIT {
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restUserMockMvc.perform(put("/api/users")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
             .andExpect(status().isBadRequest());
     }
@@ -487,7 +531,7 @@ public class UserResourceIT {
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restUserMockMvc.perform(put("/api/users")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .contentType(APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
             .andExpect(status().isBadRequest());
     }
@@ -501,7 +545,7 @@ public class UserResourceIT {
 
         // Delete the user
         restUserMockMvc.perform(delete("/api/users/{login}", user.getLogin())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .accept(APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 
         assertThat(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).get(user.getLogin())).isNull();
@@ -515,8 +559,8 @@ public class UserResourceIT {
     @Transactional
     public void getAllAuthorities() throws Exception {
         restUserMockMvc.perform(get("/api/users/authorities")
-            .accept(TestUtil.APPLICATION_JSON_UTF8)
-            .contentType(TestUtil.APPLICATION_JSON_UTF8))
+            .accept(APPLICATION_JSON_UTF8)
+            .contentType(APPLICATION_JSON_UTF8))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$").isArray())
