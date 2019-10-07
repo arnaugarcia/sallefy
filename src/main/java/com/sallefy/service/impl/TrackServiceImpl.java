@@ -77,11 +77,20 @@ public class TrackServiceImpl implements TrackService {
             track.setUser(currentUser);
         }
 
-        track = trackMapper.toEntity(trackDTO);
+        updateTrackFields(trackDTO, track);
 
         filterGenresExist(trackDTO);
 
         return saveAndTransform(track);
+    }
+
+    private void updateTrackFields(TrackDTO trackDTO, Track track) {
+        track.setColor(trackDTO.getColor());
+        track.setName(trackDTO.getName());
+        track.setDuration(trackDTO.getDuration());
+        track.setReleased(trackDTO.getReleased());
+        track.setThumbnail(trackDTO.getThumbnail());
+        track.setUrl(trackDTO.getUrl());
     }
 
     /**
