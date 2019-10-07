@@ -201,7 +201,7 @@ public class MeResourceIT {
 
     @Test
     @Transactional
-    @WithMockUser("basic-user")
+    @WithMockUser("follower")
     public void get_followers_of_current_user() throws Exception {
 
         // Initialize the database
