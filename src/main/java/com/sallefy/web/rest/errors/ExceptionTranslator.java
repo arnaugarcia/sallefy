@@ -180,4 +180,15 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
             .build();
         return create(ex, problem, request);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleUserNotFoundException(com.sallefy.service.exception.UserNotFound ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withType(NOT_FOUND_TYPE)
+            .withStatus(NOT_FOUND)
+            .with(MESSAGE_KEY, ex.getMessage())
+            .with(CODE_KEY, ERR_USER_NOT_FOUND)
+            .build();
+        return create(ex, problem, request);
+    }
 }
