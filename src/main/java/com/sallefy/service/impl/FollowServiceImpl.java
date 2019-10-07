@@ -1,13 +1,17 @@
 package com.sallefy.service.impl;
 
 import com.sallefy.domain.FollowPlaylist;
+import com.sallefy.domain.FollowUser;
 import com.sallefy.domain.User;
 import com.sallefy.repository.FollowPlaylistRepository;
+import com.sallefy.repository.FollowUserRepository;
 import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.service.FollowService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.FollowDTO;
-import com.sallefy.service.exception.PlaylistNotFound;
+import com.sallefy.service.exception.BadFollowerException;
+import com.sallefy.service.exception.PlaylistNotFoundException;
+import com.sallefy.service.exception.UserNotFoundException;
 import com.sallefy.service.mapper.PlaylistMapper;
 import org.springframework.stereotype.Service;
 
@@ -24,14 +28,18 @@ public class FollowServiceImpl implements FollowService {
 
     private final FollowPlaylistRepository followPlaylistRepository;
 
+    private final FollowUserRepository followUserRepository;
+
     public FollowServiceImpl(UserService userService,
                              PlaylistRepository playlistRepository,
                              PlaylistMapper playlistMapper,
-                             FollowPlaylistRepository followPlaylistRepository) {
+                             FollowPlaylistRepository followPlaylistRepository,
+                             FollowUserRepository followUserRepository) {
         this.userService = userService;
         this.playlistRepository = playlistRepository;
         this.playlistMapper = playlistMapper;
         this.followPlaylistRepository = followPlaylistRepository;
+        this.followUserRepository = followUserRepository;
     }
 
     @Override
@@ -61,6 +69,39 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
+    public FollowDTO toggleFollowUser(String login) {
+        final User currentUser = userService.getUserWithAuthorities();
+
+        User userToFollow = userService.getUserWithAuthoritiesByLogin(login)
+            .orElseThrow(UserNotFoundException::new);
+
+        checkIfFollowUserIsTheCurrentUser(currentUser, userToFollow);
+
+        FollowDTO followDTO = new FollowDTO();
+
+        final Optional<FollowUser> followedUser = followUserRepository.findIfFollowedUserIsFollowedByCurrentUser(login);
+
+        if (followedUser.isPresent()) {
+            followUserRepository.delete(followedUser.get());
+            followDTO.setFollowed(false);
+        } else {
+            FollowUser followUser = new FollowUser();
+            followUser.setUser(currentUser);
+            followUser.setFollowed(userToFollow);
+            followUserRepository.save(followUser);
+            followDTO.setFollowed(true);
+        }
+
+        return followDTO;
+    }
+
+    private void checkIfFollowUserIsTheCurrentUser(User currentUser, User userToFollow) {
+        if (currentUser.getLogin().equals(userToFollow.getLogin())) {
+            throw new BadFollowerException();
+        }
+    }
+
+    @Override
     public void deleteFollowersByPlaylist(Long playlistId) {
         checkIfPlaylistExists(playlistId);
         followPlaylistRepository.deleteByPlaylistId(playlistId);
@@ -68,7 +109,7 @@ public class FollowServiceImpl implements FollowService {
 
     private void checkIfPlaylistExists(Long playlistId) {
         playlistRepository.findById(playlistId)
-            .orElseThrow(PlaylistNotFound::new);
+            .orElseThrow(PlaylistNotFoundException::new);
     }
 
 }
