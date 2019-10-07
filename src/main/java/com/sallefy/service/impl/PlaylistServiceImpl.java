@@ -81,9 +81,7 @@ public class PlaylistServiceImpl implements PlaylistService {
             if (!currentUser.isAdmin()) {
                 checkOwnership(currentUser, playlist);
             }
-        }
-
-        if (!currentUser.isAdmin()) {
+        } else {
             playlist.setUser(currentUser);
         }
 
