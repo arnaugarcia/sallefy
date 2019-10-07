@@ -94,7 +94,8 @@ public class MeResource {
     @GetMapping("/me/tracks/liked")
     public ResponseEntity<List<TrackDTO>> getLikedTracks() {
         log.debug("REST request to get the list of liked Tracks");
-        throw new NotYetImplementedException();
+        final List<TrackDTO> likedTracks = trackService.findAllCurrentUserLiked();
+        return ResponseEntity.ok(likedTracks);
     }
 
     /**
