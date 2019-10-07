@@ -57,14 +57,27 @@ public class MeResourceIT {
 
     private MockMvc restMeMockMvc;
 
+    private MockMvc restTrackMockMvc;
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private LikeService likeService;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
         final MeResource meResource = new MeResource(trackService);
         this.restMeMockMvc = MockMvcBuilders.standaloneSetup(meResource)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator)
+            .build();
+
+        TrackResource trackResource = new TrackResource(trackService, likeService);
+        this.restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter)
@@ -134,7 +147,7 @@ public class MeResourceIT {
         trackRepository.save(track3);
 
         // Get all the trackList
-        restMeMockMvc.perform(get("/api/me/tracks/liked"))
+        restTrackMockMvc.perform(get("/api/me/tracks/liked"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$", hasSize(0)));
@@ -144,7 +157,7 @@ public class MeResourceIT {
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.liked").value(true));
 
-        restMeMockMvc.perform(get("/api/me/tracks/liked"))
+        restTrackMockMvc.perform(get("/api/me/tracks/liked"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$", hasSize(1)));
