@@ -163,4 +163,23 @@ public class MeResourceIT {
             .andExpect(jsonPath("$", hasSize(1)));
     }
 
+    @Test
+    @Transactional
+    @WithMockUser("basic-user")
+    public void get_own_track_by_id() throws Exception {
+
+        // Initialize the database
+        User user = UserResourceIT.createBasicUserWithUsername("basic-user");
+        userRepository.save(user);
+
+        // Tracks for user 1
+        Track track = TrackResourceIT.createEntity();
+        track.setUser(user);
+        Track savedTrack = trackRepository.save(track);
+
+        restTrackMockMvc.perform(get("/api/tracks/{id}", savedTrack.getId()))
+            .andExpect(status().isOk());
+
+    }
+
 }
