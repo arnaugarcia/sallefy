@@ -200,12 +200,12 @@ public class MeResource {
      */
     @ApiOperation(
         notes = "Find followed playlists",
-        value = "Shows al the followed playlists by the current user"
+        value = "Shows all the followed playlists by the current user"
     )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation")
     })
-    @GetMapping("/me/tracks/followed")
+    @GetMapping("/me/playlists/followed")
     public ResponseEntity<List<TrackDTO>> getFollowedTracks() {
         log.debug("REST request to get the list of followed Playlists");
         throw new NotYetImplementedException();
