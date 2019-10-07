@@ -5,7 +5,6 @@ import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
-import com.sallefy.service.MailService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.mapper.UserMapper;
@@ -95,7 +94,7 @@ public class UserResourceIT {
     public void setup() {
         cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).clear();
         cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).clear();
-        UserResource userResource = new UserResource(userService, userRepository);
+        UserResource userResource = new UserResource(userService, userRepository, followService);
 
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
