@@ -66,17 +66,20 @@ public class TrackServiceImpl implements TrackService {
 
         final User currentUser = userService.getUserWithAuthorities();
 
+        Track track = new Track();
+
         if (isUpdating(trackDTO)) {
-            Track track = findTrack(trackDTO.getId());
+            track = findTrack(trackDTO.getId());
             if (!currentUser.isAdmin()) {
                 checkUserIsTheOwner(track, currentUser);
             }
+        } else {
+            track.setUser(currentUser);
         }
 
-        filterGenresExist(trackDTO);
+        track = trackMapper.toEntity(trackDTO);
 
-        Track track = trackMapper.toEntity(trackDTO);
-        track.setUser(currentUser);
+        filterGenresExist(trackDTO);
 
         return saveAndTransform(track);
     }
