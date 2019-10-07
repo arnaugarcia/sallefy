@@ -47,7 +47,7 @@ public class MeResource {
      */
     @ApiOperation(
         value = "Shows own tracks",
-        notes = "If the current user has ADMIN role, shows all the tracks of all users"
+        notes = "Shows all the tracks of the current user"
     )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation")
@@ -55,7 +55,7 @@ public class MeResource {
     @GetMapping("/me/tracks")
     public ResponseEntity<List<TrackDTO>> getOwnTracks() {
         log.debug("REST request to get all Tracks");
-        return ResponseEntity.ok(trackService.findAll());
+        return ResponseEntity.ok(trackService.findAllByCurrentUser());
     }
 
     /**

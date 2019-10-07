@@ -55,4 +55,11 @@ public interface TrackService {
      * @return the list of tracks
      */
     List<TrackDTO> findByIds(List<Long> tracksIds);
+
+    /**
+     * Find all tracks by the current user
+     *
+     * @return the list of tracks
+     */
+    List<TrackDTO> findAllByCurrentUser();
 }
