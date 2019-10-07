@@ -147,17 +147,17 @@ public class MeResourceIT {
         trackRepository.save(track3);
 
         // Get all the trackList
-        restTrackMockMvc.perform(get("/api/me/tracks/liked"))
+        restMeMockMvc.perform(get("/api/me/tracks/liked"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$", hasSize(0)));
 
-        restMeMockMvc.perform(put("/api/tracks/{id}/like", track.getId()))
+        restTrackMockMvc.perform(put("/api/tracks/{id}/like", track.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.liked").value(true));
 
-        restTrackMockMvc.perform(get("/api/me/tracks/liked"))
+        restMeMockMvc.perform(get("/api/me/tracks/liked"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$", hasSize(1)));
