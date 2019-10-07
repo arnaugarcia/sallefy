@@ -16,6 +16,14 @@ public interface FollowService {
     FollowDTO toggleFollowPlaylist(Long playlistId);
 
     /**
+     * Method to follow or un follow a User by "login"
+     *
+     * @param login the "login" of the User
+     * @return a FollowDTO with the followed boolean
+     */
+    FollowDTO toggleFollowUser(String login);
+
+    /**
      * Method to delete all the followers by a Playlist "id"
      *
      * @param playlistId the id of the Playlist
