@@ -29,7 +29,9 @@ import javax.persistence.EntityManager;
 
 import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -104,8 +106,48 @@ public class MeResourceIT {
         // Get all the trackList
         restMeMockMvc.perform(get("/api/me/tracks"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("basic-user")
+    public void get_all_liked_tracks() throws Exception {
+
+        // Initialize the database
+        User user = UserResourceIT.createBasicUserWithUsername("basic-user");
+        userRepository.save(user);
+
+        // Tracks for user 1
+        Track track1 = TrackResourceIT.createEntity();
+        track1.setUser(user);
+        Track track = trackRepository.save(track1);
+
+        Track track2 = TrackResourceIT.createEntity();
+        track2.setUser(user);
+        trackRepository.save(track2);
+
+
+        Track track3 = TrackResourceIT.createEntity();
+        track3.setUser(user);
+        trackRepository.save(track3);
+
+        // Get all the trackList
+        restMeMockMvc.perform(get("/api/me/tracks/liked"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(0)));
+
+        restMeMockMvc.perform(put("/api/tracks/{id}/like", track.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.liked").value(true));
+
+        restMeMockMvc.perform(get("/api/me/tracks/liked"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(1)));
     }
 
 }
