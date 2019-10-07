@@ -70,4 +70,11 @@ public interface TrackService {
      * @return the list of tracks
      */
     List<TrackDTO> findAllCurrentUserLiked();
+
+    /**
+     * Find track by current user and the "id" of the track
+     * @param trackId the id of the track
+     * @return the track
+     */
+    TrackDTO findOwnTrackById(Long trackId);
 }

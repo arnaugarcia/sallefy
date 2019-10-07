@@ -71,12 +71,13 @@ public class MeResource {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation"),
         @ApiResponse(code = 403, message = "You're not the owner of the requested source"),
-        @ApiResponse(code = 404, message = "Playlist not found"),
+        @ApiResponse(code = 404, message = "Track not found"),
     })
     @GetMapping("/me/tracks/{id}")
     public ResponseEntity<TrackDTO> getOwnTrackById(@PathVariable Long id) {
         log.debug("REST request to get a Track with id: {}", id);
-        throw new NotYetImplementedException();
+        TrackDTO trackDTO = trackService.findOwnTrackById(id);
+        return ResponseEntity.ok(trackDTO);
     }
 
     /**

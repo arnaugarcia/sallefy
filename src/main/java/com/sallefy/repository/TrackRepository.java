@@ -18,6 +18,9 @@ public interface TrackRepository extends JpaRepository<Track, Long> {
     @Query("select track from Track track where track.user.login = ?#{principal.username}")
     List<Track> findByUserIsCurrentUser();
 
+    @Query("select track from Track track where track.user.login = ?#{principal.username} and track.id = :id")
+    Optional<Track> findByUserIsCurrentUserAndId(@Param("id") Long trackId);
+
     @Query(value = "select distinct track from Track track left join fetch track.genres",
         countQuery = "select count(distinct track) from Track track")
     Page<Track> findAllWithEagerRelationships(Pageable pageable);

@@ -183,6 +183,14 @@ public class TrackServiceImpl implements TrackService {
             .collect(Collectors.toList());
     }
 
+    @Override
+    public TrackDTO findOwnTrackById(Long trackId) {
+        return trackRepository.findByUserIsCurrentUserAndId(trackId)
+            .map(trackMapper::toDto)
+            .orElseThrow(TrackNotFoundException::new);
+
+    }
+
     private void filterGenresExist(TrackDTO trackDTO) {
         List<Long> genresIds = extractGenresIds(trackDTO);
 
