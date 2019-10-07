@@ -142,11 +142,11 @@ public class MeResourceIT {
 
     @Test
     @Transactional
-    @WithMockUser("basic-user")
+    @WithMockUser("basic-liked-track-user")
     public void get_all_liked_tracks() throws Exception {
 
         // Initialize the database
-        User user = UserResourceIT.createBasicUserWithUsername("basic-user");
+        User user = UserResourceIT.createBasicUserWithUsername("basic-liked-track-user");
         userRepository.save(user);
 
         // Tracks for user 1
