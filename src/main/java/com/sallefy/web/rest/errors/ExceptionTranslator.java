@@ -1,5 +1,7 @@
 package com.sallefy.web.rest.errors;
 
+import com.sallefy.service.exception.PlaylistNotFoundException;
+import com.sallefy.service.exception.UserNotFoundException;
 import com.sallefy.service.exception.UsernameAlreadyUsedException;
 import io.github.jhipster.web.util.HeaderUtil;
 import org.springframework.beans.factory.annotation.Value;
@@ -171,12 +173,34 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     }
 
     @ExceptionHandler
-    public ResponseEntity<Problem> handlePlaylistNotFoundException(com.sallefy.service.exception.PlaylistNotFound ex, NativeWebRequest request) {
+    public ResponseEntity<Problem> handlePlaylistNotFoundException(PlaylistNotFoundException ex, NativeWebRequest request) {
         Problem problem = Problem.builder()
             .withType(NOT_FOUND_TYPE)
             .withStatus(NOT_FOUND)
             .with(MESSAGE_KEY, ex.getMessage())
             .with(CODE_KEY, ERR_PLAYLIST_NOT_FOUND)
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleUserNotFoundException(UserNotFoundException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withType(NOT_FOUND_TYPE)
+            .withStatus(NOT_FOUND)
+            .with(MESSAGE_KEY, ex.getMessage())
+            .with(CODE_KEY, ERR_USER_NOT_FOUND)
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleBadFollowerException(com.sallefy.service.exception.BadFollowerException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withType(DEFAULT_TYPE)
+            .withStatus(BAD_REQUEST)
+            .with(MESSAGE_KEY, ex.getMessage())
+            .with(CODE_KEY, ERR_GENERIC)
             .build();
         return create(ex, problem, request);
     }
