@@ -1,5 +1,6 @@
 package com.sallefy.web.rest;
 
+import com.sallefy.service.FollowService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.AlbumDTO;
 import com.sallefy.service.dto.TrackDTO;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 /**
  * REST controller for managing all the library of current user
  */
@@ -36,8 +39,11 @@ public class MeResource {
 
     private final TrackService trackService;
 
-    public MeResource(TrackService trackService) {
+    private final FollowService followService;
+
+    public MeResource(TrackService trackService, FollowService followService) {
         this.trackService = trackService;
+        this.followService = followService;
     }
 
     /**
@@ -55,7 +61,7 @@ public class MeResource {
     @GetMapping("/me/tracks")
     public ResponseEntity<List<TrackDTO>> getOwnTracks() {
         log.debug("REST request to get all Tracks");
-        return ResponseEntity.ok(trackService.findAllByCurrentUser());
+        return ok(trackService.findAllByCurrentUser());
     }
 
     /**
@@ -77,7 +83,7 @@ public class MeResource {
     public ResponseEntity<TrackDTO> getOwnTrackById(@PathVariable Long id) {
         log.debug("REST request to get a Track with id: {}", id);
         TrackDTO trackDTO = trackService.findOwnTrackById(id);
-        return ResponseEntity.ok(trackDTO);
+        return ok(trackDTO);
     }
 
     /**
@@ -96,7 +102,7 @@ public class MeResource {
     public ResponseEntity<List<TrackDTO>> getLikedTracks() {
         log.debug("REST request to get the list of liked Tracks");
         final List<TrackDTO> likedTracks = trackService.findAllCurrentUserLiked();
-        return ResponseEntity.ok(likedTracks);
+        return ok(likedTracks);
     }
 
     /**
@@ -246,7 +252,8 @@ public class MeResource {
     @GetMapping("/me/followers")
     public ResponseEntity<List<UserDTO>> getFollowersOfTheUser() {
         log.debug("REST request to get the list of the current user followers");
-        throw new NotYetImplementedException();
+        List<UserDTO> followers = followService.findFollowersOfCurrentUser();
+        return ok(followers);
     }
 
 }

@@ -9,13 +9,18 @@ import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.service.FollowService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.FollowDTO;
+import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.exception.BadFollowerException;
 import com.sallefy.service.exception.PlaylistNotFoundException;
 import com.sallefy.service.exception.UserNotFoundException;
 import com.sallefy.service.mapper.PlaylistMapper;
+import com.sallefy.service.mapper.UserMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FollowServiceImpl implements FollowService {
@@ -29,17 +34,20 @@ public class FollowServiceImpl implements FollowService {
     private final FollowPlaylistRepository followPlaylistRepository;
 
     private final FollowUserRepository followUserRepository;
+    private final UserMapper userMapper;
 
     public FollowServiceImpl(UserService userService,
                              PlaylistRepository playlistRepository,
                              PlaylistMapper playlistMapper,
                              FollowPlaylistRepository followPlaylistRepository,
-                             FollowUserRepository followUserRepository) {
+                             FollowUserRepository followUserRepository,
+                             UserMapper userMapper) {
         this.userService = userService;
         this.playlistRepository = playlistRepository;
         this.playlistMapper = playlistMapper;
         this.followPlaylistRepository = followPlaylistRepository;
         this.followUserRepository = followUserRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -105,6 +113,18 @@ public class FollowServiceImpl implements FollowService {
     public void deleteFollowersByPlaylist(Long playlistId) {
         checkIfPlaylistExists(playlistId);
         followPlaylistRepository.deleteByPlaylistId(playlistId);
+    }
+
+    @Override
+    @Transactional
+    public List<UserDTO> findFollowersOfCurrentUser() {
+        final User currentUser = userService.getUserWithAuthorities();
+
+        return followUserRepository.findFollowersByCurrentUser()
+            .stream()
+            .map(userMapper::userToUserDTO)
+            .collect(Collectors.toList());
+
     }
 
     private void checkIfPlaylistExists(Long playlistId) {
