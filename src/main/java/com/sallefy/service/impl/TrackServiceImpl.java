@@ -9,9 +9,8 @@ import com.sallefy.service.UserService;
 import com.sallefy.service.dto.GenreDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.exception.BadOwnerException;
-import com.sallefy.service.mapper.TrackMapper;
-import com.sallefy.web.rest.errors.ForbiddenAlertException;
 import com.sallefy.service.exception.TrackNotFoundException;
+import com.sallefy.service.mapper.TrackMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -24,7 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.sallefy.web.rest.errors.ErrorConstants.ERR_OWNER_DIFFERS;
 import static java.util.stream.Collectors.toCollection;
 
 /**
@@ -172,6 +170,14 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public List<TrackDTO> findAllByCurrentUser() {
         return trackRepository.findByUserIsCurrentUser()
+            .stream()
+            .map(trackMapper::toDto)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TrackDTO> findAllCurrentUserLiked() {
+        return trackRepository.findAllLikedTracksByCurrentUser()
             .stream()
             .map(trackMapper::toDto)
             .collect(Collectors.toList());

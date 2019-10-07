@@ -62,4 +62,12 @@ public interface TrackService {
      * @return the list of tracks
      */
     List<TrackDTO> findAllByCurrentUser();
+
+
+    /**
+     * Find all the liked tracks by the current user
+     *
+     * @return the list of tracks
+     */
+    List<TrackDTO> findAllCurrentUserLiked();
 }
