@@ -135,6 +135,7 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
+    @Transactional
     public List<PlaylistDTO> findFollowingPlaylistsByCurrentUser() {
         return followPlaylistRepository.findPlaylistFollowedByCurrentUser()
             .stream()

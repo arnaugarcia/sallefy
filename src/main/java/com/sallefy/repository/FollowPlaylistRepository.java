@@ -18,7 +18,7 @@ public interface FollowPlaylistRepository extends JpaRepository<FollowPlaylist, 
     @Query("select followPlaylist from FollowPlaylist followPlaylist where followPlaylist.user.login = ?#{principal.username} and followPlaylist.playlist.id = :playlistId")
     Optional<FollowPlaylist> findByIdAndCurrentUser(@Param("playlistId") Long playlistId);
 
-    @Query("select followPlaylist from FollowPlaylist followPlaylist where followPlaylist.user.login = ?#{principal.username}")
+    @Query("select followPlaylist.playlist from FollowPlaylist followPlaylist inner join followPlaylist.playlist where followPlaylist.user.login = ?#{principal.username}")
     List<Playlist> findPlaylistFollowedByCurrentUser();
 
     void deleteByPlaylistId(@Param("playlistId") Long playlistId);
