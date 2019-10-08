@@ -189,6 +189,14 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlistRepository.deleteById(playlistId);
     }
 
+    @Override
+    public List<PlaylistDTO> findAllByCurrentUser() {
+        return playlistRepository.findByUserIsCurrentUser()
+            .stream()
+            .map(playlistMapper::toDto)
+            .collect(toList());
+    }
+
     private void checkOwnership(User currentUser, Playlist playlist) {
         if (!currentUser.getLogin().equals(playlist.getUser().getLogin())) {
             throw new BadOwnerException();

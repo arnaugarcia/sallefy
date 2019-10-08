@@ -1,6 +1,7 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.service.FollowService;
+import com.sallefy.service.PlaylistService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.AlbumDTO;
 import com.sallefy.service.dto.PlaylistDTO;
@@ -42,9 +43,14 @@ public class MeResource {
 
     private final FollowService followService;
 
-    public MeResource(TrackService trackService, FollowService followService) {
+    private final PlaylistService playlistService;
+
+    public MeResource(TrackService trackService,
+                      FollowService followService,
+                      PlaylistService playlistService) {
         this.trackService = trackService;
         this.followService = followService;
+        this.playlistService = playlistService;
     }
 
     /**
@@ -176,9 +182,10 @@ public class MeResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/me/playlists")
-    public ResponseEntity<List<TrackDTO>> getOwnPlaylists() {
+    public ResponseEntity<List<PlaylistDTO>> getOwnPlaylists() {
         log.debug("REST request to get own playlists");
-        throw new NotYetImplementedException();
+        List<PlaylistDTO> playlists = playlistService.findAllByCurrentUser();
+        return ok(playlists);
     }
 
     /**

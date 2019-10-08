@@ -50,4 +50,11 @@ public interface PlaylistService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Method to find all the playlists of the current user
+     *
+     * @return the list of playlists
+     */
+    List<PlaylistDTO> findAllByCurrentUser();
 }
