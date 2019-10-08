@@ -217,9 +217,29 @@ public class MeResourceIT {
         followUser.setFollowed(user);
         followUser.setUser(follower);
         followRepository.save(followUser);
-        followRepository.findAll();
 
         restMeMockMvc.perform(get("/api/me/followers"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(1)));
+
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("follower")
+    public void get_following_users_of_current_user() throws Exception {
+
+        // Initialize the database
+        User user = userRepository.save(UserResourceIT.createBasicUserWithUsername("basic-user"));
+        User follower = userRepository.save(UserResourceIT.createBasicUserWithUsername("follower"));
+
+        FollowUser followUser = new FollowUser();
+        followUser.setFollowed(user);
+        followUser.setUser(follower);
+        followRepository.save(followUser);
+
+        restMeMockMvc.perform(get("/api/me/followings"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$", hasSize(1)));
