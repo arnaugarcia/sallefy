@@ -1,8 +1,10 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
+import com.sallefy.domain.FollowUser;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
+import com.sallefy.repository.FollowUserRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.FollowService;
@@ -74,10 +76,13 @@ public class MeResourceIT {
     @Autowired
     private FollowService followService;
 
+    @Autowired
+    private FollowUserRepository followRepository;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final MeResource meResource = new MeResource(trackService);
+        final MeResource meResource = new MeResource(trackService, followService);
         this.restMeMockMvc = MockMvcBuilders.standaloneSetup(meResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
@@ -201,24 +206,23 @@ public class MeResourceIT {
 
     @Test
     @Transactional
-    @WithMockUser("follower")
+    @WithMockUser("basic-user")
     public void get_followers_of_current_user() throws Exception {
 
         // Initialize the database
-        User user = UserResourceIT.createBasicUserWithUsername("basic-user");
-        userRepository.save(user);
+        User user = userRepository.save(UserResourceIT.createBasicUserWithUsername("basic-user"));
+        User follower = userRepository.save(UserResourceIT.createBasicUserWithUsername("follower"));
 
-        userRepository.save(UserResourceIT.createBasicUserWithUsername("follower"));
-
-        restUserMockMvc.perform(put("/api/users/{login}/follow", user.getLogin()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.followed").value(true));
+        FollowUser followUser = new FollowUser();
+        followUser.setFollowed(user);
+        followUser.setUser(follower);
+        followRepository.save(followUser);
+        followRepository.findAll();
 
         restMeMockMvc.perform(get("/api/me/followers"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$", hasSize(2)));
+            .andExpect(jsonPath("$", hasSize(1)));
 
     }
 
