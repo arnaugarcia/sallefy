@@ -234,7 +234,8 @@ public class MeResource {
     @GetMapping("/me/followings")
     public ResponseEntity<List<UserDTO>> getFollowingUsers() {
         log.debug("REST request to get the list of following Users");
-        throw new NotYetImplementedException();
+        List<UserDTO> following = followService.findFollowingUsersByCurrentUser();
+        return ok(following);
     }
 
     /**

@@ -118,13 +118,19 @@ public class FollowServiceImpl implements FollowService {
     @Override
     @Transactional
     public List<UserDTO> findFollowersOfCurrentUser() {
-        final User currentUser = userService.getUserWithAuthorities();
-
         return followUserRepository.findFollowersByCurrentUser()
             .stream()
             .map(userMapper::userToUserDTO)
             .collect(Collectors.toList());
+    }
 
+    @Override
+    @Transactional
+    public List<UserDTO> findFollowingUsersByCurrentUser() {
+        return followUserRepository.findFollowingsByCurrentUser()
+            .stream()
+            .map(userMapper::userToUserDTO)
+            .collect(Collectors.toList());
     }
 
     private void checkIfPlaylistExists(Long playlistId) {

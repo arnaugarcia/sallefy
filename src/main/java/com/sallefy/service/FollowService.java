@@ -39,4 +39,10 @@ public interface FollowService {
      * @return the list of followers
      */
     List<UserDTO> findFollowersOfCurrentUser();
+
+    /**
+     * Method to find all the following users by the current user
+     * @return the list of users
+     */
+    List<UserDTO> findFollowingUsersByCurrentUser();
 }
