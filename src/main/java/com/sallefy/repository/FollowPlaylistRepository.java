@@ -1,9 +1,11 @@
 package com.sallefy.repository;
 import com.sallefy.domain.FollowPlaylist;
+import com.sallefy.domain.Playlist;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -14,7 +16,10 @@ import java.util.Optional;
 public interface FollowPlaylistRepository extends JpaRepository<FollowPlaylist, Long> {
 
     @Query("select followPlaylist from FollowPlaylist followPlaylist where followPlaylist.user.login = ?#{principal.username} and followPlaylist.playlist.id = :playlistId")
-    Optional<FollowPlaylist> findByPlaylistAndCurrentUser(@Param("playlistId") Long playlistId);
+    Optional<FollowPlaylist> findByIdAndCurrentUser(@Param("playlistId") Long playlistId);
+
+    @Query("select followPlaylist from FollowPlaylist followPlaylist where followPlaylist.user.login = ?#{principal.username}")
+    List<Playlist> findPlaylistFollowedByCurrentUser();
 
     void deleteByPlaylistId(@Param("playlistId") Long playlistId);
 

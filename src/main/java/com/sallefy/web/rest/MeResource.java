@@ -3,6 +3,7 @@ package com.sallefy.web.rest;
 import com.sallefy.service.FollowService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.AlbumDTO;
+import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.web.rest.errors.NotYetImplementedException;
@@ -202,21 +203,23 @@ public class MeResource {
     }
 
     /**
-     * {@code GET  /me/playlists/followed} : get the followed playlists.
+     * {@code GET  /me/playlists/following} : get the following playlists.
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of the followed playlists in the body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of the following playlists in the body.
      */
     @ApiOperation(
-        notes = "Find followed playlists",
-        value = "Shows all the followed playlists by the current user"
+        notes = "Find following playlists",
+        value = "Shows all the following playlists by the current user"
     )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation")
     })
-    @GetMapping("/me/playlists/followed")
-    public ResponseEntity<List<TrackDTO>> getFollowedPlaylists() {
-        log.debug("REST request to get the list of followed Playlists");
-        throw new NotYetImplementedException();
+    @GetMapping("/me/playlists/following")
+    public ResponseEntity<List<PlaylistDTO>> getFollowingPlaylists() {
+        log.debug("REST request to get the list of following Playlists by current user");
+        List<PlaylistDTO> followingPlaylists = followService.findFollowingPlaylistsByCurrentUser();
+        return ok(followingPlaylists);
+
     }
 
     /**
