@@ -7,28 +7,19 @@ import com.sallefy.domain.User;
 import com.sallefy.repository.FollowUserRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
-import com.sallefy.service.FollowService;
-import com.sallefy.service.LikeService;
-import com.sallefy.service.TrackService;
-import com.sallefy.service.UserService;
-import com.sallefy.service.mapper.TrackMapper;
+import com.sallefy.service.*;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
-
-import javax.persistence.EntityManager;
 
 import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
 import static org.hamcrest.Matchers.hasSize;
@@ -79,10 +70,13 @@ public class MeResourceIT {
     @Autowired
     private FollowUserRepository followRepository;
 
+    @Autowired
+    private PlaylistService playlistService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final MeResource meResource = new MeResource(trackService, followService);
+        final MeResource meResource = new MeResource(trackService, followService, playlistService);
         this.restMeMockMvc = MockMvcBuilders.standaloneSetup(meResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
