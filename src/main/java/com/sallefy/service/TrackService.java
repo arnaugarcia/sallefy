@@ -55,4 +55,33 @@ public interface TrackService {
      * @return the list of tracks
      */
     List<TrackDTO> findByIds(List<Long> tracksIds);
+
+    /**
+     * Find all tracks by the current user
+     *
+     * @return the list of tracks
+     */
+    List<TrackDTO> findAllByCurrentUser();
+
+
+    /**
+     * Find all the liked tracks by the current user
+     *
+     * @return the list of tracks
+     */
+    List<TrackDTO> findAllCurrentUserLiked();
+
+    /**
+     * Find track by current user and the "id" of the track
+     * @param trackId the id of the track
+     * @return the track
+     */
+    TrackDTO findOwnTrackById(Long trackId);
+
+    /**
+     * Method to find all tracks by the "login" of a user
+     * @param login the login pf a user
+     * @return the tracks list
+     */
+    List<TrackDTO> findAllByUserLogin(String login);
 }

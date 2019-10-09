@@ -12,7 +12,7 @@ import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.exception.BadOwnerException;
-import com.sallefy.service.exception.PlaylistNotFound;
+import com.sallefy.service.exception.PlaylistNotFoundException;
 import com.sallefy.service.mapper.PlaylistMapper;
 import com.sallefy.service.mapper.TrackMapper;
 import org.slf4j.Logger;
@@ -117,7 +117,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     private Playlist findById(Long playlistId) {
         return playlistRepository.findById(playlistId)
-            .orElseThrow(PlaylistNotFound::new);
+            .orElseThrow(PlaylistNotFoundException::new);
     }
 
     /**
@@ -167,7 +167,7 @@ public class PlaylistServiceImpl implements PlaylistService {
         log.debug("Request to get Playlist : {}", id);
         return playlistRepository.findOneWithEagerRelationships(id)
             .map(playlistMapper::toDto)
-            .orElseThrow(PlaylistNotFound::new);
+            .orElseThrow(PlaylistNotFoundException::new);
     }
 
     /**
@@ -189,8 +189,43 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlistRepository.deleteById(playlistId);
     }
 
+    @Override
+    public List<PlaylistDTO> findAllByCurrentUser() {
+        return playlistRepository.findByUserIsCurrentUser()
+            .stream()
+            .map(playlistMapper::toDto)
+            .collect(toList());
+    }
+
+    @Override
+    public PlaylistDTO findOwnPlaylistById(Long id) {
+        return playlistRepository.findByUserIsCurrentUserAndId(id)
+            .map(playlistMapper::toDto)
+            .orElseThrow(PlaylistNotFoundException::new);
+    }
+
+    @Override
+    public List<PlaylistDTO> findAllByUserLogin(String login) {
+        final User currentUser = userService.getUserWithAuthorities();
+        List<Playlist> playlists;
+
+        if (isTheSameUser(login, currentUser) || currentUser.isAdmin()) {
+            playlists = playlistRepository.findAllByUserLogin(login);
+        } else {
+            playlists = playlistRepository.findAllByUserLoginAndPublicAccessibleTrue(login);
+        }
+
+        return playlists.stream()
+            .map(playlistMapper::toDto)
+            .collect(toList());
+    }
+
+    private boolean isTheSameUser(String login, User currentUser) {
+        return currentUser.getLogin().equals(login);
+    }
+
     private void checkOwnership(User currentUser, Playlist playlist) {
-        if (!currentUser.getLogin().equals(playlist.getUser().getLogin())) {
+        if (!isTheSameUser(playlist.getUser().getLogin(), currentUser)) {
             throw new BadOwnerException();
         }
     }

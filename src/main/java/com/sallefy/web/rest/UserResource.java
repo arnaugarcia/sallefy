@@ -4,18 +4,24 @@ import com.sallefy.config.Constants;
 import com.sallefy.domain.User;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
-import com.sallefy.service.MailService;
+import com.sallefy.service.FollowService;
+import com.sallefy.service.PlaylistService;
+import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
+import com.sallefy.service.dto.FollowDTO;
+import com.sallefy.service.dto.PlaylistDTO;
+import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.web.rest.errors.EmailAlreadyUsedException;
 import com.sallefy.web.rest.errors.LoginAlreadyUsedException;
-
 import com.sallefy.web.rest.errors.NotYetImplementedException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +37,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 /**
  * REST controller for managing users.
@@ -70,10 +79,22 @@ public class UserResource {
 
     private final UserRepository userRepository;
 
-    public UserResource(UserService userService, UserRepository userRepository) {
+    private final FollowService followService;
 
+    private final PlaylistService playlistService;
+
+    private final TrackService trackService;
+
+    public UserResource(UserService userService,
+                        UserRepository userRepository,
+                        FollowService followService,
+                        PlaylistService playlistService,
+                        TrackService trackService) {
         this.userService = userService;
         this.userRepository = userRepository;
+        this.followService = followService;
+        this.playlistService = playlistService;
+        this.trackService = trackService;
     }
 
     /**
@@ -85,7 +106,7 @@ public class UserResource {
      *
      * @param userDTO the user to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new user, or with status {@code 400 (Bad Request)} if the login or email is already in use.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @throws URISyntaxException       if the Location URI syntax is incorrect.
      * @throws BadRequestAlertException {@code 400 (Bad Request)} if the login or email is already in use.
      */
     @PostMapping("/users")
@@ -103,7 +124,7 @@ public class UserResource {
         } else {
             User newUser = userService.createUser(userDTO);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
-                .headers(HeaderUtil.createAlert(applicationName,  "userManagement.created", newUser.getLogin()))
+                .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", newUser.getLogin()))
                 .body(newUser);
         }
     }
@@ -149,6 +170,7 @@ public class UserResource {
 
     /**
      * Gets a list of all roles.
+     *
      * @return a string list of all roles.
      */
     @GetMapping("/users/authorities")
@@ -177,10 +199,18 @@ public class UserResource {
      * @param login the login of the user to find.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the tracks of the desired user, or with status {@code 404 (Not Found)}.
      */
+    @ApiOperation(
+        value = "Shows user tracks by login",
+        notes = "Shows all the tracks of user given the login"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successful operation")
+    })
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/tracks")
-    public ResponseEntity<UserDTO> getTracksOfUser(@PathVariable String login) {
+    public ResponseEntity<List<TrackDTO>> getTracksOfUser(@PathVariable String login) {
         log.debug("REST request to get {} user tracks", login);
-        throw new NotYetImplementedException();
+        List<TrackDTO> tracks = trackService.findAllByUserLogin(login);
+        return ok(tracks);
     }
 
     /**
@@ -201,10 +231,18 @@ public class UserResource {
      * @param login the login of the user to find.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the playlists of the desired user, or with status {@code 404 (Not Found)}.
      */
+    @ApiOperation(
+        value = "Shows user playlists by login",
+        notes = "Only shows public accessible playlists. If the current user has ADMIN role it shows all the playlists of the user"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successful operation")
+    })
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/playlists")
-    public ResponseEntity<UserDTO> getPlaylistsOfUser(@PathVariable String login) {
+    public ResponseEntity<List<PlaylistDTO>> getPlaylistsOfUser(@PathVariable String login) {
         log.debug("REST request to get {} user playlists", login);
-        throw new NotYetImplementedException();
+        List<PlaylistDTO> playlists = playlistService.findAllByUserLogin(login);
+        return ok(playlists);
     }
 
     /**
@@ -213,10 +251,20 @@ public class UserResource {
      * @param login the login of the user to find.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
      */
+    @ApiOperation(
+        value = "Follow the desired user",
+        notes = "This method is a toggle. It means that if you need to 'unfollow' make the same request and the result will be false."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successful operation"),
+        @ApiResponse(code = 400, message = "User makes a bad request"),
+        @ApiResponse(code = 404, message = "User not found"),
+    })
     @PutMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/follow")
-    public ResponseEntity<UserDTO> toggleFollowUser(@PathVariable String login) {
+    public ResponseEntity<FollowDTO> toggleFollowUser(@PathVariable String login) {
         log.debug("REST request to follow the user {}", login);
-        throw new NotYetImplementedException();
+        FollowDTO followDTO = followService.toggleFollowUser(login);
+        return ok(followDTO);
     }
 
     /**
@@ -230,6 +278,8 @@ public class UserResource {
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
-        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName,  "userManagement.deleted", login)).build();
+        return ResponseEntity.noContent()
+            .headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login))
+            .build();
     }
 }
