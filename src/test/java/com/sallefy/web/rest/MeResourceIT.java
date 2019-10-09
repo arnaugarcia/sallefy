@@ -8,6 +8,7 @@ import com.sallefy.repository.FollowUserRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.*;
+import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,11 +22,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
+import static com.sallefy.web.rest.TestUtil.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -53,7 +54,7 @@ public class MeResourceIT {
 
     private MockMvc restTrackMockMvc;
 
-    private MockMvc restUserMockMvc;
+    private MockMvc restPlaylistMockMvc;
 
     @Autowired
     private UserRepository userRepository;
@@ -92,13 +93,14 @@ public class MeResourceIT {
             .setValidator(validator)
             .build();
 
-        UserResource userResource = new UserResource(userService, userRepository, followService);
-        this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
+        PlaylistResource playlistResource = new PlaylistResource(playlistService, followService);
+        this.restPlaylistMockMvc = MockMvcBuilders.standaloneSetup(playlistResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter)
             .setValidator(validator)
             .build();
+
     }
 
     @BeforeEach
@@ -237,6 +239,36 @@ public class MeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$", hasSize(1)));
+
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("playlist-user")
+    public void get_own_playlist_by_id() throws Exception {
+
+        // Initialize the database
+        userRepository.save(UserResourceIT.createBasicUserWithUsername("playlist-user"));
+
+        PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
+
+        final String playlist_name = "playlist name";
+
+        playlistRequest.setName(playlist_name);
+
+        restPlaylistMockMvc.perform(post("/api/playlists/")
+            .contentType(APPLICATION_JSON_UTF8)
+            .content(convertObjectToJsonBytes(playlistRequest)))
+            .andExpect(status().isCreated());
+
+        assertThat(playlistService.findAllByCurrentUser()).hasSize(1);
+
+        final Long playlistId = playlistService.findAllByCurrentUser().get(0).getId();
+
+        restMeMockMvc.perform(get("/api/me/playlists/{id}", playlistId))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.name").value(playlist_name));
 
     }
 
