@@ -260,16 +260,15 @@ public class MeResourceIT {
 
     @Test
     @Transactional
-    @WithMockUser("playlist-user")
+    @WithMockUser("own-playlist-user")
     public void get_own_playlist_by_id() throws Exception {
 
         // Initialize the database
-        userRepository.save(UserResourceIT.createBasicUserWithUsername("playlist-user"));
+        userRepository.save(UserResourceIT.createBasicUserWithUsername("own-playlist-user"));
 
         PlaylistRequestDTO playlistRequest = new PlaylistRequestDTO();
 
         final String playlist_name = "playlist name";
-
         playlistRequest.setName(playlist_name);
 
         restPlaylistMockMvc.perform(post("/api/playlists/")
