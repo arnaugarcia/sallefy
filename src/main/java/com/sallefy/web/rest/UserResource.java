@@ -6,9 +6,11 @@ import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
+import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;
+import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.web.rest.errors.EmailAlreadyUsedException;
@@ -81,14 +83,18 @@ public class UserResource {
 
     private final PlaylistService playlistService;
 
+    private final TrackService trackService;
+
     public UserResource(UserService userService,
                         UserRepository userRepository,
                         FollowService followService,
-                        PlaylistService playlistService) {
+                        PlaylistService playlistService,
+                        TrackService trackService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.followService = followService;
         this.playlistService = playlistService;
+        this.trackService = trackService;
     }
 
     /**
@@ -201,9 +207,10 @@ public class UserResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/tracks")
-    public ResponseEntity<UserDTO> getTracksOfUser(@PathVariable String login) {
+    public ResponseEntity<List<TrackDTO>> getTracksOfUser(@PathVariable String login) {
         log.debug("REST request to get {} user tracks", login);
-        throw new NotYetImplementedException();
+        List<TrackDTO> tracks = trackService.findAllByUserLogin(login);
+        return ok(tracks);
     }
 
     /**

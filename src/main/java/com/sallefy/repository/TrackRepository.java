@@ -1,5 +1,6 @@
 package com.sallefy.repository;
 import com.sallefy.domain.Track;
+import com.sallefy.service.dto.TrackDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -33,4 +34,7 @@ public interface TrackRepository extends JpaRepository<Track, Long> {
 
     @Query("select track from Track track inner join track.likeTracks where track.user.login = ?#{principal.username}")
     List<Track> findAllLikedTracksByCurrentUser();
+
+    @Query("select track from Track track where track.user.login = :login")
+    List<Track> findAllByUserLogin(@Param("login") String login);
 }

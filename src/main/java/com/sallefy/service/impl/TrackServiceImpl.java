@@ -191,6 +191,15 @@ public class TrackServiceImpl implements TrackService {
 
     }
 
+    @Override
+    public List<TrackDTO> findAllByUserLogin(String login) {
+        return trackRepository.findAllByUserLogin(login)
+            .stream()
+            .map(trackMapper::toDto)
+            .collect(Collectors.toList());
+
+    }
+
     private void filterGenresExist(TrackDTO trackDTO) {
         List<Long> genresIds = extractGenresIds(trackDTO);
 

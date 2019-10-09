@@ -77,4 +77,11 @@ public interface TrackService {
      * @return the track
      */
     TrackDTO findOwnTrackById(Long trackId);
+
+    /**
+     * Method to find all tracks by the "login" of a user
+     * @param login the login pf a user
+     * @return the tracks list
+     */
+    List<TrackDTO> findAllByUserLogin(String login);
 }
