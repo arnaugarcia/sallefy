@@ -193,6 +193,13 @@ public class UserResource {
      * @param login the login of the user to find.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the tracks of the desired user, or with status {@code 404 (Not Found)}.
      */
+    @ApiOperation(
+        value = "Shows user tracks by login",
+        notes = "Shows all the tracks of user given the login"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successful operation")
+    })
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/tracks")
     public ResponseEntity<UserDTO> getTracksOfUser(@PathVariable String login) {
         log.debug("REST request to get {} user tracks", login);
@@ -217,6 +224,13 @@ public class UserResource {
      * @param login the login of the user to find.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the playlists of the desired user, or with status {@code 404 (Not Found)}.
      */
+    @ApiOperation(
+        value = "Shows user playlists by login",
+        notes = "Only shows public accessible playlists. If the current user has ADMIN role it shows all the playlists of the user"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successful operation")
+    })
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/playlists")
     public ResponseEntity<List<PlaylistDTO>> getPlaylistsOfUser(@PathVariable String login) {
         log.debug("REST request to get {} user playlists", login);
