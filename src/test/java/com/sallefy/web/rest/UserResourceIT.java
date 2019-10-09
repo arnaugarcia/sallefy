@@ -6,6 +6,7 @@ import com.sallefy.domain.User;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.service.FollowService;
+import com.sallefy.service.PlaylistService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.mapper.UserMapper;
@@ -99,11 +100,14 @@ public class UserResourceIT {
     @Autowired
     private FollowService followService;
 
+    @Autowired
+    private PlaylistService playlistService;
+
     @BeforeEach
     public void setup() {
         cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).clear();
         cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).clear();
-        UserResource userResource = new UserResource(userService, userRepository, followService);
+        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService);
 
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)

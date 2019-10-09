@@ -2,9 +2,11 @@ package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
 import com.sallefy.domain.FollowUser;
+import com.sallefy.domain.Playlist;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
 import com.sallefy.repository.FollowUserRepository;
+import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.*;
@@ -56,6 +58,8 @@ public class MeResourceIT {
 
     private MockMvc restPlaylistMockMvc;
 
+    private MockMvc restUserMockMvc;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -73,6 +77,9 @@ public class MeResourceIT {
 
     @Autowired
     private PlaylistService playlistService;
+
+    @Autowired
+    private PlaylistRepository playlistRepository;
 
     @BeforeEach
     public void setup() {
@@ -100,6 +107,15 @@ public class MeResourceIT {
             .setMessageConverters(jacksonMessageConverter)
             .setValidator(validator)
             .build();
+
+        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService);
+        this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator)
+            .build();
+
 
     }
 
@@ -269,6 +285,76 @@ public class MeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.name").value(playlist_name));
+
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
+    public void should_get_playlists_by_user_login() throws Exception {
+
+        // Initialize the database
+        User user = userRepository.save(UserResourceIT.createBasicUserWithUsername("playlist-user"));
+
+        Playlist playlist = new Playlist();
+        playlist.setName("PLAYLIST_NAME");
+        playlist.setUser(user);
+        playlist.setPublicAccessible(true);
+
+        playlist = playlistRepository.save(playlist);
+
+        assertThat(playlistRepository.findById(playlist.getId())).isPresent();
+
+        restUserMockMvc.perform(get("/api/users/{login}/playlists", user.getLogin()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(1)));
+
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
+    public void should_not_get_playlists_by_user_login_because_not_public() throws Exception {
+
+        // Initialize the database
+        User user = userRepository.save(UserResourceIT.createBasicUserWithUsername("playlist-user"));
+
+        Playlist playlist = new Playlist();
+        playlist.setName("PLAYLIST_NAME");
+        playlist.setUser(user);
+
+        playlist = playlistRepository.save(playlist);
+
+        assertThat(playlistRepository.findById(playlist.getId())).isPresent();
+
+        restUserMockMvc.perform(get("/api/users/{login}/playlists", user.getLogin()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(0)));
+
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("playlist-user")
+    public void should_get_private_playlists_by_user_login_because_is_the_current_user() throws Exception {
+
+        // Initialize the database
+        User user = userRepository.save(UserResourceIT.createBasicUserWithUsername("playlist-user"));
+
+        Playlist playlist = new Playlist();
+        playlist.setName("PLAYLIST_NAME");
+        playlist.setUser(user);
+
+        playlist = playlistRepository.save(playlist);
+
+        assertThat(playlistRepository.findById(playlist.getId())).isPresent();
+
+        restUserMockMvc.perform(get("/api/users/{login}/playlists", user.getLogin()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(1)));
 
     }
 
