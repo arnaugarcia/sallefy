@@ -204,8 +204,28 @@ public class PlaylistServiceImpl implements PlaylistService {
             .orElseThrow(PlaylistNotFoundException::new);
     }
 
+    @Override
+    public List<PlaylistDTO> findAllByUserLogin(String login) {
+        final User currentUser = userService.getUserWithAuthorities();
+        List<Playlist> playlists;
+
+        if (isTheSameUser(login, currentUser) || currentUser.isAdmin()) {
+            playlists = playlistRepository.findAllByUserLogin(login);
+        } else {
+            playlists = playlistRepository.findAllByUserLoginAndPublicAccessibleTrue(login);
+        }
+
+        return playlists.stream()
+            .map(playlistMapper::toDto)
+            .collect(toList());
+    }
+
+    private boolean isTheSameUser(String login, User currentUser) {
+        return currentUser.getLogin().equals(login);
+    }
+
     private void checkOwnership(User currentUser, Playlist playlist) {
-        if (!currentUser.getLogin().equals(playlist.getUser().getLogin())) {
+        if (!isTheSameUser(playlist.getUser().getLogin(), currentUser)) {
             throw new BadOwnerException();
         }
     }

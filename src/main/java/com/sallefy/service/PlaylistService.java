@@ -64,4 +64,12 @@ public interface PlaylistService {
      * @return the playlist
      */
     PlaylistDTO findOwnPlaylistById(Long id);
+
+    /**
+     * Method to find playlist by user login
+     *
+     * @param login the login of the user
+     * @return the list of playlists
+     */
+    List<PlaylistDTO> findAllByUserLogin(String login);
 }

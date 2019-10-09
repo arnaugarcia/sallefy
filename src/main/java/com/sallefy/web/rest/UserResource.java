@@ -5,8 +5,10 @@ import com.sallefy.domain.User;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.service.FollowService;
+import com.sallefy.service.PlaylistService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.FollowDTO;
+import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.web.rest.errors.EmailAlreadyUsedException;
@@ -35,6 +37,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 /**
  * REST controller for managing users.
@@ -75,10 +79,16 @@ public class UserResource {
 
     private final FollowService followService;
 
-    public UserResource(UserService userService, UserRepository userRepository, FollowService followService) {
+    private final PlaylistService playlistService;
+
+    public UserResource(UserService userService,
+                        UserRepository userRepository,
+                        FollowService followService,
+                        PlaylistService playlistService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.followService = followService;
+        this.playlistService = playlistService;
     }
 
     /**
@@ -90,7 +100,7 @@ public class UserResource {
      *
      * @param userDTO the user to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new user, or with status {@code 400 (Bad Request)} if the login or email is already in use.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @throws URISyntaxException       if the Location URI syntax is incorrect.
      * @throws BadRequestAlertException {@code 400 (Bad Request)} if the login or email is already in use.
      */
     @PostMapping("/users")
@@ -208,9 +218,10 @@ public class UserResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the playlists of the desired user, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/playlists")
-    public ResponseEntity<UserDTO> getPlaylistsOfUser(@PathVariable String login) {
+    public ResponseEntity<List<PlaylistDTO>> getPlaylistsOfUser(@PathVariable String login) {
         log.debug("REST request to get {} user playlists", login);
-        throw new NotYetImplementedException();
+        List<PlaylistDTO> playlists = playlistService.findAllByUserLogin(login);
+        return ok(playlists);
     }
 
     /**
@@ -232,7 +243,7 @@ public class UserResource {
     public ResponseEntity<FollowDTO> toggleFollowUser(@PathVariable String login) {
         log.debug("REST request to follow the user {}", login);
         FollowDTO followDTO = followService.toggleFollowUser(login);
-        return ResponseEntity.ok(followDTO);
+        return ok(followDTO);
     }
 
     /**
@@ -246,6 +257,8 @@ public class UserResource {
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
-        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login)).build();
+        return ResponseEntity.noContent()
+            .headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login))
+            .build();
     }
 }
