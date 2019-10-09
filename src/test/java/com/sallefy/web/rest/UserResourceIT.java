@@ -2,11 +2,16 @@ package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
 import com.sallefy.domain.Authority;
+import com.sallefy.domain.Playlist;
+import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
+import com.sallefy.repository.PlaylistRepository;
+import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
+import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.mapper.UserMapper;
@@ -35,8 +40,7 @@ import java.util.Set;
 
 import static com.sallefy.web.rest.TestUtil.APPLICATION_JSON_UTF8;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -103,11 +107,20 @@ public class UserResourceIT {
     @Autowired
     private PlaylistService playlistService;
 
+    @Autowired
+    private TrackService trackService;
+
+    @Autowired
+    private PlaylistRepository playlistRepository;
+
+    @Autowired
+    private TrackRepository trackRepository;
+
     @BeforeEach
     public void setup() {
         cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).clear();
         cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).clear();
-        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService);
+        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackService);
 
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
@@ -269,6 +282,49 @@ public class UserResourceIT {
         restUserMockMvc.perform(put("/api/users/{login}/follow", savedUser.getLogin())
             .contentType(APPLICATION_JSON_UTF8))
             .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
+    public void should_get_the_playlists_by_login() throws Exception {
+        User savedUser = createBasicUserWithUsername("user-playlists-login");
+        userRepository.save(savedUser);
+
+        Playlist playlist = new Playlist();
+        playlist.setName("PLAYLIST_NAME");
+        playlist.setUser(savedUser);
+        playlist.setPublicAccessible(true);
+
+        playlist = playlistRepository.save(playlist);
+
+        assertThat(playlistRepository.findById(playlist.getId())).isPresent();
+
+        restUserMockMvc.perform(get("/api/users/{login}/playlists", savedUser.getLogin())
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(1)));
+    }
+
+
+    @Test
+    @Transactional
+    @WithMockUser
+    public void should_get_the_tracks_by_login() throws Exception {
+        User savedUser = userRepository.saveAndFlush(user);
+
+        Track track = new Track();
+        track.setName("TRACK_NAME");
+        track.setUser(savedUser);
+
+        track = trackRepository.save(track);
+
+        assertThat(trackRepository.findById(track.getId())).isPresent();
+
+        restUserMockMvc.perform(get("/api/users/{login}/tracks", savedUser.getLogin())
+            .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(1)));
     }
 
     @Test
