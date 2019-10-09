@@ -5,8 +5,12 @@ import com.sallefy.domain.User;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.service.FollowService;
+import com.sallefy.service.PlaylistService;
+import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.FollowDTO;
+import com.sallefy.service.dto.PlaylistDTO;
+import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.web.rest.errors.EmailAlreadyUsedException;
@@ -35,6 +39,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 /**
  * REST controller for managing users.
@@ -75,10 +81,20 @@ public class UserResource {
 
     private final FollowService followService;
 
-    public UserResource(UserService userService, UserRepository userRepository, FollowService followService) {
+    private final PlaylistService playlistService;
+
+    private final TrackService trackService;
+
+    public UserResource(UserService userService,
+                        UserRepository userRepository,
+                        FollowService followService,
+                        PlaylistService playlistService,
+                        TrackService trackService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.followService = followService;
+        this.playlistService = playlistService;
+        this.trackService = trackService;
     }
 
     /**
@@ -90,7 +106,7 @@ public class UserResource {
      *
      * @param userDTO the user to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new user, or with status {@code 400 (Bad Request)} if the login or email is already in use.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @throws URISyntaxException       if the Location URI syntax is incorrect.
      * @throws BadRequestAlertException {@code 400 (Bad Request)} if the login or email is already in use.
      */
     @PostMapping("/users")
@@ -183,10 +199,18 @@ public class UserResource {
      * @param login the login of the user to find.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the tracks of the desired user, or with status {@code 404 (Not Found)}.
      */
+    @ApiOperation(
+        value = "Shows user tracks by login",
+        notes = "Shows all the tracks of user given the login"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successful operation")
+    })
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/tracks")
-    public ResponseEntity<UserDTO> getTracksOfUser(@PathVariable String login) {
+    public ResponseEntity<List<TrackDTO>> getTracksOfUser(@PathVariable String login) {
         log.debug("REST request to get {} user tracks", login);
-        throw new NotYetImplementedException();
+        List<TrackDTO> tracks = trackService.findAllByUserLogin(login);
+        return ok(tracks);
     }
 
     /**
@@ -207,10 +231,18 @@ public class UserResource {
      * @param login the login of the user to find.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the playlists of the desired user, or with status {@code 404 (Not Found)}.
      */
+    @ApiOperation(
+        value = "Shows user playlists by login",
+        notes = "Only shows public accessible playlists. If the current user has ADMIN role it shows all the playlists of the user"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successful operation")
+    })
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/playlists")
-    public ResponseEntity<UserDTO> getPlaylistsOfUser(@PathVariable String login) {
+    public ResponseEntity<List<PlaylistDTO>> getPlaylistsOfUser(@PathVariable String login) {
         log.debug("REST request to get {} user playlists", login);
-        throw new NotYetImplementedException();
+        List<PlaylistDTO> playlists = playlistService.findAllByUserLogin(login);
+        return ok(playlists);
     }
 
     /**
@@ -232,7 +264,7 @@ public class UserResource {
     public ResponseEntity<FollowDTO> toggleFollowUser(@PathVariable String login) {
         log.debug("REST request to follow the user {}", login);
         FollowDTO followDTO = followService.toggleFollowUser(login);
-        return ResponseEntity.ok(followDTO);
+        return ok(followDTO);
     }
 
     /**
@@ -246,6 +278,8 @@ public class UserResource {
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
-        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login)).build();
+        return ResponseEntity.noContent()
+            .headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login))
+            .build();
     }
 }

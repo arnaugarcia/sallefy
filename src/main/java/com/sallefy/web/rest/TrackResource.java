@@ -114,9 +114,9 @@ public class TrackResource {
         @ApiResponse(code = 200, message = "Successful operation"),
     })
     @GetMapping("/tracks")
-    public List<TrackDTO> getAllTracks() {
+    public ResponseEntity<List<TrackDTO>> getAllTracks() {
         log.debug("REST request to get all Tracks");
-        return trackService.findAll();
+        return ResponseEntity.ok(trackService.findAll());
     }
 
     /**

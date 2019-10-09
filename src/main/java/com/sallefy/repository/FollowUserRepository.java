@@ -1,5 +1,6 @@
 package com.sallefy.repository;
 import com.sallefy.domain.FollowUser;
+import com.sallefy.domain.User;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,12 @@ public interface FollowUserRepository extends JpaRepository<FollowUser, Long> {
 
     @Query("select followUser from FollowUser followUser where followUser.followed.login = ?#{principal.username}")
     List<FollowUser> findByFollowedIsCurrentUser();
+
+    @Query("select followUser.user from FollowUser followUser inner join followUser.user where followUser.followed.login = ?#{principal.username}")
+    List<User> findFollowersByCurrentUser();
+
+    @Query("select followUser.followed from FollowUser followUser inner join followUser.user where followUser.user.login = ?#{principal.username}")
+    List<User> findFollowingsByCurrentUser();
 
     @Query("select followUser from FollowUser followUser where followUser.user.login = ?#{principal.username}")
     List<FollowUser> findByUserIsCurrentUser();

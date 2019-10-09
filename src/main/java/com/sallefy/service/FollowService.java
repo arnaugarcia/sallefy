@@ -1,6 +1,10 @@
 package com.sallefy.service;
 
 import com.sallefy.service.dto.FollowDTO;
+import com.sallefy.service.dto.PlaylistDTO;
+import com.sallefy.service.dto.UserDTO;
+
+import java.util.List;
 
 /**
  * Service Interface for managing follows in Users and Playlists.
@@ -29,4 +33,25 @@ public interface FollowService {
      * @param playlistId the id of the Playlist
      */
     void deleteFollowersByPlaylist(Long playlistId);
+
+    /**
+     * Method to find all the followers of by the current user
+     *
+     * @return the list of followers
+     */
+    List<UserDTO> findFollowersOfCurrentUser();
+
+    /**
+     * Method to find all the following users by the current user
+     *
+     * @return the list of users
+     */
+    List<UserDTO> findFollowingUsersByCurrentUser();
+
+    /**
+     * Method to find the playlists that follows the current user
+     *
+     * @return the list of playlists
+     */
+    List<PlaylistDTO> findFollowingPlaylistsByCurrentUser();
 }

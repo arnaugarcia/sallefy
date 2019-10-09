@@ -1,7 +1,10 @@
 package com.sallefy.web.rest;
 
+import com.sallefy.service.FollowService;
+import com.sallefy.service.PlaylistService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.AlbumDTO;
+import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.web.rest.errors.NotYetImplementedException;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 /**
  * REST controller for managing all the library of current user
@@ -36,8 +41,16 @@ public class MeResource {
 
     private final TrackService trackService;
 
-    public MeResource(TrackService trackService) {
+    private final FollowService followService;
+
+    private final PlaylistService playlistService;
+
+    public MeResource(TrackService trackService,
+                      FollowService followService,
+                      PlaylistService playlistService) {
         this.trackService = trackService;
+        this.followService = followService;
+        this.playlistService = playlistService;
     }
 
     /**
@@ -47,7 +60,7 @@ public class MeResource {
      */
     @ApiOperation(
         value = "Shows own tracks",
-        notes = "If the current user has ADMIN role, shows all the tracks of all users"
+        notes = "Shows all the tracks of the current user"
     )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation")
@@ -55,7 +68,7 @@ public class MeResource {
     @GetMapping("/me/tracks")
     public ResponseEntity<List<TrackDTO>> getOwnTracks() {
         log.debug("REST request to get all Tracks");
-        return ResponseEntity.ok(trackService.findAll());
+        return ok(trackService.findAllByCurrentUser());
     }
 
     /**
@@ -71,12 +84,13 @@ public class MeResource {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation"),
         @ApiResponse(code = 403, message = "You're not the owner of the requested source"),
-        @ApiResponse(code = 404, message = "Playlist not found"),
+        @ApiResponse(code = 404, message = "Track not found"),
     })
     @GetMapping("/me/tracks/{id}")
     public ResponseEntity<TrackDTO> getOwnTrackById(@PathVariable Long id) {
         log.debug("REST request to get a Track with id: {}", id);
-        throw new NotYetImplementedException();
+        TrackDTO trackDTO = trackService.findOwnTrackById(id);
+        return ok(trackDTO);
     }
 
     /**
@@ -94,7 +108,8 @@ public class MeResource {
     @GetMapping("/me/tracks/liked")
     public ResponseEntity<List<TrackDTO>> getLikedTracks() {
         log.debug("REST request to get the list of liked Tracks");
-        throw new NotYetImplementedException();
+        final List<TrackDTO> likedTracks = trackService.findAllCurrentUserLiked();
+        return ok(likedTracks);
     }
 
     /**
@@ -167,9 +182,10 @@ public class MeResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/me/playlists")
-    public ResponseEntity<List<TrackDTO>> getOwnPlaylists() {
+    public ResponseEntity<List<PlaylistDTO>> getOwnPlaylists() {
         log.debug("REST request to get own playlists");
-        throw new NotYetImplementedException();
+        List<PlaylistDTO> playlists = playlistService.findAllByCurrentUser();
+        return ok(playlists);
     }
 
     /**
@@ -184,35 +200,37 @@ public class MeResource {
     )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation"),
-        @ApiResponse(code = 403, message = "You're not the owner of the requested source"),
         @ApiResponse(code = 404, message = "Playlist not found"),
     })
     @GetMapping("/me/playlists/{id}")
-    public ResponseEntity<TrackDTO> getOwnPlaylist(@PathVariable Long id) {
+    public ResponseEntity<PlaylistDTO> getOwnPlaylist(@PathVariable Long id) {
         log.debug("REST request to get a Playlist with id: {}", id);
-        throw new NotYetImplementedException();
+        PlaylistDTO playlistDTO = playlistService.findOwnPlaylistById(id);
+        return ok(playlistDTO);
     }
 
     /**
-     * {@code GET  /me/playlists/followed} : get the followed playlists.
+     * {@code GET  /me/playlists/following} : get the following playlists.
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of the followed playlists in the body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of the following playlists in the body.
      */
     @ApiOperation(
-        notes = "Find followed playlists",
-        value = "Shows al the followed playlists by the current user"
+        notes = "Find following playlists",
+        value = "Shows all the following playlists by the current user"
     )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation")
     })
-    @GetMapping("/me/tracks/followed")
-    public ResponseEntity<List<TrackDTO>> getFollowedTracks() {
-        log.debug("REST request to get the list of followed Playlists");
-        throw new NotYetImplementedException();
+    @GetMapping("/me/playlists/following")
+    public ResponseEntity<List<PlaylistDTO>> getFollowingPlaylists() {
+        log.debug("REST request to get the list of following Playlists by current user");
+        List<PlaylistDTO> followingPlaylists = followService.findFollowingPlaylistsByCurrentUser();
+        return ok(followingPlaylists);
+
     }
 
     /**
-     * {@code GET  /me/users/following} : get the following users.
+     * {@code GET  /me/following} : get the following users.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of the following users in the body.
      */
@@ -223,14 +241,15 @@ public class MeResource {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation")
     })
-    @GetMapping("/me/users/followings")
+    @GetMapping("/me/followings")
     public ResponseEntity<List<UserDTO>> getFollowingUsers() {
         log.debug("REST request to get the list of following Users");
-        throw new NotYetImplementedException();
+        List<UserDTO> following = followService.findFollowingUsersByCurrentUser();
+        return ok(following);
     }
 
     /**
-     * {@code GET  /me/users/followers} : get the current user followers.
+     * {@code GET  /me/followers} : get the current user followers.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of the current user followers in the body.
      */
@@ -241,10 +260,11 @@ public class MeResource {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation")
     })
-    @GetMapping("/me/users/followers")
+    @GetMapping("/me/followers")
     public ResponseEntity<List<UserDTO>> getFollowersOfTheUser() {
         log.debug("REST request to get the list of the current user followers");
-        throw new NotYetImplementedException();
+        List<UserDTO> followers = followService.findFollowersOfCurrentUser();
+        return ok(followers);
     }
 
 }
