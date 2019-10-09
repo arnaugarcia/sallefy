@@ -200,13 +200,13 @@ public class MeResource {
     )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation"),
-        @ApiResponse(code = 403, message = "You're not the owner of the requested source"),
         @ApiResponse(code = 404, message = "Playlist not found"),
     })
     @GetMapping("/me/playlists/{id}")
-    public ResponseEntity<TrackDTO> getOwnPlaylist(@PathVariable Long id) {
+    public ResponseEntity<PlaylistDTO> getOwnPlaylist(@PathVariable Long id) {
         log.debug("REST request to get a Playlist with id: {}", id);
-        throw new NotYetImplementedException();
+        PlaylistDTO playlistDTO = playlistService.findOwnPlaylistById(id);
+        return ok(playlistDTO);
     }
 
     /**

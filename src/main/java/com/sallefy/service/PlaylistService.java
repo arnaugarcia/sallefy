@@ -57,4 +57,11 @@ public interface PlaylistService {
      * @return the list of playlists
      */
     List<PlaylistDTO> findAllByCurrentUser();
+
+    /**
+     * Method to find a playlist by the current user and by id
+     * @param id the id of the playlist
+     * @return the playlist
+     */
+    PlaylistDTO findOwnPlaylistById(Long id);
 }

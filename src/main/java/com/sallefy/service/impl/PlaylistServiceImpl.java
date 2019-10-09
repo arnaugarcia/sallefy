@@ -197,6 +197,13 @@ public class PlaylistServiceImpl implements PlaylistService {
             .collect(toList());
     }
 
+    @Override
+    public PlaylistDTO findOwnPlaylistById(Long id) {
+        return playlistRepository.findByUserIsCurrentUserAndId(id)
+            .map(playlistMapper::toDto)
+            .orElseThrow(PlaylistNotFoundException::new);
+    }
+
     private void checkOwnership(User currentUser, Playlist playlist) {
         if (!currentUser.getLogin().equals(playlist.getUser().getLogin())) {
             throw new BadOwnerException();
