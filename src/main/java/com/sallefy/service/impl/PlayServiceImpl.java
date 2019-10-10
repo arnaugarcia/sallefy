@@ -41,11 +41,11 @@ public class PlayServiceImpl implements PlayService {
 
         Track track = findTrackById(id);
 
+        final LocationDTO locationDTO = locationService.locate(requestContext);
+
         Playback playback = new Playback();
         playback.setUser(currentUser);
         playback.setTrack(track);
-
-        final LocationDTO locationDTO = locationService.locate(requestContext);
         playback.setLatitude(locationDTO.getLatitude());
         playback.setLongitude(locationDTO.getLongitude());
         playback.setIp(locationDTO.getIp());
