@@ -161,6 +161,29 @@ public class TrackResource {
     }
 
     /**
+     * {@code PUT  /tracks/:id/play} : play a track.
+     *
+     * @param id the id of the trackDTO to play.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the likeDTO, or with status {@code 404 (Not Found)}.
+     */
+    @ApiOperation(
+        value = "Plays the track by id",
+        notes = "This method stores "
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Successful operation"),
+        @ApiResponse(code = 404, message = "Track not found")
+    })
+    @PutMapping("/tracks/{id}/play")
+    public ResponseEntity<Void> playTrack(@PathVariable Long id) {
+        log.debug("REST request to like a Track : {}", id);
+        likeService.toggleLikeTrack(id);
+        return ResponseEntity.created()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
+    /**
      * {@code DELETE  /tracks/:id} : delete the "id" track.
      *
      * @param id the id of the trackDTO to delete.
@@ -183,4 +206,5 @@ public class TrackResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
 }
