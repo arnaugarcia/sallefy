@@ -81,6 +81,9 @@ public class MeResourceIT {
     @Autowired
     private PlaylistRepository playlistRepository;
 
+    @Autowired
+    private PlayService playService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -92,7 +95,7 @@ public class MeResourceIT {
             .setValidator(validator)
             .build();
 
-        TrackResource trackResource = new TrackResource(trackService, likeService);
+        TrackResource trackResource = new TrackResource(trackService, likeService, playService);
         this.restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())

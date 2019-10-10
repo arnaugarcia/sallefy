@@ -1,13 +1,10 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
-import com.sallefy.domain.FollowUser;
-import com.sallefy.domain.Playlist;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
 import com.sallefy.repository.*;
 import com.sallefy.service.*;
-import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +21,6 @@ import org.springframework.validation.Validator;
 import static com.sallefy.web.rest.TestUtil.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -81,6 +77,9 @@ public class PlayResourceIT {
     @Autowired
     private PlaybackRepository playbackRepository;
 
+    @Autowired
+    private PlayService playService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -92,7 +91,7 @@ public class PlayResourceIT {
             .setValidator(validator)
             .build();
 
-        TrackResource trackResource = new TrackResource(trackService, likeService);
+        TrackResource trackResource = new TrackResource(trackService, likeService, playService);
         this.restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())

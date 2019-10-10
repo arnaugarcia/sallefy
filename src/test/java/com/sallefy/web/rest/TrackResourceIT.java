@@ -6,6 +6,7 @@ import com.sallefy.domain.User;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.LikeService;
+import com.sallefy.service.PlayService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.TrackDTO;
@@ -127,10 +128,13 @@ public class TrackResourceIT {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PlayService playService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TrackResource trackResource = new TrackResource(trackService, likeService);
+        final TrackResource trackResource = new TrackResource(trackService, likeService, playService);
         this.restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -303,7 +307,7 @@ public class TrackResourceIT {
 
     @SuppressWarnings({"unchecked"})
     public void getAllTracksWithEagerRelationshipsIsEnabled() throws Exception {
-        TrackResource trackResource = new TrackResource(trackServiceMock, likeServiceMock);
+        TrackResource trackResource = new TrackResource(trackServiceMock, likeServiceMock, playService);
         when(trackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         MockMvc restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
@@ -320,7 +324,7 @@ public class TrackResourceIT {
 
     @SuppressWarnings({"unchecked"})
     public void getAllTracksWithEagerRelationshipsIsNotEnabled() throws Exception {
-        TrackResource trackResource = new TrackResource(trackServiceMock, likeServiceMock);
+        TrackResource trackResource = new TrackResource(trackServiceMock, likeServiceMock, playService);
         when(trackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
         MockMvc restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
