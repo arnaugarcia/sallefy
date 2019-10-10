@@ -8,12 +8,14 @@ import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.swagger.annotations.*;
+import org.mapstruct.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -181,9 +183,9 @@ public class TrackResource {
         @ApiResponse(code = 404, message = "Track not found")
     })
     @PutMapping("/tracks/{id}/play")
-    public ResponseEntity<Void> playTrack(@PathVariable Long id) throws URISyntaxException {
+    public ResponseEntity<Void> playTrack(@Context HttpServletRequest requestContext, @PathVariable Long id) throws URISyntaxException {
         log.debug("REST request to like a Track : {}", id);
-        playService.playTrack(id);
+        playService.playTrack(requestContext, id);
         return ResponseEntity.created(new URI("/api/tracks/" + id + "/play"))
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
