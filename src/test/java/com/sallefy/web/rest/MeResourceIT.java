@@ -175,7 +175,6 @@ public class MeResourceIT {
         track2.setUser(user);
         trackRepository.save(track2);
 
-
         Track track3 = TrackResourceIT.createEntity();
         track3.setUser(user);
         trackRepository.save(track3);

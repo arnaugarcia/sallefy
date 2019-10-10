@@ -5,10 +5,7 @@ import com.sallefy.domain.FollowUser;
 import com.sallefy.domain.Playlist;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
-import com.sallefy.repository.FollowUserRepository;
-import com.sallefy.repository.PlaylistRepository;
-import com.sallefy.repository.TrackRepository;
-import com.sallefy.repository.UserRepository;
+import com.sallefy.repository.*;
 import com.sallefy.service.*;
 import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
@@ -81,6 +78,9 @@ public class PlayResourceIT {
     @Autowired
     private PlaylistRepository playlistRepository;
 
+    @Autowired
+    private PlaybackRepository playbackRepository;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -138,6 +138,8 @@ public class PlayResourceIT {
 
         restTrackMockMvc.perform(put("/api/tracks/{trackId}/play", track.getId()))
             .andExpect(status().isCreated());
+
+        assertThat(playbackRepository.findAll()).hasSize(1);
 
     }
 
