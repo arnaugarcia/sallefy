@@ -8,6 +8,7 @@ import com.sallefy.repository.TrackRepository;
 import com.sallefy.service.LocationService;
 import com.sallefy.service.PlayService;
 import com.sallefy.service.UserService;
+import com.sallefy.service.dto.LocationDTO;
 import com.sallefy.service.exception.TrackNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +45,10 @@ public class PlayServiceImpl implements PlayService {
         playback.setUser(currentUser);
         playback.setTrack(track);
 
-
+        final LocationDTO locationDTO = locationService.locate(requestContext);
+        playback.setLatitude(locationDTO.getLatitude());
+        playback.setLongitude(locationDTO.getLongitude());
+        playback.setIp(locationDTO.getIp());
 
         playbackRepository.save(playback);
     }
