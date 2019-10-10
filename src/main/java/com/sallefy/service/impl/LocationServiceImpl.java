@@ -2,13 +2,13 @@ package com.sallefy.service.impl;
 
 import com.sallefy.service.LocationService;
 import com.sallefy.service.dto.LocationDTO;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
+
+import static org.springframework.web.util.UriComponentsBuilder.fromHttpUrl;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -19,21 +19,19 @@ public class LocationServiceImpl implements LocationService {
 
     private final RestTemplate restTemplate;
 
-    public LocationServiceImpl(RestTemplateBuilder builder) {
-        this.restTemplate = builder
-            .rootUri("https://api.ipgeolocation.io/")
-            .build();
+    public LocationServiceImpl() {
+        this.restTemplate = new RestTemplate();
     }
 
     @Override
     public LocationDTO locate(HttpServletRequest request) {
-        Map<String, String> vars = new HashMap<>();
 
-        vars.put(API_KEY_KEY, "");
-        vars.put(API_IP_KEY, request.getRemoteAddr());
-        vars.put(API_FIELDS_KEY, "latitude,longitude");
+        UriComponentsBuilder builder = fromHttpUrl("https://api.ipgeolocation.io/ipgeo")
+            .queryParam(API_KEY_KEY, "1d807da75e0e4f179bad51a4204100f5")
+            .queryParam(API_IP_KEY, request.getRemoteAddr())
+            .queryParam(API_FIELDS_KEY, "latitude,longitude");
 
-        return restTemplate.getForObject("ipgeo", LocationDTO.class, vars);
+        return restTemplate.getForObject(builder.toUriString(), LocationDTO.class);
     }
 
 }
