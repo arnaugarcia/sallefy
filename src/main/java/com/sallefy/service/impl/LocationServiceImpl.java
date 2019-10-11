@@ -1,5 +1,7 @@
 package com.sallefy.service.impl;
 
+import com.sallefy.config.ApplicationProperties;
+import com.sallefy.config.ApplicationProperties.Services.GeoLocation;
 import com.sallefy.service.LocationService;
 import com.sallefy.service.dto.LocationDTO;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -20,19 +22,28 @@ public class LocationServiceImpl implements LocationService {
 
     private final RestTemplate restTemplate;
 
-    public LocationServiceImpl(RestTemplateBuilder restTemplateBuilder) {
+    private final ApplicationProperties applicationProperties;
+
+    public LocationServiceImpl(RestTemplateBuilder restTemplateBuilder, ApplicationProperties applicationProperties) {
         this.restTemplate = restTemplateBuilder.build();
+        this.applicationProperties = applicationProperties;
     }
 
     @Override
     public LocationDTO locate(HttpServletRequest request) {
 
-        UriComponentsBuilder builder = fromHttpUrl("https://api.ipgeolocation.io/ipgeo")
-            .queryParam(API_KEY_KEY, "1d807da75e0e4f179bad51a4204100f5")
-            .queryParam(API_IP_KEY, request.getRemoteAddr())
-            .queryParam(API_FIELDS_KEY, "latitude,longitude");
+        UriComponentsBuilder builder = buildUriParams(request);
 
         return restTemplate.getForObject(builder.toUriString(), LocationDTO.class);
+    }
+
+    private UriComponentsBuilder buildUriParams(HttpServletRequest request) {
+        final GeoLocation geolocationProperties = applicationProperties.services.geoLocation;
+        
+        return fromHttpUrl(geolocationProperties.getHost())
+            .queryParam(API_KEY_KEY, geolocationProperties.getApiKey())
+            .queryParam(API_IP_KEY, request.getRemoteAddr())
+            .queryParam(API_FIELDS_KEY, geolocationProperties.getParams());
     }
 
 }
