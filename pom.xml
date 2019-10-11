@@ -11,6 +11,14 @@
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
+        <repository>
+            <id>spring-boot-throttling-repo</id>
+            <url>https://raw.github.com/weddini/spring-boot-throttling/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -347,6 +355,11 @@
             <scope>test</scope>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
+        <dependency>
+            <groupId>com.weddini.throttling</groupId>
+            <artifactId>spring-boot-throttling-starter</artifactId>
+            <version>0.0.9</version>
+        </dependency>
     </dependencies>
 
     <build>
