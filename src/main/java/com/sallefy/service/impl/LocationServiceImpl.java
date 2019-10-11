@@ -2,6 +2,7 @@ package com.sallefy.service.impl;
 
 import com.sallefy.service.LocationService;
 import com.sallefy.service.dto.LocationDTO;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,8 +20,8 @@ public class LocationServiceImpl implements LocationService {
 
     private final RestTemplate restTemplate;
 
-    public LocationServiceImpl() {
-        this.restTemplate = new RestTemplate();
+    public LocationServiceImpl(RestTemplateBuilder restTemplateBuilder) {
+        this.restTemplate = restTemplateBuilder.build();
     }
 
     @Override
