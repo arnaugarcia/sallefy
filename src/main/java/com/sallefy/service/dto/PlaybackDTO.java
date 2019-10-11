@@ -1,7 +1,9 @@
 package com.sallefy.service.dto;
 import java.time.ZonedDateTime;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
+import com.sallefy.domain.enumeration.AgentType;
 
 /**
  * A DTO for the {@link com.sallefy.domain.Playback} entity.
@@ -15,6 +17,8 @@ public class PlaybackDTO implements Serializable {
     private Double latitude;
 
     private Double longitude;
+
+    private AgentType agent;
 
     private ZonedDateTime date;
 
@@ -57,6 +61,14 @@ public class PlaybackDTO implements Serializable {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public AgentType getAgent() {
+        return agent;
+    }
+
+    public void setAgent(AgentType agent) {
+        this.agent = agent;
     }
 
     public ZonedDateTime getDate() {
@@ -127,6 +139,7 @@ public class PlaybackDTO implements Serializable {
             ", ip='" + getIp() + "'" +
             ", latitude=" + getLatitude() +
             ", longitude=" + getLongitude() +
+            ", agent='" + getAgent() + "'" +
             ", date='" + getDate() + "'" +
             ", user=" + getUserId() +
             ", user='" + getUserLogin() + "'" +

@@ -21,6 +21,7 @@
             <th><span jhiTranslate="sallefyApp.playback.ip">Ip</span></th>
             <th><span jhiTranslate="sallefyApp.playback.latitude">Latitude</span></th>
             <th><span jhiTranslate="sallefyApp.playback.longitude">Longitude</span></th>
+            <th><span jhiTranslate="sallefyApp.playback.agent">Agent</span></th>
             <th><span jhiTranslate="sallefyApp.playback.date">Date</span></th>
             <th><span jhiTranslate="sallefyApp.playback.user">User</span></th>
             <th><span jhiTranslate="sallefyApp.playback.track">Track</span></th>
@@ -33,6 +34,7 @@
                 <td>{{playback.ip}}</td>
                 <td>{{playback.latitude}}</td>
                 <td>{{playback.longitude}}</td>
+                <td jhiTranslate="{{'sallefyApp.AgentType.' + playback.agent}}">{{playback.agent}}</td>
                 <td>{{playback.date | date:'medium'}}</td>
                 <td>
                     {{playback.userLogin}}

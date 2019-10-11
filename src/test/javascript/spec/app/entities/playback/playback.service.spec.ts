@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { PlaybackService } from 'app/entities/playback/playback.service';
 import { IPlayback, Playback } from 'app/shared/model/playback.model';
+import { AgentType } from 'app/shared/model/enumerations/agent-type.model';
 
 describe('Service Tests', () => {
   describe('Playback Service', () => {
@@ -24,7 +25,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Playback(0, 'AAAAAAA', 0, 0, currentDate);
+      elemDefault = new Playback(0, 'AAAAAAA', 0, 0, AgentType.MOBILE, currentDate);
     });
 
     describe('Service methods', () => {
@@ -74,6 +75,7 @@ describe('Service Tests', () => {
             ip: 'BBBBBB',
             latitude: 1,
             longitude: 1,
+            agent: 'BBBBBB',
             date: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
@@ -100,6 +102,7 @@ describe('Service Tests', () => {
             ip: 'BBBBBB',
             latitude: 1,
             longitude: 1,
+            agent: 'BBBBBB',
             date: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault

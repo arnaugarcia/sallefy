@@ -19,6 +19,7 @@
       "ip": "Ip",
       "latitude": "Latitude",
       "longitude": "Longitude",
+      "agent": "Agent",
       "date": "Date",
       "user": "User",
       "track": "Track"

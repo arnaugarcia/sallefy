@@ -44,6 +44,7 @@ describe('Playback e2e test', () => {
             playbackUpdatePage.setIpInput('ip'),
             playbackUpdatePage.setLatitudeInput('5'),
             playbackUpdatePage.setLongitudeInput('5'),
+            playbackUpdatePage.agentSelectLastOption(),
             playbackUpdatePage.setDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
             playbackUpdatePage.userSelectLastOption(),
             playbackUpdatePage.trackSelectLastOption(),

@@ -1,18 +1,21 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.service.LikeService;
+import com.sallefy.service.PlayService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.swagger.annotations.*;
+import org.mapstruct.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -41,9 +44,14 @@ public class TrackResource {
 
     private final LikeService likeService;
 
-    public TrackResource(TrackService trackService, LikeService likeService) {
+    private final PlayService playService;
+
+    public TrackResource(TrackService trackService,
+                         LikeService likeService,
+                         PlayService playService) {
         this.trackService = trackService;
         this.likeService = likeService;
+        this.playService = playService;
     }
 
     /**
@@ -161,6 +169,29 @@ public class TrackResource {
     }
 
     /**
+     * {@code PUT  /tracks/:id/play} : play a track.
+     *
+     * @param id the id of the trackDTO to play.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the likeDTO, or with status {@code 404 (Not Found)}.
+     */
+    @ApiOperation(
+        value = "Plays the track by id",
+        notes = "This method stores "
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Successful operation"),
+        @ApiResponse(code = 404, message = "Track not found")
+    })
+    @PutMapping("/tracks/{id}/play")
+    public ResponseEntity<Void> playTrack(@Context HttpServletRequest requestContext, @PathVariable Long id) throws URISyntaxException {
+        log.debug("REST request to like a Track : {}", id);
+        playService.playTrack(requestContext, id);
+        return ResponseEntity.created(new URI("/api/tracks/" + id + "/play"))
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
+    /**
      * {@code DELETE  /tracks/:id} : delete the "id" track.
      *
      * @param id the id of the trackDTO to delete.
@@ -183,4 +214,5 @@ public class TrackResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
 }

@@ -204,4 +204,15 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
             .build();
         return create(ex, problem, request);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleExternalClientException(com.sallefy.service.exception.ExternalClientError ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withType(DEFAULT_TYPE)
+            .withStatus(SERVICE_UNAVAILABLE)
+            .with(MESSAGE_KEY, ex.getMessage())
+            .with(CODE_KEY, ERR_SERVICE_UNAVAILABLE)
+            .build();
+        return create(ex, problem, request);
+    }
 }
