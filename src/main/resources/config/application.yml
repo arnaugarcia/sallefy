@@ -148,5 +148,3 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 application:
-  redis:
-    host: 1asdfadsfds
