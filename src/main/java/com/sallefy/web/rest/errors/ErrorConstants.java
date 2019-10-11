@@ -12,6 +12,7 @@ public final class ErrorConstants {
     public static final String ERR_OWNER_DIFFERS = "error.user.differs";
     public static final String NOT_YET_IMPLEMENTED = "error.server.notYetImplemented";
     public static final String ERR_USER_NOT_FOUND = "error.user.notFound";
+    public static final String ERR_SERVICE_UNAVAILABLE = "error.server.notAvailable";
     public static final String ERR_GENERIC = "error.generic";
 
     public static final String PROBLEM_BASE_URL = "http://sallefy.eu-west-3.elasticbeanstalk.com/problem";
