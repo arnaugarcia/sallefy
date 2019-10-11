@@ -95,6 +95,7 @@
         <junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
         <junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
         <!-- jhipster-needle-maven-property -->
+        <spring-boot-throttling-starter.version>0.0.9</spring-boot-throttling-starter.version>
     </properties>
 
     <dependencyManagement>
@@ -358,7 +359,7 @@
         <dependency>
             <groupId>com.weddini.throttling</groupId>
             <artifactId>spring-boot-throttling-starter</artifactId>
-            <version>0.0.9</version>
+            <version>${spring-boot-throttling-starter.version}</version>
         </dependency>
     </dependencies>
 
