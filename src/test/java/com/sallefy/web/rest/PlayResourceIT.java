@@ -29,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Integration tests for the {@link TrackResource} REST controller.
  */
+@Ignore
 @SpringBootTest(classes = SallefyApp.class)
 public class PlayResourceIT {
 
@@ -89,10 +90,10 @@ public class PlayResourceIT {
 
     }
 
+    /*@Ignore("Uses a external service")
     @Test
     @Transactional
     @WithMockUser("playback-user")
-    @Ignore("Uses a external service")
     public void should_create_a_playback() throws Exception {
 
         // Initialize the database
@@ -114,6 +115,6 @@ public class PlayResourceIT {
 
         assertThat(playbackRepository.findAll()).hasSize(1);
 
-    }
+    }*/
 
 }
