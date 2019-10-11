@@ -59,10 +59,14 @@ public class PlayServiceImpl implements PlayService {
         playback.setTrack(track);
         playback.setLatitude(locationDTO.getLatitude());
         playback.setLongitude(locationDTO.getLongitude());
-        playback.setAgent(transformAgentType(request.getHeader(USER_AGENT_HEADER_KEY)));
+        playback.setAgent(getAgent(request));
         playback.setIp(locationDTO.getIp());
 
         playbackRepository.save(playback);
+    }
+
+    private AgentType getAgent(HttpServletRequest request) {
+        return transformAgentType(request.getHeader(USER_AGENT_HEADER_KEY));
     }
 
     private Track findTrackById(Long id) {
