@@ -1,5 +1,6 @@
 package com.sallefy.service.impl;
 
+import com.sallefy.config.ApplicationProperties;
 import com.sallefy.domain.Playback;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static com.sallefy.domain.enumeration.AgentType.*;
 import static com.weddini.throttling.ThrottlingType.SpEL;
-import static java.util.concurrent.TimeUnit.SECONDS;
+import static java.util.concurrent.TimeUnit.MINUTES;
 import static org.springframework.util.StringUtils.hasText;
 
 @Service
@@ -45,7 +46,7 @@ public class PlayServiceImpl implements PlayService {
     }
 
     @Override
-    @Throttling(type = SpEL, expression = "#model.login", limit = 2, timeUnit = SECONDS)
+    @Throttling(type = SpEL, expression = "#model.login", limit = 10, timeUnit = MINUTES)
     public void playTrack(HttpServletRequest request, Long id) {
         final User currentUser = userService.getUserWithAuthorities();
 
