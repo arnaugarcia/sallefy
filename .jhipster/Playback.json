@@ -14,6 +14,11 @@
             "fieldType": "Double"
         },
         {
+            "fieldName": "agent",
+            "fieldType": "AgentType",
+            "fieldValues": "MOBILE,WEB,OTHER"
+        },
+        {
             "fieldName": "date",
             "fieldType": "ZonedDateTime"
         }

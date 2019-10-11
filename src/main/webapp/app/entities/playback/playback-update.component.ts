@@ -32,6 +32,7 @@ export class PlaybackUpdateComponent implements OnInit {
     ip: [],
     latitude: [],
     longitude: [],
+    agent: [],
     date: [],
     userId: [null, Validators.required],
     trackId: [null, Validators.required]
@@ -73,6 +74,7 @@ export class PlaybackUpdateComponent implements OnInit {
       ip: playback.ip,
       latitude: playback.latitude,
       longitude: playback.longitude,
+      agent: playback.agent,
       date: playback.date != null ? playback.date.format(DATE_TIME_FORMAT) : null,
       userId: playback.userId,
       trackId: playback.trackId
@@ -100,6 +102,7 @@ export class PlaybackUpdateComponent implements OnInit {
       ip: this.editForm.get(['ip']).value,
       latitude: this.editForm.get(['latitude']).value,
       longitude: this.editForm.get(['longitude']).value,
+      agent: this.editForm.get(['agent']).value,
       date: this.editForm.get(['date']).value != null ? moment(this.editForm.get(['date']).value, DATE_TIME_FORMAT) : undefined,
       userId: this.editForm.get(['userId']).value,
       trackId: this.editForm.get(['trackId']).value

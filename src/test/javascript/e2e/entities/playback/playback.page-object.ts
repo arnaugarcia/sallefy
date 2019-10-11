@@ -29,6 +29,7 @@ export class PlaybackUpdatePage {
   ipInput = element(by.id('field_ip'));
   latitudeInput = element(by.id('field_latitude'));
   longitudeInput = element(by.id('field_longitude'));
+  agentSelect = element(by.id('field_agent'));
   dateInput = element(by.id('field_date'));
   userSelect = element(by.id('field_user'));
   trackSelect = element(by.id('field_track'));
@@ -59,6 +60,21 @@ export class PlaybackUpdatePage {
 
   async getLongitudeInput() {
     return await this.longitudeInput.getAttribute('value');
+  }
+
+  async setAgentSelect(agent) {
+    await this.agentSelect.sendKeys(agent);
+  }
+
+  async getAgentSelect() {
+    return await this.agentSelect.element(by.css('option:checked')).getText();
+  }
+
+  async agentSelectLastOption(timeout?: number) {
+    await this.agentSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
   }
 
   async setDateInput(date) {

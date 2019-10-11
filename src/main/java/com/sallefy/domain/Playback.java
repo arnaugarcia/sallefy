@@ -2,13 +2,15 @@ package com.sallefy.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+
+import com.sallefy.domain.enumeration.AgentType;
+import org.hibernate.annotations.CreationTimestamp;
 
 /**
  * A Playback.
@@ -32,6 +34,10 @@ public class Playback implements Serializable {
 
     @Column(name = "longitude")
     private Double longitude;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "agent")
+    private AgentType agent;
 
     @CreationTimestamp
     @Column(name = "date")
@@ -93,6 +99,19 @@ public class Playback implements Serializable {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public AgentType getAgent() {
+        return agent;
+    }
+
+    public Playback agent(AgentType agent) {
+        this.agent = agent;
+        return this;
+    }
+
+    public void setAgent(AgentType agent) {
+        this.agent = agent;
     }
 
     public ZonedDateTime getDate() {
@@ -158,6 +177,7 @@ public class Playback implements Serializable {
             ", ip='" + getIp() + "'" +
             ", latitude=" + getLatitude() +
             ", longitude=" + getLongitude() +
+            ", agent='" + getAgent() + "'" +
             ", date='" + getDate() + "'" +
             "}";
     }

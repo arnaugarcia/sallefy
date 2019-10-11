@@ -1,10 +1,12 @@
 import { Moment } from 'moment';
+import { AgentType } from 'app/shared/model/enumerations/agent-type.model';
 
 export interface IPlayback {
   id?: number;
   ip?: string;
   latitude?: number;
   longitude?: number;
+  agent?: AgentType;
   date?: Moment;
   userLogin?: string;
   userId?: number;
@@ -18,6 +20,7 @@ export class Playback implements IPlayback {
     public ip?: string,
     public latitude?: number,
     public longitude?: number,
+    public agent?: AgentType,
     public date?: Moment,
     public userLogin?: string,
     public userId?: number,

@@ -1,0 +1,10 @@
+{
+  "sallefyApp": {
+    "AgentType": {
+      "null": "",
+      "MOBILE": "MOBILE",
+      "WEB": "WEB",
+      "OTHER": "OTHER"
+    }
+  }
+}

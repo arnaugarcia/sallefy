@@ -59,7 +59,12 @@ entity Playback {
 	ip String,
     latitude Double,
     longitude Double,
+    agent AgentType,
     date ZonedDateTime
+}
+
+enum AgentType {
+    MOBILE, WEB, OTHER
 }
 
 relationship ManyToOne {
