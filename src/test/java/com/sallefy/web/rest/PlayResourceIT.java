@@ -8,6 +8,7 @@ import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.*;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -91,6 +92,7 @@ public class PlayResourceIT {
     @Test
     @Transactional
     @WithMockUser("playback-user")
+    @Ignore("Uses a external service")
     public void should_create_a_playback() throws Exception {
 
         // Initialize the database
