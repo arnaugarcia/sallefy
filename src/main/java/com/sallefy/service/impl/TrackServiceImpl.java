@@ -9,6 +9,7 @@ import com.sallefy.service.UserService;
 import com.sallefy.service.dto.GenreDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.exception.BadOwnerException;
+import com.sallefy.service.exception.GenreNotFound;
 import com.sallefy.service.exception.TrackNotFoundException;
 import com.sallefy.service.mapper.TrackMapper;
 import org.slf4j.Logger;
@@ -21,9 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toCollection;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Service Implementation for managing {@link Track}.
@@ -164,7 +165,7 @@ public class TrackServiceImpl implements TrackService {
         return trackRepository.findAllById(tracksIds)
             .stream()
             .map(trackMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
     @Override
@@ -172,7 +173,7 @@ public class TrackServiceImpl implements TrackService {
         return trackRepository.findByUserIsCurrentUser()
             .stream()
             .map(trackMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
     @Override
@@ -180,7 +181,7 @@ public class TrackServiceImpl implements TrackService {
         return trackRepository.findAllLikedTracksByCurrentUser()
             .stream()
             .map(trackMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
     @Override
@@ -196,8 +197,19 @@ public class TrackServiceImpl implements TrackService {
         return trackRepository.findAllByUserLogin(login)
             .stream()
             .map(trackMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(toList());
 
+    }
+
+    @Override
+    public List<TrackDTO> findTracksByGenreId(Long genreId) {
+        genreService.findOne(genreId)
+            .orElseThrow(GenreNotFound::new);
+
+        return trackRepository.findByGenreId(genreId)
+            .stream()
+            .map(trackMapper::toDto)
+            .collect(toList());
     }
 
     private void filterGenresExist(TrackDTO trackDTO) {
@@ -212,7 +224,7 @@ public class TrackServiceImpl implements TrackService {
         return trackDTO.getGenres()
             .stream()
             .map(GenreDTO::getId)
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
 
