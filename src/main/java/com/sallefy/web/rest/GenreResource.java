@@ -1,7 +1,9 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.service.GenreService;
+import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.GenreDTO;
+import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -33,8 +35,11 @@ public class GenreResource {
 
     private final GenreService genreService;
 
-    public GenreResource(GenreService genreService) {
+    private final TrackService trackService;
+
+    public GenreResource(GenreService genreService, TrackService trackService) {
         this.genreService = genreService;
+        this.trackService = trackService;
     }
 
     /**
@@ -80,13 +85,24 @@ public class GenreResource {
     /**
      * {@code GET  /genres} : get all the genres.
      *
-
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of genres in body.
      */
     @GetMapping("/genres")
     public List<GenreDTO> getAllGenres() {
         log.debug("REST request to get all Genres");
         return genreService.findAll();
+    }
+
+    /**
+     * {@code GET  /genres/{id}/tracks} : get all the tracks by genre "id".
+     * @param id the id of the genre
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of genres in body.
+     */
+    @GetMapping("/genres/{id}/tracks")
+    public List<TrackDTO> getTracksByGenreId(@PathVariable Long id) {
+        log.debug("REST request to get all Genres");
+        return trackService.findTracksByGenreId(id);
     }
 
     /**
