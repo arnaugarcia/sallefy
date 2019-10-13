@@ -529,6 +529,16 @@ public class TrackResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser
+    public void should_fail_because_genre_id_not_exists() throws Exception {
+
+        restGenreMockMvc.perform(get("/api/genres/{id}/tracks", Long.MAX_VALUE))
+            .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    @Transactional
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Track.class);
         Track track1 = new Track();
