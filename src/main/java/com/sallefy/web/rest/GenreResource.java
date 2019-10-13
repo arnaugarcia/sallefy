@@ -19,6 +19,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 /**
  * REST controller for managing {@link com.sallefy.domain.Genre}.
  */
@@ -77,7 +79,7 @@ public class GenreResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         GenreDTO result = genreService.save(genreDTO);
-        return ResponseEntity.ok()
+        return ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, genreDTO.getId().toString()))
             .body(result);
     }
@@ -100,9 +102,9 @@ public class GenreResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of genres in body.
      */
     @GetMapping("/genres/{id}/tracks")
-    public List<TrackDTO> getTracksByGenreId(@PathVariable Long id) {
+    public ResponseEntity<List<TrackDTO>> getTracksByGenreId(@PathVariable Long id) {
         log.debug("REST request to get all Genres");
-        return trackService.findTracksByGenreId(id);
+        return ok(trackService.findTracksByGenreId(id));
     }
 
     /**
