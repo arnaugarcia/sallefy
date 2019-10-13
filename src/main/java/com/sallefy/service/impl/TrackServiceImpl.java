@@ -1,14 +1,16 @@
 package com.sallefy.service.impl;
 
+import com.sallefy.domain.Genre;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
+import com.sallefy.repository.GenreRepository;
 import com.sallefy.repository.TrackRepository;
-import com.sallefy.service.GenreService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.GenreDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.exception.BadOwnerException;
+import com.sallefy.service.exception.GenreNotFound;
 import com.sallefy.service.exception.TrackNotFoundException;
 import com.sallefy.service.mapper.TrackMapper;
 import org.slf4j.Logger;
@@ -21,9 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toCollection;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Service Implementation for managing {@link Track}.
@@ -36,19 +38,19 @@ public class TrackServiceImpl implements TrackService {
 
     private final TrackRepository trackRepository;
 
-    private final TrackMapper trackMapper;
+    private final GenreRepository genreRepository;
 
-    private final GenreService genreService;
+    private final TrackMapper trackMapper;
 
     private final UserService userService;
 
     public TrackServiceImpl(TrackRepository trackRepository,
+                            GenreRepository genreRepository,
                             TrackMapper trackMapper,
-                            GenreService genreService,
                             UserService userService) {
         this.trackRepository = trackRepository;
+        this.genreRepository = genreRepository;
         this.trackMapper = trackMapper;
-        this.genreService = genreService;
         this.userService = userService;
     }
 
@@ -77,8 +79,6 @@ public class TrackServiceImpl implements TrackService {
 
         updateTrackFields(trackDTO, track);
 
-        filterGenresExist(trackDTO);
-
         return saveAndTransform(track);
     }
 
@@ -89,6 +89,8 @@ public class TrackServiceImpl implements TrackService {
         track.setReleased(trackDTO.getReleased());
         track.setThumbnail(trackDTO.getThumbnail());
         track.setUrl(trackDTO.getUrl());
+        track.setGenres(filterGenresExist(trackDTO));
+
     }
 
     /**
@@ -164,7 +166,7 @@ public class TrackServiceImpl implements TrackService {
         return trackRepository.findAllById(tracksIds)
             .stream()
             .map(trackMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
     @Override
@@ -172,7 +174,7 @@ public class TrackServiceImpl implements TrackService {
         return trackRepository.findByUserIsCurrentUser()
             .stream()
             .map(trackMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
     @Override
@@ -180,7 +182,7 @@ public class TrackServiceImpl implements TrackService {
         return trackRepository.findAllLikedTracksByCurrentUser()
             .stream()
             .map(trackMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
     @Override
@@ -196,23 +198,34 @@ public class TrackServiceImpl implements TrackService {
         return trackRepository.findAllByUserLogin(login)
             .stream()
             .map(trackMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(toList());
 
     }
 
-    private void filterGenresExist(TrackDTO trackDTO) {
+    @Override
+    public List<TrackDTO> findTracksByGenreId(Long genreId) {
+        genreRepository.findById(genreId)
+            .orElseThrow(GenreNotFound::new);
+
+        return trackRepository.findAllByGenreId(genreId)
+            .stream()
+            .map(trackMapper::toDto)
+            .collect(toList());
+    }
+
+    private HashSet<Genre> filterGenresExist(TrackDTO trackDTO) {
         List<Long> genresIds = extractGenresIds(trackDTO);
 
-        List<GenreDTO> genreDTOList = genreService.findAllById(genresIds);
+        List<Genre> genreList = genreRepository.findAllById(genresIds);
 
-        trackDTO.setGenres(new HashSet<>(genreDTOList));
+        return new HashSet<>(genreList);
     }
 
     private List<Long> extractGenresIds(TrackDTO trackDTO) {
         return trackDTO.getGenres()
             .stream()
             .map(GenreDTO::getId)
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
 

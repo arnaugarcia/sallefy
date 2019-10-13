@@ -1,14 +1,13 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
+import com.sallefy.domain.Genre;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
+import com.sallefy.repository.GenreRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
-import com.sallefy.service.LikeService;
-import com.sallefy.service.PlayService;
-import com.sallefy.service.TrackService;
-import com.sallefy.service.UserService;
+import com.sallefy.service.*;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.mapper.TrackMapper;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
@@ -34,7 +33,9 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
 import static com.sallefy.web.rest.TestUtil.sameInstant;
@@ -43,6 +44,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -89,6 +91,9 @@ public class TrackResourceIT {
     private TrackRepository trackRepositoryMock;
 
     @Autowired
+    private GenreRepository genreRepository;
+
+    @Autowired
     private TrackMapper trackMapper;
 
     @Mock
@@ -123,6 +128,8 @@ public class TrackResourceIT {
 
     private MockMvc restTrackMockMvc;
 
+    private MockMvc restGenreMockMvc;
+
     private Track track;
 
     @Autowired
@@ -131,11 +138,23 @@ public class TrackResourceIT {
     @Autowired
     private PlayService playService;
 
+    @Autowired
+    private GenreService genreService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
         final TrackResource trackResource = new TrackResource(trackService, likeService, playService);
         this.restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator)
+            .build();
+
+        final GenreResource genreResource = new GenreResource(genreService, trackService);
+        this.restGenreMockMvc = MockMvcBuilders.standaloneSetup(genreResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
@@ -266,7 +285,7 @@ public class TrackResourceIT {
         // Get all the trackList
         restTrackMockMvc.perform(get("/api/tracks?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$", hasSize(2)))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
@@ -299,7 +318,7 @@ public class TrackResourceIT {
         // Get all the trackList
         restTrackMockMvc.perform(get("/api/tracks?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$", hasSize(1)))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)));
@@ -355,7 +374,7 @@ public class TrackResourceIT {
         // Get the track
         restTrackMockMvc.perform(get("/api/tracks/{id}", track.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(track.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.url").value(DEFAULT_URL))
@@ -468,6 +487,54 @@ public class TrackResourceIT {
         // Validate the database contains one less item
         List<Track> trackList = trackRepository.findAll();
         assertThat(trackList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
+    public void should_return_tracks_by_genre_id() throws Exception {
+
+        User owner = createBasicUserWithUsername("track-owner");
+        userRepository.save(owner);
+
+        Genre genre = new Genre();
+        genre.setName("Test");
+        Genre result = genreRepository.save(genre);
+
+        restGenreMockMvc.perform(get("/api/genres"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(1)))
+            .andExpect(jsonPath("$.[*].name").value(hasItem("Test")));
+
+        Set<Genre> genres = new HashSet<>();
+        genres.add(genre);
+
+        Track track1 = createEntity();
+        track1.setGenres(genres);
+        track1.setUser(owner);
+        trackRepository.save(track1);
+
+        Track track2 = createEntity();
+        track2.setGenres(genres);
+        track2.setUser(owner);
+        trackRepository.save(track2);
+
+        restGenreMockMvc.perform(get("/api/genres/{id}/tracks", result.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(2)));
+
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
+    public void should_fail_because_genre_id_not_exists() throws Exception {
+
+        restGenreMockMvc.perform(get("/api/genres/{id}/tracks", Long.MAX_VALUE))
+            .andExpect(status().isNotFound());
+
     }
 
     @Test

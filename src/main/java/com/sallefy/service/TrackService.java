@@ -84,4 +84,12 @@ public interface TrackService {
      * @return the tracks list
      */
     List<TrackDTO> findAllByUserLogin(String login);
+
+    /**
+     * Method to find all tracks by genre "id"
+     *
+     * @param id the id of the genre
+     * @return the list of tracks
+     */
+    List<TrackDTO> findTracksByGenreId(Long id);
 }

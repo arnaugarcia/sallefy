@@ -37,4 +37,7 @@ public interface TrackRepository extends JpaRepository<Track, Long> {
 
     @Query("select track from Track track where track.user.login = :login")
     List<Track> findAllByUserLogin(@Param("login") String login);
+
+    @Query("select track from Track track left join fetch track.genres genres left join fetch track.user where genres.id = :genreId")
+    List<Track> findAllByGenreId(@Param("genreId") Long genreId);
 }
