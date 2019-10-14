@@ -5,26 +5,26 @@ import java.util.Objects;
 
 public class PlaylistCriteria extends BaseCriteria implements Serializable {
 
-    private boolean recent;
+    private Boolean recent;
 
-    private boolean popular;
+    private Boolean popular;
 
     public PlaylistCriteria() {
     }
 
-    public boolean isRecent() {
+    public Boolean isRecent() {
         return recent;
     }
 
-    public void setRecent(boolean recent) {
+    public void setRecent(Boolean recent) {
         this.recent = recent;
     }
 
-    public boolean isPopular() {
+    public Boolean isPopular() {
         return popular;
     }
 
-    public void setPopular(boolean popular) {
+    public void setPopular(Boolean popular) {
         this.popular = popular;
     }
 
