@@ -14,7 +14,7 @@ import java.util.Optional;
  * Spring Data  repository for the Playlist entity.
  */
 @Repository
-public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
+public interface PlaylistRepository extends JpaRepository<Playlist, Long>, JpaSpecificationExecutor<Playlist> {
 
     @Query("select playlist from Playlist playlist where playlist.user.login = ?#{principal.username}")
     List<Playlist> findByUserIsCurrentUser();
