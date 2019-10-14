@@ -20,7 +20,11 @@ public class PlaylistCriteria extends BaseCriteria implements Serializable {
         this.recent = recent;
     }
 
-    public Boolean isPopular() {
+    public Boolean getRecent() {
+        return recent;
+    }
+
+    public Boolean getPopular() {
         return popular;
     }
 
