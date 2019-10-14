@@ -64,7 +64,7 @@
         <!-- The liquibase version should match the one managed by
         https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
         <liquibase.version>3.7.0</liquibase.version>
-        <liquibase-hibernate5.version>3.7</liquibase-hibernate5.version>
+        <liquibase-hibernate5.version>3.6</liquibase-hibernate5.version>
         <!-- The hibernate version to be used to override default version of liquibase maven plugin -->
         <hibernate-core.version>5.3.8.Final</hibernate-core.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
@@ -617,7 +617,7 @@
                         <url>jdbc:mysql://localhost:3306/sallefy?serverTimezone=UTC</url>
                         <defaultSchemaName>sallefy</defaultSchemaName>
                         <username>root</username>
-                        <password></password>
+                        <password>cangetin</password>
                         <referenceUrl>hibernate:spring:com.sallefy.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
                         <verbose>true</verbose>
                         <logging>debug</logging>
