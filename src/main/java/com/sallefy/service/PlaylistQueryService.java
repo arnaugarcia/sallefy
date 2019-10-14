@@ -1,6 +1,7 @@
 package com.sallefy.service;
 
 import com.sallefy.domain.Playlist;
+import com.sallefy.domain.Playlist_;
 import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.criteria.PlaylistCriteria;
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Order;
 import java.util.List;
 
 /**
@@ -58,10 +60,17 @@ public class PlaylistQueryService extends QueryService<Playlist> {
     protected Specification<Playlist> createSpecification(PlaylistCriteria criteria) {
         Specification<Playlist> specification = Specification.where(null);
         if (criteria != null) {
-            /*if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Playlist_.id));
-            }*/
+            if (criteria.isRecent() != null) {
+                specification = specification.and(sortByCreated());
+            }
         }
         return specification;
+    }
+
+    private Specification<Playlist> sortByCreated() {
+        return (root, criteriaQuery, criteriaBuilder) -> {
+            final Order order = criteriaBuilder.desc(root.get(Playlist_.created));
+            return criteriaQuery.orderBy(order).getRestriction();
+        };
     }
 }
