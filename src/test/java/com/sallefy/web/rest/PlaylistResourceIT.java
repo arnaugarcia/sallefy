@@ -8,6 +8,7 @@ import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.FollowService;
+import com.sallefy.service.PlaylistQueryService;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.PlaylistRequestDTO;
@@ -22,7 +23,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -129,10 +129,13 @@ public class PlaylistResourceIT {
     @Autowired
     private FollowService followService;
 
+    @Autowired
+    private PlaylistQueryService playlistQueryService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PlaylistResource playlistResource = new PlaylistResource(playlistService, followService);
+        final PlaylistResource playlistResource = new PlaylistResource(playlistService, playlistQueryService, followService);
         this.restPlaylistMockMvc = MockMvcBuilders.standaloneSetup(playlistResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

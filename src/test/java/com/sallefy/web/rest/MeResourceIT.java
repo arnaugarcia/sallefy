@@ -84,6 +84,9 @@ public class MeResourceIT {
     @Autowired
     private PlayService playService;
 
+    @Autowired
+    private PlaylistQueryService playlistQueryService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -103,7 +106,7 @@ public class MeResourceIT {
             .setValidator(validator)
             .build();
 
-        PlaylistResource playlistResource = new PlaylistResource(playlistService, followService);
+        PlaylistResource playlistResource = new PlaylistResource(playlistService, playlistQueryService, followService);
         this.restPlaylistMockMvc = MockMvcBuilders.standaloneSetup(playlistResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
