@@ -36,6 +36,7 @@ export class PlaylistUpdatePage {
   numberSongsInput = element(by.id('field_numberSongs'));
   followersInput = element(by.id('field_followers'));
   ratingInput = element(by.id('field_rating'));
+  createdInput = element(by.id('field_created'));
   userSelect = element(by.id('field_user'));
   trackSelect = element(by.id('field_track'));
 
@@ -111,6 +112,14 @@ export class PlaylistUpdatePage {
 
   async getRatingInput() {
     return await this.ratingInput.getAttribute('value');
+  }
+
+  async setCreatedInput(created) {
+    await this.createdInput.sendKeys(created);
+  }
+
+  async getCreatedInput() {
+    return await this.createdInput.getAttribute('value');
   }
 
   async userSelectLastOption(timeout?: number) {

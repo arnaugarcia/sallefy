@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import * as moment from 'moment';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { IPlaylist, Playlist } from 'app/shared/model/playlist.model';
 import { PlaylistService } from './playlist.service';
@@ -24,6 +25,7 @@ export class PlaylistUpdateComponent implements OnInit {
   users: IUser[];
 
   tracks: ITrack[];
+  createdDp: any;
 
   editForm = this.fb.group({
     id: [],
@@ -37,6 +39,7 @@ export class PlaylistUpdateComponent implements OnInit {
     numberSongs: [],
     followers: [],
     rating: [],
+    created: [],
     userId: [null, Validators.required],
     tracks: []
   });
@@ -85,6 +88,7 @@ export class PlaylistUpdateComponent implements OnInit {
       numberSongs: playlist.numberSongs,
       followers: playlist.followers,
       rating: playlist.rating,
+      created: playlist.created,
       userId: playlist.userId,
       tracks: playlist.tracks
     });
@@ -151,6 +155,7 @@ export class PlaylistUpdateComponent implements OnInit {
       numberSongs: this.editForm.get(['numberSongs']).value,
       followers: this.editForm.get(['followers']).value,
       rating: this.editForm.get(['rating']).value,
+      created: this.editForm.get(['created']).value,
       userId: this.editForm.get(['userId']).value,
       tracks: this.editForm.get(['tracks']).value
     };

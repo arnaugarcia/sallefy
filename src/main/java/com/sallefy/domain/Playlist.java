@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,6 +55,9 @@ public class Playlist implements Serializable {
 
     @Column(name = "rating")
     private Double rating;
+
+    @Column(name = "created")
+    private LocalDate created;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -206,6 +210,19 @@ public class Playlist implements Serializable {
         this.rating = rating;
     }
 
+    public LocalDate getCreated() {
+        return created;
+    }
+
+    public Playlist created(LocalDate created) {
+        this.created = created;
+        return this;
+    }
+
+    public void setCreated(LocalDate created) {
+        this.created = created;
+    }
+
     public User getUser() {
         return user;
     }
@@ -275,6 +292,7 @@ public class Playlist implements Serializable {
             ", numberSongs=" + getNumberSongs() +
             ", followers=" + getFollowers() +
             ", rating=" + getRating() +
+            ", created='" + getCreated() + "'" +
             "}";
     }
 }
