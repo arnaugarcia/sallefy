@@ -2,6 +2,7 @@ package com.sallefy.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -56,6 +57,7 @@ public class Playlist implements Serializable {
     @Column(name = "rating")
     private Double rating;
 
+    @CreationTimestamp
     @Column(name = "created")
     private LocalDate created;
 
