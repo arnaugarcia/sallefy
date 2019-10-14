@@ -1,10 +1,12 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.service.FollowService;
+import com.sallefy.service.PlaylistQueryService;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.PlaylistRequestDTO;
+import com.sallefy.service.dto.criteria.PlaylistCriteria;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.swagger.annotations.ApiOperation;
@@ -20,6 +22,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 /**
  * REST controller for managing {@link com.sallefy.domain.Playlist}.
@@ -37,10 +41,15 @@ public class PlaylistResource {
 
     private final PlaylistService playlistService;
 
+    private final PlaylistQueryService playlistQueryService;
+
     private final FollowService followService;
 
-    public PlaylistResource(PlaylistService playlistService, FollowService followService) {
+    public PlaylistResource(PlaylistService playlistService,
+                            PlaylistQueryService playlistQueryService,
+                            FollowService followService) {
         this.playlistService = playlistService;
+        this.playlistQueryService = playlistQueryService;
         this.followService = followService;
     }
 
@@ -78,7 +87,7 @@ public class PlaylistResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         PlaylistDTO result = playlistService.save(playlistRequest);
-        return ResponseEntity.ok()
+        return ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, playlistRequest.getId().toString()))
             .body(result);
     }
@@ -89,9 +98,10 @@ public class PlaylistResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
      */
     @GetMapping("/playlists")
-    public List<PlaylistDTO> getAllPlaylists() {
+    public ResponseEntity<List<PlaylistDTO>> getAllPlaylists(PlaylistCriteria criteria) {
         log.debug("REST request to get all Playlists");
-        return playlistService.findAll();
+        final List<PlaylistDTO> playlists = playlistQueryService.findByCriteria(criteria);
+        return ok(playlists);
     }
 
     /**
@@ -104,7 +114,7 @@ public class PlaylistResource {
     public ResponseEntity<PlaylistDTO> getPlaylist(@PathVariable Long id) {
         log.debug("REST request to get Playlist : {}", id);
         PlaylistDTO playlistDTO = playlistService.findOne(id);
-        return ResponseEntity.ok(playlistDTO);
+        return ok(playlistDTO);
     }
 
     /**
@@ -125,7 +135,7 @@ public class PlaylistResource {
     public ResponseEntity<FollowDTO> toggleFollowPlaylist(@PathVariable Long id) {
         log.debug("REST request to follow the playlist with id {}", id);
         FollowDTO followDTO = followService.toggleFollowPlaylist(id);
-        return ResponseEntity.ok(followDTO);
+        return ok(followDTO);
     }
 
 
