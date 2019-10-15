@@ -1,12 +1,13 @@
 package com.sallefy.service.dto;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.sallefy.domain.Playlist} entity.

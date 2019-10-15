@@ -85,6 +85,14 @@ public class PlaylistQueryService extends QueryService<Playlist> {
     }
 
     private Specification<Playlist> sortByMostFollowed() {
+
+        /**
+         * select p.* from playlist p
+         * 	inner join follow_playlist fp on p.id = fp.playlist_id
+         *     group by fp.playlist_id
+         *     order by count(fp.id) desc;
+         */
+
         return (root, query, builder) -> {
             Subquery<Playlist> subQuery = query.subquery(Playlist.class);
 
