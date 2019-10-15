@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Order;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.data.domain.PageRequest.of;
 
 /**
  * Service for executing complex queries for {@link Playlist} entities in the database.
@@ -48,7 +51,16 @@ public class PlaylistQueryService extends QueryService<Playlist> {
     public List<PlaylistDTO> findByCriteria(PlaylistCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specification<Playlist> specification = createSpecification(criteria);
-        return playlistMapper.toDto(playlistRepository.findAll(specification));
+
+        List<Playlist> playlists;
+
+        if (isSizeSelected(criteria)) {
+            playlists = playlistRepository.findAll(specification, of(0, criteria.getSize())).getContent();
+        } else {
+            playlists = playlistRepository.findAll(specification);
+        }
+
+        return transformPlaylists(playlists);
     }
 
     /**
@@ -72,5 +84,15 @@ public class PlaylistQueryService extends QueryService<Playlist> {
             final Order order = criteriaBuilder.desc(root.get(Playlist_.created));
             return criteriaQuery.orderBy(order).getRestriction();
         };
+    }
+
+    private List<PlaylistDTO> transformPlaylists(List<Playlist> playlists) {
+        return playlists.stream()
+            .map(playlistMapper::toDto)
+            .collect(Collectors.toList());
+    }
+
+    private boolean isSizeSelected(PlaylistCriteria criteria) {
+        return criteria.getSize() != null;
     }
 }
