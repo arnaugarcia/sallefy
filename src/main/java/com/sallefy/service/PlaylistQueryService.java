@@ -1,5 +1,7 @@
 package com.sallefy.service;
 
+import com.sallefy.domain.FollowPlaylist;
+import com.sallefy.domain.FollowPlaylist_;
 import com.sallefy.domain.Playlist;
 import com.sallefy.domain.Playlist_;
 import com.sallefy.repository.PlaylistRepository;
@@ -14,7 +16,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.Order;
+import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,8 +77,29 @@ public class PlaylistQueryService extends QueryService<Playlist> {
             if (criteria.isRecent() != null) {
                 specification = specification.and(sortByCreated());
             }
+            if (criteria.getPopular() != null) {
+                specification = specification.and(sortByMostFollowed());
+            }
         }
         return specification;
+    }
+
+    private Specification<Playlist> sortByMostFollowed() {
+        return (root, query, builder) -> {
+            Subquery<Playlist> subQuery = query.subquery(Playlist.class);
+
+            Root<FollowPlaylist> followersRoot = subQuery.from(FollowPlaylist.class);
+
+            Join<FollowPlaylist, Playlist> join = followersRoot.join(FollowPlaylist_.playlist, JoinType.INNER);
+            subQuery.select(join);
+
+            Path<Long> playlistId = join.get(Playlist_.id);
+            subQuery.groupBy(playlistId);
+
+            final Order order = builder.desc(root.get(Playlist_.created));
+
+            return query.orderBy(order).getRestriction();
+        };
     }
 
     private Specification<Playlist> sortByCreated() {
