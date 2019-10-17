@@ -3,7 +3,7 @@
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-like-album-heading" jhiTranslate="sallefyApp.likeAlbum.home.createOrEditLabel">Create or edit a Like Album</h2>
             <div>
-                <jhi-alert-error></jhi-alert-error>
+                <sf-alert-error></sf-alert-error>
                 <div class="form-group" [hidden]="!editForm.get('id').value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id" formControlName="id"
