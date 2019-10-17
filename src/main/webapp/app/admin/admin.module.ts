@@ -10,11 +10,11 @@ import { UserMgmtDetailComponent } from './user-management/user-management-detai
 import { UserMgmtUpdateComponent } from './user-management/user-management-update.component';
 import { UserMgmtDeleteDialogComponent } from './user-management/user-management-delete-dialog.component';
 import { LogsComponent } from './logs/logs.component';
-import { JhiMetricsMonitoringComponent } from './metrics/metrics.component';
-import { JhiHealthModalComponent } from './health/health-modal.component';
-import { JhiHealthCheckComponent } from './health/health.component';
-import { JhiConfigurationComponent } from './configuration/configuration.component';
-import { JhiDocsComponent } from './docs/docs.component';
+import { SfMetricsMonitoringComponent } from './metrics/metrics.component';
+import { SfHealthModalComponent } from './health/health-modal.component';
+import { SfHealthCheckComponent } from './health/health.component';
+import { SfConfigurationComponent } from './configuration/configuration.component';
+import { SfDocsComponent } from './docs/docs.component';
 
 @NgModule({
   imports: [
@@ -29,12 +29,12 @@ import { JhiDocsComponent } from './docs/docs.component';
     UserMgmtUpdateComponent,
     UserMgmtDeleteDialogComponent,
     LogsComponent,
-    JhiConfigurationComponent,
-    JhiHealthCheckComponent,
-    JhiHealthModalComponent,
-    JhiDocsComponent,
-    JhiMetricsMonitoringComponent
+    SfConfigurationComponent,
+    SfHealthCheckComponent,
+    SfHealthModalComponent,
+    SfDocsComponent,
+    SfMetricsMonitoringComponent
   ],
-  entryComponents: [UserMgmtDeleteDialogComponent, JhiHealthModalComponent]
+  entryComponents: [UserMgmtDeleteDialogComponent, SfHealthModalComponent]
 })
 export class SallefyAdminModule {}

@@ -5,7 +5,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { PasswordService } from './password.service';
 
 @Component({
-  selector: 'jhi-password',
+  selector: 'sf-password',
   templateUrl: './password.component.html'
 })
 export class PasswordComponent implements OnInit {

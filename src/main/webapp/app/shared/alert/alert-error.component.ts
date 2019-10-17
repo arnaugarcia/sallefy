@@ -4,7 +4,7 @@ import { JhiEventManager, JhiAlert, JhiAlertService } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'jhi-alert-error',
+  selector: 'sf-alert-error',
   template: `
     <div class="alerts" role="alert">
       <div *ngFor="let alert of alerts" [ngClass]="setClasses(alert)">
@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
     </div>
   `
 })
-export class JhiAlertErrorComponent implements OnDestroy {
+export class SfAlertErrorComponent implements OnDestroy {
   alerts: any[];
   cleanHttpErrorListener: Subscription;
   constructor(private alertService: JhiAlertService, private eventManager: JhiEventManager, private translateService: TranslateService) {

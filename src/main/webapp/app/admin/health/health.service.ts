@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 
 @Injectable({ providedIn: 'root' })
-export class JhiHealthService {
+export class SfHealthService {
   separator: string;
 
   constructor(private http: HttpClient) {

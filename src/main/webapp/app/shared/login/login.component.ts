@@ -8,10 +8,10 @@ import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 @Component({
-  selector: 'jhi-login-modal',
+  selector: 'sf-login-modal',
   templateUrl: './login.component.html'
 })
-export class JhiLoginModalComponent implements AfterViewInit {
+export class SfLoginModalComponent implements AfterViewInit {
   authenticationError: boolean;
 
   loginForm = this.fb.group({

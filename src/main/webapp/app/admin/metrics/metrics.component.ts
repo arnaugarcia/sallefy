@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { JhiMetricsService } from './metrics.service';
+import { SfMetricsService } from './metrics.service';
 
 @Component({
-  selector: 'jhi-metrics',
+  selector: 'sf-metrics',
   templateUrl: './metrics.component.html'
 })
-export class JhiMetricsMonitoringComponent implements OnInit {
+export class SfMetricsMonitoringComponent implements OnInit {
   metrics: any = {};
   threadData: any = {};
   updatingMetrics = true;
   JCACHE_KEY: string;
 
-  constructor(private modalService: NgbModal, private metricsService: JhiMetricsService) {
+  constructor(private modalService: NgbModal, private metricsService: SfMetricsService) {
     this.JCACHE_KEY = 'jcache.statistics';
   }
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'jhi-error',
+  selector: 'sf-error',
   templateUrl: './error.component.html'
 })
 export class ErrorComponent implements OnInit {

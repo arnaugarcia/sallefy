@@ -12,7 +12,7 @@ import { LoginService } from 'app/core/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 
 @Component({
-  selector: 'jhi-navbar',
+  selector: 'sf-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['navbar.scss']
 })
