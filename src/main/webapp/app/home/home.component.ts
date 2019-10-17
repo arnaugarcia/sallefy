@@ -1,11 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
+import { PlaylistService } from 'app/entities/playlist/playlist.service';
+import { filter, map } from 'rxjs/operators';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { IPlaylist } from 'app/shared/model/playlist.model';
 
 @Component({
   selector: 'sf-home',
@@ -16,11 +20,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   account: Account;
   authSubscription: Subscription;
   modalRef: NgbModalRef;
+  private playlists: IPlaylist[] = [];
 
   constructor(
     private accountService: AccountService,
     private loginModalService: LoginModalService,
-    private eventManager: JhiEventManager
+    private eventManager: JhiEventManager,
+    private playlistService: PlaylistService,
+    private alertService: JhiAlertService
   ) {}
 
   ngOnInit() {
@@ -28,6 +35,18 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.account = account;
     });
     this.registerAuthenticationSuccess();
+    this.playlistService
+      .query()
+      .pipe(
+        filter((res: HttpResponse<IPlaylist[]>) => res.ok),
+        map((res: HttpResponse<IPlaylist[]>) => res.body)
+      )
+      .subscribe(
+        (res: IPlaylist[]) => {
+          this.playlists = res;
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
   }
 
   registerAuthenticationSuccess() {
@@ -36,6 +55,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.account = account;
       });
     });
+  }
+
+  protected onError(errorMessage: string) {
+    this.alertService.error(errorMessage, null, null);
   }
 
   isAuthenticated() {

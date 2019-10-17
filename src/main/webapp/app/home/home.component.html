@@ -116,7 +116,7 @@
     </div>
 </div>
 <div class="tabs-content">
-    <div class="master-container-fluid pr-0 tabs-content">
+    <!--<div class="master-container-fluid pr-0 tabs-content">
         <div class="browse-content-overview inactive-hide active">
             <div class="adonis-carousel music-img-box-cont-lg adonis-animate" data-animation="slideRightSkew"
                  data-animation-item=".owl-item.active" data-auto-height="yes" data-auto-width="yes"
@@ -356,14 +356,14 @@
             <hr class="m-0">
             <div class="pt-e-40 pt-e-xl-50"></div>
         </div>
-    </div>
+    </div>-->
     <div class="master-container-fluid">
         <div class="row">
             <div class="col-md-9 flex-column-content-md">
                 <main id="main">
                     <div class="tabs-content">
                         <div class="browse-content-overview inactive-hide active fluid-reverse-r fluid-reverse-md-none">
-                            <section>
+                            <!--<section>
                                 <div class="d-flex">
                                     <div class="title-box">
                                         <h6 class="sub-title inactive-color">Popular</h6>
@@ -619,7 +619,7 @@
                                     </div>
                                 </div>
                                 <div class="pt-e-20 pt-e-lg-40"></div>
-                            </section>
+                            </section>-->
                             <section>
                                 <div class="d-flex">
                                     <div class="title-box">
@@ -627,47 +627,49 @@
                                         <h2 class="title">Playlists</h2>
                                     </div>
                                     <div class="button-right ml-auto ml-auto d-flex align-items-end mb-4">
-                                        <a class="inactive-color mr-4 mr-md-0" href="#">See all<span
-                                            class="adonis-icon pl-1 icon-arrow icon-1x"><svg version="1.1"
-                                                                                             xmlns="http://www.w3.org/2000/svg"><use
-                                            xlink:href="#icon-see-all-arrow-right"/></svg></span>
+                                        <a class="inactive-color mr-4 mr-md-0" href="#">See all
+                                            <span class="adonis-icon pl-1 icon-arrow icon-1x">
+                                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                                    <use xlink:href="#icon-see-all-arrow-right"/></svg>
+                                            </span>
                                         </a>
                                     </div>
                                 </div>
-                                <div class="adonis-carousel" data-auto-width="yes" data-dots="yes"
-                                     data-loop="no" data-responsive-width="0:175px">
+                                <div class="adonis-carousel">
                                     <div class="gutter-30">
                                         <div class="owl-carousel owl-theme-adonis">
-                                            <div class="item">
-                                                <div class="music-img-box mb-e-30 mb-e-md-40">
+                                            <div *ngFor="let playlist of playlists; let index = index" class="item">
+                                                <div class="music-img-box mb-e-30 mb-e-md-40" *ngIf="(index % 2) === 0">
                                                     <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="..content/images/playlists/playlist-1@2x.jpg"
-                                                             src="/content/images/playlists/playlist-1.jpg">
+                                                        <img alt="" class="retina" [src]="playlist.tracks[0].thumbnail">
                                                         <div class="hover-state">
                                                             <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
+                                                                <span class="pointer play-btn-dark round-btn">
+                                                                    <i class="play-icon"></i>
+                                                                </span>
                                                             </div>
                                                             <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
+                                                                <span class="pointer dropdown-menu-toggle">
+                                                                    <span class="adonis-icon icon-4x">
+                                                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                                                            <use xlink:href="#icon-horizontal-dots"></use>
+                                                                        </svg>
+                                                                    </span>
+                                                                </span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
+                                                    <h6 class="title">
+                                                        <a href="#">{{playlist.name}}</a>
+                                                    </h6>
+                                                    <p class="sub-title category">
+                                                        <a href="#">{{playlist.tracks.length}}</a>
+                                                    </p>
                                                 </div>
-                                                <div class="music-img-box">
+                                                <div class="music-img-box" *ngIf="(index % 2) !== 0">
                                                     <div class="img-box box-rounded-sm img-box-md">
                                                         <img alt="" class="retina"
-                                                             data-2x="/content/images/playlists/playlist-11@2x.jpg"
-                                                             src="/content/images/playlists/playlist-11.jpg">
+                                                             [src]="playlist.tracks[0].thumbnail">
                                                         <div class="hover-state">
                                                             <div class="absolute-bottom-left pl-e-15 pb-e-15">
                                                                         <span class="pointer play-btn-dark round-btn"><i
@@ -682,510 +684,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="music-img-box mb-e-30 mb-e-md-40">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="/content/images/playlists/playlist-2@2x.jpg"
-                                                             src="/content/images/playlists/playlist-2.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                                <div class="music-img-box">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="/content/images/playlists/playlist-12@2x.jpg"
-                                                             src="/content/images/playlists/playlist-12.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="music-img-box mb-e-30 mb-e-md-40">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="content/images/playlists/playlist-3@2x.jpg"
-                                                             src="/content/images/playlists/playlist-3.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                                <div class="music-img-box">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="content/images/playlists/playlist-13@2x.jpg"
-                                                             src="/content/images/playlists/playlist-13.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-
-                                            </div>
-                                            <div class="item">
-                                                <div class="music-img-box mb-e-30 mb-e-md-40">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="content/images/playlists/playlist-4@2x.jpg"
-                                                             src="/content/images/playlists/playlist-4.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                                <div class="music-img-box">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="content/images/playlists/playlist-14@2x.jpg"
-                                                             src="/content/images/playlists/playlist-14.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-
-                                            </div>
-                                            <div class="item">
-                                                <div class="music-img-box mb-e-30 mb-e-md-40">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="content/images/playlists/playlist-5@2x.jpg"
-                                                             src="/content/images/playlists/playlist-5.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                                <div class="music-img-box">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="content/images/playlists/playlist-15@2x.jpg"
-                                                             src="/content/images/playlists/playlist-15.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="music-img-box mb-e-30 mb-e-md-40">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="content/images/playlists/playlist-6@2x.jpg"
-                                                             src="/content/images/playlists/playlist-6.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                                <div class="music-img-box">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="content/images/playlists/playlist-16@2x.jpg"
-                                                             src="/content/images/playlists/playlist-16.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="music-img-box mb-e-30 mb-e-md-40">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="content/images/playlists/playlist-7@2x.jpg"
-                                                             src="/content/images/playlists/playlist-7.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                                <div class="music-img-box">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="content/images/playlists/playlist-17@2x.jpg"
-                                                             src="/content/images/playlists/playlist-17.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="music-img-box mb-e-30 mb-e-md-40">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="..content/images/playlists/playlist-8@2x.jpg"
-                                                             src="/content/images/playlists/playlist-8.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                                <div class="music-img-box">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="..content/images/playlists/playlist-18@2x.jpg"
-                                                             src="/content/images/playlists/playlist-18.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="music-img-box mb-e-30 mb-e-md-40">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="..content/images/playlists/playlist-9@2x.jpg"
-                                                             src="/content/images/playlists/playlist-9.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                                <div class="music-img-box">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="..content/images/playlists/playlist-19@2x.jpg"
-                                                             src="/content/images/playlists/playlist-19.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="music-img-box mb-e-30 mb-e-md-40">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="..content/images/playlists/playlist-10@2x.jpg"
-                                                             src="/content/images/playlists/playlist-10.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                                <div class="music-img-box">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="..content/images/playlists/playlist-20@2x.jpg"
-                                                             src="/content/images/playlists/playlist-20.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="music-img-box mb-e-30 mb-e-md-40">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="..content/images/playlists/playlist-1@2x.jpg"
-                                                             src="/content/images/playlists/playlist-1.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
-                                                    <p class="sub-title category"><a href="#">Adonis Music
-                                                        Pop</a></p>
-                                                </div>
-                                                <div class="music-img-box">
-                                                    <div class="img-box box-rounded-sm img-box-md">
-                                                        <img alt="" class="retina"
-                                                             data-2x="..content/images/playlists/playlist-1@2x.jpg"
-                                                             src="/content/images/playlists/playlist-2.jpg">
-                                                        <div class="hover-state">
-                                                            <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                        <span class="pointer play-btn-dark round-btn"><i
-                                                                            class="play-icon"></i></span>
-                                                            </div>
-                                                            <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle"><span
-                                                                            class="adonis-icon icon-4x"><svg
-                                                                            version="1.1"
-                                                                            xmlns="http://www.w3.org/2000/svg"><use
-                                                                            xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <h6 class="title"><a href="#">Vestibulum nibh lorem
-                                                        ipsum</a></h6>
+                                                    <h6 class="title"><a href="#">{{playlist.name}}</a></h6>
                                                     <p class="sub-title category"><a href="#">Adonis Music
                                                         Pop</a></p>
                                                 </div>
@@ -1207,10 +706,12 @@
                                                              data-2x="..content/images/radios/radios-1@2x.jpg"
                                                              src="/content/images/radios/radios-1.jpg">
                                                         <div class="hover-state show">
-                                                            <div class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
+                                                            <div
+                                                                class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
                                                                 <h5 class="text-light">FEATURED RADIO</h5>
                                                             </div>
-                                                            <div class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
+                                                            <div
+                                                                class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
                                                                 <a class="text-light" href="#"><i
                                                                     class="icon-arrow-right2"></i> View all
                                                                     <span class="adonis-icon pl-1 icon-arrow icon-1x"><svg
@@ -1229,10 +730,12 @@
                                                              data-2x="..content/images/radios/radios-2@2x.jpg"
                                                              src="/content/images/radios/radios-2.jpg">
                                                         <div class="hover-state show">
-                                                            <div class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
+                                                            <div
+                                                                class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
                                                                 <h5 class="text-light">DISCOVER</h5>
                                                             </div>
-                                                            <div class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
+                                                            <div
+                                                                class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
                                                                 <a class="text-light" href="#"><i
                                                                     class="icon-arrow-right2"></i> View all
                                                                     <span class="adonis-icon pl-1 icon-arrow icon-1x"><svg
@@ -1251,10 +754,12 @@
                                                              data-2x="..content/images/radios/radios-3@2x.jpg"
                                                              src="/content/images/radios/radios-3.jpg">
                                                         <div class="hover-state show">
-                                                            <div class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
+                                                            <div
+                                                                class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
                                                                 <h5 class="text-light">THE DEFINITIVE HITS</h5>
                                                             </div>
-                                                            <div class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
+                                                            <div
+                                                                class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
                                                                 <a class="text-light" href="#"><i
                                                                     class="icon-arrow-right2"></i> View all
                                                                     <span class="adonis-icon pl-1 icon-arrow icon-1x"><svg
@@ -1273,11 +778,13 @@
                                                              data-2x="..content/images/radios/radios-4@2x.jpg"
                                                              src="/content/images/radios/radios-4.jpg">
                                                         <div class="hover-state show">
-                                                            <div class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
+                                                            <div
+                                                                class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
                                                                 <h5 class="text-light">OUR MUSICAL GIFT FOR
                                                                     YOU</h5>
                                                             </div>
-                                                            <div class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
+                                                            <div
+                                                                class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
                                                                 <a class="text-light" href="#"><i
                                                                     class="icon-arrow-right2"></i> View all
                                                                     <span class="adonis-icon pl-1 icon-arrow icon-1x"><svg
@@ -1296,10 +803,12 @@
                                                              data-2x="..content/images/radios/radios-5@2x.jpg"
                                                              src="/content/images/radios/radios-5.jpg">
                                                         <div class="hover-state show">
-                                                            <div class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
+                                                            <div
+                                                                class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
                                                                 <h5 class="text-light">FEATURED RADIO</h5>
                                                             </div>
-                                                            <div class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
+                                                            <div
+                                                                class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
                                                                 <a class="text-light" href="#"><i
                                                                     class="icon-arrow-right2"></i> View all
                                                                     <span class="adonis-icon pl-1 icon-arrow icon-1x"><svg
@@ -1318,10 +827,12 @@
                                                              data-2x="..content/images/radios/radios-1@2x.jpg"
                                                              src="/content/images/radios/radios-1.jpg">
                                                         <div class="hover-state show">
-                                                            <div class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
+                                                            <div
+                                                                class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
                                                                 <h5 class="text-light">THE DEFINITIVE HITS</h5>
                                                             </div>
-                                                            <div class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
+                                                            <div
+                                                                class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
                                                                 <a class="text-light" href="#"><i
                                                                     class="icon-arrow-right2"></i> View all
                                                                     <span class="adonis-icon pl-1 icon-arrow icon-1x"><svg
@@ -1365,11 +876,13 @@
                                                         </h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1387,11 +900,13 @@
                                                             for me</a></h6>
                                                         <p class="sub-title"><a href="#">Bing Crosby</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1409,11 +924,13 @@
                                                             fool</a></h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1431,11 +948,13 @@
                                                             Somethings</a></h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1452,11 +971,13 @@
                                                         <h6 class="title fs-2"><a href="#">Let You Down</a></h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1476,11 +997,13 @@
                                                             Somethings</a></h6>
                                                         <p class="sub-title"><a href="#">Sam Hunt</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1498,11 +1021,13 @@
                                                             Faithful</a></h6>
                                                         <p class="sub-title"><a href="#">Kesha</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1520,11 +1045,13 @@
                                                             Monty</a></h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1542,11 +1069,13 @@
                                                             Hear</a></h6>
                                                         <p class="sub-title"><a href="#">Band Aid</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1567,11 +1096,13 @@
                                                             Do</a></h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1591,11 +1122,13 @@
                                                             Bells</a></h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1613,11 +1146,13 @@
                                                             Bells</a></h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1635,11 +1170,13 @@
                                                             Mr. Grinch</a></h6>
                                                         <p class="sub-title"><a href="#">Darius Rucker</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1657,11 +1194,13 @@
                                                         </h6>
                                                         <p class="sub-title"><a href="#">Pentatonix</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1679,11 +1218,13 @@
                                                             This</a></h6>
                                                         <p class="sub-title"><a href="#">Demi Lovato</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1703,11 +1244,13 @@
                                                         </h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1725,11 +1268,13 @@
                                                             for me</a></h6>
                                                         <p class="sub-title"><a href="#">Bing Crosby</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1747,11 +1292,13 @@
                                                             fool</a></h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1769,11 +1316,13 @@
                                                             Somethings</a></h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1790,11 +1339,13 @@
                                                         <h6 class="title fs-2"><a href="#">Let You Down</a></h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1814,11 +1365,13 @@
                                                         </h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1836,11 +1389,13 @@
                                                             for me</a></h6>
                                                         <p class="sub-title"><a href="#">Bing Crosby</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1858,11 +1413,13 @@
                                                             fool</a></h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1880,11 +1437,13 @@
                                                             Somethings</a></h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
@@ -1901,11 +1460,13 @@
                                                         <h6 class="title fs-2"><a href="#">Let You Down</a></h6>
                                                         <p class="sub-title"><a href="#">Rachel Platten</a></p>
                                                     </div>
-                                                    <div class="hover-state d-flex justify-content-between align-items-center">
+                                                    <div
+                                                        class="hover-state d-flex justify-content-between align-items-center">
                                                                 <span class="pointer play-btn-dark box-rounded-sm"><i
                                                                     class="play-icon"></i></span>
                                                         <div class="d-flex align-items-center">
-                                                                    <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg
+                                                                    <span
+                                                                        class="adonis-icon text-light pointer mr-2 icon-2x"><svg
                                                                         version="1.1"
                                                                         xmlns="http://www.w3.org/2000/svg"><use
                                                                         xlink:href="#icon-heart-blank"/></svg></span>
