@@ -22,7 +22,6 @@ Typography..............Text color & sizes
 ELEMENTS & COMPONENTS
 Header..................Header styles
 Nav.....................All about navigations
-Preloader...............Site preloader, tab preloader and section preloader
 Footer..................Footer styles
 Sidebar.................Sidebar styles
 Title...................Titles settings
@@ -108,87 +107,6 @@ Temp-styles.............Few temporary styles
   }
 }
 /* md */
-@media (min-width: 768px) {
-  .fluid-reverse-md-l {
-    margin-left: -15px;
-  }
-  .fluid-reverse-md-l.preloader {
-    left: -15px;
-  }
-
-  .fluid-reverse-md-r {
-    margin-right: -15px;
-  }
-  .fluid-reverse-md-r.preloader {
-    right: -15px;
-  }
-}
-@media (max-width: 991px) {
-  .master-container-fluid {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
-  .fluid-reverse-l {
-    margin-left: -15px;
-  }
-  .fluid-reverse-l.preloader {
-    left: -15px;
-  }
-
-  .fluid-reverse-r {
-    margin-right: -15px;
-  }
-  .fluid-reverse-r.preloader {
-    right: -15px;
-  }
-}
-@media (min-width: 992px) {
-  .master-container-fluid {
-    padding-left: 51.5px;
-    padding-right: 51.5px;
-  }
-
-  .fluid-reverse-l {
-    margin-left: -51.5px;
-  }
-  .fluid-reverse-l.preloader {
-    left: -51.5px;
-  }
-
-  .fluid-reverse-r {
-    margin-right: -51.5px;
-  }
-  .fluid-reverse-r.preloader {
-    right: -51.5px;
-  }
-
-  .fluid-reverse-lg-l {
-    margin-left: -51.5px;
-  }
-  .fluid-reverse-lg-l.preloader {
-    left: -51.5px;
-  }
-
-  .fluid-reverse-lg-r {
-    margin-right: -51.5px;
-  }
-  .fluid-reverse-lg-r.preloader {
-    right: -51.5px;
-  }
-
-  .fluid-reverse-lg-none {
-    margin-right: 0;
-  }
-}
-.fluid-reverse-l.preloader,
-.fluid-reverse-r.preloader {
-  min-width: 100%;
-  width: auto;
-  margin-right: 0;
-  margin-left: 0;
-}
-
 @media (min-width: 768px) {
   .fluid-reverse-md-none {
     margin: 0;
@@ -2288,15 +2206,6 @@ hr {
   cursor: pointer;
 }
 
-.inline-preloader {
-  display: inline-block;
-  position: relative;
-  left: 3px;
-  height: 0;
-  width: 0;
-  overflow: visible;
-}
-
 .no-transition {
   transition: 0s !important;
 }
@@ -4053,109 +3962,6 @@ hr.border-hr {
     -o-transform: translateY(-15px);
     transform: translateY(-15px);
   }
-}
-.section-preloader-wrap {
-  min-height: 125px;
-}
-
-.preloader {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform-origin: 50% 200px;
-}
-.preloader.tab-preloader {
-  display: none;
-  z-index: 800;
-}
-.preloader.section-loader {
-  display: none;
-  z-index: 800;
-}
-.preloader.site-preloader {
-  z-index: 2000;
-  position: fixed;
-}
-.preloader .preloader-overlay {
-  background: #151412;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  top: 0;
-}
-.preloader.negative-overlay .preloader-overlay {
-  top: -200px;
-}
-.preloader .center-center {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2000;
-}
-.preloader > .loader-icon {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  z-index: 1900;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-.preloader .animate-loading {
-  position: absolute;
-  animation: adonis-play-loading 5s infinite alternate;
-  z-index: 1;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
-  width: 100%;
-}
-.preloader .animate-loading .adonis-icon {
-  position: absolute;
-  bottom: 0;
-  z-index: 10;
-  left: 0;
-}
-.preloader .shadow {
-  width: 200%;
-  height: 20px;
-  display: block;
-  top: 100%;
-  position: absolute;
-  border-radius: 50%;
-  box-shadow: 0 27px 20px 0 #5e5d5a !important;
-  left: -55%;
-}
-.preloader .icons {
-  animation: bounce 1s infinite alternate;
-  -webkit-transform-origin: center bottom;
-  transform-origin: center bottom;
-}
-.preloader .tab-loader {
-  -webkit-transform: translateY(20vh);
-  -ms-transform: translateY(20vh);
-  -moz-transform: translateY(20vh);
-  -o-transform: translateY(20vh);
-  transform: translateY(20vh);
-}
-.preloader .top-50-vh {
-  left: 50%;
-  top: 50vh;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-.preloader-static {
-  min-height: 50px;
 }
 
 .adonis-rotate,

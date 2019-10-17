@@ -1,0 +1,57 @@
+<html>
+<head>
+<link rel="stylesheet" href="css/OverlayScrollbars.css">
+<head>
+<body>
+<div class="horizontal-scroll-wrapper squares">
+  <div>hello<br>hello<br>hello<br></div>
+  <div>item 2</div>
+  <div>item 3</div>
+  <div>item 4</div>
+  <div>item 5</div>
+  <div>item 6</div>
+  <div>item 7</div>
+  <div>item 8</div>
+</div>
+
+<style>
+	.horizontal-scroll-wrapper {
+  display: block;
+ 
+  width: 300px;
+  max-height: 750px;
+  margin: 0;
+  overflow: auto;
+  -webkit-transform: rotate(-90deg) translateY(-250px);
+          transform: rotate(-90deg) translateY(-250px);
+  -webkit-transform-origin: right top;
+          transform-origin: right top;
+}
+.horizontal-scroll-wrapper > div {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  -webkit-transform-origin: right top;
+          transform-origin: right top;
+}
+
+.squares {
+  padding: 250px 0 0 0;
+}
+.squares > div {
+  width: 250px;
+  height: 250px;
+  margin: 10px 0;
+}
+
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/jquery.overlayScrollbars.min.js"></script>
+<script>
+jQuery(document).ready(function($){
+	$('.horizontal-scroll-wrapper').overlayScrollbars({ });
+	
+});
+</script>
+</body>
+</html>
