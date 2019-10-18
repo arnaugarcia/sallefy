@@ -10,7 +10,6 @@ import { PlaylistService } from 'app/entities/playlist/playlist.service';
 import { filter, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { IPlaylist } from 'app/shared/model/playlist.model';
-import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'sf-home',
@@ -22,31 +21,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   authSubscription: Subscription;
   modalRef: NgbModalRef;
   playlists: IPlaylist[] = [];
-
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    dots: true,
-    navSpeed: 700,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 2
-      },
-      740: {
-        items: 3
-      },
-      940: {
-        items: 7
-      }
-    },
-    nav: true
-  };
 
   constructor(
     private accountService: AccountService,

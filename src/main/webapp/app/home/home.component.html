@@ -519,72 +519,7 @@
                                     </div>
                                 </div>
                                 <div class="adonis-carousel">
-                                    <div class="gutter-30">
-                                                    <div class="item">
-                                                        <div class="music-img-box">
-                                                            <div class="img-box box-rounded-sm img-box-md">
-                                                                <img alt="" class="retina" src="">
-                                                                <div class="hover-state">
-                                                                    <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                    <span class="pointer play-btn-dark round-btn">
-                                                                        <i class="play-icon"></i>
-                                                                    </span>
-                                                                    </div>
-                                                                    <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle">
-                                                                            <span class="adonis-icon icon-4x">
-                                                                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                                                                    <use xlink:href="#icon-horizontal-dots"></use>
-                                                                                </svg>
-                                                                            </span>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <h6 class="title">
-                                                                <a href="">Playlist Title</a>
-                                                            </h6>
-                                                            <p class="sub-title category">
-                                                                <a [routerLink]="['artists', playlist.owner.login]">
-                                                                    {{playlistsOdd[index].owner.firstName}} {{playlistsOdd[index].owner.lastName}}
-                                                                </a>
-                                                            </p>
-                                                        </div>
-                                                        <div class="music-img-box mb-e-md-40" *ngIf="!(index % 2) && playlistsEven[index]"
-                                                             style="padding-left: 15px; padding-right: 15px">
-                                                            <div class="img-box box-rounded-sm img-box-md">
-                                                                <img [alt]="playlistsEven[index].description" class="retina" [src]="playlistsEven[index].tracks[0]?.thumbnail">
-                                                                <div class="hover-state">
-                                                                    <div class="absolute-bottom-left pl-e-15 pb-e-15">
-                                                                    <span class="pointer play-btn-dark round-btn">
-                                                                        <i class="play-icon"></i>
-                                                                    </span>
-                                                                    </div>
-                                                                    <div class="absolute-top-right pr-e-15 pt-e-15">
-                                                                        <span class="pointer dropdown-menu-toggle">
-                                                                            <span class="adonis-icon icon-4x">
-                                                                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                                                                    <use xlink:href="#icon-horizontal-dots"></use>
-                                                                                </svg>
-                                                                            </span>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <h6 class="title">
-                                                                <a [routerLink]="['playlists', playlistsEven[index].id]">{{playlistsEven[index].name}}</a>
-                                                            </h6>
-                                                            <p class="sub-title category">
-                                                                <a [routerLink]="['artists', playlistsEven[index].owner.login]">
-                                                                    {{playlistsEven[index].owner.firstName}} {{playlistsEven[index].owner.lastName}}
-                                                                </a>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </ng-template>
-                                            </ng-container>
-                                        </owl-carousel-o>
-                                    </div>
+
                                 </div>
                                 <div class="pt-e-20 pt-e-lg-40"></div>
                             </section>

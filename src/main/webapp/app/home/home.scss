@@ -1,10 +1,5 @@
 /* ==========================================================================
 Main page styles
 ========================================================================== */
-@import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
-@import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
-
-.owl-item {
-  padding-left: 15px;
-  padding-right: 15px;
-}
+@import '~owl.carousel/dist/assets/owl.carousel.min.css';
+@import '~owl.carousel/dist/assets/owl.theme.default.min.css';
