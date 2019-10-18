@@ -11,7 +11,6 @@ import { LoginModalService } from 'app/core/login/login-modal.service';
 import { LoginService } from 'app/core/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { OverlayService } from 'app/layouts/main/overlay.service';
-import { IUser, User } from 'app/core/user/user.model';
 
 @Component({
   selector: 'sf-navbar',
@@ -25,7 +24,6 @@ export class NavbarComponent implements OnInit {
   modalRef: NgbModalRef;
   version: string;
   showMobileMenu = false;
-  private user: IUser = new User();
 
   constructor(
     private loginService: LoginService,
@@ -51,10 +49,6 @@ export class NavbarComponent implements OnInit {
       this.swaggerEnabled = profileInfo.swaggerEnabled;
     });
 
-    this.accountService.identity().then((value: IUser) => {
-      this.user = value;
-    });
-
     this.overlayService.overlayClicked.subscribe(() => {
       this.showMobileMenu = false;
     });
@@ -71,15 +65,6 @@ export class NavbarComponent implements OnInit {
 
   login() {
     this.modalRef = this.loginModalService.open();
-  }
-
-  logout() {
-    this.loginService.logout();
-    this.router.navigate(['']);
-  }
-
-  getImageUrl() {
-    return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
   }
 
   toggleMobileMenu() {
