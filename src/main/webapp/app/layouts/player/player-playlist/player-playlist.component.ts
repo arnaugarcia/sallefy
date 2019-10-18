@@ -17,6 +17,10 @@ export class PlayerPlaylistComponent implements OnInit {
       this.showPlaylist = playerOpen;
       this.overlayService.changeStatus(playerOpen);
     });
+    this.overlayService.overlayClicked.subscribe(() => {
+      this.playerService.playlistOpen(false);
+      this.overlayService.changeStatus(false);
+    });
   }
 
   closePlaylist() {

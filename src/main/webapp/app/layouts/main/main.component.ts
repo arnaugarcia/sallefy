@@ -43,4 +43,8 @@ export class SfMainComponent implements OnInit {
       }
     });
   }
+
+  overlayClicked() {
+    this.overlayService.clicked();
+  }
 }

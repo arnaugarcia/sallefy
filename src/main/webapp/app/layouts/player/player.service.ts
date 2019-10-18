@@ -10,10 +10,6 @@ export class PlayerService {
 
   constructor() {}
 
-  togglePlaylist() {
-    this.playlistOpen(!this.playlistOpenSource.value);
-  }
-
   playlistOpen(value: boolean) {
     this.playlistOpenSource.next(value);
   }
