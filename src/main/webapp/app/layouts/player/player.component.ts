@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PlayerService } from 'app/layouts/player/player.service';
 
 @Component({
   selector: 'sf-player',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements OnInit {
-  constructor() {}
+  constructor(private playerService: PlayerService) {}
 
   ngOnInit() {}
+
+  showPlaylist() {
+    this.playerService.playlistOpen(true);
+  }
 }
