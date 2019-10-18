@@ -20,6 +20,8 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { SallefyPlayerModule } from 'app/layouts/player/player.module';
+import { NotificationComponent } from './layouts/navbar/notification/notification.component';
+import { ProfileComponent } from './layouts/navbar/profile/profile.component';
 
 @NgModule({
   imports: [
@@ -32,7 +34,16 @@ import { SallefyPlayerModule } from 'app/layouts/player/player.module';
     SallefyPlayerModule,
     SallefyAppRoutingModule
   ],
-  declarations: [SfMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+  declarations: [
+    SfMainComponent,
+    NavbarComponent,
+    NotificationComponent,
+    ProfileComponent,
+    ErrorComponent,
+    PageRibbonComponent,
+    ActiveMenuDirective,
+    FooterComponent
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

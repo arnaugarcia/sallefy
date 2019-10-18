@@ -25,6 +25,8 @@ export class NavbarComponent implements OnInit {
   modalRef: NgbModalRef;
   version: string;
   showMobileMenu = false;
+  showProfile = false;
+  showNotifications = false;
 
   constructor(
     private loginService: LoginService,
