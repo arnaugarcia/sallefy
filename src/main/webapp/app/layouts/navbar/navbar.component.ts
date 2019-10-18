@@ -11,6 +11,7 @@ import { LoginModalService } from 'app/core/login/login-modal.service';
 import { LoginService } from 'app/core/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { OverlayService } from 'app/layouts/main/overlay.service';
+import { IUser, User } from 'app/core/user/user.model';
 
 @Component({
   selector: 'sf-navbar',
@@ -19,14 +20,12 @@ import { OverlayService } from 'app/layouts/main/overlay.service';
 })
 export class NavbarComponent implements OnInit {
   inProduction: boolean;
-  isNavbarCollapsed: boolean;
   languages: any[];
   swaggerEnabled: boolean;
   modalRef: NgbModalRef;
   version: string;
   showMobileMenu = false;
-  showProfile = false;
-  showNotifications = false;
+  private user: IUser = new User();
 
   constructor(
     private loginService: LoginService,
@@ -40,7 +39,6 @@ export class NavbarComponent implements OnInit {
     private overlayService: OverlayService
   ) {
     this.version = VERSION ? 'v' + VERSION : '';
-    this.isNavbarCollapsed = true;
   }
 
   ngOnInit() {
@@ -53,6 +51,10 @@ export class NavbarComponent implements OnInit {
       this.swaggerEnabled = profileInfo.swaggerEnabled;
     });
 
+    this.accountService.identity().then((value: IUser) => {
+      this.user = value;
+    });
+
     this.overlayService.overlayClicked.subscribe(() => {
       this.showMobileMenu = false;
     });
@@ -61,10 +63,6 @@ export class NavbarComponent implements OnInit {
   changeLanguage(languageKey: string) {
     this.sessionStorage.store('locale', languageKey);
     this.languageService.changeLanguage(languageKey);
-  }
-
-  collapseNavbar() {
-    this.isNavbarCollapsed = true;
   }
 
   isAuthenticated() {
@@ -76,13 +74,8 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.collapseNavbar();
     this.loginService.logout();
     this.router.navigate(['']);
-  }
-
-  toggleNavbar() {
-    this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
 
   getImageUrl() {

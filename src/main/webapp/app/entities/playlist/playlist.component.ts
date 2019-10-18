@@ -10,7 +10,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { PlaylistService } from './playlist.service';
 
 @Component({
-  selector: 'jhi-playlist',
+  selector: 'sf-playlist',
   templateUrl: './playlist.component.html'
 })
 export class PlaylistComponent implements OnInit, OnDestroy {

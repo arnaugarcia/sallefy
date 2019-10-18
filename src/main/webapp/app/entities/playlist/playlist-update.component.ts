@@ -12,10 +12,9 @@ import { PlaylistService } from './playlist.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { ITrack } from 'app/shared/model/track.model';
-import { TrackService } from 'app/entities/track/track.service';
 
 @Component({
-  selector: 'jhi-playlist-update',
+  selector: 'sf-playlist-update',
   templateUrl: './playlist-update.component.html'
 })
 export class PlaylistUpdateComponent implements OnInit {
@@ -46,7 +45,6 @@ export class PlaylistUpdateComponent implements OnInit {
     protected jhiAlertService: JhiAlertService,
     protected playlistService: PlaylistService,
     protected userService: UserService,
-    protected trackService: TrackService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -63,13 +61,6 @@ export class PlaylistUpdateComponent implements OnInit {
         map((response: HttpResponse<IUser[]>) => response.body)
       )
       .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.trackService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<ITrack[]>) => mayBeOk.ok),
-        map((response: HttpResponse<ITrack[]>) => response.body)
-      )
-      .subscribe((res: ITrack[]) => (this.tracks = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(playlist: IPlaylist) {

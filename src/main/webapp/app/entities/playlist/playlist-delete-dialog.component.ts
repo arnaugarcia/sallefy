@@ -8,7 +8,7 @@ import { IPlaylist } from 'app/shared/model/playlist.model';
 import { PlaylistService } from './playlist.service';
 
 @Component({
-  selector: 'jhi-playlist-delete-dialog',
+  selector: 'sf-playlist-delete-dialog',
   templateUrl: './playlist-delete-dialog.component.html'
 })
 export class PlaylistDeleteDialogComponent {
@@ -32,7 +32,7 @@ export class PlaylistDeleteDialogComponent {
 }
 
 @Component({
-  selector: 'jhi-playlist-delete-popup',
+  selector: 'sf-playlist-delete-popup',
   template: ''
 })
 export class PlaylistDeletePopupComponent implements OnInit, OnDestroy {

@@ -5,7 +5,7 @@ import { JhiDataUtils } from 'ng-jhipster';
 import { IPlaylist } from 'app/shared/model/playlist.model';
 
 @Component({
-  selector: 'jhi-playlist-detail',
+  selector: 'sf-playlist-detail',
   templateUrl: './playlist-detail.component.html'
 })
 export class PlaylistDetailComponent implements OnInit {
