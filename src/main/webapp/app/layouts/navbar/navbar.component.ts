@@ -10,6 +10,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { LoginService } from 'app/core/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { OverlayService } from 'app/layouts/main/overlay.service';
 
 @Component({
   selector: 'sf-navbar',
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit {
   swaggerEnabled: boolean;
   modalRef: NgbModalRef;
   version: string;
+  showMobileMenu = false;
 
   constructor(
     private loginService: LoginService,
@@ -32,7 +34,8 @@ export class NavbarComponent implements OnInit {
     private accountService: AccountService,
     private loginModalService: LoginModalService,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private overlayService: OverlayService
   ) {
     this.version = VERSION ? 'v' + VERSION : '';
     this.isNavbarCollapsed = true;
@@ -46,6 +49,10 @@ export class NavbarComponent implements OnInit {
     this.profileService.getProfileInfo().then(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.swaggerEnabled = profileInfo.swaggerEnabled;
+    });
+
+    this.overlayService.overlayClicked.subscribe(() => {
+      this.showMobileMenu = false;
     });
   }
 
@@ -78,5 +85,14 @@ export class NavbarComponent implements OnInit {
 
   getImageUrl() {
     return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
+  }
+
+  toggleMobileMenu() {
+    this.showMobileMenu = !this.showMobileMenu;
+    if (this.showMobileMenu) {
+      this.overlayService.changeStatus(true);
+    } else {
+      this.overlayService.changeStatus(false);
+    }
   }
 }

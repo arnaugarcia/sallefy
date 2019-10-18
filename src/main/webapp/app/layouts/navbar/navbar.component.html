@@ -1,6 +1,6 @@
-<div class="off-canvas off-canvas-left d-flex flex-column" id="primary-menu-offcanvas">
+<div class="off-canvas off-canvas-left d-flex flex-column" [class.show]="showMobileMenu" id="primary-menu-offcanvas">
     <div class="m-3">
-        <a class="close-offcanvas-main-menu" data-target="#primary-menu-offcanvas" href="#">
+        <a class="close-offcanvas-main-menu" (click)="toggleMobileMenu()">
             <span class="adonis-icon icon-5x">
                 <svg height="20" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M13.4 12l5.3-5.3c0.4-0.4 0.4-1 0-1.4s-1-0.4-1.4 0l-5.3 5.3-5.3-5.3c-0.4-0.4-1-0.4-1.4 0s-0.4 1 0 1.4l5.3 5.3-5.3 5.3c-0.4 0.4-0.4 1 0 1.4 0.2 0.2 0.4 0.3 0.7 0.3s0.5-0.1 0.7-0.3l5.3-5.3 5.3 5.3c0.2 0.2 0.5 0.3 0.7 0.3s0.5-0.1 0.7-0.3c0.4-0.4 0.4-1 0-1.4l-5.3-5.3z"></path>
@@ -9,70 +9,15 @@
         </a>
     </div>
     <div class="side-nav-container d-flex flex-column align-items-center ml-auto mr-auto position-relative">
-        <ul class="side-nav adonis-effect" data-animation="menuTwo" data-animation-item="> li > a" data-level="1" id="site-side-nav">
+        <ul class="side-nav adonis-effect">
             <li class="nav-item">
-                <a class="nav-link" href="home.html">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="radio.html">Radio</a>
+                <a class="nav-link" routerLink="/home">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="library.html">Library</a>
+                <a class="nav-link" routerLink="/playlists">Playlists</a>
             </li>
-            <li class="nav-item has-dropdown">
-                <a class="nav-link" data-level="2" href="#">Shop <span class="adonis-icon icon-sm"><svg height="10" version="1.1" xmlns="http://www.w3.org/2000/svg"><use xlink:href="#arrow-right" /></svg></span></a>
-                <ul class="sub-level">
-                    <li><a class="go-back" data-level="1" href="#">Back</a></li>
-                    <li><a href="store.html">Main Shop</a></li>
-                    <li><a href="genres-shop.html">Shop Genre</a></li>
-                    <li><a href="single-shop-item.html">Single Shop Item</a></li>
-                </ul>
-            </li>
-            <li class="nav-item has-dropdown">
-                <a class="nav-link" data-level="2" href="#">Browse <span class="adonis-icon icon-sm"><svg height="10" version="1.1" xmlns="http://www.w3.org/2000/svg"><use xlink:href="#arrow-right" /></svg></span></a>
-                <ul class="sub-level">
-                    <li><a class="go-back" data-level="1" href="#">Back</a></li>
-                    <li><a href="new-releases.html">New Release</a></li>
-                    <li><a href="all-album.html">All Albums</a></li>
-                    <li><a href="featured-playlists.html">Featured Playlists</a></li>
-                    <li><a href="single-album.html">Single Album</a></li>
-                    <li><a href="single-playlist.html">Single Playlist</a></li>
-                </ul>
-            </li>
-            <li class="nav-item has-dropdown">
-                <a class="nav-link" data-level="2" href="#">Genres <span class="adonis-icon icon-sm"><svg height="10" version="1.1" xmlns="http://www.w3.org/2000/svg"><use xlink:href="#arrow-right" /></svg></span></a>
-                <ul class="sub-level">
-                    <li><a class="go-back" data-level="1" href="#">Back</a></li>
-                    <li><a href="genre-classical.html">Classical</a></li>
-                    <li><a href="genre-classical.html">Pop</a></li>
-                    <li><a href="genre-classical.html">Metal</a></li>
-                    <li><a href="genres.html">All Genres</a></li>
-                </ul>
-            </li>
-            <li class="nav-item has-dropdown">
-                <a class="nav-link" data-level="2" href="#">Charts <span class="adonis-highlight-active fs-1">hot</span><span class="adonis-icon icon-sm"><svg height="10" version="1.1" xmlns="http://www.w3.org/2000/svg"><use xlink:href="#arrow-right" /></svg></span></a>
-                <ul class="sub-level">
-                    <li><a class="go-back" data-level="1" href="#">Back</a></li>
-                    <li><a href="top-albums.html">Top Albums</a></li>
-                    <li><a href="top-artists.html">Top Artists</a></li>
-                    <li><a href="weekly-top-ten.html">Weekly Top 15</a></li>
-                    <li><a href="top-artists.html">Top Artists</a></li>
-                    <li><a href="hot-songs.html">Hot Songs</a></li>
-                    <li><a href="videos.html">Hot Videos</a></li>
-                </ul>
-            </li>
-            <li class="nav-item has-dropdown">
-                <a class="nav-link" data-level="2" href="#">More<span class="adonis-icon icon-sm"><svg height="10" version="1.1" xmlns="http://www.w3.org/2000/svg"><use xlink:href="#arrow-right" /></svg></span></a>
-                <ul class="sub-level">
-                    <li><a class="go-back" data-level="1" href="#">Back</a></li>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Help &amp; Support</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Terms and Privacy</a></li>
-                    <li><a href="#">Artist Originals</a></li>
-                    <li><a href="#">News</a></li>
-                    <li><a href="#">Advertise</a></li>
-                </ul>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/developer/api">Api</a>
             </li>
         </ul>
     </div>
@@ -94,7 +39,7 @@
         <div class="row justify-content-between">
             <div class="col-2 col-xl-3 d-flex align-items-center">
                 <div class="d-block d-lg-none">
-                    <a class="navbar-toggler toggle-off-canvas-main-menu mr-2" data-target="#primary-menu-offcanvas" href="#">
+                    <a class="navbar-toggler toggle-off-canvas-main-menu mr-2" (click)="toggleMobileMenu()">
                         <span class="navbar-toggler-icon"></span>
                         <span class="navbar-toggler-icon"></span>
                         <span class="navbar-toggler-icon"></span>
