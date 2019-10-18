@@ -34,6 +34,7 @@
     "rxjs": "6.5.2",
     "swagger-ui": "2.2.10",
     "tslib": "1.10.0",
+    "videogular2": "^7.0.1",
     "zone.js": "0.10.2"
   },
   "devDependencies": {
@@ -43,6 +44,7 @@
     "@openapitools/openapi-generator-cli": "0.0.19-4.1.2",
     "@types/chai": "4.2.0",
     "@types/chai-string": "1.4.2",
+    "@types/core-js": "^2.5.2",
     "@types/jest": "24.0.18",
     "@types/mocha": "5.2.7",
     "@types/node": "10.12.27",
