@@ -19,7 +19,7 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
-import { PlayerComponent } from 'app/layouts/player/player.component';
+import { SallefyPlayerModule } from 'app/layouts/player/player.module';
 
 @NgModule({
   imports: [
@@ -29,17 +29,10 @@ import { PlayerComponent } from 'app/layouts/player/player.component';
     SallefyHomeModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     SallefyEntityModule,
+    SallefyPlayerModule,
     SallefyAppRoutingModule
   ],
-  declarations: [
-    SfMainComponent,
-    NavbarComponent,
-    ErrorComponent,
-    PageRibbonComponent,
-    ActiveMenuDirective,
-    PlayerComponent,
-    FooterComponent
-  ],
+  declarations: [SfMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
