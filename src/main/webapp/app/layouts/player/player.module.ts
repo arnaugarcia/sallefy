@@ -6,9 +6,11 @@ import { VgOverlayPlayModule } from 'videogular2/compiled/src/overlay-play/overl
 import { VgCoreModule } from 'videogular2/compiled/src/core/core';
 import { PlayerPlaylistComponent } from './player-playlist/player-playlist.component';
 import { SallefySharedModule } from 'app/shared/shared.module';
+import { TrackListComponent } from './player-playlist/track-list/track-list.component';
+import { TrackComponent } from './player-playlist/track/track.component';
 
 @NgModule({
-  declarations: [PlayerComponent, PlayerPlaylistComponent],
+  declarations: [PlayerComponent, PlayerPlaylistComponent, TrackListComponent, TrackComponent],
   imports: [SallefySharedModule, VgCoreModule, VgControlsModule, VgOverlayPlayModule, VgBufferingModule],
   exports: [PlayerComponent]
 })
