@@ -257,6 +257,10 @@ public class UserService {
         return userRepository.findOneWithAuthoritiesByLogin(login);
     }
 
+    public Optional<UserDTO> getUserByLogin(String login) {
+        return userRepository.findOneByLogin2(login);
+    }
+
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthorities(Long id) {
         return userRepository.findOneWithAuthoritiesById(id);

@@ -3,6 +3,7 @@ package com.sallefy.domain;
 import com.sallefy.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sallefy.service.dto.UserDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
@@ -26,6 +27,25 @@ import static com.sallefy.security.AuthoritiesConstants.ADMIN;
  */
 @Entity
 @Table(name = "jhi_user")
+@NamedNativeQuery(
+    name = "UserDataMapping",
+    query = "select u.*, (select count(id) from follow_user where follow_user.user_id = u.id) as followers, (select count(id) from follow_user where follow_user.followed_id = u.id) as following, (select count(id) from playlist where playlist.user_id = u.id) as playlists, (select count(id) from track where track.user_id = u.id) as tracks from jhi_user u where u.login = ?1",
+    resultSetMapping = "UserDataMapping"
+)
+@SqlResultSetMapping(
+    name = "UserDataMapping",
+    classes = @ConstructorResult(
+        targetClass = UserDTO.class,
+        columns = {
+            @ColumnResult(name = "first_name"),
+            @ColumnResult(name = "last_name"),
+            @ColumnResult(name = "followers", type = Long.class),
+            @ColumnResult(name = "following", type = Long.class),
+            @ColumnResult(name = "playlists", type = Long.class),
+            @ColumnResult(name = "tracks", type = Long.class)
+        }
+    )
+)
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends AbstractAuditingEntity implements Serializable {
 

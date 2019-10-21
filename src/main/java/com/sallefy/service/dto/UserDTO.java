@@ -1,14 +1,13 @@
 package com.sallefy.service.dto;
 
 import com.sallefy.config.Constants;
-
 import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import javax.validation.constraints.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,6 +38,14 @@ public class UserDTO {
     private String imageUrl;
 
     private boolean activated = false;
+
+    private Long followers;
+
+    private Long following;
+
+    private Long playlists;
+
+    private Long tracks;
 
     @Size(min = 2, max = 10)
     private String langKey;
@@ -73,6 +80,15 @@ public class UserDTO {
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
+    }
+
+    public UserDTO(String firstName, String lastName, Long followers, Long following, Long playlists, Long tracks) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.followers = followers;
+        this.following = following;
+        this.playlists = playlists;
+        this.tracks = tracks;
     }
 
     public Long getId() {
@@ -179,21 +195,58 @@ public class UserDTO {
         this.authorities = authorities;
     }
 
+    public Long getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Long followers) {
+        this.followers = followers;
+    }
+
+    public Long getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Long following) {
+        this.following = following;
+    }
+
+    public Long getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(Long playlists) {
+        this.playlists = playlists;
+    }
+
+    public Long getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Long tracks) {
+        this.tracks = tracks;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
-            "login='" + login + '\'' +
+            "id=" + id +
+            ", login='" + login + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
             ", activated=" + activated +
+            ", followers=" + followers +
+            ", following=" + following +
+            ", playlists=" + playlists +
+            ", tracks=" + tracks +
             ", langKey='" + langKey + '\'' +
-            ", createdBy=" + createdBy +
+            ", createdBy='" + createdBy + '\'' +
             ", createdDate=" + createdDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
             ", authorities=" + authorities +
-            "}";
+            '}';
     }
 }

@@ -189,8 +189,7 @@ public class UserResource {
     public ResponseEntity<UserDTO> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
         return ResponseUtil.wrapOrNotFound(
-            userService.getUserWithAuthoritiesByLogin(login)
-                .map(UserDTO::new));
+            userService.getUserByLogin(login));
     }
 
     /**
