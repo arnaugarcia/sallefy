@@ -82,13 +82,39 @@ public class UserDTO {
             .collect(Collectors.toSet());
     }
 
-    public UserDTO(String firstName, String lastName, Long followers, Long following, Long playlists, Long tracks) {
+    public UserDTO(Long id,
+                   String login,
+                   String firstName,
+                   String lastName,
+                   String email,
+                   String imageUrl,
+                   Boolean activated,
+                   Long followers,
+                   Long following,
+                   Long playlists,
+                   Long tracks,
+                   String langKey,
+                   String createBy,
+                   Instant createdDate,
+                   String lastModifiedBy,
+                   Instant lastModifiedDate
+                   ) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+        this.imageUrl = imageUrl;
+        this.activated = activated;
+        this.login = login;
         this.followers = followers;
         this.following = following;
         this.playlists = playlists;
         this.tracks = tracks;
+        this.langKey = langKey;
+        this.createdBy = createBy;
+        this.createdDate = createdDate;
+        this.lastModifiedBy = lastModifiedBy;
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public Long getId() {
