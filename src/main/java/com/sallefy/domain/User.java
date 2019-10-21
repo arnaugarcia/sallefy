@@ -3,6 +3,7 @@ package com.sallefy.domain;
 import com.sallefy.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sallefy.domain.queries.UserQuery;
 import com.sallefy.service.dto.UserDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
@@ -20,6 +21,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import static com.sallefy.domain.queries.UserQuery.USER_DATA_QUERY;
+import static com.sallefy.domain.queries.UserQuery.USER_DATA_QUERY_NAME;
 import static com.sallefy.security.AuthoritiesConstants.ADMIN;
 
 /**
@@ -28,12 +31,12 @@ import static com.sallefy.security.AuthoritiesConstants.ADMIN;
 @Entity
 @Table(name = "jhi_user")
 @NamedNativeQuery(
-    name = "UserDataMapping",
-    query = "select u.*, (select count(id) from follow_user where follow_user.followed_id = u.id) as followers, (select count(id) from follow_user where follow_user.user_id = u.id) as following, (select count(id) from playlist where playlist.user_id = u.id) as playlists, (select count(id) from track where track.user_id = u.id) as tracks from jhi_user u where u.login = ?1",
-    resultSetMapping = "UserDataMapping"
+    name = USER_DATA_QUERY_NAME,
+    query = USER_DATA_QUERY,
+    resultSetMapping = USER_DATA_QUERY_NAME
 )
 @SqlResultSetMapping(
-    name = "UserDataMapping",
+    name = USER_DATA_QUERY_NAME,
     classes = @ConstructorResult(
         targetClass = UserDTO.class,
         columns = {
