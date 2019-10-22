@@ -14,6 +14,8 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
+import static com.sallefy.domain.queries.UserQuery.USER_DATA_QUERY_NAME;
+
 /**
  * Spring Data JPA repository for the {@link User} entity.
  */
@@ -34,7 +36,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findOneByLogin(String login);
 
-    @Query(nativeQuery = true, name = "UserDataMapping")
+    @Query(nativeQuery = true, name = USER_DATA_QUERY_NAME)
     Optional<UserDTO> findOneByLogin2(String login);
 
     @EntityGraph(attributePaths = "authorities")

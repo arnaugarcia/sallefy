@@ -12,7 +12,6 @@ import com.sallefy.service.exception.EmailAlreadyUsedException;
 import com.sallefy.service.exception.InvalidPasswordException;
 import com.sallefy.service.exception.UsernameAlreadyUsedException;
 import com.sallefy.service.util.RandomUtil;
-
 import com.sallefy.web.rest.errors.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +27,8 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toSet;
 
 /**
  * Service class for managing users.
@@ -126,9 +127,9 @@ public class UserService {
         return newUser;
     }
 
-    private boolean removeNonActivatedUser(User existingUser){
+    private boolean removeNonActivatedUser(User existingUser) {
         if (existingUser.getActivated()) {
-             return false;
+            return false;
         }
         userRepository.delete(existingUser);
         userRepository.flush();
@@ -158,7 +159,7 @@ public class UserService {
                 .map(authorityRepository::findById)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .collect(Collectors.toSet());
+                .collect(toSet());
             user.setAuthorities(authorities);
         }
         userRepository.save(user);
@@ -257,8 +258,17 @@ public class UserService {
         return userRepository.findOneWithAuthoritiesByLogin(login);
     }
 
-    public Optional<UserDTO> getUserByLogin(String login) {
-        return userRepository.findOneByLogin2(login);
+    public UserDTO getUserByLogin(String login) {
+        UserDTO userDTO = userRepository.findOneByLogin2(login)
+            .orElseThrow(UserNotFoundException::new);
+
+        Set<String> authorities = authorityRepository.findByUserLogin(login)
+            .stream()
+            .map(Authority::getName)
+            .collect(toSet());
+        userDTO.setAuthorities(authorities);
+
+        return userDTO;
     }
 
     @Transactional(readOnly = true)
@@ -291,6 +301,7 @@ public class UserService {
 
     /**
      * Gets a list of all the authorities.
+     *
      * @return a list of all the authorities.
      */
     public List<String> getAuthorities() {
