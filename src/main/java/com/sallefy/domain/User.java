@@ -1,10 +1,8 @@
 package com.sallefy.domain;
 
-import com.sallefy.config.Constants;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sallefy.domain.queries.UserQuery;
-import com.sallefy.service.dto.UserDTO;
+import com.sallefy.config.Constants;
+import com.sallefy.service.dto.AccountDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
@@ -38,7 +36,7 @@ import static com.sallefy.security.AuthoritiesConstants.ADMIN;
 @SqlResultSetMapping(
     name = USER_DATA_QUERY_NAME,
     classes = @ConstructorResult(
-        targetClass = UserDTO.class,
+        targetClass = AccountDTO.class,
         columns = {
             @ColumnResult(name = "id", type = Long.class),
             @ColumnResult(name = "login"),

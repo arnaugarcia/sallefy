@@ -3,16 +3,19 @@ package com.sallefy.service;
 import com.sallefy.config.Constants;
 import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
+import com.sallefy.repository.AccountRepository;
 import com.sallefy.repository.AuthorityRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.security.SecurityUtils;
+import com.sallefy.service.dto.AccountDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.exception.EmailAlreadyUsedException;
 import com.sallefy.service.exception.InvalidPasswordException;
 import com.sallefy.service.exception.UsernameAlreadyUsedException;
 import com.sallefy.service.util.RandomUtil;
 import com.sallefy.web.rest.errors.UserNotFoundException;
+import io.undertow.security.idm.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -47,11 +50,18 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    private final AccountRepository accountRepository;
+
+    public UserService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder,
+                       AuthorityRepository authorityRepository,
+                       CacheManager cacheManager,
+                       AccountRepository accountRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.accountRepository = accountRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -258,17 +268,9 @@ public class UserService {
         return userRepository.findOneWithAuthoritiesByLogin(login);
     }
 
-    public UserDTO getUserByLogin(String login) {
-        UserDTO userDTO = userRepository.findOneByLogin2(login)
-            .orElseThrow(UserNotFoundException::new);
-
-        Set<String> authorities = authorityRepository.findByUserLogin(login)
-            .stream()
-            .map(Authority::getName)
-            .collect(toSet());
-        userDTO.setAuthorities(authorities);
-
-        return userDTO;
+    @Transactional(readOnly = true)
+    public Optional<AccountDTO> getAccountByLogin(String login) {
+        return accountRepository.findOneByLogin(login);
     }
 
     @Transactional(readOnly = true)
@@ -312,5 +314,20 @@ public class UserService {
     private void clearUserCaches(User user) {
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).evict(user.getLogin());
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
+    }
+
+    public AccountDTO getCurrentUser() {
+        final AccountDTO accountDTO = SecurityUtils.getCurrentUserLogin()
+            .flatMap(accountRepository::findOneByLogin)
+            .orElseThrow(UserNotFoundException::new);
+
+        Set<String> authorities = authorityRepository.findByUserIsCurrentUser()
+            .stream()
+            .map(Authority::getName)
+            .collect(toSet());
+
+        accountDTO.setAuthorities(authorities);
+
+        return accountDTO;
     }
 }
