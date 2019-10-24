@@ -36,6 +36,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneWithAuthoritiesById(Long id);
 
     @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
+    @EntityGraph(attributePaths = "playlists")
     Optional<User> findOneWithAuthoritiesByLogin(String login);
 
     @EntityGraph(attributePaths = "authorities")
