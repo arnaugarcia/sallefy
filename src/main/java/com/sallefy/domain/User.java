@@ -2,7 +2,6 @@ package com.sallefy.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sallefy.config.Constants;
-import com.sallefy.service.dto.AccountDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
@@ -19,8 +18,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import static com.sallefy.domain.queries.UserQuery.USER_DATA_QUERY;
-import static com.sallefy.domain.queries.UserQuery.USER_DATA_QUERY_NAME;
 import static com.sallefy.security.AuthoritiesConstants.ADMIN;
 
 /**
@@ -28,35 +25,6 @@ import static com.sallefy.security.AuthoritiesConstants.ADMIN;
  */
 @Entity
 @Table(name = "jhi_user")
-@NamedNativeQuery(
-    name = USER_DATA_QUERY_NAME,
-    query = USER_DATA_QUERY,
-    resultSetMapping = USER_DATA_QUERY_NAME
-)
-@SqlResultSetMapping(
-    name = USER_DATA_QUERY_NAME,
-    classes = @ConstructorResult(
-        targetClass = AccountDTO.class,
-        columns = {
-            @ColumnResult(name = "id", type = Long.class),
-            @ColumnResult(name = "login"),
-            @ColumnResult(name = "first_name"),
-            @ColumnResult(name = "last_name"),
-            @ColumnResult(name = "email"),
-            @ColumnResult(name = "image_url"),
-            @ColumnResult(name = "activated", type = Boolean.class),
-            @ColumnResult(name = "followers", type = Long.class),
-            @ColumnResult(name = "following", type = Long.class),
-            @ColumnResult(name = "playlists", type = Long.class),
-            @ColumnResult(name = "tracks", type = Long.class),
-            @ColumnResult(name = "lang_key"),
-            @ColumnResult(name = "created_by"),
-            @ColumnResult(name = "created_date", type = Instant.class),
-            @ColumnResult(name = "last_modified_by"),
-            @ColumnResult(name = "last_modified_date", type = Instant.class)
-        }
-    )
-)
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends AbstractAuditingEntity implements Serializable {
 

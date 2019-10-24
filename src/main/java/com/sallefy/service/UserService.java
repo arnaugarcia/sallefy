@@ -3,19 +3,17 @@ package com.sallefy.service;
 import com.sallefy.config.Constants;
 import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
-import com.sallefy.repository.AccountRepository;
 import com.sallefy.repository.AuthorityRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.security.SecurityUtils;
-import com.sallefy.service.dto.AccountDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.exception.EmailAlreadyUsedException;
 import com.sallefy.service.exception.InvalidPasswordException;
 import com.sallefy.service.exception.UsernameAlreadyUsedException;
 import com.sallefy.service.util.RandomUtil;
+
 import com.sallefy.web.rest.errors.UserNotFoundException;
-import io.undertow.security.idm.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -30,8 +28,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toSet;
 
 /**
  * Service class for managing users.
@@ -50,18 +46,11 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    private final AccountRepository accountRepository;
-
-    public UserService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder,
-                       AuthorityRepository authorityRepository,
-                       CacheManager cacheManager,
-                       AccountRepository accountRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
-        this.accountRepository = accountRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -137,7 +126,7 @@ public class UserService {
         return newUser;
     }
 
-    private boolean removeNonActivatedUser(User existingUser) {
+    private boolean removeNonActivatedUser(User existingUser){
         if (existingUser.getActivated()) {
             return false;
         }
@@ -169,7 +158,7 @@ public class UserService {
                 .map(authorityRepository::findById)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .collect(toSet());
+                .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
         userRepository.save(user);
@@ -269,11 +258,6 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<AccountDTO> getAccountByLogin(String login) {
-        return accountRepository.findOneByLogin(login);
-    }
-
-    @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthorities(Long id) {
         return userRepository.findOneWithAuthoritiesById(id);
     }
@@ -303,7 +287,6 @@ public class UserService {
 
     /**
      * Gets a list of all the authorities.
-     *
      * @return a list of all the authorities.
      */
     public List<String> getAuthorities() {
@@ -314,20 +297,5 @@ public class UserService {
     private void clearUserCaches(User user) {
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).evict(user.getLogin());
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
-    }
-
-    public AccountDTO getCurrentUser() {
-        final AccountDTO accountDTO = SecurityUtils.getCurrentUserLogin()
-            .flatMap(accountRepository::findOneByLogin)
-            .orElseThrow(UserNotFoundException::new);
-
-        Set<String> authorities = authorityRepository.findByUserIsCurrentUser()
-            .stream()
-            .map(Authority::getName)
-            .collect(toSet());
-
-        accountDTO.setAuthorities(authorities);
-
-        return accountDTO;
     }
 }

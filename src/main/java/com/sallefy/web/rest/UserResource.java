@@ -8,13 +8,17 @@ import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
-import com.sallefy.service.dto.*;
+import com.sallefy.service.dto.FollowDTO;
+import com.sallefy.service.dto.PlaylistDTO;
+import com.sallefy.service.dto.TrackDTO;
+import com.sallefy.service.dto.UserDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.web.rest.errors.EmailAlreadyUsedException;
 import com.sallefy.web.rest.errors.LoginAlreadyUsedException;
 import com.sallefy.web.rest.errors.NotYetImplementedException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
+import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -36,7 +40,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-import static io.github.jhipster.web.util.ResponseUtil.wrapOrNotFound;
 import static org.springframework.http.ResponseEntity.ok;
 
 /**
@@ -148,7 +151,7 @@ public class UserResource {
         }
         Optional<UserDTO> updatedUser = userService.updateUser(userDTO);
 
-        return wrapOrNotFound(updatedUser,
+        return ResponseUtil.wrapOrNotFound(updatedUser,
             HeaderUtil.createAlert(applicationName, "userManagement.updated", userDTO.getLogin()));
     }
 
@@ -183,10 +186,11 @@ public class UserResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the "login" user, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
-    public ResponseEntity<AccountDTO> getUser(@PathVariable String login) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
-        return wrapOrNotFound(userService.getAccountByLogin(login));
-
+        return ResponseUtil.wrapOrNotFound(
+            userService.getUserWithAuthoritiesByLogin(login)
+                .map(UserDTO::new));
     }
 
     /**
