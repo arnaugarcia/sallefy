@@ -6,7 +6,6 @@ import com.sallefy.repository.UserRepository;
 import com.sallefy.security.SecurityUtils;
 import com.sallefy.service.MailService;
 import com.sallefy.service.UserService;
-import com.sallefy.service.dto.AccountDTO;
 import com.sallefy.service.dto.PasswordChangeDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.web.rest.errors.EmailAlreadyUsedException;
@@ -103,8 +102,8 @@ public class AccountResource {
      * @throws RuntimeException {@code 500 (Internal Server Error)} if the user couldn't be returned.
      */
     @GetMapping("/account")
-    public AccountDTO getAccount() {
-        return userService.getCurrentUser();
+    public UserDTO getAccount() {
+        return new UserDTO(userService.getUserWithAuthorities());
     }
 
     /**
