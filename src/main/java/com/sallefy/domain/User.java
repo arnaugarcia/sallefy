@@ -29,7 +29,9 @@ import static com.sallefy.security.AuthoritiesConstants.ADMIN;
     attributeNodes = {
         @NamedAttributeNode("authorities"),
         @NamedAttributeNode("playlists"),
-        @NamedAttributeNode("tracks")
+        @NamedAttributeNode("tracks"),
+        @NamedAttributeNode("followers"),
+        @NamedAttributeNode("following"),
     }
 )
 @Table(name = "jhi_user")
@@ -97,6 +99,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @OneToMany(mappedBy = "user")
     private Set<Track> tracks = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<FollowUser> followers = new HashSet<>();
+
+    @OneToMany(mappedBy = "followed")
+    private Set<FollowUser> following = new HashSet<>();
 
     @JsonIgnore
     @ManyToMany
@@ -227,6 +235,22 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public Set<FollowUser> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<FollowUser> followers) {
+        this.followers = followers;
+    }
+
+    public Set<FollowUser> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Set<FollowUser> following) {
+        this.following = following;
     }
 
     public boolean isAdmin() {
