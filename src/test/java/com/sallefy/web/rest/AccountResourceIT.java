@@ -146,7 +146,7 @@ public class AccountResourceIT {
 
     @Test
     public void testGetUnknownAccount() throws Exception {
-        when(mockUserService.getCurrentUser()).thenThrow(new UserNotFoundException());
+        when(mockUserService.getUserWithAuthorities()).thenThrow(new UserNotFoundException());
 
         restUserMockMvc.perform(get("/api/account")
             .accept(APPLICATION_PROBLEM_JSON))
