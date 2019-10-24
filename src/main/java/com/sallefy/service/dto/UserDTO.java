@@ -52,6 +52,12 @@ public class UserDTO {
 
     private Integer playlists;
 
+    private Integer tracks;
+
+    private Integer followers;
+
+    private Integer following;
+
     private Set<String> authorities;
 
     public UserDTO() {
@@ -75,6 +81,7 @@ public class UserDTO {
             .map(Authority::getName)
             .collect(Collectors.toSet());
         this.playlists = user.getPlaylists().size();
+        this.tracks = user.getTracks().size();
     }
 
     public UserDTO(Long id,
@@ -205,6 +212,30 @@ public class UserDTO {
 
     public void setPlaylists(Integer playlists) {
         this.playlists = playlists;
+    }
+
+    public Integer getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Integer tracks) {
+        this.tracks = tracks;
+    }
+
+    public Integer getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Integer followers) {
+        this.followers = followers;
+    }
+
+    public Integer getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Integer following) {
+        this.following = following;
     }
 
     public Set<String> getAuthorities() {

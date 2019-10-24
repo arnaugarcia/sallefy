@@ -24,6 +24,14 @@ import static com.sallefy.security.AuthoritiesConstants.ADMIN;
  * A user.
  */
 @Entity
+@NamedEntityGraph(
+    name = "user-entity-graph-with-authorities-playlists-tracks-followers",
+    attributeNodes = {
+        @NamedAttributeNode("authorities"),
+        @NamedAttributeNode("playlists"),
+        @NamedAttributeNode("tracks")
+    }
+)
 @Table(name = "jhi_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends AbstractAuditingEntity implements Serializable {
@@ -86,6 +94,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @OneToMany(mappedBy = "user")
     private Set<Playlist> playlists = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Track> tracks = new HashSet<>();
 
     @JsonIgnore
     @ManyToMany
@@ -200,6 +211,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setPlaylists(Set<Playlist> playlists) {
         this.playlists = playlists;
+    }
+
+    public Set<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Set<Track> tracks) {
+        this.tracks = tracks;
     }
 
     public Set<Authority> getAuthorities() {
