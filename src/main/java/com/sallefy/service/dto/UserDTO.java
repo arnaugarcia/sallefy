@@ -82,6 +82,8 @@ public class UserDTO {
             .collect(Collectors.toSet());
         this.playlists = user.getPlaylists().size();
         this.tracks = user.getTracks().size();
+        this.following = user.getFollowing().size();
+        this.followers = user.getFollowers().size();
     }
 
     public UserDTO(Long id,
