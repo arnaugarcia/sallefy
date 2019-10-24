@@ -50,6 +50,8 @@ public class UserDTO {
 
     private Instant lastModifiedDate;
 
+    private Integer playlists;
+
     private Set<String> authorities;
 
     public UserDTO() {
@@ -72,6 +74,7 @@ public class UserDTO {
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
+        this.playlists = user.getPlaylists().size();
     }
 
     public UserDTO(Long id,
@@ -85,8 +88,7 @@ public class UserDTO {
                    String createBy,
                    Instant createdDate,
                    String lastModifiedBy,
-                   Instant lastModifiedDate
-                   ) {
+                   Instant lastModifiedDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -197,6 +199,14 @@ public class UserDTO {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public Integer getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(Integer playlists) {
+        this.playlists = playlists;
+    }
+
     public Set<String> getAuthorities() {
         return authorities;
     }
@@ -220,6 +230,7 @@ public class UserDTO {
             ", createdDate=" + createdDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
+            ", playlists=" + playlists +
             ", authorities=" + authorities +
             '}';
     }
