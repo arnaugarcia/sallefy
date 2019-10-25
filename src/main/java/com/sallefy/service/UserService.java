@@ -12,7 +12,6 @@ import com.sallefy.service.exception.EmailAlreadyUsedException;
 import com.sallefy.service.exception.InvalidPasswordException;
 import com.sallefy.service.exception.UsernameAlreadyUsedException;
 import com.sallefy.service.util.RandomUtil;
-
 import com.sallefy.web.rest.errors.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,9 +125,9 @@ public class UserService {
         return newUser;
     }
 
-    private boolean removeNonActivatedUser(User existingUser){
+    private boolean removeNonActivatedUser(User existingUser) {
         if (existingUser.getActivated()) {
-             return false;
+            return false;
         }
         userRepository.delete(existingUser);
         userRepository.flush();
@@ -269,6 +268,13 @@ public class UserService {
             .orElseThrow(UserNotFoundException::new);
     }
 
+    @Transactional(readOnly = true)
+    public User getAccount() {
+        return SecurityUtils.getCurrentUserLogin()
+            .flatMap(userRepository::findOneByLogin)
+            .orElseThrow(UserNotFoundException::new);
+    }
+
     /**
      * Not activated users should be automatically deleted after 3 days.
      * <p>
@@ -287,6 +293,7 @@ public class UserService {
 
     /**
      * Gets a list of all the authorities.
+     *
      * @return a list of all the authorities.
      */
     public List<String> getAuthorities() {

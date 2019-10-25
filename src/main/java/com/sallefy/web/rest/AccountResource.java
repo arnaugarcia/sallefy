@@ -103,7 +103,7 @@ public class AccountResource {
      */
     @GetMapping("/account")
     public UserDTO getAccount() {
-        return new UserDTO(userService.getUserWithAuthorities());
+        return new UserDTO(userService.getAccount());
     }
 
     /**

@@ -1,8 +1,7 @@
 package com.sallefy.domain;
 
-import com.sallefy.config.Constants;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sallefy.config.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
@@ -19,12 +18,24 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import static com.sallefy.domain.User_.*;
+import static com.sallefy.domain.graphs.UserGraph.USER_ENTITY_ALL;
 import static com.sallefy.security.AuthoritiesConstants.ADMIN;
 
 /**
  * A user.
  */
 @Entity
+@NamedEntityGraph(
+    name = USER_ENTITY_ALL,
+    attributeNodes = {
+        @NamedAttributeNode(AUTHORITIES),
+        @NamedAttributeNode(PLAYLISTS),
+        @NamedAttributeNode(TRACKS),
+        @NamedAttributeNode(FOLLOWERS),
+        @NamedAttributeNode(FOLLOWING)
+    }
+)
 @Table(name = "jhi_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends AbstractAuditingEntity implements Serializable {
@@ -84,6 +95,18 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "reset_date")
     private Instant resetDate = null;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Playlist> playlists = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Track> tracks = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<FollowUser> followers = new HashSet<>();
+
+    @OneToMany(mappedBy = "followed")
+    private Set<FollowUser> following = new HashSet<>();
 
     @JsonIgnore
     @ManyToMany
@@ -192,12 +215,44 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.langKey = langKey;
     }
 
+    public Set<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(Set<Playlist> playlists) {
+        this.playlists = playlists;
+    }
+
+    public Set<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Set<Track> tracks) {
+        this.tracks = tracks;
+    }
+
     public Set<Authority> getAuthorities() {
         return authorities;
     }
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public Set<FollowUser> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<FollowUser> followers) {
+        this.followers = followers;
+    }
+
+    public Set<FollowUser> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Set<FollowUser> following) {
+        this.following = following;
     }
 
     public boolean isAdmin() {
@@ -237,4 +292,5 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", activationKey='" + activationKey + '\'' +
             "}";
     }
+
 }
