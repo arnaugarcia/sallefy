@@ -31,7 +31,7 @@ import static com.sallefy.security.AuthoritiesConstants.ADMIN;
         @NamedAttributeNode("playlists"),
         @NamedAttributeNode("tracks"),
         @NamedAttributeNode("followers"),
-        @NamedAttributeNode("following"),
+        @NamedAttributeNode("following")
     }
 )
 @Table(name = "jhi_user")

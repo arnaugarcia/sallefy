@@ -23,9 +23,11 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
         countQuery = "select count(distinct playlist) from Playlist playlist")
     Page<Playlist> findAllWithEagerRelationships(Pageable pageable);
 
+    @EntityGraph("playlist-entity-graph-with-user-tracks")
     @Query("select distinct playlist from Playlist playlist left join fetch playlist.tracks")
     List<Playlist> findAllWithEagerRelationships();
 
+    @EntityGraph("playlist-entity-graph-with-user-tracks")
     @Query("select distinct playlist from Playlist playlist left join fetch playlist.tracks where playlist.publicAccessible = true")
     List<Playlist> findAllWithEagerRelationshipsAndPublicAccessibleTrue();
 
