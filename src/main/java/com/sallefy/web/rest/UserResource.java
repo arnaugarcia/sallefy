@@ -214,18 +214,6 @@ public class UserResource {
     }
 
     /**
-     * {@code GET /users/:login/albums} : get the albums of the current user.
-     *
-     * @param login the login of the user to find.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the tracks of the current user, or with status {@code 404 (Not Found)}.
-     */
-    @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/albums")
-    public ResponseEntity<UserDTO> getTracksOfCurrentUser(@PathVariable String login) {
-        log.debug("REST request to get {} user albums", login);
-        throw new NotYetImplementedException();
-    }
-
-    /**
      * {@code GET /users/:login/playlists} : get the playlists of the desired user.
      *
      * @param login the login of the user to find.

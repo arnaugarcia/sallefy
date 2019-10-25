@@ -113,70 +113,13 @@ public class MeResource {
     }
 
     /**
-     * {@code GET  /me/albums} : get all the albums of the current user.
-     *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of albums in body.
-     */
-    @ApiOperation(
-        value = "Shows own albums",
-        notes = "If the current user has ADMIN role, shows all the albums of all users"
-    )
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successful operation")
-    })
-    @GetMapping("/me/albums")
-    public ResponseEntity<List<TrackDTO>> getOwnAlbums() {
-        log.debug("REST request to get own albums");
-        throw new NotYetImplementedException();
-    }
-
-    /**
-     * {@code GET  /me/albums/:id} : get the album by "id".
-     *
-     * @param id the id of the album to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the album, or with status {@code 404 (Not Found)}.
-     */
-    @ApiOperation(
-        notes = "Find own album by id",
-        value = "Shows the desired album by the requested id"
-    )
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successful operation"),
-        @ApiResponse(code = 403, message = "You're not the owner of the requested source"),
-        @ApiResponse(code = 404, message = "Playlist not found"),
-    })
-    @GetMapping("/me/albums/{id}")
-    public ResponseEntity<TrackDTO> getOwnAlbumById(@PathVariable Long id) {
-        log.debug("REST request to get a Album with id: {}", id);
-        throw new NotYetImplementedException();
-    }
-
-    /**
-     * {@code GET  /me/albums/liked} : get the liked albums.
-     *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of the liked albums in the body.
-     */
-    @ApiOperation(
-        notes = "Find liked albums",
-        value = "Shows al the liked albums by the current user"
-    )
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successful operation")
-    })
-    @GetMapping("/me/albums/liked")
-    public ResponseEntity<List<AlbumDTO>> getLikedAlbums() {
-        log.debug("REST request to get the list of liked Albums");
-        throw new NotYetImplementedException();
-    }
-
-    /**
      * {@code GET  /me/playlists} : get all the playlists of the current user.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
      */
     @ApiOperation(
         value = "Shows own playlists",
-        notes = "Returns all the playlists, including the private ones. If the current user has ADMIN role, shows all the albums of all users"
+        notes = "Returns all the playlists, including the private ones. If the current user has ADMIN role, shows all the playlists of all users"
     )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation")
