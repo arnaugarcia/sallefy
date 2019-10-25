@@ -18,6 +18,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import static com.sallefy.domain.User_.*;
+import static com.sallefy.domain.graphs.UserGraph.USER_ENTITY_ALL;
 import static com.sallefy.security.AuthoritiesConstants.ADMIN;
 
 /**
@@ -25,13 +27,13 @@ import static com.sallefy.security.AuthoritiesConstants.ADMIN;
  */
 @Entity
 @NamedEntityGraph(
-    name = "user-entity-graph-with-authorities-playlists-tracks-followers",
+    name = USER_ENTITY_ALL,
     attributeNodes = {
-        @NamedAttributeNode("authorities"),
-        @NamedAttributeNode("playlists"),
-        @NamedAttributeNode("tracks"),
-        @NamedAttributeNode("followers"),
-        @NamedAttributeNode("following")
+        @NamedAttributeNode(AUTHORITIES),
+        @NamedAttributeNode(PLAYLISTS),
+        @NamedAttributeNode(TRACKS),
+        @NamedAttributeNode(FOLLOWERS),
+        @NamedAttributeNode(FOLLOWING)
     }
 )
 @Table(name = "jhi_user")
