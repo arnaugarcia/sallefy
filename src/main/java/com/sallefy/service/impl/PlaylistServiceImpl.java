@@ -145,15 +145,6 @@ public class PlaylistServiceImpl implements PlaylistService {
             .collect(toList());
     }
 
-    /**
-     * Get all the playlists with eager load of many-to-many relationships.
-     *
-     * @return the list of entities.
-     */
-    public Page<PlaylistDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return playlistRepository.findAllWithEagerRelationships(pageable).map(playlistMapper::toDto);
-    }
-
 
     /**
      * Get one playlist by id.
