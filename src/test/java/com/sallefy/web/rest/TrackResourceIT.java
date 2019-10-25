@@ -170,7 +170,7 @@ public class TrackResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Track createEntity() {
-        Track track = new Track()
+        return new Track()
             .name(DEFAULT_NAME)
             .rating(DEFAULT_RATING)
             .url(DEFAULT_URL)
@@ -180,7 +180,6 @@ public class TrackResourceIT {
             .released(DEFAULT_RELEASED)
             .duration(DEFAULT_DURATION)
             .color(DEFAULT_COLOR);
-        return track;
     }
 
     /**
