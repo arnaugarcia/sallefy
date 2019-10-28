@@ -12,6 +12,9 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.sallefy.domain.FollowPlaylist_.PLAYLIST;
+import static javax.persistence.FetchType.LAZY;
+
 /**
  * A Playlist.
  */
@@ -70,9 +73,6 @@ public class Playlist implements Serializable {
     @Column(name = "number_songs")
     private Integer numberSongs;
 
-    @Column(name = "followers")
-    private Integer followers;
-
     @Column(name = "rating")
     private Double rating;
 
@@ -84,6 +84,9 @@ public class Playlist implements Serializable {
     @NotNull
     @JsonIgnoreProperties("playlists")
     private User user;
+
+    @OneToMany(fetch = LAZY, mappedBy = PLAYLIST)
+    private Set<FollowPlaylist> followers = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -205,19 +208,6 @@ public class Playlist implements Serializable {
         this.numberSongs = numberSongs;
     }
 
-    public Integer getFollowers() {
-        return followers;
-    }
-
-    public Playlist followers(Integer followers) {
-        this.followers = followers;
-        return this;
-    }
-
-    public void setFollowers(Integer followers) {
-        this.followers = followers;
-    }
-
     public Double getRating() {
         return rating;
     }
@@ -255,6 +245,14 @@ public class Playlist implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<FollowPlaylist> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<FollowPlaylist> followers) {
+        this.followers = followers;
     }
 
     public Set<Track> getTracks() {
@@ -311,7 +309,6 @@ public class Playlist implements Serializable {
             ", thumbnail='" + getThumbnail() + "'" +
             ", publicAccessible='" + isPublicAccessible() + "'" +
             ", numberSongs=" + getNumberSongs() +
-            ", followers=" + getFollowers() +
             ", rating=" + getRating() +
             ", created='" + getCreated() + "'" +
             "}";
