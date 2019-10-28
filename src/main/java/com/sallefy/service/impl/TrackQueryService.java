@@ -4,7 +4,7 @@ import com.sallefy.domain.*;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.service.QueryService;
 import com.sallefy.service.dto.TrackDTO;
-import com.sallefy.service.dto.criteria.TrackCriteria;
+import com.sallefy.service.dto.criteria.TrackCriteriaDTO;
 import com.sallefy.service.mapper.TrackMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +22,13 @@ import static org.springframework.data.domain.PageRequest.of;
 
 /**
  * Service for executing complex queries for {@link Track} entities in the database.
- * The main input is a {@link TrackCriteria} which gets converted to {@link Specification},
+ * The main input is a {@link TrackCriteriaDTO} which gets converted to {@link Specification},
  * in a way that all the filters must apply.
  * It returns a {@link List} of {@link TrackDTO} which fulfills the criteria.
  */
 @Service
 @Transactional(readOnly = true)
-public class TrackQueryService implements QueryService<TrackDTO, TrackCriteria> {
+public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDTO> {
 
     private final Logger log = LoggerFactory.getLogger(TrackQueryService.class);
 
@@ -49,7 +49,7 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteria> 
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<TrackDTO> findByCriteria(TrackCriteria criteria) {
+    public List<TrackDTO> findByCriteria(TrackCriteriaDTO criteria) {
         log.debug("Find tracks by criteria : {}", criteria);
         final Specification<Track> specification = createSpecification(criteria);
 
@@ -65,12 +65,12 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteria> 
     }
 
     /**
-     * Function to convert {@link TrackCriteria} to a {@link Specification}
+     * Function to convert {@link TrackCriteriaDTO} to a {@link Specification}
      *
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
      */
-    protected Specification<Track> createSpecification(TrackCriteria criteria) {
+    protected Specification<Track> createSpecification(TrackCriteriaDTO criteria) {
         Specification<Track> specification = Specification.where(null);
 
         if (criteria != null) {
@@ -124,7 +124,7 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteria> 
             .collect(Collectors.toList());
     }
 
-    private boolean isSizeSelected(TrackCriteria criteria) {
+    private boolean isSizeSelected(TrackCriteriaDTO criteria) {
         return criteria.getSize() != null;
     }
 }

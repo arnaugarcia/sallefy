@@ -6,7 +6,7 @@ import com.sallefy.service.PlaylistService;
 import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.PlaylistRequestDTO;
-import com.sallefy.service.dto.criteria.PlaylistCriteria;
+import com.sallefy.service.dto.criteria.PlaylistCriteriaDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.swagger.annotations.*;
@@ -108,7 +108,7 @@ public class PlaylistResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/playlists")
-    public ResponseEntity<List<PlaylistDTO>> getAllPlaylists(PlaylistCriteria criteria) {
+    public ResponseEntity<List<PlaylistDTO>> getAllPlaylists(PlaylistCriteriaDTO criteria) {
         log.debug("REST request to get all Playlists");
         final List<PlaylistDTO> playlists = playlistQueryService.findByCriteria(criteria);
         return ok(playlists);

@@ -5,9 +5,7 @@ import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.service.QueryService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.PlaylistDTO;
-import com.sallefy.service.dto.TrackDTO;
-import com.sallefy.service.dto.criteria.PlaylistCriteria;
-import com.sallefy.service.dto.criteria.TrackCriteria;
+import com.sallefy.service.dto.criteria.PlaylistCriteriaDTO;
 import com.sallefy.service.mapper.PlaylistMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,13 +23,13 @@ import static org.springframework.data.domain.PageRequest.of;
 
 /**
  * Service for executing complex queries for {@link Playlist} entities in the database.
- * The main input is a {@link PlaylistCriteria} which gets converted to {@link Specification},
+ * The main input is a {@link PlaylistCriteriaDTO} which gets converted to {@link Specification},
  * in a way that all the filters must apply.
  * It returns a {@link List} of {@link PlaylistDTO} which fulfills the criteria.
  */
 @Service
 @Transactional(readOnly = true)
-public class PlaylistQueryService implements QueryService<PlaylistDTO, PlaylistCriteria> {
+public class PlaylistQueryService implements QueryService<PlaylistDTO, PlaylistCriteriaDTO> {
 
     private final Logger log = LoggerFactory.getLogger(PlaylistQueryService.class);
 
@@ -54,7 +52,7 @@ public class PlaylistQueryService implements QueryService<PlaylistDTO, PlaylistC
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<PlaylistDTO> findByCriteria(PlaylistCriteria criteria) {
+    public List<PlaylistDTO> findByCriteria(PlaylistCriteriaDTO criteria) {
         log.debug("find by criteria : {}", criteria);
         final Specification<Playlist> specification = createSpecification(criteria);
 
@@ -70,12 +68,12 @@ public class PlaylistQueryService implements QueryService<PlaylistDTO, PlaylistC
     }
 
     /**
-     * Function to convert {@link PlaylistCriteria} to a {@link Specification}
+     * Function to convert {@link PlaylistCriteriaDTO} to a {@link Specification}
      *
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching {@link Specification} of the entity.
      */
-    protected Specification<Playlist> createSpecification(PlaylistCriteria criteria) {
+    protected Specification<Playlist> createSpecification(PlaylistCriteriaDTO criteria) {
         Specification<Playlist> specification = Specification.where(null);
 
         final User user = userService.getUserWithAuthorities();
@@ -124,7 +122,7 @@ public class PlaylistQueryService implements QueryService<PlaylistDTO, PlaylistC
             .collect(Collectors.toList());
     }
 
-    private boolean isSizeSelected(PlaylistCriteria criteria) {
+    private boolean isSizeSelected(PlaylistCriteriaDTO criteria) {
         return criteria.getSize() != null;
     }
 }

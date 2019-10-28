@@ -6,7 +6,7 @@ import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.service.dto.TrackDTO;
-import com.sallefy.service.dto.criteria.TrackCriteria;
+import com.sallefy.service.dto.criteria.TrackCriteriaDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.swagger.annotations.*;
@@ -134,7 +134,7 @@ public class TrackResource {
         @ApiResponse(code = 200, message = "Successful operation"),
     })
     @GetMapping("/tracks")
-    public ResponseEntity<List<TrackDTO>> getAllTracks(TrackCriteria trackCriteria) {
+    public ResponseEntity<List<TrackDTO>> getAllTracks(TrackCriteriaDTO trackCriteria) {
         log.debug("REST request to get all Tracks");
         return ResponseEntity.ok(trackQueryService.findByCriteria(trackCriteria));
     }

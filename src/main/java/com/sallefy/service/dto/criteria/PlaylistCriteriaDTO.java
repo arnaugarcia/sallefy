@@ -3,13 +3,13 @@ package com.sallefy.service.dto.criteria;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class PlaylistCriteria extends BaseCriteria implements Serializable {
+public class PlaylistCriteriaDTO extends BaseCriteria implements Serializable {
 
     private Boolean recent;
 
     private Boolean popular;
 
-    public PlaylistCriteria() {
+    public PlaylistCriteriaDTO() {
     }
 
     public Boolean isRecent() {
@@ -35,8 +35,8 @@ public class PlaylistCriteria extends BaseCriteria implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PlaylistCriteria)) return false;
-        PlaylistCriteria that = (PlaylistCriteria) o;
+        if (!(o instanceof PlaylistCriteriaDTO)) return false;
+        PlaylistCriteriaDTO that = (PlaylistCriteriaDTO) o;
         return recent == that.recent &&
             popular == that.popular;
     }

@@ -3,7 +3,7 @@ package com.sallefy.service.dto.criteria;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class TrackCriteria extends BaseCriteria implements Serializable {
+public class TrackCriteriaDTO extends BaseCriteria implements Serializable {
 
     private Boolean recent;
 
@@ -11,7 +11,7 @@ public class TrackCriteria extends BaseCriteria implements Serializable {
 
     private Boolean played;
 
-    public TrackCriteria() {
+    public TrackCriteriaDTO() {
     }
 
     public Boolean getRecent() {
@@ -41,8 +41,8 @@ public class TrackCriteria extends BaseCriteria implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TrackCriteria)) return false;
-        TrackCriteria that = (TrackCriteria) o;
+        if (!(o instanceof TrackCriteriaDTO)) return false;
+        TrackCriteriaDTO that = (TrackCriteriaDTO) o;
         return Objects.equals(recent, that.recent) &&
             Objects.equals(liked, that.liked) &&
             Objects.equals(played, that.played);
