@@ -1,9 +1,6 @@
 package com.sallefy.service;
 
-import com.sallefy.domain.FollowPlaylist;
-import com.sallefy.domain.FollowPlaylist_;
-import com.sallefy.domain.Playlist;
-import com.sallefy.domain.Playlist_;
+import com.sallefy.domain.*;
 import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.criteria.PlaylistCriteria;
@@ -39,9 +36,12 @@ public class PlaylistQueryService extends QueryService<Playlist> {
 
     private final PlaylistMapper playlistMapper;
 
-    public PlaylistQueryService(PlaylistRepository playlistRepository, PlaylistMapper playlistMapper) {
+    private final UserService userService;
+
+    public PlaylistQueryService(PlaylistRepository playlistRepository, PlaylistMapper playlistMapper, UserService userService) {
         this.playlistRepository = playlistRepository;
         this.playlistMapper = playlistMapper;
+        this.userService = userService;
     }
 
     /**
@@ -74,6 +74,9 @@ public class PlaylistQueryService extends QueryService<Playlist> {
      */
     protected Specification<Playlist> createSpecification(PlaylistCriteria criteria) {
         Specification<Playlist> specification = Specification.where(null);
+
+        final User user = userService.getUserWithAuthorities();
+
         if (criteria != null) {
             if (criteria.isRecent() != null) {
                 specification = specification.and(sortByCreated());
@@ -81,8 +84,16 @@ public class PlaylistQueryService extends QueryService<Playlist> {
             if (criteria.getPopular() != null) {
                 specification = specification.and(sortByMostFollowed());
             }
+            if (!user.isAdmin()) {
+                specification = specification.and(findPublicPlaylists());
+            }
         }
         return specification;
+    }
+
+    private Specification<Playlist> findPublicPlaylists() {
+        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder
+            .equal(root.get(Playlist_.publicAccessible), true);
     }
 
     private Specification<Playlist> sortByMostFollowed() {
