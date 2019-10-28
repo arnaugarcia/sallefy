@@ -12,7 +12,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
-import static com.sallefy.domain.graphs.UserGraph.USER_ENTITY_ALL;
+import static com.sallefy.domain.graphs.UserGraph.GRAPH_USER_ENTITY_ALL;
 
 /**
  * Spring Data JPA repository for the {@link User} entity.
@@ -32,14 +32,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findOneByEmailIgnoreCase(String email);
 
-    @EntityGraph(USER_ENTITY_ALL)
+    @EntityGraph(GRAPH_USER_ENTITY_ALL)
     Optional<User> findOneByLogin(String login);
 
     @EntityGraph(attributePaths = "authorities")
     Optional<User> findOneWithAuthoritiesById(Long id);
 
     @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
-    @EntityGraph(USER_ENTITY_ALL)
+    @EntityGraph(GRAPH_USER_ENTITY_ALL)
     Optional<User> findOneWithAuthoritiesByLogin(String login);
 
     @EntityGraph(attributePaths = "authorities")

@@ -30,7 +30,7 @@ public class PlaylistDTO implements Serializable {
 
     private Integer followers;
 
-    private UserDTO owner;
+    private UserSimplifyedDTO owner;
 
     private Set<TrackDTO> tracks = new HashSet<>();
 
@@ -90,11 +90,11 @@ public class PlaylistDTO implements Serializable {
         this.followers = followers;
     }
 
-    public UserDTO getOwner() {
+    public UserSimplifyedDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(UserDTO owner) {
+    public void setOwner(UserSimplifyedDTO owner) {
         this.owner = owner;
     }
 

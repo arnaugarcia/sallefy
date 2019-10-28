@@ -19,7 +19,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import static com.sallefy.domain.User_.*;
-import static com.sallefy.domain.graphs.UserGraph.USER_ENTITY_ALL;
+import static com.sallefy.domain.graphs.UserGraph.GRAPH_USER_ENTITY_ALL;
 import static com.sallefy.security.AuthoritiesConstants.ADMIN;
 
 /**
@@ -27,7 +27,7 @@ import static com.sallefy.security.AuthoritiesConstants.ADMIN;
  */
 @Entity
 @NamedEntityGraph(
-    name = USER_ENTITY_ALL,
+    name = GRAPH_USER_ENTITY_ALL,
     attributeNodes = {
         @NamedAttributeNode(AUTHORITIES),
         @NamedAttributeNode(PLAYLISTS),
@@ -96,16 +96,16 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Playlist> playlists = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Track> tracks = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<FollowUser> followers = new HashSet<>();
 
-    @OneToMany(mappedBy = "followed")
+    @OneToMany(mappedBy = "followed", fetch = FetchType.LAZY)
     private Set<FollowUser> following = new HashSet<>();
 
     @JsonIgnore
