@@ -160,7 +160,6 @@ public class PlaylistResourceIT {
             .thumbnail(DEFAULT_THUMBNAIL)
             .publicAccessible(DEFAULT_PUBLIC_ACCESSIBLE)
             .numberSongs(DEFAULT_NUMBER_SONGS)
-            .followers(DEFAULT_FOLLOWERS)
             .rating(DEFAULT_RATING);
         // Add required entity
         User user = UserResourceIT.createEntity();
@@ -177,7 +176,7 @@ public class PlaylistResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Playlist createUpdatedEntity(EntityManager em) {
-        Playlist playlist = new Playlist()
+        return new Playlist()
             .name(UPDATED_NAME)
             .collaborative(UPDATED_COLLABORATIVE)
             .description(UPDATED_DESCRIPTION)
@@ -186,9 +185,7 @@ public class PlaylistResourceIT {
             .thumbnail(UPDATED_THUMBNAIL)
             .publicAccessible(UPDATED_PUBLIC_ACCESSIBLE)
             .numberSongs(UPDATED_NUMBER_SONGS)
-            .followers(UPDATED_FOLLOWERS)
             .rating(UPDATED_RATING);
-        return playlist;
     }
 
     @BeforeEach
