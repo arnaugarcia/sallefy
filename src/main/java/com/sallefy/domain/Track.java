@@ -1,23 +1,31 @@
 package com.sallefy.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.sallefy.domain.Track_.GENRES;
+import static com.sallefy.domain.graphs.UserGraph.GRAPH_TRACK_GENRE;
+
 /**
  * A Track.
  */
 @Entity
+@NamedEntityGraph(
+    name = GRAPH_TRACK_GENRE,
+    attributeNodes = {
+        @NamedAttributeNode(GENRES),
+    }
+)
 @Table(name = "track")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Track implements Serializable {
@@ -64,8 +72,8 @@ public class Track implements Serializable {
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "track_genre",
-               joinColumns = @JoinColumn(name = "track_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
+        joinColumns = @JoinColumn(name = "track_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
     private Set<Genre> genres = new HashSet<>();
 
     @OneToMany(mappedBy = "track", orphanRemoval = true)
