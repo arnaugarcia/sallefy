@@ -86,7 +86,7 @@ public class PlaylistQueryService extends QueryService<Playlist> {
 
     private Specification<Playlist> sortByMostFollowed() {
 
-        /**
+        /*
          * select p.* from playlist p
          * 	inner join follow_playlist fp on p.id = fp.playlist_id
          *     group by fp.playlist_id
@@ -94,17 +94,12 @@ public class PlaylistQueryService extends QueryService<Playlist> {
          */
 
         return (root, query, builder) -> {
-            Subquery<Playlist> subQuery = query.subquery(Playlist.class);
+            Root<Playlist> playlist = query.from(Playlist.class);
 
-            Root<FollowPlaylist> followersRoot = subQuery.from(FollowPlaylist.class);
+            SetJoin<Playlist, FollowPlaylist> followPlaylist = playlist.join(Playlist_.followers);
+            query.groupBy(followPlaylist.get(FollowPlaylist_.playlist));
 
-            Join<FollowPlaylist, Playlist> join = followersRoot.join(FollowPlaylist_.playlist, JoinType.INNER);
-            subQuery.select(join);
-
-            Path<Long> playlistId = join.get(Playlist_.id);
-            subQuery.groupBy(playlistId);
-
-            final Order order = builder.desc(root.get(Playlist_.created));
+            final Order order = builder.desc(builder.count(followPlaylist.get(FollowPlaylist_.id)));
 
             return query.orderBy(order).getRestriction();
         };
