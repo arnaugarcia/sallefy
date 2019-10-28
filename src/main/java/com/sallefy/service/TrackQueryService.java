@@ -1,5 +1,7 @@
 package com.sallefy.service;
 
+import com.sallefy.domain.LikeTrack;
+import com.sallefy.domain.LikeTrack_;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.Track_;
 import com.sallefy.repository.TrackRepository;
@@ -14,9 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Order;
+import javax.persistence.criteria.SetJoin;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static javax.persistence.criteria.JoinType.INNER;
 import static org.springframework.data.domain.PageRequest.of;
 
 /**
@@ -72,26 +76,25 @@ public class TrackQueryService extends QueryService<Track> {
     protected Specification<Track> createSpecification(TrackCriteria criteria) {
         Specification<Track> specification = Specification.where(null);
         if (criteria != null) {
-            if (criteria.getRecent() != null) {
+            if (criteria.getRecent() != null && criteria.getRecent()) {
                 specification = specification.and(sortByCreated());
             }
             if (criteria.getLiked() != null) {
-                //specification = specification.and(sortByMostFollowed());
+                specification = specification.and(sortByMostLiked());
             }
         }
         return specification;
     }
 
-    private Specification<Track> sortByMostFollowed() {
+    private Specification<Track> sortByMostLiked() {
 
         return (root, query, builder) -> {
-            /*SetJoin<Track, LikeTrack> likeTrack = root.join(Playlist_.followers, INNER);
-            query.groupBy(followPlaylist.get(FollowPlaylist_.playlist));
+            SetJoin<Track, LikeTrack> likeTrack = root.join(Track_.likeTracks, INNER);
+            query.groupBy(likeTrack.get(LikeTrack_.track));
 
-            final Order order = builder.desc(builder.count(followPlaylist.get(FollowPlaylist_.id)));*/
+            final Order order = builder.desc(builder.count(likeTrack.get(LikeTrack_.id)));
 
-            return null;
-            // return query.orderBy(order).getRestriction();
+            return query.orderBy(order).getRestriction();
         };
     }
 
