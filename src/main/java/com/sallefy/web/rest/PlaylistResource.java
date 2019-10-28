@@ -1,7 +1,7 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.service.FollowService;
-import com.sallefy.service.PlaylistQueryService;
+import com.sallefy.service.impl.PlaylistQueryService;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;

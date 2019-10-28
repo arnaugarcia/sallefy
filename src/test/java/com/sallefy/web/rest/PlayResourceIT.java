@@ -5,6 +5,7 @@ import com.sallefy.repository.PlaybackRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.*;
+import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;

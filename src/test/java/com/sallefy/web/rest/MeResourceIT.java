@@ -11,6 +11,8 @@ import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.*;
 import com.sallefy.service.dto.PlaylistRequestDTO;
+import com.sallefy.service.impl.PlaylistQueryService;
+import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

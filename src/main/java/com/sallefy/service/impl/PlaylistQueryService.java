@@ -1,11 +1,14 @@
-package com.sallefy.service;
+package com.sallefy.service.impl;
 
 import com.sallefy.domain.*;
 import com.sallefy.repository.PlaylistRepository;
+import com.sallefy.service.QueryService;
+import com.sallefy.service.UserService;
 import com.sallefy.service.dto.PlaylistDTO;
+import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.criteria.PlaylistCriteria;
+import com.sallefy.service.dto.criteria.TrackCriteria;
 import com.sallefy.service.mapper.PlaylistMapper;
-import io.github.jhipster.service.QueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
@@ -28,7 +31,7 @@ import static org.springframework.data.domain.PageRequest.of;
  */
 @Service
 @Transactional(readOnly = true)
-public class PlaylistQueryService extends QueryService<Playlist> {
+public class PlaylistQueryService implements QueryService<PlaylistDTO, PlaylistCriteria> {
 
     private final Logger log = LoggerFactory.getLogger(PlaylistQueryService.class);
 

@@ -2,7 +2,7 @@ package com.sallefy.web.rest;
 
 import com.sallefy.service.LikeService;
 import com.sallefy.service.PlayService;
-import com.sallefy.service.TrackQueryService;
+import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.service.dto.TrackDTO;

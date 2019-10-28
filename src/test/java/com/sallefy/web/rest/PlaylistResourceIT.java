@@ -8,7 +8,7 @@ import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.FollowService;
-import com.sallefy.service.PlaylistQueryService;
+import com.sallefy.service.impl.PlaylistQueryService;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.PlaylistRequestDTO;
