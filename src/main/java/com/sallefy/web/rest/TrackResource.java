@@ -121,9 +121,15 @@ public class TrackResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tracks in body.
      */
     @ApiOperation(
-        value = "Shows own tracks",
+        value = "Shows tracks",
         notes = "If the current user has ADMIN role, shows all the tracks of all users"
     )
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "recent", value = "Sort by most recent", dataType = "boolean", paramType = "query"),
+        @ApiImplicitParam(name = "liked", value = "Sort by most liked", dataType = "boolean", paramType = "query"),
+        @ApiImplicitParam(name = "played", value = "Sort by most played", dataType = "boolean", paramType = "query"),
+        @ApiImplicitParam(name = "size", value = "Limits the response elements to the desired number", dataType = "integer", paramType = "query"),
+    })
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation"),
     })

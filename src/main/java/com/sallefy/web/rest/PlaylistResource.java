@@ -9,9 +9,7 @@ import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.service.dto.criteria.PlaylistCriteria;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -97,6 +95,18 @@ public class PlaylistResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
      */
+    @ApiOperation(
+        value = "Shows playlists",
+        notes = "If the current user has ADMIN role, shows all the tracks of all users"
+    )
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "recent", value = "Sort by most recent", dataType = "boolean", paramType = "query"),
+        @ApiImplicitParam(name = "popular", value = "Sort by most followed", dataType = "boolean", paramType = "query"),
+        @ApiImplicitParam(name = "size", value = "Limits the response elements to the desired number", dataType = "integer", paramType = "query"),
+    })
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successful operation")
+    })
     @GetMapping("/playlists")
     public ResponseEntity<List<PlaylistDTO>> getAllPlaylists(PlaylistCriteria criteria) {
         log.debug("REST request to get all Playlists");
