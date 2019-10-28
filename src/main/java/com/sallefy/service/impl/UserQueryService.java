@@ -52,12 +52,12 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
         log.debug("Find users by criteria : {}", criteria);
         final Specification<User> specification = createSpecification(criteria);
 
-        List<Track> users;
+        List<User> users;
 
         if (isSizeSelected(criteria)) {
             users = userRepository.findAll(specification, of(0, criteria.getSize())).getContent();
         } else {
-            users = trackRepository.findAll(specification);
+            users = userRepository.findAll(specification);
         }
 
         return transformUsers(users);
