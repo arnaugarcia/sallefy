@@ -13,6 +13,7 @@ import com.sallefy.service.*;
 import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.service.impl.PlaylistQueryService;
 import com.sallefy.service.impl.TrackQueryService;
+import com.sallefy.service.impl.UserQueryService;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -92,6 +93,9 @@ public class MeResourceIT {
     @Autowired
     private TrackQueryService trackQueryService;
 
+    @Autowired
+    private UserQueryService userQueryService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -119,7 +123,7 @@ public class MeResourceIT {
             .setValidator(validator)
             .build();
 
-        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackService);
+        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackService, userQueryService);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())

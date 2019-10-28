@@ -13,6 +13,7 @@ import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.dto.criteria.UserCriteriaDTO;
+import com.sallefy.service.impl.UserQueryService;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.web.rest.errors.EmailAlreadyUsedException;
 import com.sallefy.web.rest.errors.LoginAlreadyUsedException;
@@ -86,16 +87,20 @@ public class UserResource {
 
     private final TrackService trackService;
 
+    private final UserQueryService userQueryService;
+
     public UserResource(UserService userService,
                         UserRepository userRepository,
                         FollowService followService,
                         PlaylistService playlistService,
-                        TrackService trackService) {
+                        TrackService trackService,
+                        UserQueryService userQueryService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.followService = followService;
         this.playlistService = playlistService;
         this.trackService = trackService;
+        this.userQueryService = userQueryService;
     }
 
     /**
@@ -163,7 +168,7 @@ public class UserResource {
      */
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getAllUsers(UserCriteriaDTO criteria) {
-        final List<UserDTO> users = userService.getAllManagedUsers(criteria);
+        final List<UserDTO> users = userQueryService.findByCriteria(criteria);
         return ok(users);
     }
 
