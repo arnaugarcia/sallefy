@@ -30,13 +30,6 @@ public interface PlaylistService {
     List<PlaylistDTO> findAll();
 
     /**
-     * Get all the playlists with eager load of many-to-many relationships.
-     *
-     * @return the list of entities.
-     */
-    Page<PlaylistDTO> findAllWithEagerRelationships(Pageable pageable);
-
-    /**
      * Get the "id" playlist.
      *
      * @param id the id of the entity.

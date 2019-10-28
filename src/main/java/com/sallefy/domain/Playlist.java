@@ -16,6 +16,25 @@ import java.util.Set;
  * A Playlist.
  */
 @Entity
+@NamedEntityGraph(
+    name = "playlist-entity-graph-with-user-tracks",
+    attributeNodes = {
+        @NamedAttributeNode("tracks"),
+        @NamedAttributeNode(value = "user", subgraph = "user-sub-graph-with-authorities-playlists-tracks-followers")
+    },
+    subgraphs = {
+        @NamedSubgraph(
+            name = "user-sub-graph-with-authorities-playlists-tracks-followers",
+            attributeNodes = {
+                @NamedAttributeNode("authorities"),
+                @NamedAttributeNode("playlists"),
+                @NamedAttributeNode("tracks"),
+                @NamedAttributeNode("followers"),
+                @NamedAttributeNode("following")
+            }
+        )
+    }
+)
 @Table(name = "playlist")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Playlist implements Serializable {

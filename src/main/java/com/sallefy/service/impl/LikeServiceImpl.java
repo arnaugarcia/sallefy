@@ -24,30 +24,18 @@ public class LikeServiceImpl implements LikeService {
 
     private final LikeTrackRepository likeTrackRepository;
 
-    private final LikeAlbumRepository likeAlbumRepository;
-
-    private final AlbumService albumService;
-
     private final TrackMapper trackMapper;
-
-    private final AlbumMapper albumMapper;
 
     private final TrackService trackService;
 
     private final UserService userService;
 
     public LikeServiceImpl(LikeTrackRepository likeTrackRepository,
-                           LikeAlbumRepository likeAlbumRepository,
-                           AlbumService albumService,
                            TrackMapper trackMapper,
-                           AlbumMapper albumMapper,
                            TrackService trackService,
                            UserService userService) {
         this.likeTrackRepository = likeTrackRepository;
-        this.likeAlbumRepository = likeAlbumRepository;
-        this.albumService = albumService;
         this.trackMapper = trackMapper;
-        this.albumMapper = albumMapper;
         this.trackService = trackService;
         this.userService = userService;
     }
@@ -77,34 +65,6 @@ public class LikeServiceImpl implements LikeService {
         return likeDTO;
     }
 
-    @Override
-    public LikeDTO toggleLikeAlbum(Long albumId) {
-        final User user = userService.getUserWithAuthorities();
-
-        findAlbumById(albumId);
-
-        final LikeDTO likeDTO = new LikeDTO();
-
-        final Optional<LikeAlbum> userLikeAlbum = likeAlbumRepository.findAlbumByUserIsCurrentUser(albumMapper.fromId(albumId));
-
-        if (userLikeAlbum.isPresent()) {
-            likeAlbumRepository.delete(userLikeAlbum.get());
-            likeDTO.setLiked(false);
-        } else {
-            LikeAlbum likeAlbum = new LikeAlbum();
-            likeAlbum.setAlbum(albumMapper.fromId(albumId));
-            likeAlbum.setUser(user);
-            likeAlbum.setLiked(true);
-            likeAlbumRepository.save(likeAlbum);
-            likeDTO.setLiked(true);
-        }
-
-        return likeDTO;
-    }
-
-    private void findAlbumById(Long albumId) {
-        albumService.findOne(albumId);
-    }
 
     private void findTrackById(Long trackId) {
         trackService.findOne(trackId);
