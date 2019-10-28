@@ -20,6 +20,7 @@ import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static javax.persistence.criteria.JoinType.INNER;
 import static org.springframework.data.domain.PageRequest.of;
 
 /**
@@ -94,9 +95,7 @@ public class PlaylistQueryService extends QueryService<Playlist> {
          */
 
         return (root, query, builder) -> {
-            Root<Playlist> playlist = query.from(Playlist.class);
-
-            SetJoin<Playlist, FollowPlaylist> followPlaylist = playlist.join(Playlist_.followers);
+            SetJoin<Playlist, FollowPlaylist> followPlaylist = root.join(Playlist_.followers, INNER);
             query.groupBy(followPlaylist.get(FollowPlaylist_.playlist));
 
             final Order order = builder.desc(builder.count(followPlaylist.get(FollowPlaylist_.id)));
