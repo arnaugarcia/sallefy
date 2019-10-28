@@ -2,9 +2,11 @@ package com.sallefy.web.rest;
 
 import com.sallefy.service.LikeService;
 import com.sallefy.service.PlayService;
+import com.sallefy.service.TrackQueryService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.service.dto.TrackDTO;
+import com.sallefy.service.dto.criteria.TrackCriteria;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.swagger.annotations.*;
@@ -42,14 +44,18 @@ public class TrackResource {
 
     private final TrackService trackService;
 
+    private final TrackQueryService trackQueryService;
+
     private final LikeService likeService;
 
     private final PlayService playService;
 
     public TrackResource(TrackService trackService,
+                         TrackQueryService trackQueryService,
                          LikeService likeService,
                          PlayService playService) {
         this.trackService = trackService;
+        this.trackQueryService = trackQueryService;
         this.likeService = likeService;
         this.playService = playService;
     }
@@ -122,9 +128,9 @@ public class TrackResource {
         @ApiResponse(code = 200, message = "Successful operation"),
     })
     @GetMapping("/tracks")
-    public ResponseEntity<List<TrackDTO>> getAllTracks() {
+    public ResponseEntity<List<TrackDTO>> getAllTracks(TrackCriteria trackCriteria) {
         log.debug("REST request to get all Tracks");
-        return ResponseEntity.ok(trackService.findAll());
+        return ResponseEntity.ok(trackQueryService.findByCriteria(trackCriteria));
     }
 
     /**
