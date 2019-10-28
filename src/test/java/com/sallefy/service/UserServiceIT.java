@@ -5,6 +5,7 @@ import com.sallefy.config.Constants;
 import com.sallefy.domain.User;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.dto.UserDTO;
+import com.sallefy.service.dto.criteria.UserCriteriaDTO;
 import com.sallefy.service.util.RandomUtil;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -191,9 +192,8 @@ public class UserServiceIT {
         if (!userRepository.findOneByLogin(Constants.ANONYMOUS_USER).isPresent()) {
             userRepository.saveAndFlush(user);
         }
-        final PageRequest pageable = PageRequest.of(0, (int) userRepository.count());
-        final Page<UserDTO> allManagedUsers = userService.getAllManagedUsers(pageable);
-        assertThat(allManagedUsers.getContent().stream()
+        final List<UserDTO> allManagedUsers = userService.getAllManagedUsers(new UserCriteriaDTO());
+        assertThat(allManagedUsers.stream()
             .noneMatch(user -> Constants.ANONYMOUS_USER.equals(user.getLogin())))
             .isTrue();
     }
