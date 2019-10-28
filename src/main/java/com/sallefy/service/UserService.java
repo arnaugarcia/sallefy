@@ -250,14 +250,6 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<UserDTO> getAllManagedUsers(UserCriteriaDTO criteria) {
-        return userRepository.findAllByLoginNot(ANONYMOUS_USER)
-            .stream()
-            .map(UserDTO::new)
-            .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneWithAuthoritiesByLogin(login);
     }
