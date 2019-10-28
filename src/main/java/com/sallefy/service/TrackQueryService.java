@@ -1,9 +1,6 @@
 package com.sallefy.service;
 
-import com.sallefy.domain.LikeTrack;
-import com.sallefy.domain.LikeTrack_;
-import com.sallefy.domain.Track;
-import com.sallefy.domain.Track_;
+import com.sallefy.domain.*;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.criteria.TrackCriteria;
@@ -75,6 +72,7 @@ public class TrackQueryService extends QueryService<Track> {
      */
     protected Specification<Track> createSpecification(TrackCriteria criteria) {
         Specification<Track> specification = Specification.where(null);
+
         if (criteria != null) {
             if (criteria.getRecent() != null && criteria.getRecent()) {
                 specification = specification.and(sortByCreated());
@@ -82,8 +80,23 @@ public class TrackQueryService extends QueryService<Track> {
             if (criteria.getLiked() != null) {
                 specification = specification.and(sortByMostLiked());
             }
+            if (criteria.getPlayed() != null) {
+                specification = specification.and(sortByMostPlayed());
+            }
         }
         return specification;
+    }
+
+    private Specification<Track> sortByMostPlayed() {
+
+        return (root, query, builder) -> {
+            SetJoin<Track, Playback> playbacks = root.join(Track_.playbacks, INNER);
+            query.groupBy(playbacks.get(Playback_.track));
+
+            final Order order = builder.desc(builder.count(playbacks.get(Playback_.id)));
+
+            return query.orderBy(order).getRestriction();
+        };
     }
 
     private Specification<Track> sortByMostLiked() {

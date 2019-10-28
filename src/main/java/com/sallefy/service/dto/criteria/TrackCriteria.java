@@ -9,6 +9,8 @@ public class TrackCriteria extends BaseCriteria implements Serializable {
 
     private Boolean liked;
 
+    private Boolean played;
+
     public TrackCriteria() {
     }
 
@@ -28,18 +30,27 @@ public class TrackCriteria extends BaseCriteria implements Serializable {
         this.liked = liked;
     }
 
+    public Boolean getPlayed() {
+        return played;
+    }
+
+    public void setPlayed(Boolean played) {
+        this.played = played;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TrackCriteria)) return false;
         TrackCriteria that = (TrackCriteria) o;
         return Objects.equals(recent, that.recent) &&
-            Objects.equals(liked, that.liked);
+            Objects.equals(liked, that.liked) &&
+            Objects.equals(played, that.played);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(recent, liked);
+        return Objects.hash(recent, liked, played);
     }
 
     @Override
@@ -47,6 +58,7 @@ public class TrackCriteria extends BaseCriteria implements Serializable {
         return "TrackCriteria{" +
             "recent=" + recent +
             ", liked=" + liked +
+            ", played=" + played +
             '}';
     }
 }
