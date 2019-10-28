@@ -19,7 +19,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import static com.sallefy.domain.User_.*;
-import static com.sallefy.domain.graphs.UserGraph.USER_ENTITY_ALL;
+import static com.sallefy.domain.graphs.UserGraph.GRAPH_USER_ENTITY_ALL;
 import static com.sallefy.security.AuthoritiesConstants.ADMIN;
 
 /**
@@ -27,7 +27,7 @@ import static com.sallefy.security.AuthoritiesConstants.ADMIN;
  */
 @Entity
 @NamedEntityGraph(
-    name = USER_ENTITY_ALL,
+    name = GRAPH_USER_ENTITY_ALL,
     attributeNodes = {
         @NamedAttributeNode(AUTHORITIES),
         @NamedAttributeNode(PLAYLISTS),
