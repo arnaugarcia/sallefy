@@ -14,7 +14,7 @@ import java.util.Optional;
  * Spring Data  repository for the Track entity.
  */
 @Repository
-public interface TrackRepository extends JpaRepository<Track, Long> {
+public interface TrackRepository extends JpaRepository<Track, Long>, JpaSpecificationExecutor<Track> {
 
     @Query("select track from Track track where track.user.login = ?#{principal.username}")
     List<Track> findByUserIsCurrentUser();
