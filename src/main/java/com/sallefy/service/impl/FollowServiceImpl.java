@@ -143,6 +143,16 @@ public class FollowServiceImpl implements FollowService {
             .collect(Collectors.toList());
     }
 
+    @Override
+    public FollowDTO checkCurrentUserFollow(String login) {
+        final Optional<FollowUser> followedUser = followUserRepository.findIfFollowedUserIsFollowedByCurrentUser(login);
+        if (followedUser.isPresent()) {
+            return new FollowDTO(true);
+        } else {
+            return new FollowDTO(false);
+        }
+    }
+
     private void checkIfPlaylistExists(Long playlistId) {
         playlistRepository.findById(playlistId)
             .orElseThrow(PlaylistNotFoundException::new);

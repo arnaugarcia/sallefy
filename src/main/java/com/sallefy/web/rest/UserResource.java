@@ -238,7 +238,7 @@ public class UserResource {
     }
 
     /**
-     * {@code GET /users/:login/follow} : follow the desired user.
+     * {@code PUT /users/:login/follow} : follow the desired user.
      *
      * @param login the login of the user to find.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
@@ -258,6 +258,29 @@ public class UserResource {
         FollowDTO followDTO = followService.toggleFollowUser(login);
         return ok(followDTO);
     }
+
+    /**
+     * {@code GET /users/:login/follow} : Check if the current user follows the user.
+     *
+     * @param login the login of the user to find.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
+     */
+    @ApiOperation(
+        value = "Check if following",
+        notes = "Checks if the current user follows the user"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successful operation"),
+        @ApiResponse(code = 400, message = "User makes a bad request"),
+        @ApiResponse(code = 404, message = "User not found"),
+    })
+    @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/follow")
+    public ResponseEntity<FollowDTO> checkFollowUser(@PathVariable String login) {
+        log.debug("REST request to check if current user follows the user {}", login);
+        FollowDTO followDTO = followService.checkCurrentUserFollow(login);
+        return ok(followDTO);
+    }
+
 
     /**
      * {@code DELETE /users/:login} : delete the "login" User.
