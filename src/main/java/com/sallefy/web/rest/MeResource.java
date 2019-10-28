@@ -3,11 +3,9 @@ package com.sallefy.web.rest;
 import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.TrackService;
-import com.sallefy.service.dto.AlbumDTO;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.TrackDTO;
-import com.sallefy.service.dto.UserDTO;
-import com.sallefy.web.rest.errors.NotYetImplementedException;
+import com.sallefy.service.dto.UserSimplifyedDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -185,9 +183,9 @@ public class MeResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/me/followings")
-    public ResponseEntity<List<UserDTO>> getFollowingUsers() {
+    public ResponseEntity<List<UserSimplifyedDTO>> getFollowingUsers() {
         log.debug("REST request to get the list of following Users");
-        List<UserDTO> following = followService.findFollowingUsersByCurrentUser();
+        List<UserSimplifyedDTO> following = followService.findFollowingUsersByCurrentUser();
         return ok(following);
     }
 
@@ -204,9 +202,9 @@ public class MeResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/me/followers")
-    public ResponseEntity<List<UserDTO>> getFollowersOfTheUser() {
+    public ResponseEntity<List<UserSimplifyedDTO>> getFollowersOfTheUser() {
         log.debug("REST request to get the list of the current user followers");
-        List<UserDTO> followers = followService.findFollowersOfCurrentUser();
+        List<UserSimplifyedDTO> followers = followService.findFollowersOfCurrentUser();
         return ok(followers);
     }
 

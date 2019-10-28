@@ -4,6 +4,7 @@ import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
 import com.sallefy.service.dto.UserDTO;
 
+import com.sallefy.service.dto.UserSimplifyedDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -27,6 +28,10 @@ public class UserMapper {
 
     public UserDTO userToUserDTO(User user) {
         return new UserDTO(user);
+    }
+
+    public UserSimplifyedDTO userToUserSimplifiedDTO(User user) {
+        return new UserSimplifyedDTO(user);
     }
 
     public List<User> userDTOsToUsers(List<UserDTO> userDTOs) {
