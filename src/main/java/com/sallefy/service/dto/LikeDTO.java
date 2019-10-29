@@ -9,6 +9,13 @@ public class LikeDTO implements Serializable {
 
     private Boolean liked;
 
+    public LikeDTO() {
+    }
+
+    public LikeDTO(Boolean liked) {
+        this.liked = liked;
+    }
+
     public Boolean getLiked() {
         return liked;
     }

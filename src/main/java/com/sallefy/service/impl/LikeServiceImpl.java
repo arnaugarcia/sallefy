@@ -1,20 +1,14 @@
 package com.sallefy.service.impl;
 
-import com.sallefy.domain.LikeAlbum;
 import com.sallefy.domain.LikeTrack;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
-import com.sallefy.repository.LikeAlbumRepository;
 import com.sallefy.repository.LikeTrackRepository;
-import com.sallefy.service.AlbumService;
 import com.sallefy.service.LikeService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.LikeDTO;
-import com.sallefy.service.dto.TrackDTO;
-import com.sallefy.service.mapper.AlbumMapper;
 import com.sallefy.service.mapper.TrackMapper;
-import com.sallefy.web.rest.errors.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -46,7 +40,7 @@ public class LikeServiceImpl implements LikeService {
 
         findTrackById(trackId);
 
-        final Optional<LikeTrack> userLikeTrack = likeTrackRepository.findTrackByUserIsCurrentUser(createTrackFromId(trackId));
+        final Optional<LikeTrack> userLikeTrack = likeTrackRepository.findTrackByUserIsCurrentUser(trackId);
 
         final LikeDTO likeDTO = new LikeDTO();
 
@@ -63,6 +57,17 @@ public class LikeServiceImpl implements LikeService {
         }
 
         return likeDTO;
+    }
+
+    @Override
+    public LikeDTO checkLikeTrack(Long id) {
+
+        final Optional<LikeTrack> userLikeTrack = likeTrackRepository.findTrackByUserIsCurrentUser(id);
+        if (userLikeTrack.isPresent()) {
+            return new LikeDTO(true);
+        }
+        return new LikeDTO(false);
+
     }
 
 
