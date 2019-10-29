@@ -128,7 +128,7 @@ public class PlaylistResource {
     }
 
     /**
-     * {@code GET /playlists/:id/follow} : follow the desired playlist.
+     * {@code PUT /playlists/:id/follow} : follow the desired playlist.
      *
      * @param id the id of the playlist.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
