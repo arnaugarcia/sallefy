@@ -124,7 +124,7 @@ public class MeResourceIT {
             .setValidator(validator)
             .build();
 
-        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackService, userQueryService);
+        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackQueryService, userQueryService);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())

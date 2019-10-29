@@ -4,7 +4,9 @@ import com.sallefy.domain.*;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.service.QueryService;
 import com.sallefy.service.dto.TrackDTO;
+import com.sallefy.service.dto.criteria.BaseCriteria;
 import com.sallefy.service.dto.criteria.TrackCriteriaDTO;
+import com.sallefy.service.dto.criteria.UserTrackCriteriaDTO;
 import com.sallefy.service.mapper.TrackMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.SetJoin;
 import java.util.List;
@@ -65,6 +68,28 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDT
     }
 
     /**
+     * Return a {@link List} of {@link com.sallefy.service.dto.TrackDTO} which matches the criteria from the database.
+     *
+     * @param criteria The object which holds all the filters, which the entities should match.
+     * @return the matching entities.
+     */
+    @Transactional(readOnly = true)
+    public List<TrackDTO> findByCriteria(UserTrackCriteriaDTO criteria, String login) {
+        log.debug("Find tracks of {} criteria : {}", login, criteria);
+        final Specification<Track> specification = createSpecification(criteria, login);
+
+        List<Track> tracks;
+
+        if (isSizeSelected(criteria)) {
+            tracks = trackRepository.findAll(specification, of(0, criteria.getSize())).getContent();
+        } else {
+            tracks = trackRepository.findAll(specification);
+        }
+
+        return transformTracks(tracks);
+    }
+
+    /**
      * Function to convert {@link TrackCriteriaDTO} to a {@link Specification}
      *
      * @param criteria The object which holds all the filters, which the entities should match.
@@ -85,6 +110,25 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDT
             }
         }
         return specification;
+    }
+
+    protected Specification<Track> createSpecification(UserTrackCriteriaDTO criteria, String login) {
+        Specification<Track> specification = Specification.where(null);
+
+        if (criteria != null) {
+            specification = specification.and(findByUserLogin(login));
+            if (criteria.getPopular() != null && criteria.getPopular()) {
+                specification = specification.and(sortByMostPlayed());
+            }
+        }
+        return specification;
+    }
+
+    private Specification<Track> findByUserLogin(String login) {
+        return (root, query, builder) -> {
+            final Join<Track, User> userJoin = root.join(Track_.user, INNER);
+            return builder.equal(userJoin.get(User_.login), login);
+        };
     }
 
     private Specification<Track> sortByMostPlayed() {
@@ -124,7 +168,7 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDT
             .collect(Collectors.toList());
     }
 
-    private boolean isSizeSelected(TrackCriteriaDTO criteria) {
+    private boolean isSizeSelected(BaseCriteria criteria) {
         return criteria.getSize() != null;
     }
 }

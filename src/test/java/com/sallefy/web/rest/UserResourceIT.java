@@ -14,6 +14,7 @@ import com.sallefy.service.PlaylistService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.UserDTO;
+import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.service.impl.UserQueryService;
 import com.sallefy.service.mapper.UserMapper;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
@@ -120,11 +121,14 @@ public class UserResourceIT {
     @Autowired
     private UserQueryService userQueryService;
 
+    @Autowired
+    private TrackQueryService trackQueryService;
+
     @BeforeEach
     public void setup() {
         cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).clear();
         cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).clear();
-        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackService, userQueryService);
+        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackQueryService, userQueryService);
 
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)

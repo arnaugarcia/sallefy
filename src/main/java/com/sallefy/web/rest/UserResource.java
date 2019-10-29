@@ -12,7 +12,10 @@ import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.UserDTO;
+import com.sallefy.service.dto.criteria.TrackCriteriaDTO;
 import com.sallefy.service.dto.criteria.UserCriteriaDTO;
+import com.sallefy.service.dto.criteria.UserTrackCriteriaDTO;
+import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.service.impl.UserQueryService;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.web.rest.errors.EmailAlreadyUsedException;
@@ -85,7 +88,7 @@ public class UserResource {
 
     private final PlaylistService playlistService;
 
-    private final TrackService trackService;
+    private final TrackQueryService trackQueryService;
 
     private final UserQueryService userQueryService;
 
@@ -93,13 +96,13 @@ public class UserResource {
                         UserRepository userRepository,
                         FollowService followService,
                         PlaylistService playlistService,
-                        TrackService trackService,
+                        TrackQueryService trackQueryService,
                         UserQueryService userQueryService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.followService = followService;
         this.playlistService = playlistService;
-        this.trackService = trackService;
+        this.trackQueryService = trackQueryService;
         this.userQueryService = userQueryService;
     }
 
@@ -211,9 +214,9 @@ public class UserResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/tracks")
-    public ResponseEntity<List<TrackDTO>> getTracksOfUser(@PathVariable String login) {
+    public ResponseEntity<List<TrackDTO>> getTracksOfUser(@PathVariable String login, UserTrackCriteriaDTO criteria) {
         log.debug("REST request to get {} user tracks", login);
-        List<TrackDTO> tracks = trackService.findAllByUserLogin(login);
+        List<TrackDTO> tracks = trackQueryService.findByCriteria(criteria, login);
         return ok(tracks);
     }
 
