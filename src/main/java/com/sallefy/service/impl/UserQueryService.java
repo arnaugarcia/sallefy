@@ -72,14 +72,21 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
         Specification<User> specification = Specification.where(null);
 
         if (criteria != null) {
-            if (criteria.getRecent() != null && criteria.getRecent()) {
+            if (isSelectedAndTrue(criteria.getRecent())) {
                 specification = specification.and(sortByCreated());
             }
             if (criteria.getPopular() != null) {
                 specification = specification.and(sortByMostFollowed());
             }
+            if (isSelectedAndTrue(criteria.getNotFollowing())) {
+
+            }
         }
         return specification;
+    }
+
+    private boolean isSelectedAndTrue(Boolean notFollowing) {
+        return notFollowing != null && notFollowing;
     }
 
     private Specification<User> sortByMostFollowed() {
