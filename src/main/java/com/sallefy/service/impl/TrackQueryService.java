@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.SetJoin;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -127,16 +126,8 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDT
 
     private Specification<Track> findByUserLogin(String login) {
         return (root, query, builder) -> {
-            SetJoin<Track, Playback> playbacks = root.join(Track_.playbacks, INNER);
-            query.groupBy(playbacks.get(Playback_.track));
-
             final Join<Track, User> userJoin = root.join(Track_.user, INNER);
-
-            final Predicate loginEqual = builder.equal(userJoin.get(User_.login), login);
-
-            final Order order = builder.desc(builder.count(playbacks.get(Playback_.id)));
-
-            return query.where(loginEqual).orderBy(order).getRestriction();
+            return builder.equal(userJoin.get(User_.login), login);
         };
     }
 
