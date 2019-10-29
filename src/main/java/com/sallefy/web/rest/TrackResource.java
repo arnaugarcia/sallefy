@@ -2,9 +2,11 @@ package com.sallefy.web.rest;
 
 import com.sallefy.service.LikeService;
 import com.sallefy.service.PlayService;
+import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.service.dto.TrackDTO;
+import com.sallefy.service.dto.criteria.TrackCriteriaDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.swagger.annotations.*;
@@ -42,14 +44,18 @@ public class TrackResource {
 
     private final TrackService trackService;
 
+    private final TrackQueryService trackQueryService;
+
     private final LikeService likeService;
 
     private final PlayService playService;
 
     public TrackResource(TrackService trackService,
+                         TrackQueryService trackQueryService,
                          LikeService likeService,
                          PlayService playService) {
         this.trackService = trackService;
+        this.trackQueryService = trackQueryService;
         this.likeService = likeService;
         this.playService = playService;
     }
@@ -115,16 +121,22 @@ public class TrackResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tracks in body.
      */
     @ApiOperation(
-        value = "Shows own tracks",
+        value = "Shows tracks",
         notes = "If the current user has ADMIN role, shows all the tracks of all users"
     )
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "recent", value = "Sort by most recent", dataType = "boolean", paramType = "query"),
+        @ApiImplicitParam(name = "liked", value = "Sort by most liked", dataType = "boolean", paramType = "query"),
+        @ApiImplicitParam(name = "played", value = "Sort by most played", dataType = "boolean", paramType = "query"),
+        @ApiImplicitParam(name = "size", value = "Limits the response elements to the desired number", dataType = "integer", paramType = "query"),
+    })
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation"),
     })
     @GetMapping("/tracks")
-    public ResponseEntity<List<TrackDTO>> getAllTracks() {
+    public ResponseEntity<List<TrackDTO>> getAllTracks(TrackCriteriaDTO trackCriteria) {
         log.debug("REST request to get all Tracks");
-        return ResponseEntity.ok(trackService.findAll());
+        return ResponseEntity.ok(trackQueryService.findByCriteria(trackCriteria));
     }
 
     /**

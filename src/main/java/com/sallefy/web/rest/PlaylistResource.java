@@ -1,15 +1,15 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.service.FollowService;
+import com.sallefy.service.impl.PlaylistQueryService;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.PlaylistRequestDTO;
+import com.sallefy.service.dto.criteria.PlaylistCriteriaDTO;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +20,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 /**
  * REST controller for managing {@link com.sallefy.domain.Playlist}.
@@ -37,10 +39,15 @@ public class PlaylistResource {
 
     private final PlaylistService playlistService;
 
+    private final PlaylistQueryService playlistQueryService;
+
     private final FollowService followService;
 
-    public PlaylistResource(PlaylistService playlistService, FollowService followService) {
+    public PlaylistResource(PlaylistService playlistService,
+                            PlaylistQueryService playlistQueryService,
+                            FollowService followService) {
         this.playlistService = playlistService;
+        this.playlistQueryService = playlistQueryService;
         this.followService = followService;
     }
 
@@ -78,7 +85,7 @@ public class PlaylistResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         PlaylistDTO result = playlistService.save(playlistRequest);
-        return ResponseEntity.ok()
+        return ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, playlistRequest.getId().toString()))
             .body(result);
     }
@@ -88,10 +95,23 @@ public class PlaylistResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of playlists in body.
      */
+    @ApiOperation(
+        value = "Shows playlists",
+        notes = "If the current user has ADMIN role, shows all the tracks of all users"
+    )
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "recent", value = "Sort by most recent", dataType = "boolean", paramType = "query"),
+        @ApiImplicitParam(name = "popular", value = "Sort by most followed", dataType = "boolean", paramType = "query"),
+        @ApiImplicitParam(name = "size", value = "Limits the response elements to the desired number", dataType = "integer", paramType = "query"),
+    })
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successful operation")
+    })
     @GetMapping("/playlists")
-    public List<PlaylistDTO> getAllPlaylists() {
+    public ResponseEntity<List<PlaylistDTO>> getAllPlaylists(PlaylistCriteriaDTO criteria) {
         log.debug("REST request to get all Playlists");
-        return playlistService.findAll();
+        final List<PlaylistDTO> playlists = playlistQueryService.findByCriteria(criteria);
+        return ok(playlists);
     }
 
     /**
@@ -104,11 +124,11 @@ public class PlaylistResource {
     public ResponseEntity<PlaylistDTO> getPlaylist(@PathVariable Long id) {
         log.debug("REST request to get Playlist : {}", id);
         PlaylistDTO playlistDTO = playlistService.findOne(id);
-        return ResponseEntity.ok(playlistDTO);
+        return ok(playlistDTO);
     }
 
     /**
-     * {@code GET /playlists/:id/follow} : follow the desired playlist.
+     * {@code PUT /playlists/:id/follow} : follow the desired playlist.
      *
      * @param id the id of the playlist.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
@@ -125,7 +145,27 @@ public class PlaylistResource {
     public ResponseEntity<FollowDTO> toggleFollowPlaylist(@PathVariable Long id) {
         log.debug("REST request to follow the playlist with id {}", id);
         FollowDTO followDTO = followService.toggleFollowPlaylist(id);
-        return ResponseEntity.ok(followDTO);
+        return ok(followDTO);
+    }
+
+    /**
+     * {@code GET /playlists/:id/follow} : checks if the current user follows the desired playlist.
+     *
+     * @param id the id of the playlist.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
+     */
+    @ApiOperation(
+        value = "Check if current user follows the playlist",
+        notes = "Checks if the current user follows the desired playlist by 'id'"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Successful operation")
+    })
+    @GetMapping("/playlists/{id}/follow")
+    public ResponseEntity<FollowDTO> checkFollowPlaylist(@PathVariable Long id) {
+        log.debug("REST request to check if current user follows the playlist with id {}", id);
+        FollowDTO followDTO = followService.checkCurrentUserFollowPlaylist(id);
+        return ok(followDTO);
     }
 
 

@@ -28,6 +28,7 @@
             <th><span jhiTranslate="sallefyApp.playlist.numberSongs">Number Songs</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.followers">Followers</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.rating">Rating</span></th>
+            <th><span jhiTranslate="sallefyApp.playlist.created">Created</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.user">User</span></th>
             <th><span jhiTranslate="sallefyApp.playlist.track">Track</span></th>
             <th></th>
@@ -46,6 +47,7 @@
                 <td>{{playlist.numberSongs}}</td>
                 <td>{{playlist.followers}}</td>
                 <td>{{playlist.rating}}</td>
+                <td>{{playlist.created | date:'mediumDate'}}</td>
                 <td>
                     {{playlist.userLogin}}
                 </td>

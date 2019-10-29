@@ -8,6 +8,7 @@ import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.security.SecurityUtils;
 import com.sallefy.service.dto.UserDTO;
+import com.sallefy.service.dto.criteria.UserCriteriaDTO;
 import com.sallefy.service.exception.EmailAlreadyUsedException;
 import com.sallefy.service.exception.InvalidPasswordException;
 import com.sallefy.service.exception.UsernameAlreadyUsedException;
@@ -27,6 +28,8 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.sallefy.config.Constants.ANONYMOUS_USER;
 
 /**
  * Service class for managing users.
@@ -244,11 +247,6 @@ public class UserService {
                 this.clearUserCaches(user);
                 log.debug("Changed password for User: {}", user);
             });
-    }
-
-    @Transactional(readOnly = true)
-    public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
-        return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
     }
 
     @Transactional(readOnly = true)

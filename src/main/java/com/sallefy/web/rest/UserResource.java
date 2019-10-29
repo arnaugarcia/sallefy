@@ -12,6 +12,8 @@ import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.UserDTO;
+import com.sallefy.service.dto.criteria.UserCriteriaDTO;
+import com.sallefy.service.impl.UserQueryService;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.web.rest.errors.EmailAlreadyUsedException;
 import com.sallefy.web.rest.errors.LoginAlreadyUsedException;
@@ -85,16 +87,20 @@ public class UserResource {
 
     private final TrackService trackService;
 
+    private final UserQueryService userQueryService;
+
     public UserResource(UserService userService,
                         UserRepository userRepository,
                         FollowService followService,
                         PlaylistService playlistService,
-                        TrackService trackService) {
+                        TrackService trackService,
+                        UserQueryService userQueryService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.followService = followService;
         this.playlistService = playlistService;
         this.trackService = trackService;
+        this.userQueryService = userQueryService;
     }
 
     /**
@@ -158,14 +164,12 @@ public class UserResource {
     /**
      * {@code GET /users} : get all users.
      *
-     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
      */
     @GetMapping("/users")
-    public ResponseEntity<List<UserDTO>> getAllUsers(Pageable pageable) {
-        final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    public ResponseEntity<List<UserDTO>> getAllUsers(UserCriteriaDTO criteria) {
+        final List<UserDTO> users = userQueryService.findByCriteria(criteria);
+        return ok(users);
     }
 
     /**
@@ -234,7 +238,7 @@ public class UserResource {
     }
 
     /**
-     * {@code GET /users/:login/follow} : follow the desired user.
+     * {@code PUT /users/:login/follow} : follow the desired user.
      *
      * @param login the login of the user to find.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
@@ -254,6 +258,29 @@ public class UserResource {
         FollowDTO followDTO = followService.toggleFollowUser(login);
         return ok(followDTO);
     }
+
+    /**
+     * {@code GET /users/:login/follow} : Check if the current user follows the user.
+     *
+     * @param login the login of the user to find.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
+     */
+    @ApiOperation(
+        value = "Check if following",
+        notes = "Checks if the current user follows the user"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successful operation"),
+        @ApiResponse(code = 400, message = "User makes a bad request"),
+        @ApiResponse(code = 404, message = "User not found"),
+    })
+    @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/follow")
+    public ResponseEntity<FollowDTO> checkFollowUser(@PathVariable String login) {
+        log.debug("REST request to check if current user follows the user {}", login);
+        FollowDTO followDTO = followService.checkCurrentUserFollowUser(login);
+        return ok(followDTO);
+    }
+
 
     /**
      * {@code DELETE /users/:login} : delete the "login" User.

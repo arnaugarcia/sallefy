@@ -9,6 +9,7 @@ import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.*;
 import com.sallefy.service.dto.TrackDTO;
+import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.service.mapper.TrackMapper;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -141,10 +141,13 @@ public class TrackResourceIT {
     @Autowired
     private GenreService genreService;
 
+    @Autowired
+    private TrackQueryService trackQueryService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TrackResource trackResource = new TrackResource(trackService, likeService, playService);
+        final TrackResource trackResource = new TrackResource(trackService, trackQueryService, likeService, playService);
         this.restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -325,7 +328,7 @@ public class TrackResourceIT {
 
     @SuppressWarnings({"unchecked"})
     public void getAllTracksWithEagerRelationshipsIsEnabled() throws Exception {
-        TrackResource trackResource = new TrackResource(trackServiceMock, likeServiceMock, playService);
+        TrackResource trackResource = new TrackResource(trackServiceMock, trackQueryService, likeServiceMock, playService);
         when(trackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         MockMvc restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
@@ -342,7 +345,7 @@ public class TrackResourceIT {
 
     @SuppressWarnings({"unchecked"})
     public void getAllTracksWithEagerRelationshipsIsNotEnabled() throws Exception {
-        TrackResource trackResource = new TrackResource(trackServiceMock, likeServiceMock, playService);
+        TrackResource trackResource = new TrackResource(trackServiceMock, trackQueryService, likeServiceMock, playService);
         when(trackServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
         MockMvc restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)

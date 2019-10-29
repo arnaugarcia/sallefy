@@ -206,6 +206,17 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     }
 
     @ExceptionHandler
+    public ResponseEntity<Problem> handleBadFollowerException(IllegalArgumentException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withType(DEFAULT_TYPE)
+            .withStatus(BAD_REQUEST)
+            .with(MESSAGE_KEY, ex.getMessage())
+            .with(CODE_KEY, ERR_GENERIC)
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler
     public ResponseEntity<Problem> handleExternalClientException(com.sallefy.service.exception.ExternalClientError ex, NativeWebRequest request) {
         Problem problem = Problem.builder()
             .withType(DEFAULT_TYPE)

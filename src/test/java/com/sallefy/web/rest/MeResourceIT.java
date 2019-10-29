@@ -11,6 +11,9 @@ import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.*;
 import com.sallefy.service.dto.PlaylistRequestDTO;
+import com.sallefy.service.impl.PlaylistQueryService;
+import com.sallefy.service.impl.TrackQueryService;
+import com.sallefy.service.impl.UserQueryService;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -84,6 +87,15 @@ public class MeResourceIT {
     @Autowired
     private PlayService playService;
 
+    @Autowired
+    private PlaylistQueryService playlistQueryService;
+
+    @Autowired
+    private TrackQueryService trackQueryService;
+
+    @Autowired
+    private UserQueryService userQueryService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -95,7 +107,7 @@ public class MeResourceIT {
             .setValidator(validator)
             .build();
 
-        TrackResource trackResource = new TrackResource(trackService, likeService, playService);
+        TrackResource trackResource = new TrackResource(trackService, trackQueryService, likeService, playService);
         this.restTrackMockMvc = MockMvcBuilders.standaloneSetup(trackResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
@@ -103,7 +115,7 @@ public class MeResourceIT {
             .setValidator(validator)
             .build();
 
-        PlaylistResource playlistResource = new PlaylistResource(playlistService, followService);
+        PlaylistResource playlistResource = new PlaylistResource(playlistService, playlistQueryService, followService);
         this.restPlaylistMockMvc = MockMvcBuilders.standaloneSetup(playlistResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
@@ -111,7 +123,7 @@ public class MeResourceIT {
             .setValidator(validator)
             .build();
 
-        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackService);
+        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackService, userQueryService);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())

@@ -9,6 +9,13 @@ public class FollowDTO implements Serializable {
 
     private boolean followed;
 
+    public FollowDTO() {
+    }
+
+    public FollowDTO(boolean followed) {
+        this.followed = followed;
+    }
+
     public boolean isFollowed() {
         return followed;
     }

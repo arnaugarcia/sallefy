@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 import { ITrack } from 'app/shared/model/track.model';
 
 export interface IPlaylist {
@@ -12,6 +13,7 @@ export interface IPlaylist {
   numberSongs?: number;
   followers?: number;
   rating?: number;
+  created?: Moment;
   userLogin?: string;
   userId?: number;
   tracks?: ITrack[];
@@ -30,6 +32,7 @@ export class Playlist implements IPlaylist {
     public numberSongs?: number,
     public followers?: number,
     public rating?: number,
+    public created?: Moment,
     public userLogin?: string,
     public userId?: number,
     public tracks?: ITrack[]

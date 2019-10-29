@@ -49,6 +49,7 @@ describe('Playlist e2e test', () => {
             playlistUpdatePage.setNumberSongsInput('5'),
             playlistUpdatePage.setFollowersInput('5'),
             playlistUpdatePage.setRatingInput('5'),
+            playlistUpdatePage.setCreatedInput('2000-12-31'),
             playlistUpdatePage.userSelectLastOption(),
             // playlistUpdatePage.trackSelectLastOption(),
         ]);
@@ -76,6 +77,7 @@ describe('Playlist e2e test', () => {
         expect(await playlistUpdatePage.getNumberSongsInput()).to.eq('5', 'Expected numberSongs value to be equals to 5');
         expect(await playlistUpdatePage.getFollowersInput()).to.eq('5', 'Expected followers value to be equals to 5');
         expect(await playlistUpdatePage.getRatingInput()).to.eq('5', 'Expected rating value to be equals to 5');
+        expect(await playlistUpdatePage.getCreatedInput()).to.eq('2000-12-31', 'Expected created value to be equals to 2000-12-31');
         await playlistUpdatePage.save();
         expect(await playlistUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
