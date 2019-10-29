@@ -1,9 +1,13 @@
 package com.sallefy.service.impl;
 
 import com.sallefy.config.Constants;
-import com.sallefy.domain.*;
+import com.sallefy.domain.FollowUser;
+import com.sallefy.domain.FollowUser_;
+import com.sallefy.domain.User;
+import com.sallefy.domain.User_;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.QueryService;
+import com.sallefy.service.UserService;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.dto.criteria.UserCriteriaDTO;
@@ -35,9 +39,11 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
     private final Logger log = LoggerFactory.getLogger(UserQueryService.class);
 
     private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserQueryService(UserRepository userRepository) {
+    public UserQueryService(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     /**
@@ -71,6 +77,8 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
     protected Specification<User> createSpecification(UserCriteriaDTO criteria) {
         Specification<User> specification = Specification.where(null);
 
+        final User user = userService.getUserWithAuthorities();
+
         if (criteria != null) {
             if (isSelectedAndTrue(criteria.getRecent())) {
                 specification = specification.and(sortByCreated());
@@ -79,10 +87,21 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
                 specification = specification.and(sortByMostFollowed());
             }
             if (isSelectedAndTrue(criteria.getNotFollowing())) {
-
+                specification = specification.and(notFollowedBy(user.getId()));
             }
         }
         return specification;
+    }
+
+    private Specification<User> notFollowedBy(Long id) {
+        return (root, query, builder) -> {
+            SetJoin<User, FollowUser> followers = root.join(User_.followers, INNER);
+            query.groupBy(followers.get(FollowUser_.user));
+
+            final Order order = builder.desc(builder.count(followers.get(FollowUser_.id)));
+
+            return query.where(builder.notEqual(followers.get(FollowUser_.user), id)).orderBy(order).getRestriction();
+        };
     }
 
     private boolean isSelectedAndTrue(Boolean notFollowing) {
