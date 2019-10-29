@@ -181,6 +181,26 @@ public class TrackResource {
     }
 
     /**
+     * {@code GET  /tracks/:id/like} : check if user liked a track by "id".
+     *
+     * @param id the id of the trackDTO to like.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the likeDTO, or with status {@code 404 (Not Found)}.
+     */
+    @ApiOperation(
+        value = "Check if current user liked a track",
+        notes = "Checks if current user has liked the track by 'id'. If the track doesn't exists it'll return false"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Successful operation")
+    })
+    @GetMapping("/tracks/{id}/like")
+    public ResponseEntity<LikeDTO> checkLikeTrack(@PathVariable Long id) {
+        log.debug("REST request to like a Track : {}", id);
+        LikeDTO likeDTO = likeService.checkLikeTrack(id);
+        return ok(likeDTO);
+    }
+
+    /**
      * {@code PUT  /tracks/:id/play} : play a track.
      *
      * @param id the id of the trackDTO to play.

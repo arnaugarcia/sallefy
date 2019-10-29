@@ -14,4 +14,11 @@ public interface LikeService {
      * @return a LikeDTO with the liked boolean
      */
     LikeDTO toggleLikeTrack(Long trackId);
+
+    /**
+     * Checks if current user has liked the Track by "id"
+     * @param id the id of the Track
+     * @return a LikeDTO with true if the user has liked or false if the track isn't found or not liked
+     */
+    LikeDTO checkLikeTrack(Long id);
 }
