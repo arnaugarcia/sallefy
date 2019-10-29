@@ -234,7 +234,7 @@ public class MeResourceIT {
     @Test
     @Transactional
     @WithMockUser("track-owner")
-    public void getOwnTracks() throws Exception {
+    public void get_own_tracks() throws Exception {
 
         // Initialize the database
         User owner = UserResourceIT.createBasicUserWithUsername("track-owner");
@@ -259,6 +259,8 @@ public class MeResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(track1.getName())))
             .andExpect(jsonPath("$.[*].url").value(hasItem(track1.getUrl())));
     }
+
+
 
     @Test
     @Transactional
