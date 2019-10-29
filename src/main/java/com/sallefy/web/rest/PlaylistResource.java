@@ -159,8 +159,7 @@ public class PlaylistResource {
         notes = "Checks if the current user follows the desired playlist by 'id'"
     )
     @ApiResponses(value = {
-        @ApiResponse(code = 201, message = "Successful operation"),
-        @ApiResponse(code = 404, message = "Playlist not found")
+        @ApiResponse(code = 201, message = "Successful operation")
     })
     @GetMapping("/playlists/{id}/follow")
     public ResponseEntity<FollowDTO> checkFollowPlaylist(@PathVariable Long id) {
