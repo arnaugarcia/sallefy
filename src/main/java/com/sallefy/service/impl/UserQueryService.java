@@ -1,8 +1,7 @@
 package com.sallefy.service.impl;
 
 import com.sallefy.config.Constants;
-import com.sallefy.domain.User;
-import com.sallefy.domain.User_;
+import com.sallefy.domain.*;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.QueryService;
 import com.sallefy.service.dto.TrackDTO;
@@ -15,10 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Order;
+import javax.persistence.criteria.SetJoin;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static javax.persistence.criteria.JoinType.INNER;
 import static org.springframework.data.domain.PageRequest.of;
 
 /**
@@ -74,8 +75,22 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
             if (criteria.getRecent() != null && criteria.getRecent()) {
                 specification = specification.and(sortByCreated());
             }
+            if (criteria.getPopular() != null) {
+                specification = specification.and(sortByMostFollowed());
+            }
         }
         return specification;
+    }
+
+    private Specification<User> sortByMostFollowed() {
+        return (root, query, builder) -> {
+            SetJoin<User, FollowUser> followers = root.join(User_.followers, INNER);
+            query.groupBy(followers.get(FollowUser_.id));
+
+            final Order order = builder.desc(builder.count(followers.get(FollowUser_.id)));
+
+            return query.orderBy(order).getRestriction();
+        };
     }
 
     private Specification<User> sortByCreated() {
