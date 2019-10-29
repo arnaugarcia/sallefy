@@ -29,6 +29,7 @@ import org.springframework.validation.Validator;
 
 import static com.sallefy.web.rest.TestUtil.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -229,6 +230,37 @@ public class MeResourceIT {
             .andExpect(status().isOk());
 
     }
+
+    @Test
+    @Transactional
+    @WithMockUser("track-owner")
+    public void get_own_tracks() throws Exception {
+
+        // Initialize the database
+        User owner = UserResourceIT.createBasicUserWithUsername("track-owner");
+        userRepository.save(owner);
+
+        User basicUser2 = UserResourceIT.createEntity();
+        userRepository.save(basicUser2);
+
+        Track track1 = TrackResourceIT.createEntity();
+        track1.setUser(owner);
+        trackRepository.save(track1);
+
+        Track track2 = TrackResourceIT.createEntity();
+        track2.setUser(basicUser2);
+        trackRepository.save(track2);
+
+        // Get all the trackList
+        restMeMockMvc.perform(get("/api/me/tracks"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(1)))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(track1.getName())))
+            .andExpect(jsonPath("$.[*].url").value(hasItem(track1.getUrl())));
+    }
+
+
 
     @Test
     @Transactional

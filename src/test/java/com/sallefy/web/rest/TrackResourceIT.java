@@ -300,7 +300,7 @@ public class TrackResourceIT {
     @Test
     @Transactional
     @WithMockUser("track-owner")
-    public void getOwnTracks() throws Exception {
+    public void getTracks() throws Exception {
 
         // Initialize the database
         User owner = UserResourceIT.createBasicUserWithUsername("track-owner");
@@ -318,10 +318,10 @@ public class TrackResourceIT {
         trackRepository.save(track2);
 
         // Get all the trackList
-        restTrackMockMvc.perform(get("/api/tracks?sort=id,desc"))
+        restTrackMockMvc.perform(get("/api/tracks"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$", hasSize(1)))
+            .andExpect(jsonPath("$", hasSize(2)))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)));
     }
