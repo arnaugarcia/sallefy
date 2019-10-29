@@ -7,6 +7,10 @@ public class UserCriteriaDTO extends BaseCriteria implements Serializable {
 
     private Boolean recent;
 
+    private Boolean popular;
+
+    private Boolean notFollowing;
+
     public UserCriteriaDTO() {
     }
 
@@ -18,23 +22,43 @@ public class UserCriteriaDTO extends BaseCriteria implements Serializable {
         this.recent = recent;
     }
 
+    public Boolean getPopular() {
+        return popular;
+    }
+
+    public void setPopular(Boolean popular) {
+        this.popular = popular;
+    }
+
+    public Boolean getNotFollowing() {
+        return notFollowing;
+    }
+
+    public void setNotFollowing(Boolean notFollowing) {
+        this.notFollowing = notFollowing;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof UserCriteriaDTO)) return false;
         UserCriteriaDTO that = (UserCriteriaDTO) o;
-        return Objects.equals(recent, that.recent);
+        return Objects.equals(recent, that.recent) &&
+            Objects.equals(popular, that.popular) &&
+            Objects.equals(notFollowing, that.notFollowing);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(recent);
+        return Objects.hash(recent, popular, notFollowing);
     }
 
     @Override
     public String toString() {
-        return "TrackCriteria{" +
+        return "UserCriteriaDTO{" +
             "recent=" + recent +
+            ", popular=" + popular +
+            ", notFollowing=" + notFollowing +
             '}';
     }
 }
