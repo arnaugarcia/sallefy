@@ -1,14 +1,13 @@
 package com.sallefy.service.impl;
 
-import com.sallefy.domain.*;
-import com.sallefy.repository.TrackRepository;
+import com.sallefy.config.Constants;
+import com.sallefy.domain.User;
+import com.sallefy.domain.User_;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.QueryService;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.UserDTO;
-import com.sallefy.service.dto.criteria.TrackCriteriaDTO;
 import com.sallefy.service.dto.criteria.UserCriteriaDTO;
-import com.sallefy.service.mapper.TrackMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,11 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Order;
-import javax.persistence.criteria.SetJoin;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static javax.persistence.criteria.JoinType.INNER;
 import static org.springframework.data.domain.PageRequest.of;
 
 /**
@@ -60,7 +58,7 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
             users = userRepository.findAll(specification);
         }
 
-        return transformUsers(users);
+        return transformAndFilterUsers(users);
     }
 
     /**
@@ -87,10 +85,15 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
         };
     }
 
-    private List<UserDTO> transformUsers(List<User> users) {
+    private List<UserDTO> transformAndFilterUsers(List<User> users) {
         return users.stream()
             .map(UserDTO::new)
+            .filter(notAnonymousUser())
             .collect(Collectors.toList());
+    }
+
+    private Predicate<UserDTO> notAnonymousUser() {
+        return userDTO -> !userDTO.getLogin().equalsIgnoreCase(Constants.ANONYMOUS_USER);
     }
 
     private boolean isSizeSelected(UserCriteriaDTO criteria) {
