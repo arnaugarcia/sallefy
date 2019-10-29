@@ -144,9 +144,22 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public FollowDTO checkCurrentUserFollow(String login) {
+    public FollowDTO checkCurrentUserFollowUser(String login) {
         final Optional<FollowUser> followedUser = followUserRepository.findIfFollowedUserIsFollowedByCurrentUser(login);
+
         if (followedUser.isPresent()) {
+            return new FollowDTO(true);
+        } else {
+            return new FollowDTO(false);
+        }
+    }
+
+
+    @Override
+    public FollowDTO checkCurrentUserFollowPlaylist(Long playlistId) {
+        final Optional<FollowPlaylist> followPlaylist = followPlaylistRepository.findByIdAndCurrentUser(playlistId);
+
+        if (followPlaylist.isPresent()) {
             return new FollowDTO(true);
         } else {
             return new FollowDTO(false);

@@ -277,7 +277,7 @@ public class UserResource {
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/follow")
     public ResponseEntity<FollowDTO> checkFollowUser(@PathVariable String login) {
         log.debug("REST request to check if current user follows the user {}", login);
-        FollowDTO followDTO = followService.checkCurrentUserFollow(login);
+        FollowDTO followDTO = followService.checkCurrentUserFollowUser(login);
         return ok(followDTO);
     }
 

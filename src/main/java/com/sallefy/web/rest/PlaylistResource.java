@@ -148,6 +148,27 @@ public class PlaylistResource {
         return ok(followDTO);
     }
 
+    /**
+     * {@code GET /playlists/:id/follow} : checks if the current user follows the desired playlist.
+     *
+     * @param id the id of the playlist.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
+     */
+    @ApiOperation(
+        value = "Check if current user follows the playlist",
+        notes = "Checks if the current user follows the desired playlist by 'id'"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Successful operation"),
+        @ApiResponse(code = 404, message = "Playlist not found")
+    })
+    @GetMapping("/playlists/{id}/follow")
+    public ResponseEntity<FollowDTO> checkFollowPlaylist(@PathVariable Long id) {
+        log.debug("REST request to check if current user follows the playlist with id {}", id);
+        FollowDTO followDTO = followService.checkCurrentUserFollowPlaylist(id);
+        return ok(followDTO);
+    }
+
 
     /**
      * {@code DELETE  /playlists/:id} : delete the "id" playlist.
