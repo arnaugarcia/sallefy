@@ -389,12 +389,13 @@ public class UserResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser
     public void getAllUsers() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
 
         // Get all the users
-        restUserMockMvc.perform(get("/api/users?sort=id,desc")
+        restUserMockMvc.perform(get("/api/users")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
