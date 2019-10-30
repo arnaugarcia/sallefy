@@ -37,7 +37,7 @@ node {
     }
 
     stage('packaging') {
-        sh "./mvnw -ntp verify -Pprod,swagger -DskipTests"
+        sh "./mvnw -ntp verify -Pprod,war,swagger -DskipTests"
         archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
     }
 }
