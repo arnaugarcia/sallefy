@@ -18,6 +18,10 @@ logging:
     ROOT: DEBUG
     io.github.jhipster: DEBUG
     com.sallefy: DEBUG
+management:
+  health:
+    elasticsearch:
+      enabled: false
 
 spring:
   profiles:
@@ -57,6 +61,11 @@ spring:
       hibernate.cache.use_second_level_cache: true
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
+  data:
+    elasticsearch:
+      properties:
+        path:
+          home: target/elasticsearch
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
