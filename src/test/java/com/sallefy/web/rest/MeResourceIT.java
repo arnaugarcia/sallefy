@@ -9,6 +9,7 @@ import com.sallefy.repository.FollowUserRepository;
 import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
+import com.sallefy.repository.search.UserSearchRepository;
 import com.sallefy.service.*;
 import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.service.impl.PlaylistQueryService;
@@ -73,6 +74,15 @@ public class MeResourceIT {
     @Autowired
     private UserService userService;
 
+    /**
+     * This repository is mocked in the com.sallefy.repository.search test package.
+     *
+     * @see com.sallefy.repository.search.UserSearchRepositoryMockConfiguration
+     */
+    @Autowired
+    private UserSearchRepository mockUserSearchRepository;
+
+
     @Autowired
     private FollowService followService;
 
@@ -124,7 +134,13 @@ public class MeResourceIT {
             .setValidator(validator)
             .build();
 
-        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackQueryService, userQueryService);
+        UserResource userResource = new UserResource(userService,
+            userRepository,
+            followService,
+            playlistService,
+            trackQueryService,
+            userQueryService,
+            mockUserSearchRepository);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
