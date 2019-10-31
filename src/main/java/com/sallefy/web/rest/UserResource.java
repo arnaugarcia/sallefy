@@ -3,6 +3,7 @@ package com.sallefy.web.rest;
 import com.sallefy.config.Constants;
 import com.sallefy.domain.User;
 import com.sallefy.repository.UserRepository;
+import com.sallefy.repository.search.UserSearchRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
@@ -44,7 +45,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.springframework.http.ResponseEntity.ok;
 
 /**
@@ -92,18 +96,22 @@ public class UserResource {
 
     private final UserQueryService userQueryService;
 
+    private final UserSearchRepository userSearchRepository;
+
     public UserResource(UserService userService,
                         UserRepository userRepository,
                         FollowService followService,
                         PlaylistService playlistService,
                         TrackQueryService trackQueryService,
-                        UserQueryService userQueryService) {
+                        UserQueryService userQueryService,
+                        UserSearchRepository userSearchRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.followService = followService;
         this.playlistService = playlistService;
         this.trackQueryService = trackQueryService;
         this.userQueryService = userQueryService;
+        this.userSearchRepository = userSearchRepository;
     }
 
     /**
@@ -299,5 +307,18 @@ public class UserResource {
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login))
             .build();
+    }
+
+    /**
+     * {@code SEARCH /_search/users/:query} : search for the User corresponding to the query.
+     *
+     * @param query the query to search.
+     * @return the result of the search.
+     */
+    @GetMapping("/_search/users/{query}")
+    public List<User> search(@PathVariable String query) {
+        return StreamSupport
+            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
 }
