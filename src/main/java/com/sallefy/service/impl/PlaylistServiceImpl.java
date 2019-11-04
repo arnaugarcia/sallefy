@@ -4,6 +4,7 @@ import com.sallefy.domain.Playlist;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
 import com.sallefy.repository.PlaylistRepository;
+import com.sallefy.repository.search.PlaylistSearchRepository;
 import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.TrackService;
@@ -46,18 +47,22 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     private final FollowService followService;
 
+    private final PlaylistSearchRepository playlistSearchRepository;
+
     public PlaylistServiceImpl(PlaylistRepository playlistRepository,
                                PlaylistMapper playlistMapper,
                                UserService userService,
                                TrackService trackService,
                                TrackMapper trackMapper,
-                               FollowService followService) {
+                               FollowService followService,
+                               PlaylistSearchRepository playlistSearchRepository) {
         this.playlistRepository = playlistRepository;
         this.playlistMapper = playlistMapper;
         this.userService = userService;
         this.trackService = trackService;
         this.trackMapper = trackMapper;
         this.followService = followService;
+        this.playlistSearchRepository = playlistSearchRepository;
     }
 
     /**
@@ -110,6 +115,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     private PlaylistDTO saveAndTransform(Playlist playlist) {
         Playlist result = playlistRepository.save(playlist);
+        playlistSearchRepository.save(result);
         return playlistMapper.toDto(result);
     }
 
@@ -176,6 +182,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
         followService.deleteFollowersByPlaylist(playlistId);
         playlistRepository.deleteById(playlistId);
+        playlistSearchRepository.delete(playlist);
     }
 
     @Override
