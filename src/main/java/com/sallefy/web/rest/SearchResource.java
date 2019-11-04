@@ -1,5 +1,6 @@
 package com.sallefy.web.rest;
 
+import com.sallefy.service.dto.SearchDTO;
 import com.sallefy.web.rest.errors.NotYetImplementedException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -42,7 +43,7 @@ public class SearchResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/search")
-    public ResponseEntity<List<Void>> search() {
+    public ResponseEntity<List<SearchDTO>> search() {
         log.debug("REST request to search in the whole application");
         throw new NotYetImplementedException();
     }
