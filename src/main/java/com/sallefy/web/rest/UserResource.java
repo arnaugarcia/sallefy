@@ -283,7 +283,7 @@ public class UserResource {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation"),
         @ApiResponse(code = 400, message = "User makes a bad request"),
-        @ApiResponse(code = 404, message = "User not found"),
+        @ApiResponse(code = 404, message = "User not found")
     })
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/follow")
     public ResponseEntity<FollowDTO> checkFollowUser(@PathVariable String login) {

@@ -1,36 +1,37 @@
 package com.sallefy.service.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class SearchDTO implements Serializable {
 
-    private PlaylistDTO playlists;
+    private List<PlaylistDTO> playlists;
 
-    private UserSimplifyedDTO users;
+    private List<UserSimplifyedDTO> users;
 
-    private TrackDTO tracks;
+    private List<TrackDTO> tracks;
 
-    public PlaylistDTO getPlaylists() {
+    public List<PlaylistDTO> getPlaylists() {
         return playlists;
     }
 
-    public void setPlaylists(PlaylistDTO playlists) {
+    public void setPlaylists(List<PlaylistDTO> playlists) {
         this.playlists = playlists;
     }
 
-    public UserSimplifyedDTO getUsers() {
+    public List<UserSimplifyedDTO> getUsers() {
         return users;
     }
 
-    public void setUsers(UserSimplifyedDTO users) {
+    public void setUsers(List<UserSimplifyedDTO> users) {
         this.users = users;
     }
 
-    public TrackDTO getTracks() {
+    public List<TrackDTO> getTracks() {
         return tracks;
     }
 
-    public void setTracks(TrackDTO tracks) {
+    public void setTracks(List<TrackDTO> tracks) {
         this.tracks = tracks;
     }
 
