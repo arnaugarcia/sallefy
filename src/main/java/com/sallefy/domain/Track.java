@@ -6,6 +6,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,6 +37,7 @@ public class Track implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Field(type = FieldType.Keyword)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
