@@ -55,9 +55,9 @@ public class UserServiceIT {
     private UserService userService;
 
     /**
-     * This repository is mocked in the com.mycompany.myapp.repository.search test package.
+     * This repository is mocked in the com.sallefy.repository.search.UserSearchRepositoryMockConfiguration test package.
      *
-     * @see com.mycompany.myapp.repository.search.UserSearchRepositoryMockConfiguration
+     * @see com.sallefy.repository.search.UserSearchRepositoryMockConfiguration
      */
     @Autowired
     private UserSearchRepository mockUserSearchRepository;
@@ -180,7 +180,7 @@ public class UserServiceIT {
         assertThat(users).isEmpty();
 
         // Verify Elasticsearch mock
-        verify(mockUserSearchRepository, times(1)).delete(user);
+        verify(mockUserSearchRepository, times(1)).deleteById(user.getId());
     }
 
     @Test
@@ -199,7 +199,7 @@ public class UserServiceIT {
         assertThat(maybeDbUser).contains(dbUser);
 
         // Verify Elasticsearch mock
-        verify(mockUserSearchRepository, never()).delete(user);
+        verify(mockUserSearchRepository, never()).deleteById(user.getId());
     }
 
     @Test

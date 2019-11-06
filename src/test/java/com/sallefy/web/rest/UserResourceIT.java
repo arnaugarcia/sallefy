@@ -15,6 +15,7 @@ import com.sallefy.service.PlaylistService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.UserDTO;
+import com.sallefy.service.dto.UserSimplifiedDTO;
 import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.service.impl.UserQueryService;
 import com.sallefy.service.mapper.UserMapper;
@@ -265,7 +266,7 @@ public class UserResourceIT {
     public void createUserWithExistingLogin() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
+        mockUserSearchRepository.save(new UserSimplifiedDTO(user));
         int databaseSizeBeforeCreate = userRepository.findAll().size();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
@@ -373,7 +374,7 @@ public class UserResourceIT {
     public void createUserWithExistingEmail() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
+        mockUserSearchRepository.save(new UserSimplifiedDTO(user));
         int databaseSizeBeforeCreate = userRepository.findAll().size();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
@@ -404,7 +405,7 @@ public class UserResourceIT {
     public void getAllUsers() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
+        mockUserSearchRepository.save(new UserSimplifiedDTO(user));
 
         // Get all the users
         restUserMockMvc.perform(get("/api/users")
@@ -424,7 +425,7 @@ public class UserResourceIT {
     public void getUser() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
+        mockUserSearchRepository.save(new UserSimplifiedDTO(user));
 
         assertThat(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).get(user.getLogin())).isNull();
 
@@ -454,7 +455,7 @@ public class UserResourceIT {
     public void updateUser() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
+        mockUserSearchRepository.save(new UserSimplifiedDTO(user));
         int databaseSizeBeforeUpdate = userRepository.findAll().size();
 
         // Update the user
@@ -497,7 +498,7 @@ public class UserResourceIT {
     public void updateUserLogin() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
+        mockUserSearchRepository.save(new UserSimplifiedDTO(user));
         int databaseSizeBeforeUpdate = userRepository.findAll().size();
 
         // Update the user
@@ -541,7 +542,7 @@ public class UserResourceIT {
     public void updateUserExistingEmail() throws Exception {
         // Initialize the database with 2 users
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
+        mockUserSearchRepository.save(new UserSimplifiedDTO(user));
 
         User anotherUser = new User();
         anotherUser.setLogin("jhipster");
@@ -553,7 +554,7 @@ public class UserResourceIT {
         anotherUser.setImageUrl("");
         anotherUser.setLangKey("en");
         userRepository.saveAndFlush(anotherUser);
-        mockUserSearchRepository.save(anotherUser);
+        mockUserSearchRepository.save(new UserSimplifiedDTO(anotherUser));
 
         // Update the user
         User updatedUser = userRepository.findById(user.getId()).get();
@@ -585,7 +586,7 @@ public class UserResourceIT {
     public void updateUserExistingLogin() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
+        mockUserSearchRepository.save(new UserSimplifiedDTO(user));
 
         User anotherUser = new User();
         anotherUser.setLogin("jhipster");
@@ -597,7 +598,7 @@ public class UserResourceIT {
         anotherUser.setImageUrl("");
         anotherUser.setLangKey("en");
         userRepository.saveAndFlush(anotherUser);
-        mockUserSearchRepository.save(anotherUser);
+        mockUserSearchRepository.save(new UserSimplifiedDTO(anotherUser));
 
         // Update the user
         User updatedUser = userRepository.findById(user.getId()).get();
@@ -629,7 +630,7 @@ public class UserResourceIT {
     public void deleteUser() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
+        mockUserSearchRepository.save(new UserSimplifiedDTO(user));
         int databaseSizeBeforeDelete = userRepository.findAll().size();
 
         // Delete the user
