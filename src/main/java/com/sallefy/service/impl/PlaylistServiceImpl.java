@@ -115,8 +115,11 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     private PlaylistDTO saveAndTransform(Playlist playlist) {
         Playlist result = playlistRepository.save(playlist);
-        playlistSearchRepository.save(result);
-        return playlistMapper.toDto(result);
+
+        final PlaylistDTO playlistDTO = playlistMapper.toDto(result);
+
+        playlistSearchRepository.save(playlistDTO);
+        return playlistDTO;
     }
 
     private Playlist findById(Long playlistId) {
@@ -182,7 +185,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
         followService.deleteFollowersByPlaylist(playlistId);
         playlistRepository.deleteById(playlistId);
-        playlistSearchRepository.delete(playlist);
+        playlistSearchRepository.deleteById(playlistId);
     }
 
     @Override

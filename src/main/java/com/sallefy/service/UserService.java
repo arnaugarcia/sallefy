@@ -9,6 +9,7 @@ import com.sallefy.repository.search.UserSearchRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.security.SecurityUtils;
 import com.sallefy.service.dto.UserDTO;
+import com.sallefy.service.dto.UserSimplifiedDTO;
 import com.sallefy.service.exception.EmailAlreadyUsedException;
 import com.sallefy.service.exception.InvalidPasswordException;
 import com.sallefy.service.exception.UsernameAlreadyUsedException;
@@ -17,8 +18,6 @@ import com.sallefy.web.rest.errors.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,8 +27,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static com.sallefy.config.Constants.ANONYMOUS_USER;
 
 /**
  * Service class for managing users.
@@ -68,7 +65,7 @@ public class UserService {
             .map(user -> {
                 // activate given user for the registration key.
                 user.setActivated(true);
-                userSearchRepository.save(user);
+                userSearchRepository.save(new UserSimplifiedDTO(user));
                 user.setActivationKey(null);
                 this.clearUserCaches(user);
                 log.debug("Activated user: {}", user);
@@ -131,7 +128,7 @@ public class UserService {
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
-        userSearchRepository.save(newUser);
+        userSearchRepository.save(new UserSimplifiedDTO(newUser));
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
@@ -173,7 +170,7 @@ public class UserService {
             user.setAuthorities(authorities);
         }
         userRepository.save(user);
-        userSearchRepository.save(user);
+        userSearchRepository.save(new UserSimplifiedDTO(user));
         this.clearUserCaches(user);
         log.debug("Created Information for User: {}", user);
         return user;
@@ -197,7 +194,7 @@ public class UserService {
                 user.setEmail(email.toLowerCase());
                 user.setLangKey(langKey);
                 user.setImageUrl(imageUrl);
-                userSearchRepository.save(user);
+                userSearchRepository.save(new UserSimplifiedDTO(user));
                 this.clearUserCaches(user);
                 log.debug("Changed Information for User: {}", user);
             });
@@ -230,7 +227,7 @@ public class UserService {
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .forEach(managedAuthorities::add);
-                userSearchRepository.save(user);
+                userSearchRepository.save(new UserSimplifiedDTO(user));
                 this.clearUserCaches(user);
                 log.debug("Changed Information for User: {}", user);
                 return user;
@@ -241,7 +238,7 @@ public class UserService {
     public void deleteUser(String login) {
         userRepository.findOneByLogin(login).ifPresent(user -> {
             userRepository.delete(user);
-            userSearchRepository.delete(user);
+            userSearchRepository.deleteById(user.getId());
             this.clearUserCaches(user);
             log.debug("Deleted User: {}", user);
         });
@@ -297,8 +294,8 @@ public class UserService {
             .findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant.now().minus(3, ChronoUnit.DAYS))
             .forEach(user -> {
                 log.debug("Deleting not activated user {}", user.getLogin());
-                userSearchRepository.delete(user);
                 userRepository.delete(user);
+                userSearchRepository.deleteById(user.getId());
                 this.clearUserCaches(user);
             });
     }

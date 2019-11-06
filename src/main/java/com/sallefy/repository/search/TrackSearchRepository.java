@@ -1,10 +1,10 @@
 package com.sallefy.repository.search;
 
-import com.sallefy.domain.Track;
+import com.sallefy.service.dto.TrackDTO;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
- * Spring Data Elasticsearch repository for the Track entity.
+ * Spring Data Elasticsearch repository for the TrackDTO entity.
  */
-public interface TrackSearchRepository extends ElasticsearchRepository<Track, Long> {
+public interface TrackSearchRepository extends ElasticsearchRepository<TrackDTO, Long> {
 }

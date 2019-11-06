@@ -163,6 +163,7 @@ public class TrackServiceImpl implements TrackService {
             checkUserIsTheOwner(track, currentUser);
         }
 
+        trackSearchRepository.deleteById(trackId);
         trackRepository.deleteById(trackId);
     }
 
@@ -246,8 +247,11 @@ public class TrackServiceImpl implements TrackService {
 
     private TrackDTO saveAndTransform(Track track) {
         trackRepository.save(track);
-        trackSearchRepository.save(track);
-        return trackMapper.toDto(track);
+
+        final TrackDTO trackDTO = trackMapper.toDto(track);
+        trackSearchRepository.save(trackDTO);
+
+        return trackDTO;
     }
 
     private void checkUserIsTheOwner(Track track, User user) {
