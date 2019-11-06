@@ -30,7 +30,6 @@ import static com.sallefy.domain.graphs.UserGraph.GRAPH_TRACK_GENRE;
     }
 )
 @Table(name = "track")
-@Document(indexName = "track")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Track implements Serializable {
 

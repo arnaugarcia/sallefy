@@ -40,14 +40,12 @@ import static com.sallefy.security.AuthoritiesConstants.ADMIN;
     }
 )
 @Table(name = "jhi_user")
-@Document(indexName = "user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Field(type = FieldType.Keyword)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

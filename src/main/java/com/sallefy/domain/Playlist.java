@@ -40,7 +40,6 @@ import static javax.persistence.FetchType.LAZY;
     }
 )
 @Table(name = "playlist")
-@Document(indexName = "playlist")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Playlist implements Serializable {
 
