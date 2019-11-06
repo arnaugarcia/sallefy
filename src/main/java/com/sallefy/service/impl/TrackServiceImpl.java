@@ -5,6 +5,7 @@ import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
 import com.sallefy.repository.GenreRepository;
 import com.sallefy.repository.TrackRepository;
+import com.sallefy.repository.search.TrackSearchRepository;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.GenreDTO;
@@ -40,16 +41,20 @@ public class TrackServiceImpl implements TrackService {
 
     private final GenreRepository genreRepository;
 
+    private final TrackSearchRepository trackSearchRepository;
+
     private final TrackMapper trackMapper;
 
     private final UserService userService;
 
     public TrackServiceImpl(TrackRepository trackRepository,
                             GenreRepository genreRepository,
+                            TrackSearchRepository trackSearchRepository,
                             TrackMapper trackMapper,
                             UserService userService) {
         this.trackRepository = trackRepository;
         this.genreRepository = genreRepository;
+        this.trackSearchRepository = trackSearchRepository;
         this.trackMapper = trackMapper;
         this.userService = userService;
     }
@@ -241,6 +246,7 @@ public class TrackServiceImpl implements TrackService {
 
     private TrackDTO saveAndTransform(Track track) {
         trackRepository.save(track);
+        trackSearchRepository.save(track);
         return trackMapper.toDto(track);
     }
 
