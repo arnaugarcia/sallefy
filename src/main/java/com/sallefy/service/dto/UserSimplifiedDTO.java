@@ -1,14 +1,20 @@
 package com.sallefy.service.dto;
 
 import com.sallefy.domain.User;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * A DTO representing a user.
  */
-public class UserSimplifyedDTO {
+@Document(indexName = "user")
+public class UserSimplifiedDTO {
 
+    @Field(type = FieldType.Keyword)
     private Long id;
 
+    @Field(type = FieldType.Keyword)
     private String login;
 
     private String firstName;
@@ -21,11 +27,11 @@ public class UserSimplifyedDTO {
 
     private String langKey;
 
-    public UserSimplifyedDTO() {
+    public UserSimplifiedDTO() {
         // Empty constructor needed for Jackson.
     }
 
-    public UserSimplifyedDTO(User user) {
+    public UserSimplifiedDTO(User user) {
         this.id = user.getId();
         this.login = user.getLogin();
         this.firstName = user.getFirstName();
@@ -35,7 +41,7 @@ public class UserSimplifyedDTO {
         this.langKey = user.getLangKey();
     }
 
-    public UserSimplifyedDTO(Long id,
+    public UserSimplifiedDTO(Long id,
                              String login,
                              String firstName,
                              String lastName,

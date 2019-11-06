@@ -5,7 +5,7 @@ import com.sallefy.service.PlaylistService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.TrackDTO;
-import com.sallefy.service.dto.UserSimplifyedDTO;
+import com.sallefy.service.dto.UserSimplifiedDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -183,9 +183,9 @@ public class MeResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/me/followings")
-    public ResponseEntity<List<UserSimplifyedDTO>> getFollowingUsers() {
+    public ResponseEntity<List<UserSimplifiedDTO>> getFollowingUsers() {
         log.debug("REST request to get the list of following Users");
-        List<UserSimplifyedDTO> following = followService.findFollowingUsersByCurrentUser();
+        List<UserSimplifiedDTO> following = followService.findFollowingUsersByCurrentUser();
         return ok(following);
     }
 
@@ -202,9 +202,9 @@ public class MeResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/me/followers")
-    public ResponseEntity<List<UserSimplifyedDTO>> getFollowersOfTheUser() {
+    public ResponseEntity<List<UserSimplifiedDTO>> getFollowersOfTheUser() {
         log.debug("REST request to get the list of the current user followers");
-        List<UserSimplifyedDTO> followers = followService.findFollowersOfCurrentUser();
+        List<UserSimplifiedDTO> followers = followService.findFollowersOfCurrentUser();
         return ok(followers);
     }
 

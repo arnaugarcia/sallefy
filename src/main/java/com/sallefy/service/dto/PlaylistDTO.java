@@ -29,7 +29,7 @@ public class PlaylistDTO implements Serializable {
     @JsonProperty("public")
     private Boolean publicAccessible;
 
-    private UserSimplifyedDTO owner;
+    private UserSimplifiedDTO owner;
 
     private Set<TrackDTO> tracks = new HashSet<>();
 
@@ -81,11 +81,11 @@ public class PlaylistDTO implements Serializable {
         this.publicAccessible = publicAccessible;
     }
 
-    public UserSimplifyedDTO getOwner() {
+    public UserSimplifiedDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(UserSimplifyedDTO owner) {
+    public void setOwner(UserSimplifiedDTO owner) {
         this.owner = owner;
     }
 

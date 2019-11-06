@@ -10,7 +10,7 @@ import com.sallefy.service.SearchService;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.SearchDTO;
 import com.sallefy.service.dto.TrackDTO;
-import com.sallefy.service.dto.UserSimplifyedDTO;
+import com.sallefy.service.dto.UserSimplifiedDTO;
 import com.sallefy.service.mapper.PlaylistMapper;
 import com.sallefy.service.mapper.TrackMapper;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
@@ -69,7 +69,7 @@ public class SearchServiceImpl implements SearchService {
             .collect(toList());
     }
 
-    private List<UserSimplifyedDTO> findAndTransformUsersBy(QueryStringQueryBuilder query) {
+    private List<UserSimplifiedDTO> findAndTransformUsersBy(QueryStringQueryBuilder query) {
         List<User> users = new ArrayList<>();
 
         userSearchRepository.search(query)
@@ -77,7 +77,7 @@ public class SearchServiceImpl implements SearchService {
             .forEachRemaining(users::add);
 
         return users.stream()
-            .map(UserSimplifyedDTO::new)
+            .map(UserSimplifiedDTO::new)
             .collect(toList());
     }
 
