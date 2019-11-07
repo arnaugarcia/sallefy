@@ -45,7 +45,7 @@ public class SearchResource {
      */
     @ApiOperation(
         value = "Search globally",
-        notes = "Search in the whole application. Users, Albums, Tracks and Playlists"
+        notes = "Search in the whole application. Users, Albums, Tracks and Playlists. This resource implements elastic search query it means that you can search using elastic search queries such *iron (to search for a object that ends with iron) or *iorn* (object that contains iron). See <a href='https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html'>this</a> for more info."
     )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation")
