@@ -17,7 +17,7 @@ import java.util.Set;
 /**
  * A DTO for the {@link com.sallefy.domain.Track} entity.
  */
-@Document(indexName = "track")
+@Document(indexName = "track-dto")
 public class TrackDTO implements Serializable {
 
     @Field(type = FieldType.Keyword)
