@@ -66,6 +66,7 @@ spring:
       properties:
         path:
           home: target/elasticsearch
+      cluster-name: sallefy-dev
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
@@ -78,6 +79,11 @@ spring:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
     cache: false
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
+    jest:
+      uris: http://localhost:9200
 
 server:
   port: 8080
