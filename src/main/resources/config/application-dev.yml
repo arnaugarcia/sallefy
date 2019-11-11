@@ -79,11 +79,6 @@ spring:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
     cache: false
-  elasticsearch:
-    rest:
-      uris: http://localhost:9200
-    jest:
-      uris: http://localhost:9200
 
 server:
   port: 8080
