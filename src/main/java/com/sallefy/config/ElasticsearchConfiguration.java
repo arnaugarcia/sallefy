@@ -8,5 +8,4 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(ElasticsearchProperties.class)
 public class ElasticsearchConfiguration {
 
-
 }
