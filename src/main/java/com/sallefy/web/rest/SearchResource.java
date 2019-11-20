@@ -2,9 +2,9 @@ package com.sallefy.web.rest;
 
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.security.SecurityUtils;
+import com.sallefy.service.ElasticsearchIndexService;
 import com.sallefy.service.SearchService;
 import com.sallefy.service.dto.SearchDTO;
-import io.github.jhipster.web.util.HeaderUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -35,8 +35,11 @@ public class SearchResource {
 
     private final SearchService searchService;
 
-    public SearchResource(SearchService searchService) {
+    private final ElasticsearchIndexService elasticsearchIndexService;
+
+    public SearchResource(SearchService searchService, ElasticsearchIndexService elasticsearchIndexService) {
         this.searchService = searchService;
+        this.elasticsearchIndexService = elasticsearchIndexService;
     }
 
     /**
@@ -72,9 +75,8 @@ public class SearchResource {
     @PostMapping("/search/index")
     public ResponseEntity<Void> reindexAll() {
         log.info("REST request to reindex Elasticsearch by user : {}", SecurityUtils.getCurrentUserLogin());
-        searchService.reindexDataStore();
-        return ResponseEntity.accepted()
-            .build();
+        elasticsearchIndexService.reindexAll();
+        return ResponseEntity.accepted().build();
     }
 
 }
