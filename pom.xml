@@ -83,6 +83,7 @@
         <log4j2-mock.version>0.0.1</log4j2-mock.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <sonar-maven-plugin.version>3.6.1.1688</sonar-maven-plugin.version>
+        <elasticsearch.version>7.4.1</elasticsearch.version>
         <jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
         <jacoco.utReportFile>${jacoco.utReportFolder}/test.exec</jacoco.utReportFile>
         <jacoco.itReportFolder>${project.build.directory}/jacoco/integrationTest</jacoco.itReportFolder>
@@ -248,10 +249,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <!-- Spring Data Jest dependencies for Elasticsearch -->
+        <!-- Spring Data Rest dependencies -->
         <dependency>
-            <groupId>com.github.vanroy</groupId>
-            <artifactId>spring-boot-starter-data-jest</artifactId>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>transport</artifactId>
+            <version>${elasticsearch.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-logging</groupId>
@@ -259,14 +261,32 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- log4j2-mock needed to create embedded elasticsearch instance with SLF4J -->
+
         <dependency>
-            <groupId>de.dentrassi.elasticsearch</groupId>
-            <artifactId>log4j2-mock</artifactId>
-            <version>${log4j2-mock.version}</version>
-            <scope>runtime</scope>
+            <!-- required by elasticsearch -->
+            <groupId>org.elasticsearch.plugin</groupId>
+            <artifactId>transport-netty4-client</artifactId>
+            <version>${elasticsearch.version}</version>
         </dependency>
-        <!-- end of Spring Data Jest dependencies -->
+
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>${elasticsearch.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-elasticsearch</artifactId>
+        </dependency>
+
+        <!-- end of Spring Data Rest dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
