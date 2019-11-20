@@ -15,7 +15,7 @@ import java.util.Set;
 /**
  * A DTO for the {@link com.sallefy.domain.Playlist} entity.
  */
-@Document(indexName = "playlist-dto")
+@Document(indexName = "playlist")
 public class PlaylistDTO implements Serializable {
 
     @Field(type = FieldType.Keyword)

@@ -8,7 +8,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 /**
  * A DTO representing a user.
  */
-@Document(indexName = "user-simplified")
+@Document(indexName = "user")
 public class UserSimplifiedDTO {
 
     @Field(type = FieldType.Keyword)
