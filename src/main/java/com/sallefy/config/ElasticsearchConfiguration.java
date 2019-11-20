@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.EntityMapper;
 
 import java.io.IOException;
@@ -31,6 +32,11 @@ public class ElasticsearchConfiguration {
         ClientConfiguration clientConfiguration = ClientConfiguration.builder().connectedToLocalhost().build();
 
         return RestClients.create(clientConfiguration).rest();
+    }
+
+    @Bean
+    public ElasticsearchRestTemplate elasticsearchRestTemplate(EntityMapper mapper) {
+        return new ElasticsearchRestTemplate(client(), mapper);
     }
 
     @Bean
