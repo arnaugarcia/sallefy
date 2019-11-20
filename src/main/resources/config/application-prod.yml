@@ -53,7 +53,9 @@ spring:
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
   # see https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-nosql.html#boot-features-connecting-to-elasticsearch-jest
-
+  data:
+    elasticsearch:
+      cluster-name: sallefy
   # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
   liquibase:
     contexts: prod
@@ -64,13 +66,6 @@ spring:
     password:
   thymeleaf:
     cache: true
-  data:
-    elasticsearch:
-      cluster-name: sallefy
-    jest:
-      uri: http://localhost:9200
-    rest:
-      uris: http://localhost:9200
 
 # ===================================================================
 # To enable TLS in production, generate a certificate using:
