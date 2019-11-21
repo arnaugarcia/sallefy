@@ -67,6 +67,7 @@ spring:
         path:
           home: target/elasticsearch
       cluster-name: sallefy-dev
+      cluster-nodes: localhost:9200
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
