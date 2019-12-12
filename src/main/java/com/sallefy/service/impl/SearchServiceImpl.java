@@ -20,8 +20,6 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class SearchServiceImpl implements SearchService {
 
-    private final UserSearchRepository userSearchRepository;
-
     private final PlaylistSearchRepository playlistSearchRepository;
 
     private final TrackSearchRepository trackSearchRepository;
@@ -30,12 +28,11 @@ public class SearchServiceImpl implements SearchService {
 
     private final PlaylistMapper playlistMapper;
 
-    public SearchServiceImpl(UserSearchRepository userSearchRepository,
+    public SearchServiceImpl(
                              PlaylistSearchRepository playlistSearchRepository,
                              TrackSearchRepository trackSearchRepository,
                              TrackMapper trackMapper,
                              PlaylistMapper playlistMapper) {
-        this.userSearchRepository = userSearchRepository;
         this.playlistSearchRepository = playlistSearchRepository;
         this.trackSearchRepository = trackSearchRepository;
         this.trackMapper = trackMapper;
