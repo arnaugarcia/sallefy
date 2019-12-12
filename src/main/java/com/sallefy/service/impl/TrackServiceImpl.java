@@ -248,11 +248,7 @@ public class TrackServiceImpl implements TrackService {
 
     private TrackDTO saveAndTransform(Track track) {
         trackRepository.save(track);
-
-        final TrackDTO trackDTO = trackMapper.toDto(track);
-        trackSearchRepository.save(trackDTO);
-
-        return trackDTO;
+        return trackMapper.toDto(track);
     }
 
     private void checkUserIsTheOwner(Track track, User user) {

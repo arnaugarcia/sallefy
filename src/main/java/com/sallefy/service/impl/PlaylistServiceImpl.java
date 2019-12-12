@@ -47,22 +47,18 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     private final FollowService followService;
 
-    private final PlaylistSearchRepository playlistSearchRepository;
-
     public PlaylistServiceImpl(PlaylistRepository playlistRepository,
                                PlaylistMapper playlistMapper,
                                UserService userService,
                                TrackService trackService,
                                TrackMapper trackMapper,
-                               FollowService followService,
-                               PlaylistSearchRepository playlistSearchRepository) {
+                               FollowService followService) {
         this.playlistRepository = playlistRepository;
         this.playlistMapper = playlistMapper;
         this.userService = userService;
         this.trackService = trackService;
         this.trackMapper = trackMapper;
         this.followService = followService;
-        this.playlistSearchRepository = playlistSearchRepository;
     }
 
     /**
@@ -115,11 +111,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     private PlaylistDTO saveAndTransform(Playlist playlist) {
         Playlist result = playlistRepository.save(playlist);
-
-        final PlaylistDTO playlistDTO = playlistMapper.toDto(result);
-
-        playlistSearchRepository.save(playlistDTO);
-        return playlistDTO;
+        return playlistMapper.toDto(result);
     }
 
     private Playlist findById(Long playlistId) {
@@ -185,7 +177,6 @@ public class PlaylistServiceImpl implements PlaylistService {
 
         followService.deleteFollowersByPlaylist(playlistId);
         playlistRepository.deleteById(playlistId);
-        playlistSearchRepository.deleteById(playlistId);
     }
 
     @Override
