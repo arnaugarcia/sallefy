@@ -8,11 +8,14 @@ import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.SearchDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.UserSimplifiedDTO;
-import org.elasticsearch.index.query.QueryStringQueryBuilder;
+import com.sallefy.service.mapper.PlaylistMapper;
+import com.sallefy.service.mapper.TrackMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class SearchServiceImpl implements SearchService {
@@ -23,52 +26,54 @@ public class SearchServiceImpl implements SearchService {
 
     private final TrackSearchRepository trackSearchRepository;
 
+    private final TrackMapper trackMapper;
+
+    private final PlaylistMapper playlistMapper;
+
     public SearchServiceImpl(UserSearchRepository userSearchRepository,
                              PlaylistSearchRepository playlistSearchRepository,
-                             TrackSearchRepository trackSearchRepository) {
+                             TrackSearchRepository trackSearchRepository,
+                             TrackMapper trackMapper,
+                             PlaylistMapper playlistMapper) {
         this.userSearchRepository = userSearchRepository;
         this.playlistSearchRepository = playlistSearchRepository;
         this.trackSearchRepository = trackSearchRepository;
+        this.trackMapper = trackMapper;
+        this.playlistMapper = playlistMapper;
     }
 
     @Override
-    public SearchDTO search(QueryStringQueryBuilder query) {
+    public SearchDTO search(String keyword) {
         SearchDTO searchDTO = new SearchDTO();
 
-        searchDTO.setPlaylists(findAndTransformPlaylistsBy(query));
-        searchDTO.setUsers(findAndTransformUsersBy(query));
-        searchDTO.setTracks(findAndTransformTracksBy(query));
+        searchDTO.setPlaylists(findAndTransformPlaylistsBy(keyword));
+        searchDTO.setUsers(findAndTransformUsersBy(keyword));
+        searchDTO.setTracks(findAndTransformTracksBy(keyword));
 
         return searchDTO;
     }
 
-    private List<TrackDTO> findAndTransformTracksBy(QueryStringQueryBuilder query) {
-        List<TrackDTO> tracks = new ArrayList<>();
-
-        trackSearchRepository.search(query)
-            .spliterator()
-            .forEachRemaining(tracks::add);
-
-        return tracks;
+    private List<TrackDTO> findAndTransformTracksBy(String query) {
+        return trackSearchRepository.search(query)
+            .stream()
+            .map(trackMapper::toDto)
+            .collect(toList());
     }
 
-    private List<UserSimplifiedDTO> findAndTransformUsersBy(QueryStringQueryBuilder query) {
+    private List<UserSimplifiedDTO> findAndTransformUsersBy(String keyword) {
         List<UserSimplifiedDTO> users = new ArrayList<>();
 
-        userSearchRepository.search(query)
+        /*userSearchRepository.search(keyword)
             .spliterator()
-            .forEachRemaining(users::add);
+            .forEachRemaining(users::add);*/
 
         return users;
     }
 
-    private List<PlaylistDTO> findAndTransformPlaylistsBy(QueryStringQueryBuilder query) {
-        List<PlaylistDTO> playlists = new ArrayList<>();
-
-        playlistSearchRepository.search(query)
-            .spliterator()
-            .forEachRemaining(playlists::add);
-
-        return playlists;
+    private List<PlaylistDTO> findAndTransformPlaylistsBy(String keyword) {
+        return playlistSearchRepository.search(keyword)
+            .stream()
+            .map(playlistMapper::toDto)
+            .collect(toList());
     }
 }

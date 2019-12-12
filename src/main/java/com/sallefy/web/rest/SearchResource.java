@@ -1,8 +1,5 @@
 package com.sallefy.web.rest;
 
-import com.sallefy.security.AuthoritiesConstants;
-import com.sallefy.security.SecurityUtils;
-import com.sallefy.service.ElasticsearchIndexService;
 import com.sallefy.service.SearchService;
 import com.sallefy.service.dto.SearchDTO;
 import io.swagger.annotations.ApiOperation;
@@ -10,12 +7,12 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.springframework.http.ResponseEntity.ok;
 
 /**
@@ -29,21 +26,16 @@ import static org.springframework.http.ResponseEntity.ok;
 public class SearchResource {
 
     private final Logger log = LoggerFactory.getLogger(SearchResource.class);
-
-    @Value("${jhipster.clientApp.name}")
-    private String applicationName;
-
+    
     private final SearchService searchService;
 
-    private final ElasticsearchIndexService elasticsearchIndexService;
-
-    public SearchResource(SearchService searchService, ElasticsearchIndexService elasticsearchIndexService) {
+    public SearchResource(SearchService searchService) {
         this.searchService = searchService;
-        this.elasticsearchIndexService = elasticsearchIndexService;
     }
 
     /**
      * {@code GET  /search} : Search in the application.
+     * @param keyword the keyword to find
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of the data found.
      */
@@ -55,28 +47,10 @@ public class SearchResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/search")
-    public ResponseEntity<SearchDTO> search(@RequestParam String query) {
+    public ResponseEntity<SearchDTO> search(@RequestParam String keyword) {
         log.debug("REST request to search in the whole application");
-        SearchDTO search = searchService.search(queryStringQuery(query));
+        SearchDTO search = searchService.search(keyword);
         return ok(search);
-    }
-
-    /**
-     * {@code POST  /search} : Reindex the entities for elastic search
-     */
-    @ApiOperation(
-        value = "Reindex all Elasticsearch documents",
-        notes = "This allows to delete and recreate your entity indexes in Elasticsearch, then reinsert all data into the newly created indexes from your main datastore"
-    )
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successful operation")
-    })
-    @Secured(AuthoritiesConstants.ADMIN)
-    @PostMapping("/search/index")
-    public ResponseEntity<Void> reindexAll() {
-        log.info("REST request to reindex Elasticsearch by user : {}", SecurityUtils.getCurrentUserLogin());
-        elasticsearchIndexService.reindexAll();
-        return ResponseEntity.accepted().build();
     }
 
 }

@@ -48,7 +48,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.springframework.http.ResponseEntity.ok;
 
 /**
@@ -96,22 +95,18 @@ public class UserResource {
 
     private final UserQueryService userQueryService;
 
-    private final UserSearchRepository userSearchRepository;
-
     public UserResource(UserService userService,
                         UserRepository userRepository,
                         FollowService followService,
                         PlaylistService playlistService,
                         TrackQueryService trackQueryService,
-                        UserQueryService userQueryService,
-                        UserSearchRepository userSearchRepository) {
+                        UserQueryService userQueryService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.followService = followService;
         this.playlistService = playlistService;
         this.trackQueryService = trackQueryService;
         this.userQueryService = userQueryService;
-        this.userSearchRepository = userSearchRepository;
     }
 
     /**

@@ -1,4 +1,4 @@
 /**
- * Spring Data Elasticsearch repositories.
+ * Spring Data search repositories.
  */
 package com.sallefy.repository.search;

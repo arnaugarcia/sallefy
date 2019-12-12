@@ -1,16 +1,15 @@
 package com.sallefy.service;
 
 import com.sallefy.service.dto.SearchDTO;
-import org.elasticsearch.index.query.QueryStringQueryBuilder;
 
 public interface SearchService {
 
     /**
-     * Search in the datastore of Elasticsearch by QueryString
+     * Search in the application by keyword
      *
-     * @param query the string to find
+     * @param keyword the string to find
      * @return a searchDTO object containing all the data
      */
-    SearchDTO search(QueryStringQueryBuilder query);
+    SearchDTO search(String keyword);
 
 }

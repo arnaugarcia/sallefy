@@ -1,20 +1,14 @@
 package com.sallefy.service.dto;
 
 import com.sallefy.domain.User;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * A DTO representing a user.
  */
-@Document(indexName = "user")
 public class UserSimplifiedDTO {
 
-    @Field(type = FieldType.Keyword)
     private Long id;
 
-    @Field(type = FieldType.Keyword)
     private String login;
 
     private String firstName;

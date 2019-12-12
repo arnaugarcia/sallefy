@@ -1,9 +1,6 @@
 package com.sallefy.service.dto;
 
 import com.sallefy.service.dto.constraints.CloudinaryHost;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -17,10 +14,8 @@ import java.util.Set;
 /**
  * A DTO for the {@link com.sallefy.domain.Track} entity.
  */
-@Document(indexName = "track")
 public class TrackDTO implements Serializable {
 
-    @Field(type = FieldType.Keyword)
     private Long id;
 
     @NotNull

@@ -1,9 +1,6 @@
 package com.sallefy.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
@@ -15,10 +12,8 @@ import java.util.Set;
 /**
  * A DTO for the {@link com.sallefy.domain.Playlist} entity.
  */
-@Document(indexName = "playlist")
 public class PlaylistDTO implements Serializable {
 
-    @Field(type = FieldType.Keyword)
     private Long id;
 
     @NotNull
