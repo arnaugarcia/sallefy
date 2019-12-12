@@ -74,15 +74,6 @@ public class MeResourceIT {
     @Autowired
     private UserService userService;
 
-    /**
-     * This repository is mocked in the com.sallefy.repository.search test package.
-     *
-     * @see com.sallefy.repository.search.UserSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private UserSearchRepository mockUserSearchRepository;
-
-
     @Autowired
     private FollowService followService;
 
@@ -139,8 +130,7 @@ public class MeResourceIT {
             followService,
             playlistService,
             trackQueryService,
-            userQueryService,
-            mockUserSearchRepository);
+            userQueryService);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
