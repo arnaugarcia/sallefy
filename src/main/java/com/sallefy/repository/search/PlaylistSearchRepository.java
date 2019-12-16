@@ -3,6 +3,7 @@ package com.sallefy.repository.search;
 import com.sallefy.domain.Playlist;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ import java.util.List;
 public interface PlaylistSearchRepository extends JpaRepository<Playlist, Long> {
 
     @Query("select playlist from Playlist playlist where playlist.name like %:keyword% or playlist.description like %:keyword%")
-    List<Playlist> search(String keyword);
+    List<Playlist> search(@Param("keyword") String keyword);
 }
