@@ -11,6 +11,7 @@ import com.sallefy.service.dto.UserSimplifiedDTO;
 import com.sallefy.service.mapper.PlaylistMapper;
 import com.sallefy.service.mapper.TrackMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ public class SearchServiceImpl implements SearchService {
         this.playlistMapper = playlistMapper;
     }
 
+    @Transactional
     @Override
     public SearchDTO search(String keyword) {
         SearchDTO searchDTO = new SearchDTO();
