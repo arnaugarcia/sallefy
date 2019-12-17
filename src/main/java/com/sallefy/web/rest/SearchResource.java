@@ -26,7 +26,7 @@ import static org.springframework.http.ResponseEntity.ok;
 public class SearchResource {
 
     private final Logger log = LoggerFactory.getLogger(SearchResource.class);
-    
+
     private final SearchService searchService;
 
     public SearchResource(SearchService searchService) {

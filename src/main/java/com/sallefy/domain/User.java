@@ -18,9 +18,13 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import static com.sallefy.config.Constants.LOGIN_REGEX;
 import static com.sallefy.domain.User_.*;
 import static com.sallefy.domain.graphs.UserGraph.GRAPH_USER_ENTITY_ALL;
 import static com.sallefy.security.AuthoritiesConstants.ADMIN;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+import static org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE;
 
 /**
  * A user.
@@ -37,17 +41,17 @@ import static com.sallefy.security.AuthoritiesConstants.ADMIN;
     }
 )
 @Table(name = "jhi_user")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = NONSTRICT_READ_WRITE)
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @NotNull
-    @Pattern(regexp = Constants.LOGIN_REGEX)
+    @Pattern(regexp = LOGIN_REGEX)
     @Size(min = 1, max = 50)
     @Column(length = 50, unique = true, nullable = false)
     private String login;
@@ -96,16 +100,16 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = LAZY)
     private Set<Playlist> playlists = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = LAZY)
     private Set<Track> tracks = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = LAZY)
     private Set<FollowUser> followers = new HashSet<>();
 
-    @OneToMany(mappedBy = "followed", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "followed", fetch = LAZY)
     private Set<FollowUser> following = new HashSet<>();
 
     @JsonIgnore
@@ -114,7 +118,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
         name = "jhi_user_authority",
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 

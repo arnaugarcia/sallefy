@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
+import static com.sallefy.domain.User_.AUTHORITIES;
 import static com.sallefy.domain.graphs.UserGraph.GRAPH_USER_ENTITY_ALL;
 
 /**
@@ -34,14 +35,14 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     @EntityGraph(GRAPH_USER_ENTITY_ALL)
     Optional<User> findOneByLogin(String login);
 
-    @EntityGraph(attributePaths = "authorities")
+    @EntityGraph(attributePaths = AUTHORITIES)
     Optional<User> findOneWithAuthoritiesById(Long id);
 
     @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
     @EntityGraph(GRAPH_USER_ENTITY_ALL)
     Optional<User> findOneWithAuthoritiesByLogin(String login);
 
-    @EntityGraph(attributePaths = "authorities")
+    @EntityGraph(attributePaths = AUTHORITIES)
     @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
     Optional<User> findOneWithAuthoritiesByEmailIgnoreCase(String email);
 

@@ -7,7 +7,7 @@ public class SearchDTO implements Serializable {
 
     private List<PlaylistDTO> playlists;
 
-    private List<UserSimplifiedDTO> users;
+    private List<UserDTO> users;
 
     private List<TrackDTO> tracks;
 
@@ -19,11 +19,11 @@ public class SearchDTO implements Serializable {
         this.playlists = playlists;
     }
 
-    public List<UserSimplifiedDTO> getUsers() {
+    public List<UserDTO> getUsers() {
         return users;
     }
 
-    public void setUsers(List<UserSimplifiedDTO> users) {
+    public void setUsers(List<UserDTO> users) {
         this.users = users;
     }
 

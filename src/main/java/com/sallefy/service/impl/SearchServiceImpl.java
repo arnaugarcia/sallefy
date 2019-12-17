@@ -7,13 +7,13 @@ import com.sallefy.service.SearchService;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.SearchDTO;
 import com.sallefy.service.dto.TrackDTO;
-import com.sallefy.service.dto.UserSimplifiedDTO;
+import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.mapper.PlaylistMapper;
 import com.sallefy.service.mapper.TrackMapper;
+import com.sallefy.service.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -25,19 +25,27 @@ public class SearchServiceImpl implements SearchService {
 
     private final TrackSearchRepository trackSearchRepository;
 
+    private final UserSearchRepository userSearchRepository;
+
     private final TrackMapper trackMapper;
 
     private final PlaylistMapper playlistMapper;
 
+    private final UserMapper userMapper;
+
     public SearchServiceImpl(
-                             PlaylistSearchRepository playlistSearchRepository,
-                             TrackSearchRepository trackSearchRepository,
-                             TrackMapper trackMapper,
-                             PlaylistMapper playlistMapper) {
+        PlaylistSearchRepository playlistSearchRepository,
+        TrackSearchRepository trackSearchRepository,
+        UserSearchRepository userSearchRepository,
+        TrackMapper trackMapper,
+        PlaylistMapper playlistMapper,
+        UserMapper userMapper) {
         this.playlistSearchRepository = playlistSearchRepository;
         this.trackSearchRepository = trackSearchRepository;
+        this.userSearchRepository = userSearchRepository;
         this.trackMapper = trackMapper;
         this.playlistMapper = playlistMapper;
+        this.userMapper = userMapper;
     }
 
     @Transactional
@@ -59,14 +67,11 @@ public class SearchServiceImpl implements SearchService {
             .collect(toList());
     }
 
-    private List<UserSimplifiedDTO> findAndTransformUsersBy(String keyword) {
-        List<UserSimplifiedDTO> users = new ArrayList<>();
-
-        /*userSearchRepository.search(keyword)
-            .spliterator()
-            .forEachRemaining(users::add);*/
-
-        return users;
+    private List<UserDTO> findAndTransformUsersBy(String keyword) {
+        return userSearchRepository.search(keyword)
+            .stream()
+            .map(userMapper::userToUserDTO)
+            .collect(toList());
     }
 
     private List<PlaylistDTO> findAndTransformPlaylistsBy(String keyword) {
