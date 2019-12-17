@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface PlaylistSearchRepository extends JpaRepository<Playlist, Long> {
 
-    @Query("select playlist from Playlist playlist left join fetch playlist.tracks where playlist.name like %:keyword% or playlist.description like %:keyword%")
+    @Query("select playlist from Playlist playlist left join fetch playlist.tracks where playlist.publicAccessible = true and (playlist.name like %:keyword% or playlist.description like %:keyword%)")
     List<Playlist> search(@Param("keyword") String keyword);
 }
