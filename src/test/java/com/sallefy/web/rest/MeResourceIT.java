@@ -9,7 +9,6 @@ import com.sallefy.repository.FollowUserRepository;
 import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
-import com.sallefy.repository.search.UserSearchRepository;
 import com.sallefy.service.*;
 import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.service.impl.PlaylistQueryService;
