@@ -41,20 +41,16 @@ public class TrackServiceImpl implements TrackService {
 
     private final GenreRepository genreRepository;
 
-    private final TrackSearchRepository trackSearchRepository;
-
     private final TrackMapper trackMapper;
 
     private final UserService userService;
 
     public TrackServiceImpl(TrackRepository trackRepository,
                             GenreRepository genreRepository,
-                            TrackSearchRepository trackSearchRepository,
                             TrackMapper trackMapper,
                             UserService userService) {
         this.trackRepository = trackRepository;
         this.genreRepository = genreRepository;
-        this.trackSearchRepository = trackSearchRepository;
         this.trackMapper = trackMapper;
         this.userService = userService;
     }
@@ -164,7 +160,6 @@ public class TrackServiceImpl implements TrackService {
             checkUserIsTheOwner(track, currentUser);
         }
 
-        trackSearchRepository.deleteById(trackId);
         trackRepository.deleteById(trackId);
     }
 
