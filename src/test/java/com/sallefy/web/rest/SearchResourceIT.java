@@ -2,7 +2,8 @@ package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
 import com.sallefy.domain.Playlist;
-import com.sallefy.domain.Playlist_;
+import com.sallefy.domain.Track;
+import com.sallefy.domain.User;
 import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
@@ -21,10 +22,10 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 
-import static com.sallefy.web.rest.TestUtil.*;
+import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -78,9 +79,13 @@ public class SearchResourceIT {
     @Test
     public void shouldReturnAListOfPlaylists() throws Exception {
 
-        playlistRepository.save(PlaylistResourceIT.createEntity());
-        trackRepository.save(TrackResourceIT.createEntity());
-        userRepository.save(UserResourceIT.createEntity());
+        User user = userRepository.save(UserResourceIT.createBasicUserWithUsername("user-search-test"));
+        Playlist playlist = PlaylistResourceIT.createEntity();
+        playlist.setUser(user);
+
+        Track track = TrackResourceIT.createEntity();
+        track.setUser(user);
+        trackRepository.save(track);
 
         restSearchMockMvc.perform(get("/api/search?keyword=a"))
             .andExpect(status().isOk())
