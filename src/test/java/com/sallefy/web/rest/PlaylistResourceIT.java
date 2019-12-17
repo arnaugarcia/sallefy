@@ -8,11 +8,11 @@ import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.FollowService;
-import com.sallefy.service.impl.PlaylistQueryService;
 import com.sallefy.service.PlaylistService;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.PlaylistRequestDTO;
 import com.sallefy.service.dto.TrackDTO;
+import com.sallefy.service.impl.PlaylistQueryService;
 import com.sallefy.service.mapper.PlaylistMapper;
 import com.sallefy.service.mapper.TrackMapper;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
@@ -150,8 +150,8 @@ public class PlaylistResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Playlist createEntity(EntityManager em) {
-        Playlist playlist = new Playlist()
+    public static Playlist createEntity() {
+        return new Playlist()
             .name(DEFAULT_NAME)
             .collaborative(DEFAULT_COLLABORATIVE)
             .description(DEFAULT_DESCRIPTION)
@@ -161,12 +161,6 @@ public class PlaylistResourceIT {
             .publicAccessible(DEFAULT_PUBLIC_ACCESSIBLE)
             .numberSongs(DEFAULT_NUMBER_SONGS)
             .rating(DEFAULT_RATING);
-        // Add required entity
-        User user = UserResourceIT.createEntity();
-        em.persist(user);
-        em.flush();
-        playlist.setUser(user);
-        return playlist;
     }
 
     /**
@@ -190,7 +184,7 @@ public class PlaylistResourceIT {
 
     @BeforeEach
     public void initTest() {
-        playlist = createEntity(em);
+        playlist = createEntity();
     }
 
     @Test
@@ -255,6 +249,10 @@ public class PlaylistResourceIT {
     public void createPlaylistWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = playlistRepository.findAll().size();
 
+        User user = UserResourceIT.createEntity();
+
+        playlist.setUser(userRepository.save(user));
+
         // Create the Playlist with an existing ID
         playlist.setId(1L);
         PlaylistDTO playlistDTO = playlistMapper.toDto(playlist);
@@ -297,7 +295,11 @@ public class PlaylistResourceIT {
     @Test
     @Transactional
     public void getPlaylist() throws Exception {
-        // Initialize the database
+
+        User user = UserResourceIT.createEntity();
+
+        playlist.setUser(userRepository.save(user));
+
         playlistRepository.saveAndFlush(playlist);
 
         // Get the playlist
@@ -363,8 +365,13 @@ public class PlaylistResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser
     public void updateNonExistingPlaylist() throws Exception {
         int databaseSizeBeforeUpdate = playlistRepository.findAll().size();
+
+        User user = createBasicUserWithUsername("update-playlist-user");
+
+        playlist.setUser(userRepository.save(user));
 
         // Create the Playlist
         PlaylistDTO playlistDTO = playlistMapper.toDto(playlist);
