@@ -1,7 +1,14 @@
 package com.sallefy.service.dto;
 
+import com.sallefy.service.dto.constraints.Latitude;
+import com.sallefy.service.dto.constraints.Longitude;
+
 public class LatLongDTO {
+
+    @Latitude
     private Double latitude;
+
+    @Longitude
     private Double longitude;
 
     public LatLongDTO() {
