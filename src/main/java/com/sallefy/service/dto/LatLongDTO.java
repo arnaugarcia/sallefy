@@ -1,15 +1,10 @@
 package com.sallefy.service.dto;
 
-import java.io.Serializable;
-
-public class LocationDTO implements Serializable {
-
+public class LatLongDTO {
     private Double latitude;
     private Double longitude;
-    private String ip;
-    private String client;
 
-    public LocationDTO() {
+    public LatLongDTO() {
     }
 
     public Double getLatitude() {
@@ -28,29 +23,11 @@ public class LocationDTO implements Serializable {
         this.longitude = longitude;
     }
 
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getClient() {
-        return client;
-    }
-
-    public void setClient(String client) {
-        this.client = client;
-    }
-
     @Override
     public String toString() {
-        return "LocationDTO{" +
+        return "LatLongDTO{" +
             "latitude=" + latitude +
             ", longitude=" + longitude +
-            ", ip='" + ip + '\'' +
-            ", client='" + client + '\'' +
             '}';
     }
 }
