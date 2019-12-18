@@ -4,6 +4,7 @@ import com.sallefy.SallefyApp;
 import com.sallefy.config.Constants;
 import com.sallefy.domain.User;
 import com.sallefy.repository.UserRepository;
+import com.sallefy.repository.search.UserSearchRepository;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.dto.criteria.UserCriteriaDTO;
 import com.sallefy.service.impl.UserQueryService;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Integration tests for {@link UserService}.
@@ -52,6 +53,14 @@ public class UserServiceIT {
 
     @Autowired
     private UserService userService;
+
+    /**
+     * This repository is mocked in the com.sallefy.repository.search.UserSearchRepositoryMockConfiguration test package.
+     *
+     * @see com.sallefy.repository.search.UserSearchRepositoryMockConfiguration
+     */
+    @Autowired
+    private UserSearchRepository mockUserSearchRepository;
 
     @Autowired
     private UserQueryService userQueryService;

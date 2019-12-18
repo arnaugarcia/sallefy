@@ -3,6 +3,7 @@ package com.sallefy.web.rest;
 import com.sallefy.config.Constants;
 import com.sallefy.domain.User;
 import com.sallefy.repository.UserRepository;
+import com.sallefy.repository.search.UserSearchRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
@@ -44,6 +45,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -275,7 +278,7 @@ public class UserResource {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation"),
         @ApiResponse(code = 400, message = "User makes a bad request"),
-        @ApiResponse(code = 404, message = "User not found"),
+        @ApiResponse(code = 404, message = "User not found")
     })
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/follow")
     public ResponseEntity<FollowDTO> checkFollowUser(@PathVariable String login) {
@@ -300,4 +303,5 @@ public class UserResource {
             .headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login))
             .build();
     }
+
 }

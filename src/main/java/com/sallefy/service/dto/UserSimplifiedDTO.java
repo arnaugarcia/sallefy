@@ -5,7 +5,7 @@ import com.sallefy.domain.User;
 /**
  * A DTO representing a user.
  */
-public class UserSimplifyedDTO {
+public class UserSimplifiedDTO {
 
     private Long id;
 
@@ -21,11 +21,11 @@ public class UserSimplifyedDTO {
 
     private String langKey;
 
-    public UserSimplifyedDTO() {
+    public UserSimplifiedDTO() {
         // Empty constructor needed for Jackson.
     }
 
-    public UserSimplifyedDTO(User user) {
+    public UserSimplifiedDTO(User user) {
         this.id = user.getId();
         this.login = user.getLogin();
         this.firstName = user.getFirstName();
@@ -35,7 +35,7 @@ public class UserSimplifyedDTO {
         this.langKey = user.getLangKey();
     }
 
-    public UserSimplifyedDTO(Long id,
+    public UserSimplifiedDTO(Long id,
                              String login,
                              String firstName,
                              String lastName,

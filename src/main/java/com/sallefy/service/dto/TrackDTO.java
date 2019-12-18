@@ -35,7 +35,7 @@ public class TrackDTO implements Serializable {
 
     private String color;
 
-    private UserSimplifyedDTO owner;
+    private UserSimplifiedDTO owner;
 
     private Set<GenreDTO> genres = new HashSet<>();
 
@@ -103,11 +103,11 @@ public class TrackDTO implements Serializable {
         this.genres = genres;
     }
 
-    public UserSimplifyedDTO getOwner() {
+    public UserSimplifiedDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(UserSimplifyedDTO owner) {
+    public void setOwner(UserSimplifiedDTO owner) {
         this.owner = owner;
     }
 

@@ -12,7 +12,6 @@
 # Full reference is available at:
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
-
 logging:
   level:
     ROOT: INFO
@@ -24,7 +23,6 @@ management:
     export:
       prometheus:
         enabled: false
-
 spring:
   devtools:
     restart:
