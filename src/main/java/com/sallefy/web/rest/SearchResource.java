@@ -41,7 +41,7 @@ public class SearchResource {
      */
     @ApiOperation(
         value = "Search globally",
-        notes = "Search in the whole application. Users, Albums, Tracks and Playlists. This resource implements elastic search query it means that you can search using elastic search dsl queries. See https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html for more info."
+        notes = "Search in the whole application. Users, Tracks and Playlists."
     )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation")
