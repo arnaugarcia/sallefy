@@ -26,7 +26,6 @@ public class PlaylistDTO implements Serializable {
 
     private String thumbnail;
 
-    @JsonProperty("public")
     private Boolean publicAccessible;
 
     private UserSimplifiedDTO owner;
