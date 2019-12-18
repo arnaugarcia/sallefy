@@ -7,6 +7,11 @@ public class LatLongDTO {
     public LatLongDTO() {
     }
 
+    public LatLongDTO(Double latitude, Double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public Double getLatitude() {
         return latitude;
     }
