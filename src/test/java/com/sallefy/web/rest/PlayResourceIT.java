@@ -73,6 +73,8 @@ public class PlayResourceIT {
     @Autowired
     private TrackQueryService trackQueryService;
 
+    private LatLongDTO latLongDTO;
+
     private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
@@ -91,7 +93,10 @@ public class PlayResourceIT {
 
     @BeforeEach
     public void initTest() {
-
+        latLongDTO = aLatLongDTO()
+            .withLatitude(LATITUDE)
+            .withLongitude(LONGITUDE)
+            .build();
     }
 
     @Test
@@ -107,11 +112,6 @@ public class PlayResourceIT {
 
         assertThat(trackRepository.findById(track.getId())).isPresent();
 
-        LatLongDTO latLongDTO = aLatLongDTO()
-            .withLatitude(LATITUDE)
-            .withLongitude(LONGITUDE)
-            .build();
-
         restTrackMockMvc.perform(
             put("/api/tracks/{trackId}/play", track.getId())
                 .content(mapper.writeValueAsBytes(latLongDTO))
@@ -120,6 +120,34 @@ public class PlayResourceIT {
 
         assertThat(playbackRepository.findAll()).hasSize(1);
 
+    }
+
+    @Test
+    @WithMockUser
+    @Transactional
+    public void shouldNotCreateAPlaybackBecauseTrackDontExists() throws Exception {
+        restTrackMockMvc.perform(
+            put("/api/tracks/{trackId}/play", Long.MAX_VALUE)
+                .content(mapper.writeValueAsBytes(latLongDTO))
+                .contentType(APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser
+    @Transactional
+    public void shouldNotCreateAPlaybackBecauseLatitudeIsWrong() throws Exception {
+
+        LatLongDTO latLongDTO = aLatLongDTO()
+            .withLatitude(0D)
+            .withLongitude(0D)
+            .build();
+
+        restTrackMockMvc.perform(
+            put("/api/tracks/{trackId}/play", Long.MAX_VALUE)
+                .content(mapper.writeValueAsBytes(latLongDTO))
+                .contentType(APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
     }
 
 }
