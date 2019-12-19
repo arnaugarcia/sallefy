@@ -38,8 +38,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = SallefyApp.class)
 public class PlayResourceIT {
 
-    private final static Double LATITUDE = 31.356078;
-    private final static Double LONGITUDE = 31.356078;
+    private final static Double LATITUDE = 41.357721;
+    private final static Double LONGITUDE = 1.980989;
 
     @Autowired
     private TrackRepository trackRepository;
@@ -136,11 +136,62 @@ public class PlayResourceIT {
     @Test
     @WithMockUser
     @Transactional
-    public void shouldNotCreateAPlaybackBecauseLatitudeIsWrong() throws Exception {
+    public void shouldNotCreateAPlaybackBecauseLatitudeOrIsWrong() throws Exception {
 
         LatLongDTO latLongDTO = aLatLongDTO()
             .withLatitude(0D)
+            .withLongitude(LONGITUDE)
+            .build();
+
+        restTrackMockMvc.perform(
+            put("/api/tracks/{trackId}/play", Long.MAX_VALUE)
+                .content(mapper.writeValueAsBytes(latLongDTO))
+                .contentType(APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser
+    @Transactional
+    public void shouldNotCreateAPlaybackBecauseLongitudeOrIsWrong() throws Exception {
+
+        LatLongDTO latLongDTO = aLatLongDTO()
+            .withLatitude(LATITUDE)
             .withLongitude(0D)
+            .build();
+
+        restTrackMockMvc.perform(
+            put("/api/tracks/{trackId}/play", Long.MAX_VALUE)
+                .content(mapper.writeValueAsBytes(latLongDTO))
+                .contentType(APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser
+    @Transactional
+    public void shouldNotCreateAPlaybackBecauseLongitudeIsNull() throws Exception {
+
+        LatLongDTO latLongDTO = aLatLongDTO()
+            .withLatitude(LATITUDE)
+            .withLongitude(null)
+            .build();
+
+        restTrackMockMvc.perform(
+            put("/api/tracks/{trackId}/play", Long.MAX_VALUE)
+                .content(mapper.writeValueAsBytes(latLongDTO))
+                .contentType(APPLICATION_JSON))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser
+    @Transactional
+    public void shouldNotCreateAPlaybackBecauseLatitudeIsNull() throws Exception {
+
+        LatLongDTO latLongDTO = aLatLongDTO()
+            .withLatitude(null)
+            .withLongitude(LONGITUDE)
             .build();
 
         restTrackMockMvc.perform(
