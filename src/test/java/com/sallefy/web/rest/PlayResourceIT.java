@@ -27,6 +27,7 @@ import org.springframework.validation.Validator;
 
 import static com.sallefy.service.dto.builder.LatLongDTOBuilder.aLatLongDTO;
 import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
+import static java.lang.Double.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -139,7 +140,7 @@ public class PlayResourceIT {
     public void shouldNotCreateAPlaybackBecauseLatitudeOrIsWrong() throws Exception {
 
         LatLongDTO latLongDTO = aLatLongDTO()
-            .withLatitude(0D)
+            .withLatitude(MAX_VALUE)
             .withLongitude(LONGITUDE)
             .build();
 
@@ -157,7 +158,7 @@ public class PlayResourceIT {
 
         LatLongDTO latLongDTO = aLatLongDTO()
             .withLatitude(LATITUDE)
-            .withLongitude(0D)
+            .withLongitude(MAX_VALUE)
             .build();
 
         restTrackMockMvc.perform(
