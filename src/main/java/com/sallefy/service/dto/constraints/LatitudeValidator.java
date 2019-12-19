@@ -12,6 +12,6 @@ public class LatitudeValidator implements ConstraintValidator<Latitude, Double> 
     }
 
     private boolean isInRange(Double latitude) {
-        return latitude > 90 || latitude < -90;
+        return latitude > -90 && latitude < 90;
     }
 }
