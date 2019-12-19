@@ -3,11 +3,15 @@ package com.sallefy.service.dto;
 import com.sallefy.service.dto.constraints.Latitude;
 import com.sallefy.service.dto.constraints.Longitude;
 
+import javax.validation.constraints.NotBlank;
+
 public class LatLongDTO {
 
+    @NotBlank
     @Latitude
     private Double latitude;
 
+    @NotBlank
     @Longitude
     private Double longitude;
 

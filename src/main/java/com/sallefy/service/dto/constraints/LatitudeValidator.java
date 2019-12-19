@@ -8,10 +8,7 @@ public class LatitudeValidator implements ConstraintValidator<Latitude, Double> 
     }
 
     public boolean isValid(Double latitude, ConstraintValidatorContext context) {
-        return latitude != null && isInRange(latitude);
-    }
-
-    private boolean isInRange(Double latitude) {
         return latitude > -90 && latitude < 90;
     }
+
 }
