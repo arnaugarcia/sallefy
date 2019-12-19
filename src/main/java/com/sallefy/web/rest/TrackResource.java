@@ -2,6 +2,7 @@ package com.sallefy.web.rest;
 
 import com.sallefy.service.LikeService;
 import com.sallefy.service.PlayService;
+import com.sallefy.service.dto.LatLongDTO;
 import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.dto.LikeDTO;
@@ -208,16 +209,19 @@ public class TrackResource {
      */
     @ApiOperation(
         value = "Plays the track by id",
-        notes = "This method stores "
+        notes = "This method stores a play action by a track"
     )
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Successful operation"),
+        @ApiResponse(code = 400, message = "Request object not valid"),
         @ApiResponse(code = 404, message = "Track not found")
     })
     @PutMapping("/tracks/{id}/play")
-    public ResponseEntity<Void> playTrack(@Context HttpServletRequest requestContext, @PathVariable Long id) throws URISyntaxException {
+    public ResponseEntity<Void> playTrack(@Context HttpServletRequest requestContext,
+                                          @PathVariable Long id,
+                                          @Valid @RequestBody LatLongDTO latLong) throws URISyntaxException {
         log.debug("REST request to like a Track : {}", id);
-        playService.playTrack(requestContext, id);
+        playService.playTrack(requestContext, latLong, id);
         return ResponseEntity.created(new URI("/api/tracks/" + id + "/play"))
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();

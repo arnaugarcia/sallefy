@@ -1,15 +1,22 @@
 package com.sallefy.service.dto;
 
-import java.io.Serializable;
+import com.sallefy.service.dto.constraints.Latitude;
+import com.sallefy.service.dto.constraints.Longitude;
 
-public class LocationDTO implements Serializable {
+public class LatLongDTO {
 
+    @Latitude
     private Double latitude;
-    private Double longitude;
-    private String ip;
-    private String client;
 
-    public LocationDTO() {
+    @Longitude
+    private Double longitude;
+
+    public LatLongDTO() {
+    }
+
+    public LatLongDTO(Double latitude, Double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public Double getLatitude() {
@@ -28,29 +35,11 @@ public class LocationDTO implements Serializable {
         this.longitude = longitude;
     }
 
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getClient() {
-        return client;
-    }
-
-    public void setClient(String client) {
-        this.client = client;
-    }
-
     @Override
     public String toString() {
-        return "LocationDTO{" +
+        return "LatLongDTO{" +
             "latitude=" + latitude +
             ", longitude=" + longitude +
-            ", ip='" + ip + '\'' +
-            ", client='" + client + '\'' +
             '}';
     }
 }
