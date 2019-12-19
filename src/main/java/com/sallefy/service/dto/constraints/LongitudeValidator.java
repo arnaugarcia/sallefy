@@ -13,6 +13,6 @@ public class LongitudeValidator implements ConstraintValidator<Longitude, Double
     }
 
     private boolean isInRange(Double longitude) {
-        return longitude > 180 || longitude < - 180;
+        return longitude > 180 || longitude < -180;
     }
 }
