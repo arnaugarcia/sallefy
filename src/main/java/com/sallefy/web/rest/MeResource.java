@@ -34,9 +34,6 @@ public class MeResource {
 
     private final Logger log = LoggerFactory.getLogger(MeResource.class);
 
-    @Value("${jhipster.clientApp.name}")
-    private String applicationName;
-
     private final TrackService trackService;
 
     private final FollowService followService;
