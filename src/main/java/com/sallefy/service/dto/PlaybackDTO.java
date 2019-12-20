@@ -2,7 +2,7 @@ package com.sallefy.service.dto;
 
 import com.sallefy.domain.enumeration.AgentType;
 
-public class MarkerDTO {
+public class PlaybackDTO {
     private Double latitude;
     private Double longitude;
     private AgentType client;

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @AllOrNone({"latitude", "longitude", "radius"})
-public class MarkerCriteriaDTO extends BaseCriteria implements Serializable {
+public class PlaybackCriteriaDTO extends BaseCriteria implements Serializable {
 
     @Latitude
     private Double latitude;
@@ -20,7 +20,7 @@ public class MarkerCriteriaDTO extends BaseCriteria implements Serializable {
     private Long trackId;
     private String genre;
 
-    public MarkerCriteriaDTO() {
+    public PlaybackCriteriaDTO() {
     }
 
     public Double getLatitude() {
@@ -74,8 +74,8 @@ public class MarkerCriteriaDTO extends BaseCriteria implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof MarkerCriteriaDTO)) return false;
-        MarkerCriteriaDTO that = (MarkerCriteriaDTO) o;
+        if (!(o instanceof PlaybackCriteriaDTO)) return false;
+        PlaybackCriteriaDTO that = (PlaybackCriteriaDTO) o;
         return Objects.equals(latitude, that.latitude) &&
             Objects.equals(longitude, that.longitude) &&
             Objects.equals(radius, that.radius) &&
