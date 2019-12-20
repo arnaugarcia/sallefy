@@ -1,6 +1,8 @@
 package com.sallefy.service.dto.criteria;
 
 import com.sallefy.service.dto.constraints.AllOrNone;
+import com.sallefy.service.dto.constraints.Latitude;
+import com.sallefy.service.dto.constraints.Longitude;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,10 +10,12 @@ import java.util.Objects;
 @AllOrNone({"latitude", "longitude", "radius"})
 public class MarkerCriteriaDTO extends BaseCriteria implements Serializable {
 
+    @Latitude
     private Double latitude;
+
+    @Longitude
     private Double longitude;
     private Integer radius;
-    private Boolean me;
     private Long username;
     private Long trackId;
     private String genre;
@@ -41,14 +45,6 @@ public class MarkerCriteriaDTO extends BaseCriteria implements Serializable {
 
     public void setRadius(Integer radius) {
         this.radius = radius;
-    }
-
-    public Boolean getMe() {
-        return me;
-    }
-
-    public void setMe(Boolean me) {
-        this.me = me;
     }
 
     public Long getUsername() {
@@ -83,7 +79,6 @@ public class MarkerCriteriaDTO extends BaseCriteria implements Serializable {
         return Objects.equals(latitude, that.latitude) &&
             Objects.equals(longitude, that.longitude) &&
             Objects.equals(radius, that.radius) &&
-            Objects.equals(me, that.me) &&
             Objects.equals(username, that.username) &&
             Objects.equals(trackId, that.trackId) &&
             Objects.equals(genre, that.genre);
@@ -91,7 +86,7 @@ public class MarkerCriteriaDTO extends BaseCriteria implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(latitude, longitude, radius, me, username, trackId, genre);
+        return Objects.hash(latitude, longitude, radius, username, trackId, genre);
     }
 
 
