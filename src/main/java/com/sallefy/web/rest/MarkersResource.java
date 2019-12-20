@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -48,7 +49,7 @@ public class MarkersResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/markers")
-    public ResponseEntity<List<MarkerDTO>> findMarkers(MarkerCriteriaDTO criteria) {
+    public ResponseEntity<List<MarkerDTO>> findMarkers(@Valid MarkerCriteriaDTO criteria) {
         log.debug("REST request to get all Tracks");
         return ok(markerService.findByCriteria(criteria));
     }
