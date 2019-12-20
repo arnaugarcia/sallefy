@@ -1,8 +1,8 @@
 package com.sallefy.web.rest;
 
-import com.sallefy.service.MarkerService;
 import com.sallefy.service.dto.MarkerDTO;
 import com.sallefy.service.dto.criteria.MarkerCriteriaDTO;
+import com.sallefy.service.impl.MarkerQueryService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -30,10 +30,10 @@ public class MarkersResource {
 
     private final Logger log = LoggerFactory.getLogger(MarkersResource.class);
 
-    private final MarkerService markerService;
+    private final MarkerQueryService markerQueryService;
 
-    public MarkersResource(MarkerService markerService) {
-        this.markerService = markerService;
+    public MarkersResource(MarkerQueryService markerQueryService) {
+        this.markerQueryService = markerQueryService;
     }
 
     /**
@@ -51,7 +51,7 @@ public class MarkersResource {
     @GetMapping("/markers")
     public ResponseEntity<List<MarkerDTO>> findMarkers(@Valid MarkerCriteriaDTO criteria) {
         log.debug("REST request to get all Tracks");
-        return ok(markerService.findByCriteria(criteria));
+        return ok(markerQueryService.findByCriteria(criteria));
     }
 
 }
