@@ -1,6 +1,7 @@
 package com.sallefy.service.impl;
 
 import com.sallefy.domain.Playback;
+import com.sallefy.domain.Playback_;
 import com.sallefy.repository.PlaybackRepository;
 import com.sallefy.service.QueryService;
 import com.sallefy.service.dto.PlaybackDTO;
@@ -13,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.lang.Math.cos;
 import static org.springframework.data.domain.PageRequest.of;
+import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * Service for executing complex queries for {@link Playback} entities in the database.
@@ -66,8 +69,32 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
     protected Specification<Playback> createSpecification(PlaybackCriteriaDTO criteria) {
         Specification<Playback> specification = Specification.where(null);
 
+        if (criteria != null) {
+            if (!isEmpty(criteria.getLatitude()) && !isEmpty(criteria.getLongitude()) && !isEmpty(criteria.getRadius())) {
+                specification = specification.and(sortByRadius(criteria.getLatitude(), criteria.getLongitude(), criteria.getRadius()));
+            }
+        }
+
         return specification;
     }
+
+    private Specification<Playback> sortByRadius(Double latitude, Double longitude, Integer radius) {
+
+        final Double angleRadius = radius / (111 * cos(latitude));
+
+        final Double minLatitude = latitude - angleRadius;
+        final Double maxLatitude = latitude + angleRadius;
+        final Double minLongitude = longitude - angleRadius;
+        final Double maxLongitude = longitude + angleRadius;
+
+        return (root, query, builder) -> {
+            query.where(
+                builder.between(root.get(Playback_.latitude), minLatitude, maxLatitude),
+                builder.between(root.get(Playback_.longitude), minLongitude, maxLongitude));
+            return query.getGroupRestriction();
+        };
+    }
+
 
     private boolean isSizeSelected(PlaybackCriteriaDTO criteria) {
         return criteria.getSize() != null;
