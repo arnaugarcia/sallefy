@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface QueryService<D, C extends BaseCriteria> {
 
-    public List<D> findByCriteria(C criteria);
+    List<D> findByCriteria(C criteria);
 
 }
