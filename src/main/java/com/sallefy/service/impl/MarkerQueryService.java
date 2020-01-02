@@ -82,9 +82,20 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
             if (!isEmpty(criteria.getTrackId())) {
                 specification = specification.and(byTrackId(criteria.getTrackId()));
             }
+            if (!isEmpty(criteria.getUsername())) {
+                specification = specification.and(byUsername(criteria.getUsername()));
+            }
         }
 
         return specification;
+    }
+
+    private Specification<Playback> byUsername(String username) {
+        return (root, query, builder) -> {
+            final Join<Playback, User> userJoin = root.join(Playback_.user);
+            final Path<String> userLoginAttribute = userJoin.get(User_.login);
+            return builder.equal(userLoginAttribute, username);
+        };
     }
 
     private Specification<Playback> byTrackId(Long trackId) {
