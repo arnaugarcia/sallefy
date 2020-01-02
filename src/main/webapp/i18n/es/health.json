@@ -1,28 +1,28 @@
 {
   "health": {
-    "title": "Revisions de salud",
-    "refresh.button": "Actualitzar",
-    "stacktrace": "Traça d'error",
+    "title": "Control de salud",
+    "refresh.button": "Refrescar",
+    "stacktrace": "Stacktrace",
     "details": {
-      "details": "Detalls",
-      "properties": "Propietats",
-      "name": "Nom",
+      "details": "Detalles",
+      "properties": "Propiedades",
+      "name": "Nombre",
       "value": "Valor",
       "error": "Error"
     },
     "indicator": {
-      "diskSpace": "Espai al disc",
-      "mail": "Compte de correu electrònic",
-      "db": "Base de dades"
+      "diskSpace": "Espacio en disco",
+      "mail": "Email",
+      "db": "Database"
     },
     "table": {
-      "service": "Nom del servei",
-      "status": "Estat"
+      "service": "Nombre del servicio",
+      "status": "Estado"
     },
     "status": {
       "UNKNOWN": "UNKNOWN",
-      "UP": "ACTIU",
-      "DOWN": "INACTIU"
+      "UP": "LEVANTADO",
+      "DOWN": "CAÍDO"
     }
   }
 }

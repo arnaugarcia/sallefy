@@ -1,8 +1,8 @@
 package com.sallefy;
 
 import com.sallefy.config.ApplicationProperties;
-import com.sallefy.config.DefaultProfileUtil;
 
+import io.github.jhipster.config.DefaultProfileUtil;
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.apache.commons.lang3.StringUtils;
