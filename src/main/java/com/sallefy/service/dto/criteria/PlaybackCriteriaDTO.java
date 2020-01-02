@@ -11,7 +11,7 @@ public class PlaybackCriteriaDTO extends BaseCriteria implements Serializable {
     private Double latitude;
     private Double longitude;
     private Integer radius;
-    private Long username;
+    private String username;
     private Long trackId;
     private String genre;
 
@@ -42,11 +42,11 @@ public class PlaybackCriteriaDTO extends BaseCriteria implements Serializable {
         this.radius = radius;
     }
 
-    public Long getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(Long username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
