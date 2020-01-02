@@ -89,8 +89,8 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
 
         return (root, query, builder) -> {
             query.where(
-                builder.between(root.get(Playback_.latitude), minLatitude, maxLatitude),
-                builder.between(root.get(Playback_.longitude), minLongitude, maxLongitude));
+                builder.between(root.get(Playback_.latitude), maxLatitude, minLatitude),
+                builder.between(root.get(Playback_.longitude), maxLongitude, minLongitude));
             return query.getGroupRestriction();
         };
     }
