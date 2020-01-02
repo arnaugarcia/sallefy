@@ -1,8 +1,6 @@
 package com.sallefy.service.dto.criteria;
 
 import com.sallefy.service.dto.constraints.AllOrNone;
-import com.sallefy.service.dto.constraints.Latitude;
-import com.sallefy.service.dto.constraints.Longitude;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -10,10 +8,7 @@ import java.util.Objects;
 @AllOrNone({"latitude", "longitude", "radius"})
 public class PlaybackCriteriaDTO extends BaseCriteria implements Serializable {
 
-    @Latitude
     private Double latitude;
-
-    @Longitude
     private Double longitude;
     private Integer radius;
     private Long username;
