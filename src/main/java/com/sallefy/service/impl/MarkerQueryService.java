@@ -79,9 +79,19 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
             if (!isEmpty(criteria.getGenre())) {
                 specification = specification.and(byGenre(criteria.getGenre()));
             }
+            if (!isEmpty(criteria.getTrackId())) {
+                specification = specification.and(byTrackId(criteria.getTrackId()));
+            }
         }
 
         return specification;
+    }
+
+    private Specification<Playback> byTrackId(Long trackId) {
+        return (root, query, builder) -> {
+            final Join<Playback, Track> trackJoin = root.join(Playback_.track, JoinType.LEFT);
+            return builder.equal(trackJoin.get(Track_.id), trackId);
+        };
     }
 
     private Specification<Playback> byGenre(String genre) {
