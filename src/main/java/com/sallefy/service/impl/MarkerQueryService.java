@@ -1,7 +1,6 @@
 package com.sallefy.service.impl;
 
-import com.sallefy.domain.Playback;
-import com.sallefy.domain.Playback_;
+import com.sallefy.domain.*;
 import com.sallefy.repository.PlaybackRepository;
 import com.sallefy.service.QueryService;
 import com.sallefy.service.dto.PlaybackDTO;
@@ -12,6 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.SetJoin;
 import java.util.List;
 
 import static java.lang.Math.cos;
@@ -45,7 +48,7 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
      */
     @Override
     public List<PlaybackDTO> findByCriteria(PlaybackCriteriaDTO criteria) {
-        log.debug("find markers by criteria : {}", criteria);
+        log.debug("find playbacks by criteria : {}", criteria);
 
         final Specification<Playback> specification = createSpecification(criteria);
 
@@ -73,9 +76,22 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
             if (!isEmpty(criteria.getLatitude()) && !isEmpty(criteria.getLongitude()) && !isEmpty(criteria.getRadius())) {
                 specification = specification.and(sortByRadius(criteria.getLatitude(), criteria.getLongitude(), criteria.getRadius()));
             }
+            if (!isEmpty(criteria.getGenre())) {
+                specification = specification.and(byGenre(criteria.getGenre()));
+            }
         }
 
         return specification;
+    }
+
+    private Specification<Playback> byGenre(String genre) {
+        return (root, query, builder) -> {
+            final Join<Playback, Track> trackJoin = root.join(Playback_.track, JoinType.LEFT);
+            final SetJoin<Track, Genre> trackGenreJoin = trackJoin.join(Track_.genres, JoinType.LEFT);
+            final Path<String> genreNameAttribute = trackGenreJoin.get(Genre_.name);
+
+            return builder.equal(genreNameAttribute, genre);
+        };
     }
 
     private Specification<Playback> sortByRadius(Double latitude, Double longitude, Integer radius) {
@@ -87,12 +103,9 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
         final Double minLongitude = longitude - angleRadius;
         final Double maxLongitude = longitude + angleRadius;
 
-        return (root, query, builder) -> {
-            query.where(
-                builder.between(root.get(Playback_.latitude), maxLatitude, minLatitude),
-                builder.between(root.get(Playback_.longitude), maxLongitude, minLongitude));
-            return query.getGroupRestriction();
-        };
+        return (root, query, builder) -> builder.and(
+            builder.between(root.get(Playback_.latitude), maxLatitude, minLatitude),
+            builder.between(root.get(Playback_.longitude), maxLongitude, minLongitude));
     }
 
 
