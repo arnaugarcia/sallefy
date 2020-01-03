@@ -12,7 +12,7 @@ export class PlayerPlaylistComponent implements OnInit {
 
   constructor(private playerService: PlayerService, private overlayService: OverlayService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.playerService.playlistOpenStatus.subscribe((playerOpen: boolean) => {
       this.showPlaylist = playerOpen;
       this.overlayService.changeStatus(playerOpen);
@@ -23,7 +23,7 @@ export class PlayerPlaylistComponent implements OnInit {
     });
   }
 
-  closePlaylist() {
+  closePlaylist(): void {
     this.playerService.playlistOpen(false);
   }
 }

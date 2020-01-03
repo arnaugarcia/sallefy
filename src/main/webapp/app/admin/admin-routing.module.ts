@@ -28,7 +28,7 @@ import { RouterModule } from '@angular/router';
       },
       {
         path: 'health',
-        loadChildren: () => import('./health/health.module').then(m => m.HealthModule)
+        loadChildren: () => import('./health/health.module').then(m => m.SfHealthModule)
       },
       {
         path: 'logs',

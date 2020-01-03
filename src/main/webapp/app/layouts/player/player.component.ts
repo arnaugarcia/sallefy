@@ -9,9 +9,9 @@ import { PlayerService } from 'app/layouts/player/player.service';
 export class PlayerComponent implements OnInit {
   constructor(private playerService: PlayerService) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  showPlaylist() {
+  showPlaylist(): void {
     this.playerService.playlistOpen(true);
   }
 }

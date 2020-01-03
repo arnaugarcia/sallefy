@@ -8,5 +8,5 @@ import { Component, OnInit } from '@angular/core';
 export class TrackListComponent implements OnInit {
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 }

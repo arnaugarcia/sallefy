@@ -7,7 +7,7 @@ import { HealthDetails, HealthKey } from './health.service';
   selector: 'sf-health-modal',
   templateUrl: './health-modal.component.html'
 })
-export class HealthModalComponent {
+export class SfHealthModalComponent {
   health?: { key: HealthKey; value: HealthDetails };
 
   constructor(public activeModal: NgbActiveModal) {}

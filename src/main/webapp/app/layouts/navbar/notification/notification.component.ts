@@ -11,12 +11,12 @@ export class NotificationComponent implements OnInit {
 
   constructor(private overlayService: OverlayService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.overlayService.overlayClicked.subscribe(() => {
       this.show = false;
     });
   }
-  toggleShowNotifications() {
+  toggleShowNotifications(): void {
     this.show = !this.show;
   }
 }

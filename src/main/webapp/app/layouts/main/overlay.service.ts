@@ -13,11 +13,11 @@ export class OverlayService {
 
   constructor() {}
 
-  changeStatus(value: boolean) {
+  changeStatus(value: boolean): void {
     this.overlayStatusSource.next(value);
   }
 
-  clicked() {
+  clicked(): void {
     this.overlayClickedSource.next(true);
     this.overlayClickedSource.next(false);
   }

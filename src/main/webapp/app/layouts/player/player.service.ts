@@ -10,7 +10,7 @@ export class PlayerService {
 
   constructor() {}
 
-  playlistOpen(value: boolean) {
+  playlistOpen(value: boolean): void {
     this.playlistOpenSource.next(value);
   }
 }

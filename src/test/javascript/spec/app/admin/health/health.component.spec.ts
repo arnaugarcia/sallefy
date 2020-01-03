@@ -3,26 +3,26 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 
 import { SallefyTestModule } from '../../../test.module';
-import { HealthComponent } from 'app/admin/health/health.component';
+import { SfHealthComponent } from 'app/admin/health/health.component';
 import { Health, HealthService } from 'app/admin/health/health.service';
 
 describe('Component Tests', () => {
-  describe('HealthComponent', () => {
-    let comp: HealthComponent;
-    let fixture: ComponentFixture<HealthComponent>;
+  describe('SfHealthComponent', () => {
+    let comp: SfHealthComponent;
+    let fixture: ComponentFixture<SfHealthComponent>;
     let service: HealthService;
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [SallefyTestModule],
-        declarations: [HealthComponent]
+        declarations: [SfHealthComponent]
       })
-        .overrideTemplate(HealthComponent, '')
+        .overrideTemplate(SfHealthComponent, '')
         .compileComponents();
     }));
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(HealthComponent);
+      fixture = TestBed.createComponent(SfHealthComponent);
       comp = fixture.componentInstance;
       service = fixture.debugElement.injector.get(HealthService);
     });

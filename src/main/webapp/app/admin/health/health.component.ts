@@ -3,13 +3,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Health, HealthDetails, HealthKey, HealthService, HealthStatus } from './health.service';
-import { HealthModalComponent } from './health-modal.component';
+import { SfHealthModalComponent } from './health-modal.component';
 
 @Component({
-  selector: 'jhi-health',
+  selector: 'sf-health',
   templateUrl: './health.component.html'
 })
-export class HealthComponent implements OnInit {
+export class SfHealthComponent implements OnInit {
   health?: Health;
 
   constructor(private modalService: NgbModal, private healthService: HealthService) {}
@@ -38,7 +38,7 @@ export class HealthComponent implements OnInit {
   }
 
   showHealth(health: { key: HealthKey; value: HealthDetails }): void {
-    const modalRef = this.modalService.open(HealthModalComponent);
+    const modalRef = this.modalService.open(SfHealthModalComponent);
     modalRef.componentInstance.health = health;
   }
 }
