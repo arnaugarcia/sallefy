@@ -5,7 +5,7 @@
         "title": "Playlists",
         "createLabel": "Crear nuevo Playlist",
         "createOrEditLabel": "Crear o editar Playlist",
-        "notFound": "No Playlists found"
+        "notFound": "Ningún Playlists encontrado"
       },
       "created": "Un nuevo Playlist ha sido creado con el identificador {{ param }}",
       "updated": "Un Playlist ha sido actualizado con el identificador {{ param }}",
@@ -26,7 +26,6 @@
       "numberSongs": "Number Songs",
       "followers": "Followers",
       "rating": "Rating",
-      "created": "Created",
       "user": "User",
       "track": "Track"
     }

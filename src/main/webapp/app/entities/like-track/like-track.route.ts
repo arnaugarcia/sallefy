@@ -1,27 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { LikeTrack } from 'app/shared/model/like-track.model';
+import { ILikeTrack, LikeTrack } from 'app/shared/model/like-track.model';
 import { LikeTrackService } from './like-track.service';
 import { LikeTrackComponent } from './like-track.component';
 import { LikeTrackDetailComponent } from './like-track-detail.component';
 import { LikeTrackUpdateComponent } from './like-track-update.component';
-import { LikeTrackDeletePopupComponent } from './like-track-delete-dialog.component';
-import { ILikeTrack } from 'app/shared/model/like-track.model';
 
 @Injectable({ providedIn: 'root' })
 export class LikeTrackResolve implements Resolve<ILikeTrack> {
-  constructor(private service: LikeTrackService) {}
+  constructor(private service: LikeTrackService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ILikeTrack> {
+  resolve(route: ActivatedRouteSnapshot): Observable<ILikeTrack> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        filter((response: HttpResponse<LikeTrack>) => response.ok),
-        map((likeTrack: HttpResponse<LikeTrack>) => likeTrack.body)
+        flatMap((likeTrack: HttpResponse<LikeTrack>) => {
+          if (likeTrack.body) {
+            return of(likeTrack.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
       );
     }
     return of(new LikeTrack());
@@ -73,21 +78,5 @@ export const likeTrackRoute: Routes = [
       pageTitle: 'sallefyApp.likeTrack.home.title'
     },
     canActivate: [UserRouteAccessService]
-  }
-];
-
-export const likeTrackPopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: LikeTrackDeletePopupComponent,
-    resolve: {
-      likeTrack: LikeTrackResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'sallefyApp.likeTrack.home.title'
-    },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
   }
 ];

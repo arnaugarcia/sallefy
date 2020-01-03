@@ -5,7 +5,7 @@
         "title": "Playbacks",
         "createLabel": "Crear nuevo Playback",
         "createOrEditLabel": "Crear o editar Playback",
-        "notFound": "No Playbacks found"
+        "notFound": "Ningún Playbacks encontrado"
       },
       "created": "Un nuevo Playback ha sido creado con el identificador {{ param }}",
       "updated": "Un Playback ha sido actualizado con el identificador {{ param }}",

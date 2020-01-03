@@ -1,7 +1,5 @@
 import { Moment } from 'moment';
 import { IGenre } from 'app/shared/model/genre.model';
-import { IPlayback } from 'app/shared/model/playback.model';
-import { ILikeTrack } from 'app/shared/model/like-track.model';
 import { IPlaylist } from 'app/shared/model/playlist.model';
 import { IAlbum } from 'app/shared/model/album.model';
 
@@ -19,8 +17,6 @@ export interface ITrack {
   userLogin?: string;
   userId?: number;
   genres?: IGenre[];
-  playbacks?: IPlayback[];
-  likeTracks?: ILikeTrack[];
   playlists?: IPlaylist[];
   albums?: IAlbum[];
 }
@@ -40,8 +36,6 @@ export class Track implements ITrack {
     public userLogin?: string,
     public userId?: number,
     public genres?: IGenre[],
-    public playbacks?: IPlayback[],
-    public likeTracks?: ILikeTrack[],
     public playlists?: IPlaylist[],
     public albums?: IAlbum[]
   ) {}

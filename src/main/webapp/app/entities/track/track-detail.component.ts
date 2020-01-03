@@ -8,17 +8,17 @@ import { ITrack } from 'app/shared/model/track.model';
   templateUrl: './track-detail.component.html'
 })
 export class TrackDetailComponent implements OnInit {
-  track: ITrack;
+  track: ITrack | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ track }) => {
       this.track = track;
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

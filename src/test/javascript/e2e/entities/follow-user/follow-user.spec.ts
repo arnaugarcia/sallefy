@@ -1,17 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { browser, ExpectedConditions as ec, protractor, promise } from 'protractor';
+import { browser, ExpectedConditions as ec /* , protractor, promise */ } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FollowUserComponentsPage, FollowUserDeleteDialog, FollowUserUpdatePage } from './follow-user.page-object';
+import {
+  FollowUserComponentsPage,
+  /* FollowUserDeleteDialog,
+   */ FollowUserUpdatePage
+} from './follow-user.page-object';
 
 const expect = chai.expect;
 
 describe('FollowUser e2e test', () => {
   let navBarPage: NavBarPage;
   let signInPage: SignInPage;
-  let followUserUpdatePage: FollowUserUpdatePage;
   let followUserComponentsPage: FollowUserComponentsPage;
+  let followUserUpdatePage: FollowUserUpdatePage;
   /* let followUserDeleteDialog: FollowUserDeleteDialog; */
 
   before(async () => {

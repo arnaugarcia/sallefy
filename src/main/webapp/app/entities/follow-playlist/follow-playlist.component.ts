@@ -1,66 +1,55 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IFollowPlaylist } from 'app/shared/model/follow-playlist.model';
-import { AccountService } from 'app/core/auth/account.service';
 import { FollowPlaylistService } from './follow-playlist.service';
+import { FollowPlaylistDeleteDialogComponent } from './follow-playlist-delete-dialog.component';
 
 @Component({
   selector: 'jhi-follow-playlist',
   templateUrl: './follow-playlist.component.html'
 })
 export class FollowPlaylistComponent implements OnInit, OnDestroy {
-  followPlaylists: IFollowPlaylist[];
-  currentAccount: any;
-  eventSubscriber: Subscription;
+  followPlaylists?: IFollowPlaylist[];
+  eventSubscriber?: Subscription;
 
   constructor(
     protected followPlaylistService: FollowPlaylistService,
-    protected jhiAlertService: JhiAlertService,
     protected eventManager: JhiEventManager,
-    protected accountService: AccountService
+    protected modalService: NgbModal
   ) {}
 
-  loadAll() {
-    this.followPlaylistService
-      .query()
-      .pipe(
-        filter((res: HttpResponse<IFollowPlaylist[]>) => res.ok),
-        map((res: HttpResponse<IFollowPlaylist[]>) => res.body)
-      )
-      .subscribe(
-        (res: IFollowPlaylist[]) => {
-          this.followPlaylists = res;
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+  loadAll(): void {
+    this.followPlaylistService.query().subscribe((res: HttpResponse<IFollowPlaylist[]>) => {
+      this.followPlaylists = res.body ? res.body : [];
+    });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadAll();
-    this.accountService.identity().then(account => {
-      this.currentAccount = account;
-    });
     this.registerChangeInFollowPlaylists();
   }
 
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
   }
 
-  trackId(index: number, item: IFollowPlaylist) {
-    return item.id;
+  trackId(index: number, item: IFollowPlaylist): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
   }
 
-  registerChangeInFollowPlaylists() {
-    this.eventSubscriber = this.eventManager.subscribe('followPlaylistListModification', response => this.loadAll());
+  registerChangeInFollowPlaylists(): void {
+    this.eventSubscriber = this.eventManager.subscribe('followPlaylistListModification', () => this.loadAll());
   }
 
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
+  delete(followPlaylist: IFollowPlaylist): void {
+    const modalRef = this.modalService.open(FollowPlaylistDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.followPlaylist = followPlaylist;
   }
 }

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiAlertService } from 'ng-jhipster';
+import { map } from 'rxjs/operators';
+
 import { IAlbum, Album } from 'app/shared/model/album.model';
 import { AlbumService } from './album.service';
 import { IUser } from 'app/core/user/user.model';
@@ -14,16 +13,18 @@ import { UserService } from 'app/core/user/user.service';
 import { ITrack } from 'app/shared/model/track.model';
 import { TrackService } from 'app/entities/track/track.service';
 
+type SelectableEntity = IUser | ITrack;
+
 @Component({
   selector: 'jhi-album-update',
   templateUrl: './album-update.component.html'
 })
 export class AlbumUpdateComponent implements OnInit {
-  isSaving: boolean;
+  isSaving = false;
 
-  users: IUser[];
+  users: IUser[] = [];
 
-  tracks: ITrack[];
+  tracks: ITrack[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -36,7 +37,6 @@ export class AlbumUpdateComponent implements OnInit {
   });
 
   constructor(
-    protected jhiAlertService: JhiAlertService,
     protected albumService: AlbumService,
     protected userService: UserService,
     protected trackService: TrackService,
@@ -44,28 +44,31 @@ export class AlbumUpdateComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ album }) => {
       this.updateForm(album);
+
+      this.userService
+        .query()
+        .pipe(
+          map((res: HttpResponse<IUser[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: IUser[]) => (this.users = resBody));
+
+      this.trackService
+        .query()
+        .pipe(
+          map((res: HttpResponse<ITrack[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: ITrack[]) => (this.tracks = resBody));
     });
-    this.userService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IUser[]>) => response.body)
-      )
-      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.trackService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<ITrack[]>) => mayBeOk.ok),
-        map((response: HttpResponse<ITrack[]>) => response.body)
-      )
-      .subscribe((res: ITrack[]) => (this.tracks = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(album: IAlbum) {
+  updateForm(album: IAlbum): void {
     this.editForm.patchValue({
       id: album.id,
       title: album.title,
@@ -77,11 +80,11 @@ export class AlbumUpdateComponent implements OnInit {
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const album = this.createFromForm();
     if (album.id !== undefined) {
@@ -94,41 +97,37 @@ export class AlbumUpdateComponent implements OnInit {
   private createFromForm(): IAlbum {
     return {
       ...new Album(),
-      id: this.editForm.get(['id']).value,
-      title: this.editForm.get(['title']).value,
-      year: this.editForm.get(['year']).value,
-      thumbnail: this.editForm.get(['thumbnail']).value,
-      totalTracks: this.editForm.get(['totalTracks']).value,
-      userId: this.editForm.get(['userId']).value,
-      tracks: this.editForm.get(['tracks']).value
+      id: this.editForm.get(['id'])!.value,
+      title: this.editForm.get(['title'])!.value,
+      year: this.editForm.get(['year'])!.value,
+      thumbnail: this.editForm.get(['thumbnail'])!.value,
+      totalTracks: this.editForm.get(['totalTracks'])!.value,
+      userId: this.editForm.get(['userId'])!.value,
+      tracks: this.editForm.get(['tracks'])!.value
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IAlbum>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IAlbum>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
 
-  trackUserById(index: number, item: IUser) {
+  trackById(index: number, item: SelectableEntity): any {
     return item.id;
   }
 
-  trackTrackById(index: number, item: ITrack) {
-    return item.id;
-  }
-
-  getSelected(selectedVals: any[], option: any) {
+  getSelected(selectedVals: ITrack[], option: ITrack): ITrack {
     if (selectedVals) {
       for (let i = 0; i < selectedVals.length; i++) {
         if (option.id === selectedVals[i].id) {

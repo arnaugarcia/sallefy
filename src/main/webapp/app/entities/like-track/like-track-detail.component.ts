@@ -8,17 +8,17 @@ import { ILikeTrack } from 'app/shared/model/like-track.model';
   templateUrl: './like-track-detail.component.html'
 })
 export class LikeTrackDetailComponent implements OnInit {
-  likeTrack: ILikeTrack;
+  likeTrack: ILikeTrack | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ likeTrack }) => {
       this.likeTrack = likeTrack;
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

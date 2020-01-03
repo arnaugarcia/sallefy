@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiAlertService } from 'ng-jhipster';
+
 import { IFollowUser, FollowUser } from 'app/shared/model/follow-user.model';
 import { FollowUserService } from './follow-user.service';
 import { IUser } from 'app/core/user/user.model';
@@ -19,9 +18,9 @@ import { UserService } from 'app/core/user/user.service';
   templateUrl: './follow-user-update.component.html'
 })
 export class FollowUserUpdateComponent implements OnInit {
-  isSaving: boolean;
+  isSaving = false;
 
-  users: IUser[];
+  users: IUser[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -31,28 +30,28 @@ export class FollowUserUpdateComponent implements OnInit {
   });
 
   constructor(
-    protected jhiAlertService: JhiAlertService,
     protected followUserService: FollowUserService,
     protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ followUser }) => {
       this.updateForm(followUser);
+
+      this.userService
+        .query()
+        .pipe(
+          map((res: HttpResponse<IUser[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: IUser[]) => (this.users = resBody));
     });
-    this.userService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IUser[]>) => response.body)
-      )
-      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(followUser: IFollowUser) {
+  updateForm(followUser: IFollowUser): void {
     this.editForm.patchValue({
       id: followUser.id,
       date: followUser.date != null ? followUser.date.format(DATE_TIME_FORMAT) : null,
@@ -61,11 +60,11 @@ export class FollowUserUpdateComponent implements OnInit {
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const followUser = this.createFromForm();
     if (followUser.id !== undefined) {
@@ -78,30 +77,30 @@ export class FollowUserUpdateComponent implements OnInit {
   private createFromForm(): IFollowUser {
     return {
       ...new FollowUser(),
-      id: this.editForm.get(['id']).value,
-      date: this.editForm.get(['date']).value != null ? moment(this.editForm.get(['date']).value, DATE_TIME_FORMAT) : undefined,
-      followedId: this.editForm.get(['followedId']).value,
-      userId: this.editForm.get(['userId']).value
+      id: this.editForm.get(['id'])!.value,
+      date: this.editForm.get(['date'])!.value != null ? moment(this.editForm.get(['date'])!.value, DATE_TIME_FORMAT) : undefined,
+      followedId: this.editForm.get(['followedId'])!.value,
+      userId: this.editForm.get(['userId'])!.value
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IFollowUser>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IFollowUser>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
 
-  trackUserById(index: number, item: IUser) {
+  trackById(index: number, item: IUser): any {
     return item.id;
   }
 }

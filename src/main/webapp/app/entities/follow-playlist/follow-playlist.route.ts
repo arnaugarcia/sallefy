@@ -1,27 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { FollowPlaylist } from 'app/shared/model/follow-playlist.model';
+import { IFollowPlaylist, FollowPlaylist } from 'app/shared/model/follow-playlist.model';
 import { FollowPlaylistService } from './follow-playlist.service';
 import { FollowPlaylistComponent } from './follow-playlist.component';
 import { FollowPlaylistDetailComponent } from './follow-playlist-detail.component';
 import { FollowPlaylistUpdateComponent } from './follow-playlist-update.component';
-import { FollowPlaylistDeletePopupComponent } from './follow-playlist-delete-dialog.component';
-import { IFollowPlaylist } from 'app/shared/model/follow-playlist.model';
 
 @Injectable({ providedIn: 'root' })
 export class FollowPlaylistResolve implements Resolve<IFollowPlaylist> {
-  constructor(private service: FollowPlaylistService) {}
+  constructor(private service: FollowPlaylistService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IFollowPlaylist> {
+  resolve(route: ActivatedRouteSnapshot): Observable<IFollowPlaylist> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        filter((response: HttpResponse<FollowPlaylist>) => response.ok),
-        map((followPlaylist: HttpResponse<FollowPlaylist>) => followPlaylist.body)
+        flatMap((followPlaylist: HttpResponse<FollowPlaylist>) => {
+          if (followPlaylist.body) {
+            return of(followPlaylist.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
       );
     }
     return of(new FollowPlaylist());
@@ -73,21 +78,5 @@ export const followPlaylistRoute: Routes = [
       pageTitle: 'sallefyApp.followPlaylist.home.title'
     },
     canActivate: [UserRouteAccessService]
-  }
-];
-
-export const followPlaylistPopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: FollowPlaylistDeletePopupComponent,
-    resolve: {
-      followPlaylist: FollowPlaylistResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'sallefyApp.followPlaylist.home.title'
-    },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
   }
 ];

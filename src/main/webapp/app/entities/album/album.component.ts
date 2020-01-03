@@ -1,66 +1,51 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IAlbum } from 'app/shared/model/album.model';
-import { AccountService } from 'app/core/auth/account.service';
 import { AlbumService } from './album.service';
+import { AlbumDeleteDialogComponent } from './album-delete-dialog.component';
 
 @Component({
   selector: 'jhi-album',
   templateUrl: './album.component.html'
 })
 export class AlbumComponent implements OnInit, OnDestroy {
-  albums: IAlbum[];
-  currentAccount: any;
-  eventSubscriber: Subscription;
+  albums?: IAlbum[];
+  eventSubscriber?: Subscription;
 
-  constructor(
-    protected albumService: AlbumService,
-    protected jhiAlertService: JhiAlertService,
-    protected eventManager: JhiEventManager,
-    protected accountService: AccountService
-  ) {}
+  constructor(protected albumService: AlbumService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
 
-  loadAll() {
-    this.albumService
-      .query()
-      .pipe(
-        filter((res: HttpResponse<IAlbum[]>) => res.ok),
-        map((res: HttpResponse<IAlbum[]>) => res.body)
-      )
-      .subscribe(
-        (res: IAlbum[]) => {
-          this.albums = res;
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+  loadAll(): void {
+    this.albumService.query().subscribe((res: HttpResponse<IAlbum[]>) => {
+      this.albums = res.body ? res.body : [];
+    });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadAll();
-    this.accountService.identity().then(account => {
-      this.currentAccount = account;
-    });
     this.registerChangeInAlbums();
   }
 
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
   }
 
-  trackId(index: number, item: IAlbum) {
-    return item.id;
+  trackId(index: number, item: IAlbum): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
   }
 
-  registerChangeInAlbums() {
-    this.eventSubscriber = this.eventManager.subscribe('albumListModification', response => this.loadAll());
+  registerChangeInAlbums(): void {
+    this.eventSubscriber = this.eventManager.subscribe('albumListModification', () => this.loadAll());
   }
 
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
+  delete(album: IAlbum): void {
+    const modalRef = this.modalService.open(AlbumDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.album = album;
   }
 }

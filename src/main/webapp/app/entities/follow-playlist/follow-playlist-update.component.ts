@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiAlertService } from 'ng-jhipster';
+
 import { IFollowPlaylist, FollowPlaylist } from 'app/shared/model/follow-playlist.model';
 import { FollowPlaylistService } from './follow-playlist.service';
 import { IUser } from 'app/core/user/user.model';
@@ -16,16 +15,18 @@ import { UserService } from 'app/core/user/user.service';
 import { IPlaylist } from 'app/shared/model/playlist.model';
 import { PlaylistService } from 'app/entities/playlist/playlist.service';
 
+type SelectableEntity = IUser | IPlaylist;
+
 @Component({
   selector: 'jhi-follow-playlist-update',
   templateUrl: './follow-playlist-update.component.html'
 })
 export class FollowPlaylistUpdateComponent implements OnInit {
-  isSaving: boolean;
+  isSaving = false;
 
-  users: IUser[];
+  users: IUser[] = [];
 
-  playlists: IPlaylist[];
+  playlists: IPlaylist[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -35,7 +36,6 @@ export class FollowPlaylistUpdateComponent implements OnInit {
   });
 
   constructor(
-    protected jhiAlertService: JhiAlertService,
     protected followPlaylistService: FollowPlaylistService,
     protected userService: UserService,
     protected playlistService: PlaylistService,
@@ -43,28 +43,31 @@ export class FollowPlaylistUpdateComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ followPlaylist }) => {
       this.updateForm(followPlaylist);
+
+      this.userService
+        .query()
+        .pipe(
+          map((res: HttpResponse<IUser[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: IUser[]) => (this.users = resBody));
+
+      this.playlistService
+        .query()
+        .pipe(
+          map((res: HttpResponse<IPlaylist[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: IPlaylist[]) => (this.playlists = resBody));
     });
-    this.userService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IUser[]>) => response.body)
-      )
-      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.playlistService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IPlaylist[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IPlaylist[]>) => response.body)
-      )
-      .subscribe((res: IPlaylist[]) => (this.playlists = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(followPlaylist: IFollowPlaylist) {
+  updateForm(followPlaylist: IFollowPlaylist): void {
     this.editForm.patchValue({
       id: followPlaylist.id,
       date: followPlaylist.date != null ? followPlaylist.date.format(DATE_TIME_FORMAT) : null,
@@ -73,11 +76,11 @@ export class FollowPlaylistUpdateComponent implements OnInit {
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const followPlaylist = this.createFromForm();
     if (followPlaylist.id !== undefined) {
@@ -90,34 +93,30 @@ export class FollowPlaylistUpdateComponent implements OnInit {
   private createFromForm(): IFollowPlaylist {
     return {
       ...new FollowPlaylist(),
-      id: this.editForm.get(['id']).value,
-      date: this.editForm.get(['date']).value != null ? moment(this.editForm.get(['date']).value, DATE_TIME_FORMAT) : undefined,
-      userId: this.editForm.get(['userId']).value,
-      playlistId: this.editForm.get(['playlistId']).value
+      id: this.editForm.get(['id'])!.value,
+      date: this.editForm.get(['date'])!.value != null ? moment(this.editForm.get(['date'])!.value, DATE_TIME_FORMAT) : undefined,
+      userId: this.editForm.get(['userId'])!.value,
+      playlistId: this.editForm.get(['playlistId'])!.value
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IFollowPlaylist>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IFollowPlaylist>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
 
-  trackUserById(index: number, item: IUser) {
-    return item.id;
-  }
-
-  trackPlaylistById(index: number, item: IPlaylist) {
+  trackById(index: number, item: SelectableEntity): any {
     return item.id;
   }
 }

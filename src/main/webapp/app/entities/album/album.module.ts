@@ -5,14 +5,12 @@ import { SallefySharedModule } from 'app/shared/shared.module';
 import { AlbumComponent } from './album.component';
 import { AlbumDetailComponent } from './album-detail.component';
 import { AlbumUpdateComponent } from './album-update.component';
-import { AlbumDeletePopupComponent, AlbumDeleteDialogComponent } from './album-delete-dialog.component';
-import { albumRoute, albumPopupRoute } from './album.route';
-
-const ENTITY_STATES = [...albumRoute, ...albumPopupRoute];
+import { AlbumDeleteDialogComponent } from './album-delete-dialog.component';
+import { albumRoute } from './album.route';
 
 @NgModule({
-  imports: [SallefySharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [AlbumComponent, AlbumDetailComponent, AlbumUpdateComponent, AlbumDeleteDialogComponent, AlbumDeletePopupComponent],
-  entryComponents: [AlbumComponent, AlbumUpdateComponent, AlbumDeleteDialogComponent, AlbumDeletePopupComponent]
+  imports: [SallefySharedModule, RouterModule.forChild(albumRoute)],
+  declarations: [AlbumComponent, AlbumDetailComponent, AlbumUpdateComponent, AlbumDeleteDialogComponent],
+  entryComponents: [AlbumDeleteDialogComponent]
 })
 export class SallefyAlbumModule {}

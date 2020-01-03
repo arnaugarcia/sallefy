@@ -8,17 +8,17 @@ import { IGenre } from 'app/shared/model/genre.model';
   templateUrl: './genre-detail.component.html'
 })
 export class GenreDetailComponent implements OnInit {
-  genre: IGenre;
+  genre: IGenre | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ genre }) => {
       this.genre = genre;
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

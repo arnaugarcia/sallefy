@@ -12,13 +12,13 @@ describe('Service Tests', () => {
     let service: LikeTrackService;
     let httpMock: HttpTestingController;
     let elemDefault: ILikeTrack;
-    let expectedResult;
+    let expectedResult: ILikeTrack | ILikeTrack[] | boolean | null;
     let currentDate: moment.Moment;
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
       });
-      expectedResult = {};
+      expectedResult = null;
       injector = getTestBed();
       service = injector.get(LikeTrackService);
       httpMock = injector.get(HttpTestingController);
@@ -38,11 +38,11 @@ describe('Service Tests', () => {
         service
           .find(123)
           .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+          .subscribe(resp => (expectedResult = resp.body));
 
         const req = httpMock.expectOne({ method: 'GET' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: elemDefault });
+        expect(expectedResult).toMatchObject(elemDefault);
       });
 
       it('should create a LikeTrack', () => {
@@ -60,12 +60,12 @@ describe('Service Tests', () => {
           returnedFromService
         );
         service
-          .create(new LikeTrack(null))
+          .create(new LikeTrack())
           .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+          .subscribe(resp => (expectedResult = resp.body));
         const req = httpMock.expectOne({ method: 'POST' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: expected });
+        expect(expectedResult).toMatchObject(expected);
       });
 
       it('should update a LikeTrack', () => {
@@ -86,10 +86,10 @@ describe('Service Tests', () => {
         service
           .update(expected)
           .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+          .subscribe(resp => (expectedResult = resp.body));
         const req = httpMock.expectOne({ method: 'PUT' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: expected });
+        expect(expectedResult).toMatchObject(expected);
       });
 
       it('should return a list of LikeTrack', () => {
@@ -107,7 +107,7 @@ describe('Service Tests', () => {
           returnedFromService
         );
         service
-          .query(expected)
+          .query()
           .pipe(
             take(1),
             map(resp => resp.body)

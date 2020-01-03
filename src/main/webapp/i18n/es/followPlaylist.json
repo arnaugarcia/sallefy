@@ -5,7 +5,7 @@
         "title": "Follow Playlists",
         "createLabel": "Crear nuevo Follow Playlist",
         "createOrEditLabel": "Crear o editar Follow Playlist",
-        "notFound": "No Follow Playlists found"
+        "notFound": "Ningún Follow Playlists encontrado"
       },
       "created": "Un nuevo Follow Playlist ha sido creado con el identificador {{ param }}",
       "updated": "Un Follow Playlist ha sido actualizado con el identificador {{ param }}",

@@ -5,7 +5,7 @@
         "title": "Genres",
         "createLabel": "Crear nuevo Genre",
         "createOrEditLabel": "Crear o editar Genre",
-        "notFound": "No Genres found"
+        "notFound": "Ningún Genres encontrado"
       },
       "created": "Un nuevo Genre ha sido creado con el identificador {{ param }}",
       "updated": "Un Genre ha sido actualizado con el identificador {{ param }}",

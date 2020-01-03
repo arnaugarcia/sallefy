@@ -5,7 +5,7 @@
         "title": "Follow Users",
         "createLabel": "Crear nuevo Follow User",
         "createOrEditLabel": "Crear o editar Follow User",
-        "notFound": "No Follow Users found"
+        "notFound": "Ningún Follow Users encontrado"
       },
       "created": "Un nuevo Follow User ha sido creado con el identificador {{ param }}",
       "updated": "Un Follow User ha sido actualizado con el identificador {{ param }}",

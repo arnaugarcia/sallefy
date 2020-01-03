@@ -1,17 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { browser, ExpectedConditions as ec, protractor, promise } from 'protractor';
+import { browser, ExpectedConditions as ec /* , protractor, promise */ } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { LikeTrackComponentsPage, LikeTrackDeleteDialog, LikeTrackUpdatePage } from './like-track.page-object';
+import {
+  LikeTrackComponentsPage,
+  /* LikeTrackDeleteDialog,
+   */ LikeTrackUpdatePage
+} from './like-track.page-object';
 
 const expect = chai.expect;
 
 describe('LikeTrack e2e test', () => {
   let navBarPage: NavBarPage;
   let signInPage: SignInPage;
-  let likeTrackUpdatePage: LikeTrackUpdatePage;
   let likeTrackComponentsPage: LikeTrackComponentsPage;
+  let likeTrackUpdatePage: LikeTrackUpdatePage;
   /* let likeTrackDeleteDialog: LikeTrackDeleteDialog; */
 
   before(async () => {

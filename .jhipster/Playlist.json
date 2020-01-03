@@ -60,10 +60,6 @@
         {
             "fieldName": "rating",
             "fieldType": "Double"
-        },
-        {
-            "fieldName": "created",
-            "fieldType": "LocalDate"
         }
     ],
     "changelogDate": "20190919065621",
@@ -73,5 +69,8 @@
     "entityTableName": "playlist",
     "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "pagination": "no"
+    "pagination": "no",
+    "name": "Playlist",
+    "readOnly": false,
+    "applications": "*"
 }

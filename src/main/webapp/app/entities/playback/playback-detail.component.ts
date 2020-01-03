@@ -8,17 +8,17 @@ import { IPlayback } from 'app/shared/model/playback.model';
   templateUrl: './playback-detail.component.html'
 })
 export class PlaybackDetailComponent implements OnInit {
-  playback: IPlayback;
+  playback: IPlayback | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ playback }) => {
       this.playback = playback;
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

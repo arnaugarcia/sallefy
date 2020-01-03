@@ -56,19 +56,6 @@
             "ownerSide": true
         },
         {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "playback",
-            "otherEntityRelationshipName": "track",
-            "relationshipValidateRules": "required",
-            "relationshipName": "playback"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "likeTrack",
-            "otherEntityRelationshipName": "track",
-            "relationshipName": "likeTrack"
-        },
-        {
             "relationshipType": "many-to-many",
             "otherEntityName": "playlist",
             "otherEntityRelationshipName": "track",
@@ -93,5 +80,6 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "",
-    "applications": "*"
+    "applications": "*",
+    "readOnly": false
 }

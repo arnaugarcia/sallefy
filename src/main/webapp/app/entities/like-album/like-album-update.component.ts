@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiAlertService } from 'ng-jhipster';
+
 import { ILikeAlbum, LikeAlbum } from 'app/shared/model/like-album.model';
 import { LikeAlbumService } from './like-album.service';
 import { IUser } from 'app/core/user/user.model';
@@ -16,16 +15,18 @@ import { UserService } from 'app/core/user/user.service';
 import { IAlbum } from 'app/shared/model/album.model';
 import { AlbumService } from 'app/entities/album/album.service';
 
+type SelectableEntity = IUser | IAlbum;
+
 @Component({
   selector: 'jhi-like-album-update',
   templateUrl: './like-album-update.component.html'
 })
 export class LikeAlbumUpdateComponent implements OnInit {
-  isSaving: boolean;
+  isSaving = false;
 
-  users: IUser[];
+  users: IUser[] = [];
 
-  albums: IAlbum[];
+  albums: IAlbum[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -36,7 +37,6 @@ export class LikeAlbumUpdateComponent implements OnInit {
   });
 
   constructor(
-    protected jhiAlertService: JhiAlertService,
     protected likeAlbumService: LikeAlbumService,
     protected userService: UserService,
     protected albumService: AlbumService,
@@ -44,28 +44,31 @@ export class LikeAlbumUpdateComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ likeAlbum }) => {
       this.updateForm(likeAlbum);
+
+      this.userService
+        .query()
+        .pipe(
+          map((res: HttpResponse<IUser[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: IUser[]) => (this.users = resBody));
+
+      this.albumService
+        .query()
+        .pipe(
+          map((res: HttpResponse<IAlbum[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: IAlbum[]) => (this.albums = resBody));
     });
-    this.userService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IUser[]>) => response.body)
-      )
-      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.albumService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IAlbum[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IAlbum[]>) => response.body)
-      )
-      .subscribe((res: IAlbum[]) => (this.albums = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(likeAlbum: ILikeAlbum) {
+  updateForm(likeAlbum: ILikeAlbum): void {
     this.editForm.patchValue({
       id: likeAlbum.id,
       liked: likeAlbum.liked,
@@ -75,11 +78,11 @@ export class LikeAlbumUpdateComponent implements OnInit {
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const likeAlbum = this.createFromForm();
     if (likeAlbum.id !== undefined) {
@@ -92,35 +95,31 @@ export class LikeAlbumUpdateComponent implements OnInit {
   private createFromForm(): ILikeAlbum {
     return {
       ...new LikeAlbum(),
-      id: this.editForm.get(['id']).value,
-      liked: this.editForm.get(['liked']).value,
-      date: this.editForm.get(['date']).value != null ? moment(this.editForm.get(['date']).value, DATE_TIME_FORMAT) : undefined,
-      userId: this.editForm.get(['userId']).value,
-      albumId: this.editForm.get(['albumId']).value
+      id: this.editForm.get(['id'])!.value,
+      liked: this.editForm.get(['liked'])!.value,
+      date: this.editForm.get(['date'])!.value != null ? moment(this.editForm.get(['date'])!.value, DATE_TIME_FORMAT) : undefined,
+      userId: this.editForm.get(['userId'])!.value,
+      albumId: this.editForm.get(['albumId'])!.value
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<ILikeAlbum>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<ILikeAlbum>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
 
-  trackUserById(index: number, item: IUser) {
-    return item.id;
-  }
-
-  trackAlbumById(index: number, item: IAlbum) {
+  trackById(index: number, item: SelectableEntity): any {
     return item.id;
   }
 }

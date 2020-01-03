@@ -1,17 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { browser, ExpectedConditions as ec, promise } from 'protractor';
+import { browser, ExpectedConditions as ec /* , promise */ } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { AlbumComponentsPage, AlbumDeleteDialog, AlbumUpdatePage } from './album.page-object';
+import {
+  AlbumComponentsPage,
+  /* AlbumDeleteDialog,
+   */ AlbumUpdatePage
+} from './album.page-object';
 
 const expect = chai.expect;
 
 describe('Album e2e test', () => {
   let navBarPage: NavBarPage;
   let signInPage: SignInPage;
-  let albumUpdatePage: AlbumUpdatePage;
   let albumComponentsPage: AlbumComponentsPage;
+  let albumUpdatePage: AlbumUpdatePage;
   /* let albumDeleteDialog: AlbumDeleteDialog; */
 
   before(async () => {

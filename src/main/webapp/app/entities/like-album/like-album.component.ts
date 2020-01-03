@@ -1,66 +1,51 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ILikeAlbum } from 'app/shared/model/like-album.model';
-import { AccountService } from 'app/core/auth/account.service';
 import { LikeAlbumService } from './like-album.service';
+import { LikeAlbumDeleteDialogComponent } from './like-album-delete-dialog.component';
 
 @Component({
   selector: 'jhi-like-album',
   templateUrl: './like-album.component.html'
 })
 export class LikeAlbumComponent implements OnInit, OnDestroy {
-  likeAlbums: ILikeAlbum[];
-  currentAccount: any;
-  eventSubscriber: Subscription;
+  likeAlbums?: ILikeAlbum[];
+  eventSubscriber?: Subscription;
 
-  constructor(
-    protected likeAlbumService: LikeAlbumService,
-    protected jhiAlertService: JhiAlertService,
-    protected eventManager: JhiEventManager,
-    protected accountService: AccountService
-  ) {}
+  constructor(protected likeAlbumService: LikeAlbumService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
 
-  loadAll() {
-    this.likeAlbumService
-      .query()
-      .pipe(
-        filter((res: HttpResponse<ILikeAlbum[]>) => res.ok),
-        map((res: HttpResponse<ILikeAlbum[]>) => res.body)
-      )
-      .subscribe(
-        (res: ILikeAlbum[]) => {
-          this.likeAlbums = res;
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+  loadAll(): void {
+    this.likeAlbumService.query().subscribe((res: HttpResponse<ILikeAlbum[]>) => {
+      this.likeAlbums = res.body ? res.body : [];
+    });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadAll();
-    this.accountService.identity().then(account => {
-      this.currentAccount = account;
-    });
     this.registerChangeInLikeAlbums();
   }
 
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
   }
 
-  trackId(index: number, item: ILikeAlbum) {
-    return item.id;
+  trackId(index: number, item: ILikeAlbum): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
   }
 
-  registerChangeInLikeAlbums() {
-    this.eventSubscriber = this.eventManager.subscribe('likeAlbumListModification', response => this.loadAll());
+  registerChangeInLikeAlbums(): void {
+    this.eventSubscriber = this.eventManager.subscribe('likeAlbumListModification', () => this.loadAll());
   }
 
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
+  delete(likeAlbum: ILikeAlbum): void {
+    const modalRef = this.modalService.open(LikeAlbumDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.likeAlbum = likeAlbum;
   }
 }

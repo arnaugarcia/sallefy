@@ -1,66 +1,51 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IFollowUser } from 'app/shared/model/follow-user.model';
-import { AccountService } from 'app/core/auth/account.service';
 import { FollowUserService } from './follow-user.service';
+import { FollowUserDeleteDialogComponent } from './follow-user-delete-dialog.component';
 
 @Component({
   selector: 'jhi-follow-user',
   templateUrl: './follow-user.component.html'
 })
 export class FollowUserComponent implements OnInit, OnDestroy {
-  followUsers: IFollowUser[];
-  currentAccount: any;
-  eventSubscriber: Subscription;
+  followUsers?: IFollowUser[];
+  eventSubscriber?: Subscription;
 
-  constructor(
-    protected followUserService: FollowUserService,
-    protected jhiAlertService: JhiAlertService,
-    protected eventManager: JhiEventManager,
-    protected accountService: AccountService
-  ) {}
+  constructor(protected followUserService: FollowUserService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
 
-  loadAll() {
-    this.followUserService
-      .query()
-      .pipe(
-        filter((res: HttpResponse<IFollowUser[]>) => res.ok),
-        map((res: HttpResponse<IFollowUser[]>) => res.body)
-      )
-      .subscribe(
-        (res: IFollowUser[]) => {
-          this.followUsers = res;
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+  loadAll(): void {
+    this.followUserService.query().subscribe((res: HttpResponse<IFollowUser[]>) => {
+      this.followUsers = res.body ? res.body : [];
+    });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadAll();
-    this.accountService.identity().then(account => {
-      this.currentAccount = account;
-    });
     this.registerChangeInFollowUsers();
   }
 
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
   }
 
-  trackId(index: number, item: IFollowUser) {
-    return item.id;
+  trackId(index: number, item: IFollowUser): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
   }
 
-  registerChangeInFollowUsers() {
-    this.eventSubscriber = this.eventManager.subscribe('followUserListModification', response => this.loadAll());
+  registerChangeInFollowUsers(): void {
+    this.eventSubscriber = this.eventManager.subscribe('followUserListModification', () => this.loadAll());
   }
 
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
+  delete(followUser: IFollowUser): void {
+    const modalRef = this.modalService.open(FollowUserDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.followUser = followUser;
   }
 }

@@ -5,19 +5,19 @@ export class GenreComponentsPage {
   deleteButtons = element.all(by.css('jhi-genre div table .btn-danger'));
   title = element.all(by.css('jhi-genre div h2#page-heading span')).first();
 
-  async clickOnCreateButton(timeout?: number) {
+  async clickOnCreateButton(): Promise<void> {
     await this.createButton.click();
   }
 
-  async clickOnLastDeleteButton(timeout?: number) {
+  async clickOnLastDeleteButton(): Promise<void> {
     await this.deleteButtons.last().click();
   }
 
-  async countDeleteButtons() {
+  async countDeleteButtons(): Promise<number> {
     return this.deleteButtons.count();
   }
 
-  async getTitle() {
+  async getTitle(): Promise<string> {
     return this.title.getAttribute('jhiTranslate');
   }
 }
@@ -29,31 +29,31 @@ export class GenreUpdatePage {
   nameInput = element(by.id('field_name'));
   popularityInput = element(by.id('field_popularity'));
 
-  async getPageTitle() {
+  async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
   }
 
-  async setNameInput(name) {
+  async setNameInput(name: string): Promise<void> {
     await this.nameInput.sendKeys(name);
   }
 
-  async getNameInput() {
+  async getNameInput(): Promise<string> {
     return await this.nameInput.getAttribute('value');
   }
 
-  async setPopularityInput(popularity) {
+  async setPopularityInput(popularity: string): Promise<void> {
     await this.popularityInput.sendKeys(popularity);
   }
 
-  async getPopularityInput() {
+  async getPopularityInput(): Promise<string> {
     return await this.popularityInput.getAttribute('value');
   }
 
-  async save(timeout?: number) {
+  async save(): Promise<void> {
     await this.saveButton.click();
   }
 
-  async cancel(timeout?: number) {
+  async cancel(): Promise<void> {
     await this.cancelButton.click();
   }
 
@@ -66,11 +66,11 @@ export class GenreDeleteDialog {
   private dialogTitle = element(by.id('jhi-delete-genre-heading'));
   private confirmButton = element(by.id('jhi-confirm-delete-genre'));
 
-  async getDialogTitle() {
+  async getDialogTitle(): Promise<string> {
     return this.dialogTitle.getAttribute('jhiTranslate');
   }
 
-  async clickOnConfirmButton(timeout?: number) {
+  async clickOnConfirmButton(): Promise<void> {
     await this.confirmButton.click();
   }
 }
