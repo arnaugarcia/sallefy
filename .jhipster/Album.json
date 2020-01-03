@@ -34,12 +34,6 @@
             "relationshipName": "track",
             "otherEntityField": "name",
             "ownerSide": true
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "likeAlbum",
-            "otherEntityRelationshipName": "album",
-            "relationshipName": "likeAlbum"
         }
     ],
     "changelogDate": "20190919065622",
@@ -50,5 +44,6 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "",
-    "applications": "*"
+    "applications": "*",
+    "readOnly": false
 }

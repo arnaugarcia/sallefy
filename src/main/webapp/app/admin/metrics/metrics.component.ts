@@ -1,42 +1,47 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { flatMap } from 'rxjs/operators';
 
-import { SfMetricsService } from './metrics.service';
+import { Metrics, MetricsKey, SfMetricsService, Thread, ThreadDump } from './metrics.service';
 
 @Component({
   selector: 'sf-metrics',
-  templateUrl: './metrics.component.html'
+  templateUrl: './metrics.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SfMetricsMonitoringComponent implements OnInit {
-  metrics: any = {};
-  threadData: any = {};
+export class SfMetricsComponent implements OnInit {
+  metrics?: Metrics;
+  threads?: Thread[];
   updatingMetrics = true;
-  JCACHE_KEY: string;
 
-  constructor(private modalService: NgbModal, private metricsService: SfMetricsService) {
-    this.JCACHE_KEY = 'jcache.statistics';
-  }
+  constructor(private metricsService: SfMetricsService, private changeDetector: ChangeDetectorRef) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.refresh();
   }
 
-  refresh() {
+  refresh(): void {
     this.updatingMetrics = true;
-    this.metricsService.getMetrics().subscribe(metrics => {
-      this.metrics = metrics;
-      this.metricsService.threadDump().subscribe(data => {
-        this.threadData = data.threads;
-        this.updatingMetrics = false;
-      });
-    });
+    this.metricsService
+      .getMetrics()
+      .pipe(
+        flatMap(
+          () => this.metricsService.threadDump(),
+          (metrics: Metrics, threadDump: ThreadDump) => {
+            this.metrics = metrics;
+            this.threads = threadDump.threads;
+            this.updatingMetrics = false;
+            this.changeDetector.detectChanges();
+          }
+        )
+      )
+      .subscribe();
   }
 
-  isObjectExisting(metrics: any, key: string) {
-    return metrics && metrics[key];
+  metricsKeyExists(key: MetricsKey): boolean {
+    return this.metrics && this.metrics[key];
   }
 
-  isObjectExistingAndNotEmpty(metrics: any, key: string) {
-    return this.isObjectExisting(metrics, key) && JSON.stringify(metrics[key]) !== '{}';
+  metricsKeyExistsAndObjectNotEmpty(key: MetricsKey): boolean {
+    return this.metrics && this.metrics[key] && JSON.stringify(this.metrics[key]) !== '{}';
   }
 }

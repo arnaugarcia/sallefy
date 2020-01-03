@@ -1,10 +1,13 @@
 package com.sallefy.service.dto;
+import io.swagger.annotations.ApiModel;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * A DTO for the {@link com.sallefy.domain.Genre} entity.
  */
+@ApiModel(value = "Genre", description = "A DTO representing a Genre of a Track")
 public class GenreDTO implements Serializable {
 
     private Long id;

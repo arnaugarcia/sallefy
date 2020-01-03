@@ -1,14 +1,15 @@
 package com.sallefy.service;
 
+import com.sallefy.SallefyApp;
 import com.sallefy.domain.PersistentAuditEvent;
 import com.sallefy.repository.PersistenceAuditEventRepository;
-import com.sallefy.SallefyApp;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
@@ -45,7 +46,7 @@ public class AuditEventServiceIT {
         auditEventWithinRetention = new PersistentAuditEvent();
         auditEventWithinRetention.setAuditEventDate(Instant.now().minus(jHipsterProperties.getAuditEvents().getRetentionPeriod() - 1, ChronoUnit.DAYS));
         auditEventWithinRetention.setPrincipal("test-user-retention");
-        auditEventWithinRetention.setAuditEventType("test-type");;
+        auditEventWithinRetention.setAuditEventType("test-type");
 
         auditEventNew = new PersistentAuditEvent();
         auditEventNew.setAuditEventDate(Instant.now());
@@ -60,13 +61,13 @@ public class AuditEventServiceIT {
         persistenceAuditEventRepository.save(auditEventOld);
         persistenceAuditEventRepository.save(auditEventWithinRetention);
         persistenceAuditEventRepository.save(auditEventNew);
-        
+
         persistenceAuditEventRepository.flush();
-        
+
         auditEventService.removeOldAuditEvents();
-        
+
         persistenceAuditEventRepository.flush();
-        
+
         assertThat(persistenceAuditEventRepository.findAll().size()).isEqualTo(2);
         assertThat(persistenceAuditEventRepository.findByPrincipal("test-user-old")).isEmpty();
         assertThat(persistenceAuditEventRepository.findByPrincipal("test-user-retention")).isNotEmpty();

@@ -1,15 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
-import { PlaylistService } from 'app/entities/playlist/playlist.service';
-import { filter, map } from 'rxjs/operators';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { IPlaylist } from 'app/shared/model/playlist.model';
+import { HttpResponse } from '@angular/common/http';
+import { PlaylistService } from 'app/entities/playlist/playlist.service';
 
 @Component({
   selector: 'sf-home',
@@ -17,61 +14,39 @@ import { IPlaylist } from 'app/shared/model/playlist.model';
   styleUrls: ['home.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  account: Account;
-  authSubscription: Subscription;
-  modalRef: NgbModalRef;
+  account: Account | null = null;
+  authSubscription?: Subscription;
   playlists: IPlaylist[] = [];
 
   constructor(
-    private accountService: AccountService,
-    private loginModalService: LoginModalService,
-    private eventManager: JhiEventManager,
     private playlistService: PlaylistService,
-    private alertService: JhiAlertService
+    private accountService: AccountService,
+    private loginModalService: LoginModalService
   ) {}
 
-  ngOnInit() {
-    this.accountService.identity().then((account: Account) => {
-      this.account = account;
-    });
-    this.registerAuthenticationSuccess();
-    this.playlistService
-      .query()
-      .pipe(
-        filter((res: HttpResponse<IPlaylist[]>) => res.ok),
-        map((res: HttpResponse<IPlaylist[]>) => res.body)
-      )
-      .subscribe(
-        (res: IPlaylist[]) => {
-          this.playlists = res;
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+  ngOnInit(): void {
+    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
+    this.playlistService.query().subscribe(
+      (res: HttpResponse<IPlaylist[]>) => {
+        this.playlists = res.body ? res.body : [];
+      },
+      () => {
+        console.error('Error getting the playlists');
+      }
+    );
   }
 
-  registerAuthenticationSuccess() {
-    this.authSubscription = this.eventManager.subscribe('authenticationSuccess', message => {
-      this.accountService.identity().then(account => {
-        this.account = account;
-      });
-    });
-  }
-
-  protected onError(errorMessage: string) {
-    this.alertService.error(errorMessage, null, null);
-  }
-
-  isAuthenticated() {
+  isAuthenticated(): boolean {
     return this.accountService.isAuthenticated();
   }
 
-  login() {
-    this.modalRef = this.loginModalService.open();
+  login(): void {
+    this.loginModalService.open();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.authSubscription) {
-      this.eventManager.destroy(this.authSubscription);
+      this.authSubscription.unsubscribe();
     }
   }
 }

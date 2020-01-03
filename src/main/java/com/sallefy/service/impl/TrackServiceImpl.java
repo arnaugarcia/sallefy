@@ -111,6 +111,7 @@ public class TrackServiceImpl implements TrackService {
         } else {
             tracks = trackRepository.findByUserIsCurrentUser();
         }
+
         return tracks.stream()
             .map(trackMapper::toDto)
             .collect(toCollection(LinkedList::new));

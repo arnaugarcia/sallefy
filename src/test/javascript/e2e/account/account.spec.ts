@@ -1,6 +1,6 @@
-import { browser, element, by, ExpectedConditions as ec } from 'protractor';
+import { browser, by, element, ExpectedConditions as ec } from 'protractor';
 
-import { NavBarPage, SignInPage, PasswordPage, SettingsPage } from '../page-objects/jhi-page-objects';
+import { NavBarPage, PasswordPage, SettingsPage, SignInPage } from '../page-objects/jhi-page-objects';
 
 const expect = chai.expect;
 
@@ -97,6 +97,18 @@ describe('account', () => {
     await passwordPage.setPassword('admin');
     await passwordPage.setConfirmPassword('admin');
     await passwordPage.save();
+  });
+
+  it('should navigate to 404 not found error page on non existing route and show user own navbar if valid authentication exists', async () => {
+    // don't sign out and refresh page with non existing route
+    await browser.get('/this-is-link-to-non-existing-page');
+
+    // should navigate to 404 not found page
+    const url = await browser.getCurrentUrl();
+    expect(url).to.endWith('404');
+
+    // as user is admin then should show admin menu to user
+    await navBarPage.clickOnAdminMenu();
   });
 
   after(async () => {

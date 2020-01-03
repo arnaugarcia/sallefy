@@ -1,23 +1,23 @@
-import { element, by, ElementFinder } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 
 export class PlaylistComponentsPage {
   createButton = element(by.id('jh-create-entity'));
   deleteButtons = element.all(by.css('jhi-playlist div table .btn-danger'));
   title = element.all(by.css('jhi-playlist div h2#page-heading span')).first();
 
-  async clickOnCreateButton(timeout?: number) {
+  async clickOnCreateButton(): Promise<void> {
     await this.createButton.click();
   }
 
-  async clickOnLastDeleteButton(timeout?: number) {
+  async clickOnLastDeleteButton(): Promise<void> {
     await this.deleteButtons.last().click();
   }
 
-  async countDeleteButtons() {
+  async countDeleteButtons(): Promise<number> {
     return this.deleteButtons.count();
   }
 
-  async getTitle() {
+  async getTitle(): Promise<string> {
     return this.title.getAttribute('jhiTranslate');
   }
 }
@@ -39,88 +39,88 @@ export class PlaylistUpdatePage {
   userSelect = element(by.id('field_user'));
   trackSelect = element(by.id('field_track'));
 
-  async getPageTitle() {
+  async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
   }
 
-  async setNameInput(name) {
+  async setNameInput(name: string): Promise<void> {
     await this.nameInput.sendKeys(name);
   }
 
-  async getNameInput() {
+  async getNameInput(): Promise<string> {
     return await this.nameInput.getAttribute('value');
   }
 
-  getCollaborativeInput(timeout?: number) {
+  getCollaborativeInput(): ElementFinder {
     return this.collaborativeInput;
   }
-  async setDescriptionInput(description) {
+  async setDescriptionInput(description: string): Promise<void> {
     await this.descriptionInput.sendKeys(description);
   }
 
-  async getDescriptionInput() {
+  async getDescriptionInput(): Promise<string> {
     return await this.descriptionInput.getAttribute('value');
   }
 
-  async setPrimaryColorInput(primaryColor) {
+  async setPrimaryColorInput(primaryColor: string): Promise<void> {
     await this.primaryColorInput.sendKeys(primaryColor);
   }
 
-  async getPrimaryColorInput() {
+  async getPrimaryColorInput(): Promise<string> {
     return await this.primaryColorInput.getAttribute('value');
   }
 
-  async setCoverInput(cover) {
+  async setCoverInput(cover: string): Promise<void> {
     await this.coverInput.sendKeys(cover);
   }
 
-  async getCoverInput() {
+  async getCoverInput(): Promise<string> {
     return await this.coverInput.getAttribute('value');
   }
 
-  async setThumbnailInput(thumbnail) {
+  async setThumbnailInput(thumbnail: string): Promise<void> {
     await this.thumbnailInput.sendKeys(thumbnail);
   }
 
-  async getThumbnailInput() {
+  async getThumbnailInput(): Promise<string> {
     return await this.thumbnailInput.getAttribute('value');
   }
 
-  getPublicAccessibleInput(timeout?: number) {
+  getPublicAccessibleInput(): ElementFinder {
     return this.publicAccessibleInput;
   }
-  async setNumberSongsInput(numberSongs) {
+  async setNumberSongsInput(numberSongs: string): Promise<void> {
     await this.numberSongsInput.sendKeys(numberSongs);
   }
 
-  async getNumberSongsInput() {
+  async getNumberSongsInput(): Promise<string> {
     return await this.numberSongsInput.getAttribute('value');
   }
 
-  async setFollowersInput(followers) {
+  async setFollowersInput(followers: string): Promise<void> {
     await this.followersInput.sendKeys(followers);
   }
 
-  async getFollowersInput() {
+  async getFollowersInput(): Promise<string> {
     return await this.followersInput.getAttribute('value');
   }
 
-  async setRatingInput(rating) {
+  async setRatingInput(rating: string): Promise<void> {
     await this.ratingInput.sendKeys(rating);
   }
 
-  async getRatingInput() {
+  async getRatingInput(): Promise<string> {
     return await this.ratingInput.getAttribute('value');
   }
 
-  async userSelectLastOption(timeout?: number) {
+  async userSelectLastOption(): Promise<void> {
     await this.userSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async userSelectOption(option) {
+  async userSelectOption(option: string): Promise<void> {
     await this.userSelect.sendKeys(option);
   }
 
@@ -128,18 +128,18 @@ export class PlaylistUpdatePage {
     return this.userSelect;
   }
 
-  async getUserSelectedOption() {
+  async getUserSelectedOption(): Promise<string> {
     return await this.userSelect.element(by.css('option:checked')).getText();
   }
 
-  async trackSelectLastOption(timeout?: number) {
+  async trackSelectLastOption(): Promise<void> {
     await this.trackSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async trackSelectOption(option) {
+  async trackSelectOption(option: string): Promise<void> {
     await this.trackSelect.sendKeys(option);
   }
 
@@ -147,15 +147,15 @@ export class PlaylistUpdatePage {
     return this.trackSelect;
   }
 
-  async getTrackSelectedOption() {
+  async getTrackSelectedOption(): Promise<string> {
     return await this.trackSelect.element(by.css('option:checked')).getText();
   }
 
-  async save(timeout?: number) {
+  async save(): Promise<void> {
     await this.saveButton.click();
   }
 
-  async cancel(timeout?: number) {
+  async cancel(): Promise<void> {
     await this.cancelButton.click();
   }
 
@@ -168,11 +168,11 @@ export class PlaylistDeleteDialog {
   private dialogTitle = element(by.id('jhi-delete-playlist-heading'));
   private confirmButton = element(by.id('jhi-confirm-delete-playlist'));
 
-  async getDialogTitle() {
+  async getDialogTitle(): Promise<string> {
     return this.dialogTitle.getAttribute('jhiTranslate');
   }
 
-  async clickOnConfirmButton(timeout?: number) {
+  async clickOnConfirmButton(): Promise<void> {
     await this.confirmButton.click();
   }
 }

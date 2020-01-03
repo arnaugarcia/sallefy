@@ -1,16 +1,18 @@
 package com.sallefy.service.dto;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
+import io.swagger.annotations.ApiModel;
+
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.sallefy.domain.Playlist} entity.
  */
+@ApiModel(value = "Playlist", description = "A DTO representing an entire playlists filled with all the songs")
 public class PlaylistDTO implements Serializable {
 
     private Long id;
@@ -25,12 +27,9 @@ public class PlaylistDTO implements Serializable {
 
     private String thumbnail;
 
-    @JsonProperty("public")
     private Boolean publicAccessible;
 
-    private Integer followers;
-
-    private UserDTO owner;
+    private UserSimplifiedDTO owner;
 
     private Set<TrackDTO> tracks = new HashSet<>();
 
@@ -82,19 +81,11 @@ public class PlaylistDTO implements Serializable {
         this.publicAccessible = publicAccessible;
     }
 
-    public Integer getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Integer followers) {
-        this.followers = followers;
-    }
-
-    public UserDTO getOwner() {
+    public UserSimplifiedDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(UserDTO owner) {
+    public void setOwner(UserSimplifiedDTO owner) {
         this.owner = owner;
     }
 
@@ -136,7 +127,6 @@ public class PlaylistDTO implements Serializable {
             ", cover='" + getCover() + "'" +
             ", thumbnail='" + getThumbnail() + "'" +
             ", publicAccessible='" + isPublicAccessible() + "'" +
-            ", followers=" + getFollowers() +
             ", owner='" + getOwner() + "'" +
             "}";
     }

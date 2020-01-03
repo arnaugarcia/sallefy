@@ -1,12 +1,11 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
-import io.github.jhipster.config.JHipsterProperties;
 import com.sallefy.config.audit.AuditEventConverter;
 import com.sallefy.domain.PersistentAuditEvent;
 import com.sallefy.repository.PersistenceAuditEventRepository;
-
 import com.sallefy.service.AuditEventService;
+import io.github.jhipster.config.JHipsterProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { IUser, User } from 'app/core/user/user.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/core/login/login.service';
 import { Router } from '@angular/router';
+import { Account } from 'app/core/user/account.model';
 
 @Component({
   selector: 'sf-profile',
@@ -10,32 +10,32 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  currentAccount: IUser = new User();
+  currentAccount: Account | null = null;
   show = false;
 
   constructor(private accountService: AccountService, private loginService: LoginService, private router: Router) {}
 
-  ngOnInit() {
-    this.accountService.identity().then(account => {
+  ngOnInit(): void {
+    this.accountService.identity().subscribe((account: Account | null) => {
       this.currentAccount = account;
     });
   }
 
-  toggleShowProfile() {
+  toggleShowProfile(): void {
     this.show = !this.show;
   }
 
-  isAuthenticated() {
+  isAuthenticated(): boolean {
     return this.accountService.isAuthenticated();
   }
 
-  logout() {
+  logout(): void {
     this.show = false;
     this.loginService.logout();
     this.router.navigate(['']);
   }
 
-  getImageUrl() {
+  getImageUrl(): string | null {
     return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
   }
 }

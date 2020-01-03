@@ -6,18 +6,19 @@ import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
-import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.UserDTO;
+import com.sallefy.service.dto.criteria.UserCriteriaDTO;
+import com.sallefy.service.dto.criteria.UserTrackCriteriaDTO;
+import com.sallefy.service.impl.TrackQueryService;
+import com.sallefy.service.impl.UserQueryService;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.web.rest.errors.EmailAlreadyUsedException;
 import com.sallefy.web.rest.errors.LoginAlreadyUsedException;
-import com.sallefy.web.rest.errors.NotYetImplementedException;
 import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -25,14 +26,9 @@ import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -83,18 +79,22 @@ public class UserResource {
 
     private final PlaylistService playlistService;
 
-    private final TrackService trackService;
+    private final TrackQueryService trackQueryService;
+
+    private final UserQueryService userQueryService;
 
     public UserResource(UserService userService,
                         UserRepository userRepository,
                         FollowService followService,
                         PlaylistService playlistService,
-                        TrackService trackService) {
+                        TrackQueryService trackQueryService,
+                        UserQueryService userQueryService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.followService = followService;
         this.playlistService = playlistService;
-        this.trackService = trackService;
+        this.trackQueryService = trackQueryService;
+        this.userQueryService = userQueryService;
     }
 
     /**
@@ -111,7 +111,7 @@ public class UserResource {
      */
     @PostMapping("/users")
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<User> createUser(@Valid @RequestBody UserDTO userDTO) throws URISyntaxException {
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
 
         if (userDTO.getId() != null) {
@@ -122,7 +122,7 @@ public class UserResource {
         } else if (userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
             throw new EmailAlreadyUsedException();
         } else {
-            User newUser = userService.createUser(userDTO);
+            UserDTO newUser = userService.createUser(userDTO);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", newUser.getLogin()))
                 .body(newUser);
@@ -158,14 +158,12 @@ public class UserResource {
     /**
      * {@code GET /users} : get all users.
      *
-     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
      */
     @GetMapping("/users")
-    public ResponseEntity<List<UserDTO>> getAllUsers(Pageable pageable) {
-        final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    public ResponseEntity<List<UserDTO>> getAllUsers(UserCriteriaDTO criteria) {
+        final List<UserDTO> users = userQueryService.findByCriteria(criteria);
+        return ok(users);
     }
 
     /**
@@ -207,22 +205,10 @@ public class UserResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/tracks")
-    public ResponseEntity<List<TrackDTO>> getTracksOfUser(@PathVariable String login) {
+    public ResponseEntity<List<TrackDTO>> getTracksOfUser(@PathVariable String login, UserTrackCriteriaDTO criteria) {
         log.debug("REST request to get {} user tracks", login);
-        List<TrackDTO> tracks = trackService.findAllByUserLogin(login);
+        List<TrackDTO> tracks = trackQueryService.findByCriteria(criteria, login);
         return ok(tracks);
-    }
-
-    /**
-     * {@code GET /users/:login/albums} : get the albums of the current user.
-     *
-     * @param login the login of the user to find.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the tracks of the current user, or with status {@code 404 (Not Found)}.
-     */
-    @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/albums")
-    public ResponseEntity<UserDTO> getTracksOfCurrentUser(@PathVariable String login) {
-        log.debug("REST request to get {} user albums", login);
-        throw new NotYetImplementedException();
     }
 
     /**
@@ -246,7 +232,7 @@ public class UserResource {
     }
 
     /**
-     * {@code GET /users/:login/follow} : follow the desired user.
+     * {@code PUT /users/:login/follow} : follow the desired user.
      *
      * @param login the login of the user to find.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
@@ -268,6 +254,29 @@ public class UserResource {
     }
 
     /**
+     * {@code GET /users/:login/follow} : Check if the current user follows the user.
+     *
+     * @param login the login of the user to find.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the followDTO, or with status {@code 404 (Not Found)}.
+     */
+    @ApiOperation(
+        value = "Check if following",
+        notes = "Checks if the current user follows the user"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successful operation"),
+        @ApiResponse(code = 400, message = "User makes a bad request"),
+        @ApiResponse(code = 404, message = "User not found")
+    })
+    @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/follow")
+    public ResponseEntity<FollowDTO> checkFollowUser(@PathVariable String login) {
+        log.debug("REST request to check if current user follows the user {}", login);
+        FollowDTO followDTO = followService.checkCurrentUserFollowUser(login);
+        return ok(followDTO);
+    }
+
+
+    /**
      * {@code DELETE /users/:login} : delete the "login" User.
      *
      * @param login the login of the user to delete.
@@ -282,4 +291,5 @@ public class UserResource {
             .headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login))
             .build();
     }
+
 }

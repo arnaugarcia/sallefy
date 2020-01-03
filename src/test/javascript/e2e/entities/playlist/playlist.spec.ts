@@ -1,17 +1,15 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { browser, ExpectedConditions as ec, promise } from 'protractor';
+import { browser, ExpectedConditions as ec } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { PlaylistComponentsPage, PlaylistDeleteDialog, PlaylistUpdatePage } from './playlist.page-object';
+import { PlaylistComponentsPage, PlaylistUpdatePage } from './playlist.page-object';
 
 const expect = chai.expect;
 
 describe('Playlist e2e test', () => {
   let navBarPage: NavBarPage;
   let signInPage: SignInPage;
-  let playlistUpdatePage: PlaylistUpdatePage;
   let playlistComponentsPage: PlaylistComponentsPage;
+  let playlistUpdatePage: PlaylistUpdatePage;
   /* let playlistDeleteDialog: PlaylistDeleteDialog; */
 
   before(async () => {

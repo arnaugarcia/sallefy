@@ -1,6 +1,7 @@
 package com.sallefy.service.dto;
 
 import com.sallefy.service.dto.constraints.CloudinaryHost;
+import io.swagger.annotations.ApiModel;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -14,6 +15,7 @@ import java.util.Set;
 /**
  * A DTO for the {@link com.sallefy.domain.Track} entity.
  */
+@ApiModel(value = "Track", description = "A DTO representing a Track")
 public class TrackDTO implements Serializable {
 
     private Long id;
@@ -35,7 +37,7 @@ public class TrackDTO implements Serializable {
 
     private String color;
 
-    private UserDTO owner;
+    private UserSimplifiedDTO owner;
 
     private Set<GenreDTO> genres = new HashSet<>();
 
@@ -103,11 +105,11 @@ public class TrackDTO implements Serializable {
         this.genres = genres;
     }
 
-    public UserDTO getOwner() {
+    public UserSimplifiedDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(UserDTO owner) {
+    public void setOwner(UserSimplifiedDTO owner) {
         this.owner = owner;
     }
 

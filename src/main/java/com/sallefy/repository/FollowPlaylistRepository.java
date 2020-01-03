@@ -1,7 +1,9 @@
 package com.sallefy.repository;
+
 import com.sallefy.domain.FollowPlaylist;
 import com.sallefy.domain.Playlist;
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 

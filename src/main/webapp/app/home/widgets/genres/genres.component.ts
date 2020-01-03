@@ -9,11 +9,11 @@ import { HttpResponse } from '@angular/common/http';
   styleUrls: ['./genres.component.scss']
 })
 export class GenresComponent implements OnInit {
-  genres: IGenre[] = [];
+  genres: IGenre[] | null = [];
 
   constructor(private genreService: GenreService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.genreService.query().subscribe((response: HttpResponse<IGenre[]>) => {
       this.genres = response.body;
     });

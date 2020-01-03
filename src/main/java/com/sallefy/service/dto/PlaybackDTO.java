@@ -1,51 +1,15 @@
 package com.sallefy.service.dto;
-import java.time.ZonedDateTime;
-import javax.validation.constraints.*;
-import java.io.Serializable;
-import java.util.Objects;
+
 import com.sallefy.domain.enumeration.AgentType;
+import io.swagger.annotations.ApiModel;
 
-/**
- * A DTO for the {@link com.sallefy.domain.Playback} entity.
- */
-public class PlaybackDTO implements Serializable {
-
-    private Long id;
-
-    private String ip;
-
+@ApiModel(value = "Playback", description = "A DTO representing a playback of a song")
+public class PlaybackDTO {
     private Double latitude;
-
     private Double longitude;
-
-    private AgentType agent;
-
-    private ZonedDateTime date;
-
-
-    private Long userId;
-
-    private String userLogin;
-
-    private Long trackId;
-
-    private String trackName;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
+    private AgentType client;
+    private UserSimplifiedDTO user;
+    private TrackDTO track;
 
     public Double getLatitude() {
         return latitude;
@@ -63,88 +27,27 @@ public class PlaybackDTO implements Serializable {
         this.longitude = longitude;
     }
 
-    public AgentType getAgent() {
-        return agent;
+    public AgentType getClient() {
+        return client;
     }
 
-    public void setAgent(AgentType agent) {
-        this.agent = agent;
+    public void setClient(AgentType client) {
+        this.client = client;
     }
 
-    public ZonedDateTime getDate() {
-        return date;
+    public UserSimplifiedDTO getUser() {
+        return user;
     }
 
-    public void setDate(ZonedDateTime date) {
-        this.date = date;
+    public void setUser(UserSimplifiedDTO user) {
+        this.user = user;
     }
 
-    public Long getUserId() {
-        return userId;
+    public TrackDTO getTrack() {
+        return track;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUserLogin() {
-        return userLogin;
-    }
-
-    public void setUserLogin(String userLogin) {
-        this.userLogin = userLogin;
-    }
-
-    public Long getTrackId() {
-        return trackId;
-    }
-
-    public void setTrackId(Long trackId) {
-        this.trackId = trackId;
-    }
-
-    public String getTrackName() {
-        return trackName;
-    }
-
-    public void setTrackName(String trackName) {
-        this.trackName = trackName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        PlaybackDTO playbackDTO = (PlaybackDTO) o;
-        if (playbackDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), playbackDTO.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "PlaybackDTO{" +
-            "id=" + getId() +
-            ", ip='" + getIp() + "'" +
-            ", latitude=" + getLatitude() +
-            ", longitude=" + getLongitude() +
-            ", agent='" + getAgent() + "'" +
-            ", date='" + getDate() + "'" +
-            ", user=" + getUserId() +
-            ", user='" + getUserLogin() + "'" +
-            ", track=" + getTrackId() +
-            ", track='" + getTrackName() + "'" +
-            "}";
+    public void setTrack(TrackDTO track) {
+        this.track = track;
     }
 }

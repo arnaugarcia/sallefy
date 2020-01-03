@@ -16,9 +16,9 @@ public interface LikeService {
     LikeDTO toggleLikeTrack(Long trackId);
 
     /**
-     * Method to like or dislike an Album by "id"
-     * @param albumId the id of the album
-     * @return a LikeDTO with the liked boolean
+     * Checks if current user has liked the Track by "id"
+     * @param id the id of the Track
+     * @return a LikeDTO with true if the user has liked or false if the track isn't found or not liked
      */
-    LikeDTO toggleLikeAlbum(Long albumId);
+    LikeDTO checkLikeTrack(Long id);
 }

@@ -1,27 +1,27 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import { SallefyTestModule } from '../../../test.module';
-import { SfMetricsMonitoringComponent } from 'app/admin/metrics/metrics.component';
+import { SfMetricsComponent } from 'app/admin/metrics/metrics.component';
 import { SfMetricsService } from 'app/admin/metrics/metrics.service';
 
 describe('Component Tests', () => {
-  describe('SfMetricsMonitoringComponent', () => {
-    let comp: SfMetricsMonitoringComponent;
-    let fixture: ComponentFixture<SfMetricsMonitoringComponent>;
+  describe('SfMetricsComponent', () => {
+    let comp: SfMetricsComponent;
+    let fixture: ComponentFixture<SfMetricsComponent>;
     let service: SfMetricsService;
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [SallefyTestModule],
-        declarations: [SfMetricsMonitoringComponent]
+        declarations: [SfMetricsComponent]
       })
-        .overrideTemplate(SfMetricsMonitoringComponent, '')
+        .overrideTemplate(SfMetricsComponent, '')
         .compileComponents();
     }));
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(SfMetricsMonitoringComponent);
+      fixture = TestBed.createComponent(SfMetricsComponent);
       comp = fixture.componentInstance;
       service = fixture.debugElement.injector.get(SfMetricsService);
     });

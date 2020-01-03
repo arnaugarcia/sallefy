@@ -1,12 +1,9 @@
 package com.sallefy.domain;
 
-import com.sallefy.config.Constants;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -19,24 +16,40 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import static com.sallefy.config.Constants.LOGIN_REGEX;
+import static com.sallefy.domain.User_.*;
+import static com.sallefy.domain.graphs.UserGraph.GRAPH_USER_ENTITY_ALL;
 import static com.sallefy.security.AuthoritiesConstants.ADMIN;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+import static org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE;
 
 /**
  * A user.
  */
 @Entity
+@NamedEntityGraph(
+    name = GRAPH_USER_ENTITY_ALL,
+    attributeNodes = {
+        @NamedAttributeNode(AUTHORITIES),
+        @NamedAttributeNode(PLAYLISTS),
+        @NamedAttributeNode(TRACKS),
+        @NamedAttributeNode(FOLLOWERS),
+        @NamedAttributeNode(FOLLOWING)
+    }
+)
 @Table(name = "jhi_user")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = NONSTRICT_READ_WRITE)
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @NotNull
-    @Pattern(regexp = Constants.LOGIN_REGEX)
+    @Pattern(regexp = LOGIN_REGEX)
     @Size(min = 1, max = 50)
     @Column(length = 50, unique = true, nullable = false)
     private String login;
@@ -85,13 +98,25 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
+    @OneToMany(mappedBy = "user", fetch = LAZY)
+    private Set<Playlist> playlists = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = LAZY)
+    private Set<Track> tracks = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = LAZY)
+    private Set<FollowUser> followers = new HashSet<>();
+
+    @OneToMany(mappedBy = "followed", fetch = LAZY)
+    private Set<FollowUser> following = new HashSet<>();
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "jhi_user_authority",
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
@@ -192,12 +217,44 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.langKey = langKey;
     }
 
+    public Set<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(Set<Playlist> playlists) {
+        this.playlists = playlists;
+    }
+
+    public Set<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Set<Track> tracks) {
+        this.tracks = tracks;
+    }
+
     public Set<Authority> getAuthorities() {
         return authorities;
     }
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public Set<FollowUser> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<FollowUser> followers) {
+        this.followers = followers;
+    }
+
+    public Set<FollowUser> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Set<FollowUser> following) {
+        this.following = following;
     }
 
     public boolean isAdmin() {
@@ -237,4 +294,5 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", activationKey='" + activationKey + '\'' +
             "}";
     }
+
 }

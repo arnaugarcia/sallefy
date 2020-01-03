@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Router, ActivatedRouteSnapshot, NavigationEnd, NavigationError } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRouteSnapshot, NavigationEnd, NavigationError, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
-import { JhiLanguageHelper } from 'app/core/language/language.helper';
+import { AccountService } from 'app/core/auth/account.service';
 import { OverlayService } from 'app/layouts/main/overlay.service';
 import { DOCUMENT } from '@angular/common';
 
@@ -11,24 +13,21 @@ import { DOCUMENT } from '@angular/common';
 })
 export class SfMainComponent implements OnInit {
   constructor(
-    private jhiLanguageHelper: JhiLanguageHelper,
-    private router: Router,
+    private accountService: AccountService,
+    private translateService: TranslateService,
+    private overlayService: OverlayService,
     @Inject(DOCUMENT) private document: Document,
-    private overlayService: OverlayService
+    private titleService: Title,
+    private router: Router
   ) {}
 
-  private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
-    let title: string = routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'sallefyApp';
-    if (routeSnapshot.firstChild) {
-      title = this.getPageTitle(routeSnapshot.firstChild) || title;
-    }
-    return title;
-  }
+  ngOnInit(): void {
+    // try to log in automatically
+    this.accountService.identity().subscribe();
 
-  ngOnInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.jhiLanguageHelper.updateTitle(this.getPageTitle(this.router.routerState.snapshot.root));
+        this.updateTitle();
       }
       if (event instanceof NavigationError && event.error.status === 404) {
         this.router.navigate(['/404']);
@@ -44,7 +43,25 @@ export class SfMainComponent implements OnInit {
     });
   }
 
-  overlayClicked() {
+  overlayClicked(): void {
     this.overlayService.clicked();
+
+    this.translateService.onLangChange.subscribe(() => this.updateTitle());
+  }
+
+  private getPageTitle(routeSnapshot: ActivatedRouteSnapshot): string {
+    let title: string = routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : '';
+    if (routeSnapshot.firstChild) {
+      title = this.getPageTitle(routeSnapshot.firstChild) || title;
+    }
+    return title;
+  }
+
+  private updateTitle(): void {
+    let pageTitle = this.getPageTitle(this.router.routerState.snapshot.root);
+    if (!pageTitle) {
+      pageTitle = 'global.title';
+    }
+    this.translateService.get(pageTitle).subscribe(title => this.titleService.setTitle(title));
   }
 }

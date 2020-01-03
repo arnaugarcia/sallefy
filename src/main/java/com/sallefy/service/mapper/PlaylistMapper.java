@@ -1,19 +1,20 @@
 package com.sallefy.service.mapper;
 
-import com.sallefy.domain.*;
+import com.sallefy.domain.Playlist;
 import com.sallefy.service.dto.PlaylistDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity {@link Playlist} and its DTO {@link PlaylistDTO}.o
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class, TrackMapper.class})
+@Mapper(componentModel = "spring", uses = {UserMapper.class, TrackMapper.class, })
 public interface PlaylistMapper extends EntityMapper<PlaylistDTO, Playlist> {
 
     @Mapping(source = "user", target = "owner")
     PlaylistDTO toDto(Playlist playlist);
 
+    @Mapping(target = "created", ignore = true)
     @Mapping(target = "primaryColor", ignore = true)
     @Mapping(target = "rating", ignore = true)
     @Mapping(target = "numberSongs", ignore = true)

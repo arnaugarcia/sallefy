@@ -1,28 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
+import { map } from 'rxjs/operators';
+import { JhiDataUtils, JhiEventManager, JhiEventWithContent, JhiFileLoadError } from 'ng-jhipster';
+
 import { IPlaylist, Playlist } from 'app/shared/model/playlist.model';
 import { PlaylistService } from './playlist.service';
+import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { ITrack } from 'app/shared/model/track.model';
+
+type SelectableEntity = IUser | ITrack;
 
 @Component({
   selector: 'sf-playlist-update',
   templateUrl: './playlist-update.component.html'
 })
 export class PlaylistUpdateComponent implements OnInit {
-  isSaving: boolean;
+  isSaving = false;
 
-  users: IUser[];
+  users: IUser[] = [];
 
-  tracks: ITrack[];
+  tracks: ITrack[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -42,28 +45,29 @@ export class PlaylistUpdateComponent implements OnInit {
 
   constructor(
     protected dataUtils: JhiDataUtils,
-    protected jhiAlertService: JhiAlertService,
+    protected eventManager: JhiEventManager,
     protected playlistService: PlaylistService,
     protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ playlist }) => {
       this.updateForm(playlist);
+
+      this.userService
+        .query()
+        .pipe(
+          map((res: HttpResponse<IUser[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: IUser[]) => (this.users = resBody));
     });
-    this.userService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IUser[]>) => response.body)
-      )
-      .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(playlist: IPlaylist) {
+  updateForm(playlist: IPlaylist): void {
     this.editForm.patchValue({
       id: playlist.id,
       name: playlist.name,
@@ -81,44 +85,27 @@ export class PlaylistUpdateComponent implements OnInit {
     });
   }
 
-  byteSize(field) {
-    return this.dataUtils.byteSize(field);
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
   }
 
-  openFile(contentType, field) {
-    return this.dataUtils.openFile(contentType, field);
+  openFile(contentType: string, base64String: string): void {
+    this.dataUtils.openFile(contentType, base64String);
   }
 
-  setFileData(event, field: string, isImage) {
-    return new Promise((resolve, reject) => {
-      if (event && event.target && event.target.files && event.target.files[0]) {
-        const file: File = event.target.files[0];
-        if (isImage && !file.type.startsWith('image/')) {
-          reject(`File was expected to be an image but was found to be ${file.type}`);
-        } else {
-          const filedContentType: string = field + 'ContentType';
-          this.dataUtils.toBase64(file, base64Data => {
-            this.editForm.patchValue({
-              [field]: base64Data,
-              [filedContentType]: file.type
-            });
-          });
-        }
-      } else {
-        reject(`Base64 data was not set as file could not be extracted from passed parameter: ${event}`);
-      }
-    }).then(
-      // eslint-disable-next-line no-console
-      () => console.log('blob added'), // success
-      this.onError
-    );
+  setFileData(event: Event, field: string, isImage: boolean): void {
+    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe(null, (err: JhiFileLoadError) => {
+      this.eventManager.broadcast(
+        new JhiEventWithContent<AlertError>('sallefyApp.error', { ...err, key: 'error.file.' + err.key })
+      );
+    });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const playlist = this.createFromForm();
     if (playlist.id !== undefined) {
@@ -131,47 +118,43 @@ export class PlaylistUpdateComponent implements OnInit {
   private createFromForm(): IPlaylist {
     return {
       ...new Playlist(),
-      id: this.editForm.get(['id']).value,
-      name: this.editForm.get(['name']).value,
-      collaborative: this.editForm.get(['collaborative']).value,
-      description: this.editForm.get(['description']).value,
-      primaryColor: this.editForm.get(['primaryColor']).value,
-      cover: this.editForm.get(['cover']).value,
-      thumbnail: this.editForm.get(['thumbnail']).value,
-      publicAccessible: this.editForm.get(['publicAccessible']).value,
-      numberSongs: this.editForm.get(['numberSongs']).value,
-      followers: this.editForm.get(['followers']).value,
-      rating: this.editForm.get(['rating']).value,
-      userId: this.editForm.get(['userId']).value,
-      tracks: this.editForm.get(['tracks']).value
+      id: this.editForm.get(['id'])!.value,
+      name: this.editForm.get(['name'])!.value,
+      collaborative: this.editForm.get(['collaborative'])!.value,
+      description: this.editForm.get(['description'])!.value,
+      primaryColor: this.editForm.get(['primaryColor'])!.value,
+      cover: this.editForm.get(['cover'])!.value,
+      thumbnail: this.editForm.get(['thumbnail'])!.value,
+      publicAccessible: this.editForm.get(['publicAccessible'])!.value,
+      numberSongs: this.editForm.get(['numberSongs'])!.value,
+      followers: this.editForm.get(['followers'])!.value,
+      rating: this.editForm.get(['rating'])!.value,
+      userId: this.editForm.get(['userId'])!.value,
+      tracks: this.editForm.get(['tracks'])!.value
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IPlaylist>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IPlaylist>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
 
-  trackUserById(index: number, item: IUser) {
+  trackById(index: number, item: SelectableEntity): any {
     return item.id;
   }
 
-  trackTrackById(index: number, item: ITrack) {
-    return item.id;
-  }
-
-  getSelected(selectedVals: any[], option: any) {
+  getSelected(selectedVals: ITrack[], option: ITrack): ITrack {
     if (selectedVals) {
       for (let i = 0; i < selectedVals.length; i++) {
         if (option.id === selectedVals[i].id) {

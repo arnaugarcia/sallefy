@@ -1,21 +1,18 @@
 import { TestBed } from '@angular/core/testing';
-
-import { SfMetricsService } from 'app/admin/metrics/metrics.service';
-import { SERVER_API_URL } from 'app/app.constants';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
+import { Metrics, SfMetricsService, ThreadDump } from 'app/admin/metrics/metrics.service';
+import { SERVER_API_URL } from 'app/app.constants';
 
 describe('Service Tests', () => {
   describe('Logs Service', () => {
     let service: SfMetricsService;
-    let httpMock;
-    let expectedResult;
+    let httpMock: HttpTestingController;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
       });
-
-      expectedResult = {};
       service = TestBed.get(SfMetricsService);
       httpMock = TestBed.get(HttpTestingController);
     });
@@ -26,7 +23,7 @@ describe('Service Tests', () => {
 
     describe('Service methods', () => {
       it('should call correct URL', () => {
-        service.getMetrics().subscribe(() => {});
+        service.getMetrics().subscribe();
 
         const req = httpMock.expectOne({ method: 'GET' });
         const resourceUrl = SERVER_API_URL + 'management/jhimetrics';
@@ -34,7 +31,16 @@ describe('Service Tests', () => {
       });
 
       it('should return Metrics', () => {
-        const metrics = [];
+        let expectedResult: Metrics | null = null;
+        const metrics: Metrics = {
+          jvm: {},
+          'http.server.requests': {},
+          cache: {},
+          services: {},
+          databases: {},
+          garbageCollector: {},
+          processMetrics: {}
+        };
 
         service.getMetrics().subscribe(received => {
           expectedResult = received;
@@ -46,7 +52,8 @@ describe('Service Tests', () => {
       });
 
       it('should return Thread Dump', () => {
-        const dump = [{ name: 'test1', threadState: 'RUNNABLE' }];
+        let expectedResult: ThreadDump | null = null;
+        const dump: ThreadDump = { threads: [{ name: 'test1', threadState: 'RUNNABLE' }] };
 
         service.threadDump().subscribe(received => {
           expectedResult = received;

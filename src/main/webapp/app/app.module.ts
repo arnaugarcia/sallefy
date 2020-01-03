@@ -1,12 +1,7 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import './vendor';
-import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
-import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
-import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
-import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
 import { SallefySharedModule } from 'app/shared/shared.module';
 import { SallefyCoreModule } from 'app/core/core.module';
 import { SallefyAppRoutingModule } from './app-routing.module';
@@ -22,7 +17,6 @@ import { ErrorComponent } from './layouts/error/error.component';
 import { SallefyPlayerModule } from 'app/layouts/player/player.module';
 import { NotificationComponent } from './layouts/navbar/notification/notification.component';
 import { ProfileComponent } from './layouts/navbar/profile/profile.component';
-import { DeveloperModule } from 'app/developer/developer.module';
 
 @NgModule({
   imports: [
@@ -30,7 +24,6 @@ import { DeveloperModule } from 'app/developer/developer.module';
     SallefySharedModule,
     SallefyCoreModule,
     SallefyHomeModule,
-    DeveloperModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     SallefyEntityModule,
     SallefyPlayerModule,
@@ -38,35 +31,13 @@ import { DeveloperModule } from 'app/developer/developer.module';
   ],
   declarations: [
     SfMainComponent,
-    NavbarComponent,
     NotificationComponent,
     ProfileComponent,
+    NavbarComponent,
     ErrorComponent,
     PageRibbonComponent,
     ActiveMenuDirective,
     FooterComponent
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthExpiredInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorHandlerInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: NotificationInterceptor,
-      multi: true
-    }
   ],
   bootstrap: [SfMainComponent]
 })

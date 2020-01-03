@@ -3,8 +3,11 @@ package com.sallefy.web.rest;
 import com.sallefy.service.LikeService;
 import com.sallefy.service.PlayService;
 import com.sallefy.service.TrackService;
+import com.sallefy.service.dto.LatLongDTO;
 import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.service.dto.TrackDTO;
+import com.sallefy.service.dto.criteria.TrackCriteriaDTO;
+import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.swagger.annotations.*;
@@ -42,14 +45,18 @@ public class TrackResource {
 
     private final TrackService trackService;
 
+    private final TrackQueryService trackQueryService;
+
     private final LikeService likeService;
 
     private final PlayService playService;
 
     public TrackResource(TrackService trackService,
+                         TrackQueryService trackQueryService,
                          LikeService likeService,
                          PlayService playService) {
         this.trackService = trackService;
+        this.trackQueryService = trackQueryService;
         this.likeService = likeService;
         this.playService = playService;
     }
@@ -115,16 +122,22 @@ public class TrackResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tracks in body.
      */
     @ApiOperation(
-        value = "Shows own tracks",
+        value = "Shows tracks",
         notes = "If the current user has ADMIN role, shows all the tracks of all users"
     )
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "recent", value = "Sort by most recent", dataType = "boolean", paramType = "query"),
+        @ApiImplicitParam(name = "liked", value = "Sort by most liked", dataType = "boolean", paramType = "query"),
+        @ApiImplicitParam(name = "played", value = "Sort by most played", dataType = "boolean", paramType = "query"),
+        @ApiImplicitParam(name = "size", value = "Limits the response elements to the desired number", dataType = "integer", paramType = "query"),
+    })
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation"),
     })
     @GetMapping("/tracks")
-    public ResponseEntity<List<TrackDTO>> getAllTracks() {
+    public ResponseEntity<List<TrackDTO>> getAllTracks(TrackCriteriaDTO trackCriteria) {
         log.debug("REST request to get all Tracks");
-        return ResponseEntity.ok(trackService.findAll());
+        return ResponseEntity.ok(trackQueryService.findByCriteria(trackCriteria));
     }
 
     /**
@@ -169,6 +182,26 @@ public class TrackResource {
     }
 
     /**
+     * {@code GET  /tracks/:id/like} : check if user liked a track by "id".
+     *
+     * @param id the id of the trackDTO to like.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the likeDTO, or with status {@code 404 (Not Found)}.
+     */
+    @ApiOperation(
+        value = "Check if current user liked a track",
+        notes = "Checks if current user has liked the track by 'id'. If the track doesn't exists it'll return false"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Successful operation")
+    })
+    @GetMapping("/tracks/{id}/like")
+    public ResponseEntity<LikeDTO> checkLikeTrack(@PathVariable Long id) {
+        log.debug("REST request to like a Track : {}", id);
+        LikeDTO likeDTO = likeService.checkLikeTrack(id);
+        return ok(likeDTO);
+    }
+
+    /**
      * {@code PUT  /tracks/:id/play} : play a track.
      *
      * @param id the id of the trackDTO to play.
@@ -176,16 +209,19 @@ public class TrackResource {
      */
     @ApiOperation(
         value = "Plays the track by id",
-        notes = "This method stores "
+        notes = "This method stores a play action by a track"
     )
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Successful operation"),
+        @ApiResponse(code = 400, message = "Request object not valid"),
         @ApiResponse(code = 404, message = "Track not found")
     })
     @PutMapping("/tracks/{id}/play")
-    public ResponseEntity<Void> playTrack(@Context HttpServletRequest requestContext, @PathVariable Long id) throws URISyntaxException {
+    public ResponseEntity<Void> playTrack(@Context HttpServletRequest requestContext,
+                                          @PathVariable Long id,
+                                          @Valid @RequestBody LatLongDTO latLong) throws URISyntaxException {
         log.debug("REST request to like a Track : {}", id);
-        playService.playTrack(requestContext, id);
+        playService.playTrack(requestContext, latLong, id);
         return ResponseEntity.created(new URI("/api/tracks/" + id + "/play"))
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();

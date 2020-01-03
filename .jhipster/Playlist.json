@@ -1,5 +1,24 @@
 {
-    "name": "Playlist",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "playlist",
+            "relationshipValidateRules": "required",
+            "relationshipName": "user",
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "track",
+            "otherEntityRelationshipName": "playlist",
+            "relationshipName": "track",
+            "otherEntityField": "name",
+            "ownerSide": true
+        }
+    ],
     "fields": [
         {
             "fieldName": "name",
@@ -43,31 +62,15 @@
             "fieldType": "Double"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "user",
-            "otherEntityRelationshipName": "playlist",
-            "relationshipValidateRules": "required",
-            "relationshipName": "user",
-            "otherEntityField": "login"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityName": "track",
-            "otherEntityRelationshipName": "playlist",
-            "relationshipName": "track",
-            "otherEntityField": "name",
-            "ownerSide": true
-        }
-    ],
     "changelogDate": "20190919065621",
-    "entityTableName": "playlist",
     "dto": "mapstruct",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "serviceImpl",
+    "entityTableName": "playlist",
+    "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
+    "pagination": "no",
+    "name": "Playlist",
+    "readOnly": false,
     "applications": "*"
 }

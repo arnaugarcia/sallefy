@@ -1,10 +1,10 @@
 package com.sallefy.config;
 
 import io.github.jhipster.config.JHipsterConstants;
-
 import org.springframework.boot.SpringApplication;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Utility class to load a Spring profile to be used as default

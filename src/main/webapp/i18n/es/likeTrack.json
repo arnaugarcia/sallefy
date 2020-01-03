@@ -5,7 +5,7 @@
         "title": "Like Tracks",
         "createLabel": "Crear nuevo Like Track",
         "createOrEditLabel": "Crear o editar Like Track",
-        "notFound": "No Like Tracks found"
+        "notFound": "Ningún Like Tracks encontrado"
       },
       "created": "Un nuevo Like Track ha sido creado con el identificador {{ param }}",
       "updated": "Un Like Track ha sido actualizado con el identificador {{ param }}",

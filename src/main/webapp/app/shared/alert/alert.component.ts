@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { JhiAlertService } from 'ng-jhipster';
+import { JhiAlert, JhiAlertService } from 'ng-jhipster';
 
 @Component({
   selector: 'sf-alert',
@@ -14,22 +14,23 @@ import { JhiAlertService } from 'ng-jhipster';
   `
 })
 export class SfAlertComponent implements OnInit, OnDestroy {
-  alerts: any[];
+  alerts: JhiAlert[] = [];
 
   constructor(private alertService: JhiAlertService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.alerts = this.alertService.get();
   }
 
-  setClasses(alert) {
-    return {
-      'jhi-toast': alert.toast,
-      [alert.position]: true
-    };
+  setClasses(alert: JhiAlert): { [key: string]: boolean } {
+    const classes = { 'sf-toast': Boolean(alert.toast) };
+    if (alert.position) {
+      return { ...classes, [alert.position]: true };
+    }
+    return classes;
   }
 
-  ngOnDestroy() {
-    this.alerts = [];
+  ngOnDestroy(): void {
+    this.alertService.clear();
   }
 }

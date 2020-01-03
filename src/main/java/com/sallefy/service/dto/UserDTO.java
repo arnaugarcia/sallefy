@@ -1,14 +1,14 @@
 package com.sallefy.service.dto;
 
 import com.sallefy.config.Constants;
-
 import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
+import io.swagger.annotations.ApiModel;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import javax.validation.constraints.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 /**
  * A DTO representing a user, with his authorities.
  */
+@ApiModel(value = "User", description = "A DTO with all the data of a user")
 public class UserDTO {
 
     private Long id;
@@ -51,6 +52,14 @@ public class UserDTO {
 
     private Instant lastModifiedDate;
 
+    private Integer playlists;
+
+    private Integer tracks;
+
+    private Integer followers;
+
+    private Integer following;
+
     private Set<String> authorities;
 
     public UserDTO() {
@@ -73,6 +82,36 @@ public class UserDTO {
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
+        this.playlists = user.getPlaylists().size();
+        this.tracks = user.getTracks().size();
+        this.following = user.getFollowing().size();
+        this.followers = user.getFollowers().size();
+    }
+
+    public UserDTO(Long id,
+                   String login,
+                   String firstName,
+                   String lastName,
+                   String email,
+                   String imageUrl,
+                   Boolean activated,
+                   String langKey,
+                   String createBy,
+                   Instant createdDate,
+                   String lastModifiedBy,
+                   Instant lastModifiedDate) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.imageUrl = imageUrl;
+        this.activated = activated;
+        this.login = login;
+        this.langKey = langKey;
+        this.createdBy = createBy;
+        this.createdDate = createdDate;
+        this.lastModifiedBy = lastModifiedBy;
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public Long getId() {
@@ -171,6 +210,38 @@ public class UserDTO {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public Integer getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(Integer playlists) {
+        this.playlists = playlists;
+    }
+
+    public Integer getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Integer tracks) {
+        this.tracks = tracks;
+    }
+
+    public Integer getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Integer followers) {
+        this.followers = followers;
+    }
+
+    public Integer getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Integer following) {
+        this.following = following;
+    }
+
     public Set<String> getAuthorities() {
         return authorities;
     }
@@ -182,18 +253,20 @@ public class UserDTO {
     @Override
     public String toString() {
         return "UserDTO{" +
-            "login='" + login + '\'' +
+            "id=" + id +
+            ", login='" + login + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
             ", activated=" + activated +
             ", langKey='" + langKey + '\'' +
-            ", createdBy=" + createdBy +
+            ", createdBy='" + createdBy + '\'' +
             ", createdDate=" + createdDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
+            ", playlists=" + playlists +
             ", authorities=" + authorities +
-            "}";
+            '}';
     }
 }

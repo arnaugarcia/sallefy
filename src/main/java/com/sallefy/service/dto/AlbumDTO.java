@@ -1,8 +1,9 @@
 package com.sallefy.service.dto;
+
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.sallefy.domain.Album} entity.
@@ -18,7 +19,6 @@ public class AlbumDTO implements Serializable {
     private String thumbnail;
 
     private Integer totalTracks;
-
 
     private Long userId;
 

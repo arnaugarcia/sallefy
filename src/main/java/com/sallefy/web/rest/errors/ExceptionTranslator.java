@@ -104,7 +104,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     }
 
     @ExceptionHandler
-    public ResponseEntity<Problem> handleUsernameAreadyUsedException(UsernameAlreadyUsedException ex, NativeWebRequest request) {
+    public ResponseEntity<Problem> handleUsernameAlreadyUsedException(UsernameAlreadyUsedException ex, NativeWebRequest request) {
         LoginAlreadyUsedException problem = new LoginAlreadyUsedException();
         return create(problem, request, HeaderUtil.createFailureAlert(applicationName, true, problem.getEntityName(), problem.getErrorKey(), problem.getMessage()));
     }
@@ -196,6 +196,17 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
 
     @ExceptionHandler
     public ResponseEntity<Problem> handleBadFollowerException(com.sallefy.service.exception.BadFollowerException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withType(DEFAULT_TYPE)
+            .withStatus(BAD_REQUEST)
+            .with(MESSAGE_KEY, ex.getMessage())
+            .with(CODE_KEY, ERR_GENERIC)
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleBadFollowerException(IllegalArgumentException ex, NativeWebRequest request) {
         Problem problem = Problem.builder()
             .withType(DEFAULT_TYPE)
             .withStatus(BAD_REQUEST)

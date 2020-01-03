@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 
 import { VERSION } from 'app/app.constants';
-import { JhiLanguageHelper } from 'app/core/language/language.helper';
+import { LANGUAGES } from 'app/core/language/language.constants';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { LoginService } from 'app/core/login/login.service';
@@ -18,17 +17,16 @@ import { OverlayService } from 'app/layouts/main/overlay.service';
   styleUrls: ['navbar.scss']
 })
 export class NavbarComponent implements OnInit {
-  inProduction: boolean;
-  languages: any[];
-  swaggerEnabled: boolean;
-  modalRef: NgbModalRef;
+  inProduction?: boolean;
+  isNavbarCollapsed = true;
+  languages = LANGUAGES;
+  swaggerEnabled?: boolean;
   version: string;
   showMobileMenu = false;
 
   constructor(
     private loginService: LoginService,
     private languageService: JhiLanguageService,
-    private languageHelper: JhiLanguageHelper,
     private sessionStorage: SessionStorageService,
     private accountService: AccountService,
     private loginModalService: LoginModalService,
@@ -36,15 +34,12 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private overlayService: OverlayService
   ) {
-    this.version = VERSION ? 'v' + VERSION : '';
+    this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
+    this.isNavbarCollapsed = true;
   }
 
-  ngOnInit() {
-    this.languageHelper.getAll().then(languages => {
-      this.languages = languages;
-    });
-
-    this.profileService.getProfileInfo().then(profileInfo => {
+  ngOnInit(): void {
+    this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.swaggerEnabled = profileInfo.swaggerEnabled;
     });
@@ -54,25 +49,43 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  changeLanguage(languageKey: string) {
+  changeLanguage(languageKey: string): void {
     this.sessionStorage.store('locale', languageKey);
     this.languageService.changeLanguage(languageKey);
   }
 
-  isAuthenticated() {
+  collapseNavbar(): void {
+    this.isNavbarCollapsed = true;
+  }
+
+  isAuthenticated(): boolean {
     return this.accountService.isAuthenticated();
   }
 
-  login() {
-    this.modalRef = this.loginModalService.open();
+  login(): void {
+    this.loginModalService.open();
   }
 
-  toggleMobileMenu() {
+  toggleMobileMenu(): void {
     this.showMobileMenu = !this.showMobileMenu;
     if (this.showMobileMenu) {
       this.overlayService.changeStatus(true);
     } else {
       this.overlayService.changeStatus(false);
     }
+  }
+
+  logout(): void {
+    this.collapseNavbar();
+    this.loginService.logout();
+    this.router.navigate(['']);
+  }
+
+  toggleNavbar(): void {
+    this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
+
+  getImageUrl(): string {
+    return this.isAuthenticated() ? this.accountService.getImageUrl() : '';
   }
 }

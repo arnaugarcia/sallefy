@@ -5,7 +5,7 @@
         "title": "Albums",
         "createLabel": "Crear nuevo Album",
         "createOrEditLabel": "Crear o editar Album",
-        "notFound": "No Albums found"
+        "notFound": "Ningún Albums encontrado"
       },
       "created": "Un nuevo Album ha sido creado con el identificador {{ param }}",
       "updated": "Un Album ha sido actualizado con el identificador {{ param }}",
@@ -21,8 +21,7 @@
       "thumbnail": "Thumbnail",
       "totalTracks": "Total Tracks",
       "user": "User",
-      "track": "Track",
-      "likeAlbum": "Like Album"
+      "track": "Track"
     }
   }
 }
