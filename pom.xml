@@ -5,7 +5,7 @@
 
     <groupId>com.sallefy</groupId>
     <artifactId>sallefy</artifactId>
-    <version>0.1.5-BETA</version>
+    <version>0.1.6-BETA</version>
     <packaging>jar</packaging>
     <name>Sallefy</name>
 
@@ -347,6 +347,11 @@
             <scope>test</scope>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
     </dependencies>
 
     <build>
