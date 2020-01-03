@@ -8,6 +8,7 @@
             </span>
         </button>
     </h2>
+    <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
     <br/>
     <div class="alert alert-warning" *ngIf="tracks?.length === 0">
@@ -17,19 +18,19 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="sallefyApp.track.name">Name</span></th>
-            <th><span jhiTranslate="sallefyApp.track.rating">Rating</span></th>
-            <th><span jhiTranslate="sallefyApp.track.url">Url</span></th>
-            <th><span jhiTranslate="sallefyApp.track.popularity">Popularity</span></th>
-            <th><span jhiTranslate="sallefyApp.track.thumbnail">Thumbnail</span></th>
-            <th><span jhiTranslate="sallefyApp.track.createdAt">Created At</span></th>
-            <th><span jhiTranslate="sallefyApp.track.released">Released</span></th>
-            <th><span jhiTranslate="sallefyApp.track.duration">Duration</span></th>
-            <th><span jhiTranslate="sallefyApp.track.color">Color</span></th>
-            <th><span jhiTranslate="sallefyApp.track.user">User</span></th>
-            <th><span jhiTranslate="sallefyApp.track.genre">Genre</span></th>
-            <th></th>
+            <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.track.name">Name</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.track.rating">Rating</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.track.url">Url</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.track.popularity">Popularity</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.track.thumbnail">Thumbnail</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.track.createdAt">Created At</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.track.released">Released</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.track.duration">Duration</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.track.color">Color</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.track.user">User</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.track.genre">Genre</span></th>
+            <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -66,10 +67,7 @@
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
-                        <button type="submit"
-                                [routerLink]="['/track', { outlets: { popup: track.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
+                        <button type="submit" (click)="delete(track)"
                                 class="btn btn-danger btn-sm">
                             <fa-icon [icon]="'times'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>

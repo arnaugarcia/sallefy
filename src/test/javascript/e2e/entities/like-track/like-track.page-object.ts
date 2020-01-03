@@ -5,19 +5,19 @@ export class LikeTrackComponentsPage {
   deleteButtons = element.all(by.css('jhi-like-track div table .btn-danger'));
   title = element.all(by.css('jhi-like-track div h2#page-heading span')).first();
 
-  async clickOnCreateButton(timeout?: number) {
+  async clickOnCreateButton(): Promise<void> {
     await this.createButton.click();
   }
 
-  async clickOnLastDeleteButton(timeout?: number) {
+  async clickOnLastDeleteButton(): Promise<void> {
     await this.deleteButtons.last().click();
   }
 
-  async countDeleteButtons() {
+  async countDeleteButtons(): Promise<number> {
     return this.deleteButtons.count();
   }
 
-  async getTitle() {
+  async getTitle(): Promise<string> {
     return this.title.getAttribute('jhiTranslate');
   }
 }
@@ -31,29 +31,29 @@ export class LikeTrackUpdatePage {
   userSelect = element(by.id('field_user'));
   trackSelect = element(by.id('field_track'));
 
-  async getPageTitle() {
+  async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
   }
 
-  getLikedInput(timeout?: number) {
+  getLikedInput(): ElementFinder {
     return this.likedInput;
   }
-  async setDateInput(date) {
+  async setDateInput(date: string): Promise<void> {
     await this.dateInput.sendKeys(date);
   }
 
-  async getDateInput() {
+  async getDateInput(): Promise<string> {
     return await this.dateInput.getAttribute('value');
   }
 
-  async userSelectLastOption(timeout?: number) {
+  async userSelectLastOption(): Promise<void> {
     await this.userSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async userSelectOption(option) {
+  async userSelectOption(option: string): Promise<void> {
     await this.userSelect.sendKeys(option);
   }
 
@@ -61,18 +61,18 @@ export class LikeTrackUpdatePage {
     return this.userSelect;
   }
 
-  async getUserSelectedOption() {
+  async getUserSelectedOption(): Promise<string> {
     return await this.userSelect.element(by.css('option:checked')).getText();
   }
 
-  async trackSelectLastOption(timeout?: number) {
+  async trackSelectLastOption(): Promise<void> {
     await this.trackSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async trackSelectOption(option) {
+  async trackSelectOption(option: string): Promise<void> {
     await this.trackSelect.sendKeys(option);
   }
 
@@ -80,15 +80,15 @@ export class LikeTrackUpdatePage {
     return this.trackSelect;
   }
 
-  async getTrackSelectedOption() {
+  async getTrackSelectedOption(): Promise<string> {
     return await this.trackSelect.element(by.css('option:checked')).getText();
   }
 
-  async save(timeout?: number) {
+  async save(): Promise<void> {
     await this.saveButton.click();
   }
 
-  async cancel(timeout?: number) {
+  async cancel(): Promise<void> {
     await this.cancelButton.click();
   }
 
@@ -101,11 +101,11 @@ export class LikeTrackDeleteDialog {
   private dialogTitle = element(by.id('jhi-delete-likeTrack-heading'));
   private confirmButton = element(by.id('jhi-confirm-delete-likeTrack'));
 
-  async getDialogTitle() {
+  async getDialogTitle(): Promise<string> {
     return this.dialogTitle.getAttribute('jhiTranslate');
   }
 
-  async clickOnConfirmButton(timeout?: number) {
+  async clickOnConfirmButton(): Promise<void> {
     await this.confirmButton.click();
   }
 }

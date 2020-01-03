@@ -8,17 +8,17 @@ import { ILikeAlbum } from 'app/shared/model/like-album.model';
   templateUrl: './like-album-detail.component.html'
 })
 export class LikeAlbumDetailComponent implements OnInit {
-  likeAlbum: ILikeAlbum;
+  likeAlbum: ILikeAlbum | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ likeAlbum }) => {
       this.likeAlbum = likeAlbum;
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

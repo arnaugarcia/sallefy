@@ -5,7 +5,7 @@
         "title": "Tracks",
         "createLabel": "Crear nuevo Track",
         "createOrEditLabel": "Crear o editar Track",
-        "notFound": "No Tracks found"
+        "notFound": "Ningún Tracks encontrado"
       },
       "created": "Un nuevo Track ha sido creado con el identificador {{ param }}",
       "updated": "Un Track ha sido actualizado con el identificador {{ param }}",
@@ -27,8 +27,6 @@
       "color": "Color",
       "user": "User",
       "genre": "Genre",
-      "playback": "Playback",
-      "likeTrack": "Like Track",
       "playlist": "Playlist",
       "album": "Album"
     }

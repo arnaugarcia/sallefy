@@ -5,19 +5,19 @@ export class PlaybackComponentsPage {
   deleteButtons = element.all(by.css('jhi-playback div table .btn-danger'));
   title = element.all(by.css('jhi-playback div h2#page-heading span')).first();
 
-  async clickOnCreateButton(timeout?: number) {
+  async clickOnCreateButton(): Promise<void> {
     await this.createButton.click();
   }
 
-  async clickOnLastDeleteButton(timeout?: number) {
+  async clickOnLastDeleteButton(): Promise<void> {
     await this.deleteButtons.last().click();
   }
 
-  async countDeleteButtons() {
+  async countDeleteButtons(): Promise<number> {
     return this.deleteButtons.count();
   }
 
-  async getTitle() {
+  async getTitle(): Promise<string> {
     return this.title.getAttribute('jhiTranslate');
   }
 }
@@ -34,65 +34,65 @@ export class PlaybackUpdatePage {
   userSelect = element(by.id('field_user'));
   trackSelect = element(by.id('field_track'));
 
-  async getPageTitle() {
+  async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
   }
 
-  async setIpInput(ip) {
+  async setIpInput(ip: string): Promise<void> {
     await this.ipInput.sendKeys(ip);
   }
 
-  async getIpInput() {
+  async getIpInput(): Promise<string> {
     return await this.ipInput.getAttribute('value');
   }
 
-  async setLatitudeInput(latitude) {
+  async setLatitudeInput(latitude: string): Promise<void> {
     await this.latitudeInput.sendKeys(latitude);
   }
 
-  async getLatitudeInput() {
+  async getLatitudeInput(): Promise<string> {
     return await this.latitudeInput.getAttribute('value');
   }
 
-  async setLongitudeInput(longitude) {
+  async setLongitudeInput(longitude: string): Promise<void> {
     await this.longitudeInput.sendKeys(longitude);
   }
 
-  async getLongitudeInput() {
+  async getLongitudeInput(): Promise<string> {
     return await this.longitudeInput.getAttribute('value');
   }
 
-  async setAgentSelect(agent) {
+  async setAgentSelect(agent: string): Promise<void> {
     await this.agentSelect.sendKeys(agent);
   }
 
-  async getAgentSelect() {
+  async getAgentSelect(): Promise<string> {
     return await this.agentSelect.element(by.css('option:checked')).getText();
   }
 
-  async agentSelectLastOption(timeout?: number) {
+  async agentSelectLastOption(): Promise<void> {
     await this.agentSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async setDateInput(date) {
+  async setDateInput(date: string): Promise<void> {
     await this.dateInput.sendKeys(date);
   }
 
-  async getDateInput() {
+  async getDateInput(): Promise<string> {
     return await this.dateInput.getAttribute('value');
   }
 
-  async userSelectLastOption(timeout?: number) {
+  async userSelectLastOption(): Promise<void> {
     await this.userSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async userSelectOption(option) {
+  async userSelectOption(option: string): Promise<void> {
     await this.userSelect.sendKeys(option);
   }
 
@@ -100,18 +100,18 @@ export class PlaybackUpdatePage {
     return this.userSelect;
   }
 
-  async getUserSelectedOption() {
+  async getUserSelectedOption(): Promise<string> {
     return await this.userSelect.element(by.css('option:checked')).getText();
   }
 
-  async trackSelectLastOption(timeout?: number) {
+  async trackSelectLastOption(): Promise<void> {
     await this.trackSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async trackSelectOption(option) {
+  async trackSelectOption(option: string): Promise<void> {
     await this.trackSelect.sendKeys(option);
   }
 
@@ -119,15 +119,15 @@ export class PlaybackUpdatePage {
     return this.trackSelect;
   }
 
-  async getTrackSelectedOption() {
+  async getTrackSelectedOption(): Promise<string> {
     return await this.trackSelect.element(by.css('option:checked')).getText();
   }
 
-  async save(timeout?: number) {
+  async save(): Promise<void> {
     await this.saveButton.click();
   }
 
-  async cancel(timeout?: number) {
+  async cancel(): Promise<void> {
     await this.cancelButton.click();
   }
 
@@ -140,11 +140,11 @@ export class PlaybackDeleteDialog {
   private dialogTitle = element(by.id('jhi-delete-playback-heading'));
   private confirmButton = element(by.id('jhi-confirm-delete-playback'));
 
-  async getDialogTitle() {
+  async getDialogTitle(): Promise<string> {
     return this.dialogTitle.getAttribute('jhiTranslate');
   }
 
-  async clickOnConfirmButton(timeout?: number) {
+  async clickOnConfirmButton(): Promise<void> {
     await this.confirmButton.click();
   }
 }

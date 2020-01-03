@@ -5,19 +5,19 @@ export class FollowPlaylistComponentsPage {
   deleteButtons = element.all(by.css('jhi-follow-playlist div table .btn-danger'));
   title = element.all(by.css('jhi-follow-playlist div h2#page-heading span')).first();
 
-  async clickOnCreateButton(timeout?: number) {
+  async clickOnCreateButton(): Promise<void> {
     await this.createButton.click();
   }
 
-  async clickOnLastDeleteButton(timeout?: number) {
+  async clickOnLastDeleteButton(): Promise<void> {
     await this.deleteButtons.last().click();
   }
 
-  async countDeleteButtons() {
+  async countDeleteButtons(): Promise<number> {
     return this.deleteButtons.count();
   }
 
-  async getTitle() {
+  async getTitle(): Promise<string> {
     return this.title.getAttribute('jhiTranslate');
   }
 }
@@ -30,26 +30,26 @@ export class FollowPlaylistUpdatePage {
   userSelect = element(by.id('field_user'));
   playlistSelect = element(by.id('field_playlist'));
 
-  async getPageTitle() {
+  async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
   }
 
-  async setDateInput(date) {
+  async setDateInput(date: string): Promise<void> {
     await this.dateInput.sendKeys(date);
   }
 
-  async getDateInput() {
+  async getDateInput(): Promise<string> {
     return await this.dateInput.getAttribute('value');
   }
 
-  async userSelectLastOption(timeout?: number) {
+  async userSelectLastOption(): Promise<void> {
     await this.userSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async userSelectOption(option) {
+  async userSelectOption(option: string): Promise<void> {
     await this.userSelect.sendKeys(option);
   }
 
@@ -57,18 +57,18 @@ export class FollowPlaylistUpdatePage {
     return this.userSelect;
   }
 
-  async getUserSelectedOption() {
+  async getUserSelectedOption(): Promise<string> {
     return await this.userSelect.element(by.css('option:checked')).getText();
   }
 
-  async playlistSelectLastOption(timeout?: number) {
+  async playlistSelectLastOption(): Promise<void> {
     await this.playlistSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async playlistSelectOption(option) {
+  async playlistSelectOption(option: string): Promise<void> {
     await this.playlistSelect.sendKeys(option);
   }
 
@@ -76,15 +76,15 @@ export class FollowPlaylistUpdatePage {
     return this.playlistSelect;
   }
 
-  async getPlaylistSelectedOption() {
+  async getPlaylistSelectedOption(): Promise<string> {
     return await this.playlistSelect.element(by.css('option:checked')).getText();
   }
 
-  async save(timeout?: number) {
+  async save(): Promise<void> {
     await this.saveButton.click();
   }
 
-  async cancel(timeout?: number) {
+  async cancel(): Promise<void> {
     await this.cancelButton.click();
   }
 
@@ -97,11 +97,11 @@ export class FollowPlaylistDeleteDialog {
   private dialogTitle = element(by.id('jhi-delete-followPlaylist-heading'));
   private confirmButton = element(by.id('jhi-confirm-delete-followPlaylist'));
 
-  async getDialogTitle() {
+  async getDialogTitle(): Promise<string> {
     return this.dialogTitle.getAttribute('jhiTranslate');
   }
 
-  async clickOnConfirmButton(timeout?: number) {
+  async clickOnConfirmButton(): Promise<void> {
     await this.confirmButton.click();
   }
 }

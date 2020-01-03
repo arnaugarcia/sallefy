@@ -5,20 +5,12 @@ import { SallefySharedModule } from 'app/shared/shared.module';
 import { LikeAlbumComponent } from './like-album.component';
 import { LikeAlbumDetailComponent } from './like-album-detail.component';
 import { LikeAlbumUpdateComponent } from './like-album-update.component';
-import { LikeAlbumDeletePopupComponent, LikeAlbumDeleteDialogComponent } from './like-album-delete-dialog.component';
-import { likeAlbumRoute, likeAlbumPopupRoute } from './like-album.route';
-
-const ENTITY_STATES = [...likeAlbumRoute, ...likeAlbumPopupRoute];
+import { LikeAlbumDeleteDialogComponent } from './like-album-delete-dialog.component';
+import { likeAlbumRoute } from './like-album.route';
 
 @NgModule({
-  imports: [SallefySharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [
-    LikeAlbumComponent,
-    LikeAlbumDetailComponent,
-    LikeAlbumUpdateComponent,
-    LikeAlbumDeleteDialogComponent,
-    LikeAlbumDeletePopupComponent
-  ],
-  entryComponents: [LikeAlbumComponent, LikeAlbumUpdateComponent, LikeAlbumDeleteDialogComponent, LikeAlbumDeletePopupComponent]
+  imports: [SallefySharedModule, RouterModule.forChild(likeAlbumRoute)],
+  declarations: [LikeAlbumComponent, LikeAlbumDetailComponent, LikeAlbumUpdateComponent, LikeAlbumDeleteDialogComponent],
+  entryComponents: [LikeAlbumDeleteDialogComponent]
 })
 export class SallefyLikeAlbumModule {}

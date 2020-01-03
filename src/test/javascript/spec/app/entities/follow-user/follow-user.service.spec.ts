@@ -12,13 +12,13 @@ describe('Service Tests', () => {
     let service: FollowUserService;
     let httpMock: HttpTestingController;
     let elemDefault: IFollowUser;
-    let expectedResult;
+    let expectedResult: IFollowUser | IFollowUser[] | boolean | null;
     let currentDate: moment.Moment;
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
       });
-      expectedResult = {};
+      expectedResult = null;
       injector = getTestBed();
       service = injector.get(FollowUserService);
       httpMock = injector.get(HttpTestingController);
@@ -38,11 +38,11 @@ describe('Service Tests', () => {
         service
           .find(123)
           .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+          .subscribe(resp => (expectedResult = resp.body));
 
         const req = httpMock.expectOne({ method: 'GET' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: elemDefault });
+        expect(expectedResult).toMatchObject(elemDefault);
       });
 
       it('should create a FollowUser', () => {
@@ -60,12 +60,12 @@ describe('Service Tests', () => {
           returnedFromService
         );
         service
-          .create(new FollowUser(null))
+          .create(new FollowUser())
           .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+          .subscribe(resp => (expectedResult = resp.body));
         const req = httpMock.expectOne({ method: 'POST' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: expected });
+        expect(expectedResult).toMatchObject(expected);
       });
 
       it('should update a FollowUser', () => {
@@ -85,10 +85,10 @@ describe('Service Tests', () => {
         service
           .update(expected)
           .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+          .subscribe(resp => (expectedResult = resp.body));
         const req = httpMock.expectOne({ method: 'PUT' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: expected });
+        expect(expectedResult).toMatchObject(expected);
       });
 
       it('should return a list of FollowUser', () => {
@@ -105,7 +105,7 @@ describe('Service Tests', () => {
           returnedFromService
         );
         service
-          .query(expected)
+          .query()
           .pipe(
             take(1),
             map(resp => resp.body)

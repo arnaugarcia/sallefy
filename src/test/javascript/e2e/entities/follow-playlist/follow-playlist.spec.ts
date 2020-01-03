@@ -1,17 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { browser, ExpectedConditions as ec, protractor, promise } from 'protractor';
+import { browser, ExpectedConditions as ec /* , protractor, promise */ } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FollowPlaylistComponentsPage, FollowPlaylistDeleteDialog, FollowPlaylistUpdatePage } from './follow-playlist.page-object';
+import {
+  FollowPlaylistComponentsPage,
+  /* FollowPlaylistDeleteDialog,
+   */ FollowPlaylistUpdatePage
+} from './follow-playlist.page-object';
 
 const expect = chai.expect;
 
 describe('FollowPlaylist e2e test', () => {
   let navBarPage: NavBarPage;
   let signInPage: SignInPage;
-  let followPlaylistUpdatePage: FollowPlaylistUpdatePage;
   let followPlaylistComponentsPage: FollowPlaylistComponentsPage;
+  let followPlaylistUpdatePage: FollowPlaylistUpdatePage;
   /* let followPlaylistDeleteDialog: FollowPlaylistDeleteDialog; */
 
   before(async () => {

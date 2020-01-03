@@ -1,17 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { browser, ExpectedConditions as ec, promise } from 'protractor';
+import { browser, ExpectedConditions as ec /* , promise */ } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { PlaylistComponentsPage, PlaylistDeleteDialog, PlaylistUpdatePage } from './playlist.page-object';
+import {
+  PlaylistComponentsPage,
+  /* PlaylistDeleteDialog,
+   */ PlaylistUpdatePage
+} from './playlist.page-object';
 
 const expect = chai.expect;
 
 describe('Playlist e2e test', () => {
   let navBarPage: NavBarPage;
   let signInPage: SignInPage;
-  let playlistUpdatePage: PlaylistUpdatePage;
   let playlistComponentsPage: PlaylistComponentsPage;
+  let playlistUpdatePage: PlaylistUpdatePage;
   /* let playlistDeleteDialog: PlaylistDeleteDialog; */
 
   before(async () => {
@@ -49,7 +51,6 @@ describe('Playlist e2e test', () => {
             playlistUpdatePage.setNumberSongsInput('5'),
             playlistUpdatePage.setFollowersInput('5'),
             playlistUpdatePage.setRatingInput('5'),
-            playlistUpdatePage.setCreatedInput('2000-12-31'),
             playlistUpdatePage.userSelectLastOption(),
             // playlistUpdatePage.trackSelectLastOption(),
         ]);
@@ -77,7 +78,6 @@ describe('Playlist e2e test', () => {
         expect(await playlistUpdatePage.getNumberSongsInput()).to.eq('5', 'Expected numberSongs value to be equals to 5');
         expect(await playlistUpdatePage.getFollowersInput()).to.eq('5', 'Expected followers value to be equals to 5');
         expect(await playlistUpdatePage.getRatingInput()).to.eq('5', 'Expected rating value to be equals to 5');
-        expect(await playlistUpdatePage.getCreatedInput()).to.eq('2000-12-31', 'Expected created value to be equals to 2000-12-31');
         await playlistUpdatePage.save();
         expect(await playlistUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 

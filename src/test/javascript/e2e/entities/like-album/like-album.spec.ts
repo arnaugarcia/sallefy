@@ -1,17 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { browser, ExpectedConditions as ec, protractor, promise } from 'protractor';
+import { browser, ExpectedConditions as ec /* , protractor, promise */ } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { LikeAlbumComponentsPage, LikeAlbumDeleteDialog, LikeAlbumUpdatePage } from './like-album.page-object';
+import {
+  LikeAlbumComponentsPage,
+  /* LikeAlbumDeleteDialog,
+   */ LikeAlbumUpdatePage
+} from './like-album.page-object';
 
 const expect = chai.expect;
 
 describe('LikeAlbum e2e test', () => {
   let navBarPage: NavBarPage;
   let signInPage: SignInPage;
-  let likeAlbumUpdatePage: LikeAlbumUpdatePage;
   let likeAlbumComponentsPage: LikeAlbumComponentsPage;
+  let likeAlbumUpdatePage: LikeAlbumUpdatePage;
   /* let likeAlbumDeleteDialog: LikeAlbumDeleteDialog; */
 
   before(async () => {

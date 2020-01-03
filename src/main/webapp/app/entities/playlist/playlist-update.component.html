@@ -4,7 +4,7 @@
             <h2 id="jhi-playlist-heading" jhiTranslate="sallefyApp.playlist.home.createOrEditLabel">Create or edit a Playlist</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id').value">
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id" formControlName="id"
                         readonly />
@@ -59,33 +59,24 @@
                     <input type="number" class="form-control" name="rating" id="field_rating"
                            formControlName="rating"/>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="sallefyApp.playlist.created" for="field_created">Created</label>
-                    <div class="input-group">
-                        <input id="field_created" type="text" class="form-control" name="created" ngbDatepicker  #createdDp="ngbDatepicker" formControlName="created"/>
-                        <span class="input-group-append">
-                            <button type="button" class="btn btn-secondary" (click)="createdDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
-                        </span>
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="sallefyApp.playlist.user" for="field_user">User</label>
                     <select class="form-control" id="field_user" name="user" formControlName="userId">
-                        <option *ngIf="!editForm.get('userId').value" [ngValue]="null" selected></option>
-                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+                        <option *ngIf="!editForm.get('userId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{userOption.login}}</option>
                     </select>
                 </div>
-                <div *ngIf="editForm.get('userId').invalid && (editForm.get('userId').dirty || editForm.get('userId').touched)">
+                <div *ngIf="editForm.get('userId')!.invalid && (editForm.get('userId')!.dirty || editForm.get('userId')!.touched)">
                     <small class="form-text text-danger"
-                           *ngIf="editForm.get('userId').errors.required" jhiTranslate="entity.validation.required">
+                           *ngIf="editForm.get('userId')?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                     </small>
                 </div>
                 <div class="form-group">
                     <label jhiTranslate="sallefyApp.playlist.track" for="field_tracks">Track</label>
                     <select class="form-control" id="field_tracks" multiple name="tracks" formControlName="tracks">
-                        <option [ngValue]="getSelected(editForm.get('tracks').value, trackOption)" *ngFor="let trackOption of tracks; trackBy: trackTrackById">{{trackOption.name}}</option>
+                        <option [ngValue]="getSelected(editForm.get('tracks')!.value, trackOption)" *ngFor="let trackOption of tracks; trackBy: trackById">{{trackOption.name}}</option>
                     </select>
                 </div>
             </div>

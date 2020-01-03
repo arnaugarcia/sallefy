@@ -8,6 +8,7 @@
             </span>
         </button>
     </h2>
+    <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
     <br/>
     <div class="alert alert-warning" *ngIf="followUsers?.length === 0">
@@ -17,11 +18,11 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="sallefyApp.followUser.date">Date</span></th>
-            <th><span jhiTranslate="sallefyApp.followUser.followed">Followed</span></th>
-            <th><span jhiTranslate="sallefyApp.followUser.user">User</span></th>
-            <th></th>
+            <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.followUser.date">Date</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.followUser.followed">Followed</span></th>
+            <th scope="col" ><span jhiTranslate="sallefyApp.followUser.user">User</span></th>
+            <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -48,10 +49,7 @@
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
-                        <button type="submit"
-                                [routerLink]="['/follow-user', { outlets: { popup: followUser.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
+                        <button type="submit" (click)="delete(followUser)"
                                 class="btn btn-danger btn-sm">
                             <fa-icon [icon]="'times'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>

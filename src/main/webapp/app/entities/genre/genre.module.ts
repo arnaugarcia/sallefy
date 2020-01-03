@@ -5,14 +5,12 @@ import { SallefySharedModule } from 'app/shared/shared.module';
 import { GenreComponent } from './genre.component';
 import { GenreDetailComponent } from './genre-detail.component';
 import { GenreUpdateComponent } from './genre-update.component';
-import { GenreDeletePopupComponent, GenreDeleteDialogComponent } from './genre-delete-dialog.component';
-import { genreRoute, genrePopupRoute } from './genre.route';
-
-const ENTITY_STATES = [...genreRoute, ...genrePopupRoute];
+import { GenreDeleteDialogComponent } from './genre-delete-dialog.component';
+import { genreRoute } from './genre.route';
 
 @NgModule({
-  imports: [SallefySharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [GenreComponent, GenreDetailComponent, GenreUpdateComponent, GenreDeleteDialogComponent, GenreDeletePopupComponent],
-  entryComponents: [GenreComponent, GenreUpdateComponent, GenreDeleteDialogComponent, GenreDeletePopupComponent]
+  imports: [SallefySharedModule, RouterModule.forChild(genreRoute)],
+  declarations: [GenreComponent, GenreDetailComponent, GenreUpdateComponent, GenreDeleteDialogComponent],
+  entryComponents: [GenreDeleteDialogComponent]
 })
 export class SallefyGenreModule {}

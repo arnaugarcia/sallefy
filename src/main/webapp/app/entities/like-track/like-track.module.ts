@@ -5,20 +5,12 @@ import { SallefySharedModule } from 'app/shared/shared.module';
 import { LikeTrackComponent } from './like-track.component';
 import { LikeTrackDetailComponent } from './like-track-detail.component';
 import { LikeTrackUpdateComponent } from './like-track-update.component';
-import { LikeTrackDeletePopupComponent, LikeTrackDeleteDialogComponent } from './like-track-delete-dialog.component';
-import { likeTrackRoute, likeTrackPopupRoute } from './like-track.route';
-
-const ENTITY_STATES = [...likeTrackRoute, ...likeTrackPopupRoute];
+import { LikeTrackDeleteDialogComponent } from './like-track-delete-dialog.component';
+import { likeTrackRoute } from './like-track.route';
 
 @NgModule({
-  imports: [SallefySharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [
-    LikeTrackComponent,
-    LikeTrackDetailComponent,
-    LikeTrackUpdateComponent,
-    LikeTrackDeleteDialogComponent,
-    LikeTrackDeletePopupComponent
-  ],
-  entryComponents: [LikeTrackComponent, LikeTrackUpdateComponent, LikeTrackDeleteDialogComponent, LikeTrackDeletePopupComponent]
+  imports: [SallefySharedModule, RouterModule.forChild(likeTrackRoute)],
+  declarations: [LikeTrackComponent, LikeTrackDetailComponent, LikeTrackUpdateComponent, LikeTrackDeleteDialogComponent],
+  entryComponents: [LikeTrackDeleteDialogComponent]
 })
 export class SallefyLikeTrackModule {}

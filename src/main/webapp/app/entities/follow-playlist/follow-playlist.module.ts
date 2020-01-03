@@ -5,25 +5,17 @@ import { SallefySharedModule } from 'app/shared/shared.module';
 import { FollowPlaylistComponent } from './follow-playlist.component';
 import { FollowPlaylistDetailComponent } from './follow-playlist-detail.component';
 import { FollowPlaylistUpdateComponent } from './follow-playlist-update.component';
-import { FollowPlaylistDeletePopupComponent, FollowPlaylistDeleteDialogComponent } from './follow-playlist-delete-dialog.component';
-import { followPlaylistRoute, followPlaylistPopupRoute } from './follow-playlist.route';
-
-const ENTITY_STATES = [...followPlaylistRoute, ...followPlaylistPopupRoute];
+import { FollowPlaylistDeleteDialogComponent } from './follow-playlist-delete-dialog.component';
+import { followPlaylistRoute } from './follow-playlist.route';
 
 @NgModule({
-  imports: [SallefySharedModule, RouterModule.forChild(ENTITY_STATES)],
+  imports: [SallefySharedModule, RouterModule.forChild(followPlaylistRoute)],
   declarations: [
     FollowPlaylistComponent,
     FollowPlaylistDetailComponent,
     FollowPlaylistUpdateComponent,
-    FollowPlaylistDeleteDialogComponent,
-    FollowPlaylistDeletePopupComponent
+    FollowPlaylistDeleteDialogComponent
   ],
-  entryComponents: [
-    FollowPlaylistComponent,
-    FollowPlaylistUpdateComponent,
-    FollowPlaylistDeleteDialogComponent,
-    FollowPlaylistDeletePopupComponent
-  ]
+  entryComponents: [FollowPlaylistDeleteDialogComponent]
 })
 export class SallefyFollowPlaylistModule {}

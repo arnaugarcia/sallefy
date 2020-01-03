@@ -8,17 +8,17 @@ import { IFollowPlaylist } from 'app/shared/model/follow-playlist.model';
   templateUrl: './follow-playlist-detail.component.html'
 })
 export class FollowPlaylistDetailComponent implements OnInit {
-  followPlaylist: IFollowPlaylist;
+  followPlaylist: IFollowPlaylist | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ followPlaylist }) => {
       this.followPlaylist = followPlaylist;
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

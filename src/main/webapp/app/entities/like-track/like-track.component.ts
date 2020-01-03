@@ -1,66 +1,51 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ILikeTrack } from 'app/shared/model/like-track.model';
-import { AccountService } from 'app/core/auth/account.service';
 import { LikeTrackService } from './like-track.service';
+import { LikeTrackDeleteDialogComponent } from './like-track-delete-dialog.component';
 
 @Component({
   selector: 'jhi-like-track',
   templateUrl: './like-track.component.html'
 })
 export class LikeTrackComponent implements OnInit, OnDestroy {
-  likeTracks: ILikeTrack[];
-  currentAccount: any;
-  eventSubscriber: Subscription;
+  likeTracks?: ILikeTrack[];
+  eventSubscriber?: Subscription;
 
-  constructor(
-    protected likeTrackService: LikeTrackService,
-    protected jhiAlertService: JhiAlertService,
-    protected eventManager: JhiEventManager,
-    protected accountService: AccountService
-  ) {}
+  constructor(protected likeTrackService: LikeTrackService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
 
-  loadAll() {
-    this.likeTrackService
-      .query()
-      .pipe(
-        filter((res: HttpResponse<ILikeTrack[]>) => res.ok),
-        map((res: HttpResponse<ILikeTrack[]>) => res.body)
-      )
-      .subscribe(
-        (res: ILikeTrack[]) => {
-          this.likeTracks = res;
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+  loadAll(): void {
+    this.likeTrackService.query().subscribe((res: HttpResponse<ILikeTrack[]>) => {
+      this.likeTracks = res.body ? res.body : [];
+    });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadAll();
-    this.accountService.identity().then(account => {
-      this.currentAccount = account;
-    });
     this.registerChangeInLikeTracks();
   }
 
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
   }
 
-  trackId(index: number, item: ILikeTrack) {
-    return item.id;
+  trackId(index: number, item: ILikeTrack): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
   }
 
-  registerChangeInLikeTracks() {
-    this.eventSubscriber = this.eventManager.subscribe('likeTrackListModification', response => this.loadAll());
+  registerChangeInLikeTracks(): void {
+    this.eventSubscriber = this.eventManager.subscribe('likeTrackListModification', () => this.loadAll());
   }
 
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
+  delete(likeTrack: ILikeTrack): void {
+    const modalRef = this.modalService.open(LikeTrackDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.likeTrack = likeTrack;
   }
 }

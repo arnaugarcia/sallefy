@@ -1,27 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Genre } from 'app/shared/model/genre.model';
+import { IGenre, Genre } from 'app/shared/model/genre.model';
 import { GenreService } from './genre.service';
 import { GenreComponent } from './genre.component';
 import { GenreDetailComponent } from './genre-detail.component';
 import { GenreUpdateComponent } from './genre-update.component';
-import { GenreDeletePopupComponent } from './genre-delete-dialog.component';
-import { IGenre } from 'app/shared/model/genre.model';
 
 @Injectable({ providedIn: 'root' })
 export class GenreResolve implements Resolve<IGenre> {
-  constructor(private service: GenreService) {}
+  constructor(private service: GenreService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IGenre> {
+  resolve(route: ActivatedRouteSnapshot): Observable<IGenre> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        filter((response: HttpResponse<Genre>) => response.ok),
-        map((genre: HttpResponse<Genre>) => genre.body)
+        flatMap((genre: HttpResponse<Genre>) => {
+          if (genre.body) {
+            return of(genre.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
       );
     }
     return of(new Genre());
@@ -73,21 +78,5 @@ export const genreRoute: Routes = [
       pageTitle: 'sallefyApp.genre.home.title'
     },
     canActivate: [UserRouteAccessService]
-  }
-];
-
-export const genrePopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: GenreDeletePopupComponent,
-    resolve: {
-      genre: GenreResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'sallefyApp.genre.home.title'
-    },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
   }
 ];

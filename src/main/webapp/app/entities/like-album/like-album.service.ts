@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import * as moment from 'moment';
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
-import { map } from 'rxjs/operators';
-
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { ILikeAlbum } from 'app/shared/model/like-album.model';
@@ -46,20 +46,20 @@ export class LikeAlbumService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  delete(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(likeAlbum: ILikeAlbum): ILikeAlbum {
     const copy: ILikeAlbum = Object.assign({}, likeAlbum, {
-      date: likeAlbum.date != null && likeAlbum.date.isValid() ? likeAlbum.date.toJSON() : null
+      date: likeAlbum.date && likeAlbum.date.isValid() ? likeAlbum.date.toJSON() : undefined
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.date = res.body.date != null ? moment(res.body.date) : null;
+      res.body.date = res.body.date ? moment(res.body.date) : undefined;
     }
     return res;
   }
@@ -67,7 +67,7 @@ export class LikeAlbumService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((likeAlbum: ILikeAlbum) => {
-        likeAlbum.date = likeAlbum.date != null ? moment(likeAlbum.date) : null;
+        likeAlbum.date = likeAlbum.date ? moment(likeAlbum.date) : undefined;
       });
     }
     return res;

@@ -5,20 +5,12 @@ import { SallefySharedModule } from 'app/shared/shared.module';
 import { FollowUserComponent } from './follow-user.component';
 import { FollowUserDetailComponent } from './follow-user-detail.component';
 import { FollowUserUpdateComponent } from './follow-user-update.component';
-import { FollowUserDeletePopupComponent, FollowUserDeleteDialogComponent } from './follow-user-delete-dialog.component';
-import { followUserRoute, followUserPopupRoute } from './follow-user.route';
-
-const ENTITY_STATES = [...followUserRoute, ...followUserPopupRoute];
+import { FollowUserDeleteDialogComponent } from './follow-user-delete-dialog.component';
+import { followUserRoute } from './follow-user.route';
 
 @NgModule({
-  imports: [SallefySharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [
-    FollowUserComponent,
-    FollowUserDetailComponent,
-    FollowUserUpdateComponent,
-    FollowUserDeleteDialogComponent,
-    FollowUserDeletePopupComponent
-  ],
-  entryComponents: [FollowUserComponent, FollowUserUpdateComponent, FollowUserDeleteDialogComponent, FollowUserDeletePopupComponent]
+  imports: [SallefySharedModule, RouterModule.forChild(followUserRoute)],
+  declarations: [FollowUserComponent, FollowUserDetailComponent, FollowUserUpdateComponent, FollowUserDeleteDialogComponent],
+  entryComponents: [FollowUserDeleteDialogComponent]
 })
 export class SallefyFollowUserModule {}

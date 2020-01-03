@@ -1,66 +1,51 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IGenre } from 'app/shared/model/genre.model';
-import { AccountService } from 'app/core/auth/account.service';
 import { GenreService } from './genre.service';
+import { GenreDeleteDialogComponent } from './genre-delete-dialog.component';
 
 @Component({
   selector: 'jhi-genre',
   templateUrl: './genre.component.html'
 })
 export class GenreComponent implements OnInit, OnDestroy {
-  genres: IGenre[];
-  currentAccount: any;
-  eventSubscriber: Subscription;
+  genres?: IGenre[];
+  eventSubscriber?: Subscription;
 
-  constructor(
-    protected genreService: GenreService,
-    protected jhiAlertService: JhiAlertService,
-    protected eventManager: JhiEventManager,
-    protected accountService: AccountService
-  ) {}
+  constructor(protected genreService: GenreService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
 
-  loadAll() {
-    this.genreService
-      .query()
-      .pipe(
-        filter((res: HttpResponse<IGenre[]>) => res.ok),
-        map((res: HttpResponse<IGenre[]>) => res.body)
-      )
-      .subscribe(
-        (res: IGenre[]) => {
-          this.genres = res;
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+  loadAll(): void {
+    this.genreService.query().subscribe((res: HttpResponse<IGenre[]>) => {
+      this.genres = res.body ? res.body : [];
+    });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadAll();
-    this.accountService.identity().then(account => {
-      this.currentAccount = account;
-    });
     this.registerChangeInGenres();
   }
 
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
   }
 
-  trackId(index: number, item: IGenre) {
-    return item.id;
+  trackId(index: number, item: IGenre): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
   }
 
-  registerChangeInGenres() {
-    this.eventSubscriber = this.eventManager.subscribe('genreListModification', response => this.loadAll());
+  registerChangeInGenres(): void {
+    this.eventSubscriber = this.eventManager.subscribe('genreListModification', () => this.loadAll());
   }
 
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
+  delete(genre: IGenre): void {
+    const modalRef = this.modalService.open(GenreDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.genre = genre;
   }
 }

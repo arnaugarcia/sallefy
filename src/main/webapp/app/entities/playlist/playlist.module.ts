@@ -5,20 +5,12 @@ import { SallefySharedModule } from 'app/shared/shared.module';
 import { PlaylistComponent } from './playlist.component';
 import { PlaylistDetailComponent } from './playlist-detail.component';
 import { PlaylistUpdateComponent } from './playlist-update.component';
-import { PlaylistDeletePopupComponent, PlaylistDeleteDialogComponent } from './playlist-delete-dialog.component';
-import { playlistRoute, playlistPopupRoute } from './playlist.route';
-
-const ENTITY_STATES = [...playlistRoute, ...playlistPopupRoute];
+import { PlaylistDeleteDialogComponent } from './playlist-delete-dialog.component';
+import { playlistRoute } from './playlist.route';
 
 @NgModule({
-  imports: [SallefySharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [
-    PlaylistComponent,
-    PlaylistDetailComponent,
-    PlaylistUpdateComponent,
-    PlaylistDeleteDialogComponent,
-    PlaylistDeletePopupComponent
-  ],
-  entryComponents: [PlaylistComponent, PlaylistUpdateComponent, PlaylistDeleteDialogComponent, PlaylistDeletePopupComponent]
+  imports: [SallefySharedModule, RouterModule.forChild(playlistRoute)],
+  declarations: [PlaylistComponent, PlaylistDetailComponent, PlaylistUpdateComponent, PlaylistDeleteDialogComponent],
+  entryComponents: [PlaylistDeleteDialogComponent]
 })
 export class SallefyPlaylistModule {}

@@ -1,66 +1,51 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IPlayback } from 'app/shared/model/playback.model';
-import { AccountService } from 'app/core/auth/account.service';
 import { PlaybackService } from './playback.service';
+import { PlaybackDeleteDialogComponent } from './playback-delete-dialog.component';
 
 @Component({
   selector: 'jhi-playback',
   templateUrl: './playback.component.html'
 })
 export class PlaybackComponent implements OnInit, OnDestroy {
-  playbacks: IPlayback[];
-  currentAccount: any;
-  eventSubscriber: Subscription;
+  playbacks?: IPlayback[];
+  eventSubscriber?: Subscription;
 
-  constructor(
-    protected playbackService: PlaybackService,
-    protected jhiAlertService: JhiAlertService,
-    protected eventManager: JhiEventManager,
-    protected accountService: AccountService
-  ) {}
+  constructor(protected playbackService: PlaybackService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
 
-  loadAll() {
-    this.playbackService
-      .query()
-      .pipe(
-        filter((res: HttpResponse<IPlayback[]>) => res.ok),
-        map((res: HttpResponse<IPlayback[]>) => res.body)
-      )
-      .subscribe(
-        (res: IPlayback[]) => {
-          this.playbacks = res;
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
+  loadAll(): void {
+    this.playbackService.query().subscribe((res: HttpResponse<IPlayback[]>) => {
+      this.playbacks = res.body ? res.body : [];
+    });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadAll();
-    this.accountService.identity().then(account => {
-      this.currentAccount = account;
-    });
     this.registerChangeInPlaybacks();
   }
 
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
   }
 
-  trackId(index: number, item: IPlayback) {
-    return item.id;
+  trackId(index: number, item: IPlayback): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
   }
 
-  registerChangeInPlaybacks() {
-    this.eventSubscriber = this.eventManager.subscribe('playbackListModification', response => this.loadAll());
+  registerChangeInPlaybacks(): void {
+    this.eventSubscriber = this.eventManager.subscribe('playbackListModification', () => this.loadAll());
   }
 
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
+  delete(playback: IPlayback): void {
+    const modalRef = this.modalService.open(PlaybackDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.playback = playback;
   }
 }

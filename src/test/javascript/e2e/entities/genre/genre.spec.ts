@@ -1,8 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { browser, ExpectedConditions as ec, promise } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { GenreComponentsPage, GenreDeleteDialog, GenreUpdatePage } from './genre.page-object';
 
 const expect = chai.expect;
@@ -10,8 +8,8 @@ const expect = chai.expect;
 describe('Genre e2e test', () => {
   let navBarPage: NavBarPage;
   let signInPage: SignInPage;
-  let genreUpdatePage: GenreUpdatePage;
   let genreComponentsPage: GenreComponentsPage;
+  let genreUpdatePage: GenreUpdatePage;
   let genreDeleteDialog: GenreDeleteDialog;
 
   before(async () => {

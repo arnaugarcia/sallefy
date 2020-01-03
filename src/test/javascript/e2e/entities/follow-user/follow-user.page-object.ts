@@ -5,19 +5,19 @@ export class FollowUserComponentsPage {
   deleteButtons = element.all(by.css('jhi-follow-user div table .btn-danger'));
   title = element.all(by.css('jhi-follow-user div h2#page-heading span')).first();
 
-  async clickOnCreateButton(timeout?: number) {
+  async clickOnCreateButton(): Promise<void> {
     await this.createButton.click();
   }
 
-  async clickOnLastDeleteButton(timeout?: number) {
+  async clickOnLastDeleteButton(): Promise<void> {
     await this.deleteButtons.last().click();
   }
 
-  async countDeleteButtons() {
+  async countDeleteButtons(): Promise<number> {
     return this.deleteButtons.count();
   }
 
-  async getTitle() {
+  async getTitle(): Promise<string> {
     return this.title.getAttribute('jhiTranslate');
   }
 }
@@ -30,26 +30,26 @@ export class FollowUserUpdatePage {
   followedSelect = element(by.id('field_followed'));
   userSelect = element(by.id('field_user'));
 
-  async getPageTitle() {
+  async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
   }
 
-  async setDateInput(date) {
+  async setDateInput(date: string): Promise<void> {
     await this.dateInput.sendKeys(date);
   }
 
-  async getDateInput() {
+  async getDateInput(): Promise<string> {
     return await this.dateInput.getAttribute('value');
   }
 
-  async followedSelectLastOption(timeout?: number) {
+  async followedSelectLastOption(): Promise<void> {
     await this.followedSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async followedSelectOption(option) {
+  async followedSelectOption(option: string): Promise<void> {
     await this.followedSelect.sendKeys(option);
   }
 
@@ -57,18 +57,18 @@ export class FollowUserUpdatePage {
     return this.followedSelect;
   }
 
-  async getFollowedSelectedOption() {
+  async getFollowedSelectedOption(): Promise<string> {
     return await this.followedSelect.element(by.css('option:checked')).getText();
   }
 
-  async userSelectLastOption(timeout?: number) {
+  async userSelectLastOption(): Promise<void> {
     await this.userSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async userSelectOption(option) {
+  async userSelectOption(option: string): Promise<void> {
     await this.userSelect.sendKeys(option);
   }
 
@@ -76,15 +76,15 @@ export class FollowUserUpdatePage {
     return this.userSelect;
   }
 
-  async getUserSelectedOption() {
+  async getUserSelectedOption(): Promise<string> {
     return await this.userSelect.element(by.css('option:checked')).getText();
   }
 
-  async save(timeout?: number) {
+  async save(): Promise<void> {
     await this.saveButton.click();
   }
 
-  async cancel(timeout?: number) {
+  async cancel(): Promise<void> {
     await this.cancelButton.click();
   }
 
@@ -97,11 +97,11 @@ export class FollowUserDeleteDialog {
   private dialogTitle = element(by.id('jhi-delete-followUser-heading'));
   private confirmButton = element(by.id('jhi-confirm-delete-followUser'));
 
-  async getDialogTitle() {
+  async getDialogTitle(): Promise<string> {
     return this.dialogTitle.getAttribute('jhiTranslate');
   }
 
-  async clickOnConfirmButton(timeout?: number) {
+  async clickOnConfirmButton(): Promise<void> {
     await this.confirmButton.click();
   }
 }

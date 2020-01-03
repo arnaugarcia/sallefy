@@ -1,27 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Track } from 'app/shared/model/track.model';
+import { ITrack, Track } from 'app/shared/model/track.model';
 import { TrackService } from './track.service';
 import { TrackComponent } from './track.component';
 import { TrackDetailComponent } from './track-detail.component';
 import { TrackUpdateComponent } from './track-update.component';
-import { TrackDeletePopupComponent } from './track-delete-dialog.component';
-import { ITrack } from 'app/shared/model/track.model';
 
 @Injectable({ providedIn: 'root' })
 export class TrackResolve implements Resolve<ITrack> {
-  constructor(private service: TrackService) {}
+  constructor(private service: TrackService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITrack> {
+  resolve(route: ActivatedRouteSnapshot): Observable<ITrack> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        filter((response: HttpResponse<Track>) => response.ok),
-        map((track: HttpResponse<Track>) => track.body)
+        flatMap((track: HttpResponse<Track>) => {
+          if (track.body) {
+            return of(track.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
       );
     }
     return of(new Track());
@@ -73,21 +78,5 @@ export const trackRoute: Routes = [
       pageTitle: 'sallefyApp.track.home.title'
     },
     canActivate: [UserRouteAccessService]
-  }
-];
-
-export const trackPopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: TrackDeletePopupComponent,
-    resolve: {
-      track: TrackResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'sallefyApp.track.home.title'
-    },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
   }
 ];

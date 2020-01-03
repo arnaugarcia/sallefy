@@ -8,17 +8,17 @@ import { IAlbum } from 'app/shared/model/album.model';
   templateUrl: './album-detail.component.html'
 })
 export class AlbumDetailComponent implements OnInit {
-  album: IAlbum;
+  album: IAlbum | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ album }) => {
       this.album = album;
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

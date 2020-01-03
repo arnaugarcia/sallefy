@@ -79,11 +79,11 @@ relationship ManyToOne {
     LikeAlbum {user(login) required} to User,
 
     Playback{user(login) required} to User,
-    Playback{track(name) required} to Track{playback(ip) required},
+    Playback{track(name) required} to Track,
 
-    LikeTrack{track(name) required} to Track{likeTrack},
+    LikeTrack{track(name) required} to Track,
 
-    LikeAlbum{album(title) required} to Album{likeAlbum},
+    LikeAlbum{album(title) required} to Album,
 
     FollowPlaylist{user(login) required} to User,
     FollowPlaylist{playlist(name) required} to Playlist
