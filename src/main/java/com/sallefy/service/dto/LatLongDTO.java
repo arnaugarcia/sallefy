@@ -13,6 +13,9 @@ public class LatLongDTO {
     @Longitude
     private Double longitude;
 
+    public LatLongDTO() {
+    }
+
     public LatLongDTO(Double latitude, Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
