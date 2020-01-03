@@ -2,7 +2,9 @@ package com.sallefy.service.dto;
 
 import com.sallefy.service.dto.constraints.Latitude;
 import com.sallefy.service.dto.constraints.Longitude;
+import io.swagger.annotations.ApiModel;
 
+@ApiModel(value = "LatLong", description = "A DTO to representing a coordinate")
 public class LatLongDTO {
 
     @Latitude
@@ -10,9 +12,6 @@ public class LatLongDTO {
 
     @Longitude
     private Double longitude;
-
-    public LatLongDTO() {
-    }
 
     public LatLongDTO(Double latitude, Double longitude) {
         this.latitude = latitude;

@@ -1,10 +1,12 @@
 package com.sallefy.service.dto;
 
 import com.sallefy.domain.User;
+import io.swagger.annotations.ApiModel;
 
 /**
  * A DTO representing a user.
  */
+@ApiModel(value = "User", description = "A DTO with a simplification version of the user. This object is mostly used when the user is a child of a parent entity")
 public class UserSimplifiedDTO {
 
     private Long id;

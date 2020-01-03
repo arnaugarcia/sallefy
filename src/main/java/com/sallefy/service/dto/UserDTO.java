@@ -3,6 +3,7 @@ package com.sallefy.service.dto;
 import com.sallefy.config.Constants;
 import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
+import io.swagger.annotations.ApiModel;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 /**
  * A DTO representing a user, with his authorities.
  */
+@ApiModel(value = "User", description = "A DTO with all the data of a user")
 public class UserDTO {
 
     private Long id;

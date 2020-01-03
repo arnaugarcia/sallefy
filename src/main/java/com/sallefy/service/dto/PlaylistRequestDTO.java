@@ -1,15 +1,14 @@
 package com.sallefy.service.dto;
 
 import com.sallefy.service.dto.constraints.CloudinaryHost;
+import io.swagger.annotations.ApiModel;
 
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.*;
 
-/**
- * A DTO for the {@link com.sallefy.domain.Playlist} entity.
- */
+@ApiModel(value = "PlaylistRequest", description = "A DTO for creating/updating a playlist")
 public class PlaylistRequestDTO implements Serializable {
 
     private Long id;
