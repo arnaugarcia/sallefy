@@ -1,8 +1,11 @@
 package com.sallefy.service.dto;
 
+import io.swagger.annotations.ApiModel;
+
 import java.io.Serializable;
 import java.util.List;
 
+@ApiModel(value = "Search", description = "A DTO containing all the searched data in the application")
 public class SearchDTO implements Serializable {
 
     private List<PlaylistDTO> playlists;

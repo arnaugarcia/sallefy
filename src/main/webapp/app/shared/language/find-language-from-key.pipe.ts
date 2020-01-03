@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'findLanguageFromKey' })
 export class FindLanguageFromKeyPipe implements PipeTransform {
-  private languages: any = {
+  private languages: { [key: string]: { name: string; rtl?: boolean } } = {
     ca: { name: 'Català' },
     en: { name: 'English' },
     es: { name: 'Español' }

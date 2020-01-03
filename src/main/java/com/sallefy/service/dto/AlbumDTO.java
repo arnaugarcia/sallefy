@@ -19,7 +19,6 @@ public class AlbumDTO implements Serializable {
 
     private Integer totalTracks;
 
-
     private Long userId;
 
     private String userLogin;

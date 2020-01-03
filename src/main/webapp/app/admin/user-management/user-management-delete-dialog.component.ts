@@ -9,19 +9,19 @@ import { UserService } from 'app/core/user/user.service';
   selector: 'jhi-user-mgmt-delete-dialog',
   templateUrl: './user-management-delete-dialog.component.html'
 })
-export class UserMgmtDeleteDialogComponent {
-  user: User;
+export class UserManagementDeleteDialogComponent {
+  user?: User;
 
   constructor(private userService: UserService, public activeModal: NgbActiveModal, private eventManager: JhiEventManager) {}
 
-  clear() {
-    this.activeModal.dismiss('cancel');
+  clear(): void {
+    this.activeModal.dismiss();
   }
 
-  confirmDelete(login) {
-    this.userService.delete(login).subscribe(response => {
-      this.eventManager.broadcast({ name: 'userListModification', content: 'Deleted a user' });
-      this.activeModal.close(true);
+  confirmDelete(login: string): void {
+    this.userService.delete(login).subscribe(() => {
+      this.eventManager.broadcast('userListModification');
+      this.activeModal.close();
     });
   }
 }

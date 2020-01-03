@@ -1,7 +1,9 @@
 package com.sallefy.service.dto;
 
 import com.sallefy.domain.enumeration.AgentType;
+import io.swagger.annotations.ApiModel;
 
+@ApiModel(value = "Playback", description = "A DTO representing a playback of a song")
 public class PlaybackDTO {
     private Double latitude;
     private Double longitude;

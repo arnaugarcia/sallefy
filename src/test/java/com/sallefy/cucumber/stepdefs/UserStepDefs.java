@@ -1,8 +1,8 @@
 package com.sallefy.cucumber.stepdefs;
 
-import cucumber.api.java.Before;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

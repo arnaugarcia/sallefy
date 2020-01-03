@@ -1,8 +1,11 @@
 package com.sallefy.service.dto;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * A DTO representing a password change required data - current and new password.
  */
+@ApiModel(value = "PasswordChange", description = "A DTO representing a password change required data - current and new password.")
 public class PasswordChangeDTO {
     private String currentPassword;
     private String newPassword;

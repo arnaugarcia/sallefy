@@ -1,6 +1,6 @@
 package com.sallefy.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModel;
 
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
@@ -12,6 +12,7 @@ import java.util.Set;
 /**
  * A DTO for the {@link com.sallefy.domain.Playlist} entity.
  */
+@ApiModel(value = "Playlist", description = "A DTO representing an entire playlists filled with all the songs")
 public class PlaylistDTO implements Serializable {
 
     private Long id;

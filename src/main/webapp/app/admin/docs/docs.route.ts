@@ -1,12 +1,11 @@
 import { Route } from '@angular/router';
 
-import { JhiDocsComponent } from './docs.component';
+import { DocsComponent } from './docs.component';
 
 export const docsRoute: Route = {
-  path: 'docs',
-  component: JhiDocsComponent,
+  path: '',
+  component: DocsComponent,
   data: {
-    authorities: ['ROLE_USER'],
     pageTitle: 'global.menu.admin.apidocs'
   }
 };

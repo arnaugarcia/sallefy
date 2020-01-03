@@ -2,8 +2,12 @@ package com.sallefy.service.dto;
 
 import com.sallefy.service.dto.constraints.Latitude;
 import com.sallefy.service.dto.constraints.Longitude;
+import io.swagger.annotations.ApiModel;
 
-public class LatLongDTO {
+import java.io.Serializable;
+
+@ApiModel(value = "LatLong", description = "A DTO to representing a coordinate")
+public class LatLongDTO implements Serializable {
 
     @Latitude
     private Double latitude;
