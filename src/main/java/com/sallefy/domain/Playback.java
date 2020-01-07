@@ -1,16 +1,15 @@
 package com.sallefy.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sallefy.domain.enumeration.AgentType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-
-import com.sallefy.domain.enumeration.AgentType;
-import org.hibernate.annotations.CreationTimestamp;
 
 /**
  * A Playback.

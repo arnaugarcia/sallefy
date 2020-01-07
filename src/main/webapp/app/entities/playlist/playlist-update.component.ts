@@ -5,7 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { JhiDataUtils, JhiEventManager, JhiEventWithContent, JhiFileLoadError } from 'ng-jhipster';
 
 import { IPlaylist, Playlist } from 'app/shared/model/playlist.model';
 import { PlaylistService } from './playlist.service';
@@ -13,12 +13,11 @@ import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { ITrack } from 'app/shared/model/track.model';
-import { TrackService } from 'app/entities/track/track.service';
 
 type SelectableEntity = IUser | ITrack;
 
 @Component({
-  selector: 'jhi-playlist-update',
+  selector: 'sf-playlist-update',
   templateUrl: './playlist-update.component.html'
 })
 export class PlaylistUpdateComponent implements OnInit {
@@ -49,7 +48,6 @@ export class PlaylistUpdateComponent implements OnInit {
     protected eventManager: JhiEventManager,
     protected playlistService: PlaylistService,
     protected userService: UserService,
-    protected trackService: TrackService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -66,15 +64,6 @@ export class PlaylistUpdateComponent implements OnInit {
           })
         )
         .subscribe((resBody: IUser[]) => (this.users = resBody));
-
-      this.trackService
-        .query()
-        .pipe(
-          map((res: HttpResponse<ITrack[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: ITrack[]) => (this.tracks = resBody));
     });
   }
 

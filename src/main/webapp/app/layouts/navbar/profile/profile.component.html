@@ -1,0 +1,54 @@
+<a class="nav-link dropdown-toggle w-nowrap pr-0" (click)="toggleShowProfile()" href="javascript:void(0);">
+    <div class="flex-row d-inline-flex">
+        <div class="user">
+            <img alt="" class="rounded-circle" src="/content/images/user-thumb-1.jpg">
+        </div>
+        <span class="ml-2 mt-2 fs-1 d-none d-lg-block">{{currentAccount.firstName}} {{currentAccount.lastName}}</span>
+    </div>
+</a>
+<div aria-labelledby="dropdownUserSettings" class="dropdown-menu dropdown-menu-right user-settings-dropdown clearfix" [class.show]="show">
+    <div class="settings-top">
+        <div class="user-cover-image">
+            <img alt="" src="/content/images/user/cover.jpg">
+        </div>
+        <div class="user-profile-image rounded-circle">
+            <img [alt]="currentAccount.firstName" [src]="getImageUrl()">
+        </div>
+    </div>
+    <div class="settings-bottom">
+        <h5 class="user-name text-center">{{currentAccount.firstName}} {{currentAccount.lastName}}</h5>
+        <ul class="user-settings-menu list-unstyled">
+            <li>
+                <a class="inactive-color" href="Javascript:void(0)" routerLink="account/settings">
+                 <span class="adonis-icon notification mr-3 icon-3x">
+                      <svg version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                         <path d="M10 6c0-3.314 2.686-6 6-6s6 2.686 6 6c0 3.314-2.686 6-6 6s-6-2.686-6-6zM24.002 14h-1.107l-6.222 12.633 2.327-11.633-3-3-3 3 2.327 11.633-6.222-12.633h-1.107c-3.998 0-3.998 2.687-3.998 6v10h24v-10c0-3.313 0-6-3.998-6z"></path>
+                      </svg>
+                    </span>
+                    Your Profile
+                </a>
+            </li>
+            <li>
+                <a class="inactive-color" href="#">
+                    <span class="adonis-icon mr-3 icon-3x">
+                        <svg version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M30 19l-9 9-3-3-2 2 5 5 11-11z"></path>
+                            <path d="M14 24h10v-3.598c-2.101-1.225-4.885-2.066-8-2.321v-1.649c2.203-1.242 4-4.337 4-7.432 0-4.971 0-9-6-9s-6 4.029-6 9c0 3.096 1.797 6.191 4 7.432v1.649c-6.784 0.555-12 3.888-12 7.918h14v-2z"></path>
+                        </svg>
+                    </span>
+                    Following
+                </a>
+            </li>
+            <li>
+                <a class="inactive-color" href="Javascript:void(0)" (click)="logout()">
+                    <span class="adonis-icon mr-3 icon-2x">
+                        <svg height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24 20v-4h-10v-4h10v-4l6 6zM22 18v8h-10v6l-12-6v-26h22v10h-2v-8h-16l8 4v18h8v-6z"></path>
+                        </svg>
+                    </span>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

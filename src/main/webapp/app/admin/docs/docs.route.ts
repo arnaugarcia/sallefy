@@ -1,10 +1,10 @@
 import { Route } from '@angular/router';
 
-import { DocsComponent } from './docs.component';
+import { SfDocsComponent } from './docs.component';
 
 export const docsRoute: Route = {
-  path: '',
-  component: DocsComponent,
+  path: 'docs',
+  component: SfDocsComponent,
   data: {
     pageTitle: 'global.menu.admin.apidocs'
   }

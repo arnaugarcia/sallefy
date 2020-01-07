@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from 'app/core/user/user.model';
 
 @Component({
-  selector: 'jhi-user-mgmt-detail',
+  selector: 'sf-user-mgmt-detail',
   templateUrl: './user-management-detail.component.html'
 })
 export class UserManagementDetailComponent implements OnInit {

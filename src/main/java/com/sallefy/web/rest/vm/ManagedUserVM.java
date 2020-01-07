@@ -1,6 +1,7 @@
 package com.sallefy.web.rest.vm;
 
 import com.sallefy.service.dto.UserDTO;
+
 import javax.validation.constraints.Size;
 
 /**

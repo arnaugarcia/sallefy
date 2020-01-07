@@ -10,11 +10,11 @@ export type Thread = any;
 export type ThreadDump = { threads: Thread[] };
 
 @Injectable({ providedIn: 'root' })
-export class MetricsService {
+export class SfMetricsService {
   constructor(private http: HttpClient) {}
 
   getMetrics(): Observable<Metrics> {
-    return this.http.get<Metrics>(SERVER_API_URL + 'management/jhimetrics');
+    return this.http.get<Metrics>(SERVER_API_URL + 'management/sfmetrics');
   }
 
   threadDump(): Observable<ThreadDump> {

@@ -1,4 +1,4 @@
-import { element, by, ElementFinder } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 
 export class PlaylistComponentsPage {
   createButton = element(by.id('jh-create-entity'));

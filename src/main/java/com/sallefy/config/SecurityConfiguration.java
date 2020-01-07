@@ -1,11 +1,7 @@
 package com.sallefy.config;
 
-import com.sallefy.security.*;
-import com.sallefy.security.jwt.*;
-
-import io.micrometer.core.ipc.http.HttpSender;
-import org.springframework.beans.factory.BeanInitializationException;
-import org.springframework.beans.factory.InitializingBean;
+import com.sallefy.security.jwt.JWTConfigurer;
+import com.sallefy.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;

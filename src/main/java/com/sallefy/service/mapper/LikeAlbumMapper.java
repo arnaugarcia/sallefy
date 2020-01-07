@@ -1,9 +1,9 @@
 package com.sallefy.service.mapper;
 
-import com.sallefy.domain.*;
+import com.sallefy.domain.LikeAlbum;
 import com.sallefy.service.dto.LikeAlbumDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity {@link LikeAlbum} and its DTO {@link LikeAlbumDTO}.

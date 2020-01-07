@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Renderer, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { JhiLanguageService } from 'ng-jhipster';
@@ -8,7 +8,7 @@ import { LoginModalService } from 'app/core/login/login-modal.service';
 import { RegisterService } from './register.service';
 
 @Component({
-  selector: 'jhi-register',
+  selector: 'sf-register',
   templateUrl: './register.component.html'
 })
 export class RegisterComponent implements AfterViewInit {

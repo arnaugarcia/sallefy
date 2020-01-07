@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-import { throwError, of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { SallefyTestModule } from '../../../test.module';
 import { AccountService } from 'app/core/auth/account.service';

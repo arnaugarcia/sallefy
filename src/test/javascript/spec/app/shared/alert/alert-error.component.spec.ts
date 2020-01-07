@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SallefyTestModule } from '../../../test.module';
-import { AlertErrorComponent } from 'app/shared/alert/alert-error.component';
+import { SfAlertErrorComponent } from 'app/shared/alert/alert-error.component';
 import { MockAlertService } from '../../../helpers/mock-alert.service';
 
 describe('Component Tests', () => {
   describe('Alert Error Component', () => {
-    let comp: AlertErrorComponent;
-    let fixture: ComponentFixture<AlertErrorComponent>;
+    let comp: SfAlertErrorComponent;
+    let fixture: ComponentFixture<SfAlertErrorComponent>;
     let eventManager: JhiEventManager;
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [SallefyTestModule, TranslateModule.forRoot()],
-        declarations: [AlertErrorComponent],
+        declarations: [SfAlertErrorComponent],
         providers: [
           JhiEventManager,
           {
@@ -25,12 +25,12 @@ describe('Component Tests', () => {
           }
         ]
       })
-        .overrideTemplate(AlertErrorComponent, '')
+        .overrideTemplate(SfAlertErrorComponent, '')
         .compileComponents();
     }));
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(AlertErrorComponent);
+      fixture = TestBed.createComponent(SfAlertErrorComponent);
       comp = fixture.componentInstance;
       eventManager = fixture.debugElement.injector.get(JhiEventManager);
     });

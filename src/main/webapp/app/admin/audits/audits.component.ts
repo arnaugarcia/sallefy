@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -8,7 +8,7 @@ import { Audit } from './audit.model';
 import { AuditsService } from './audits.service';
 
 @Component({
-  selector: 'jhi-audit',
+  selector: 'sf-audit',
   templateUrl: './audits.component.html'
 })
 export class AuditsComponent implements OnInit {

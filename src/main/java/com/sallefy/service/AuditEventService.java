@@ -1,8 +1,8 @@
 package com.sallefy.service;
 
-import io.github.jhipster.config.JHipsterProperties;
 import com.sallefy.config.audit.AuditEventConverter;
 import com.sallefy.repository.PersistenceAuditEventRepository;
+import io.github.jhipster.config.JHipsterProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.audit.AuditEvent;

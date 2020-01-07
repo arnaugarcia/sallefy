@@ -1,13 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
-import { JhiEventManager, JhiAlert, JhiAlertService, JhiEventWithContent } from 'ng-jhipster';
+import { JhiAlert, JhiAlertService, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
 import { AlertError } from './alert-error.model';
 
 @Component({
-  selector: 'jhi-alert-error',
+  selector: 'sf-alert-error',
   template: `
     <div class="alerts" role="alert">
       <div *ngFor="let alert of alerts" [ngClass]="setClasses(alert)">
@@ -18,7 +18,7 @@ import { AlertError } from './alert-error.model';
     </div>
   `
 })
-export class AlertErrorComponent implements OnDestroy {
+export class SfAlertErrorComponent implements OnDestroy {
   alerts: JhiAlert[] = [];
   errorListener: Subscription;
   httpErrorListener: Subscription;

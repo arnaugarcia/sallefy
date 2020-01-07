@@ -1,6 +1,7 @@
 package com.sallefy.service.dto;
-import java.time.ZonedDateTime;
+
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**

@@ -1,7 +1,6 @@
 package com.sallefy;
 
-import io.github.jhipster.config.DefaultProfileUtil;
-
+import com.sallefy.config.DefaultProfileUtil;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 

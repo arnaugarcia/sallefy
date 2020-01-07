@@ -1,5 +1,5 @@
-import { Injectable, RendererFactory2, Renderer2 } from '@angular/core';
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Injectable({ providedIn: 'root' })
 export class LanguageHelper {

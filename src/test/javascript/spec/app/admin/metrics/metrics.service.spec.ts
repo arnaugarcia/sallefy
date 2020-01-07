@@ -1,19 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { MetricsService, Metrics, ThreadDump } from 'app/admin/metrics/metrics.service';
+import { Metrics, SfMetricsService, ThreadDump } from 'app/admin/metrics/metrics.service';
 import { SERVER_API_URL } from 'app/app.constants';
 
 describe('Service Tests', () => {
   describe('Logs Service', () => {
-    let service: MetricsService;
+    let service: SfMetricsService;
     let httpMock: HttpTestingController;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
       });
-      service = TestBed.get(MetricsService);
+      service = TestBed.get(SfMetricsService);
       httpMock = TestBed.get(HttpTestingController);
     });
 

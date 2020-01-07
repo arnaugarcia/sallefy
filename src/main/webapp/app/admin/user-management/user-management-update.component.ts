@@ -7,7 +7,7 @@ import { User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 
 @Component({
-  selector: 'jhi-user-mgmt-update',
+  selector: 'sf-user-mgmt-update',
   templateUrl: './user-management-update.component.html'
 })
 export class UserManagementUpdateComponent implements OnInit {

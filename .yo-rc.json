@@ -26,7 +26,7 @@
     "nativeLanguage": "en",
     "languages": ["ca", "es", "en"],
     "clientFramework": "angularX",
-    "jhiPrefix": "jhi",
+    "jhiPrefix": "sf",
     "jhipsterVersion": "6.6.0",
     "jwtSecretKey": "ZGI3MTQyY2I3YTNiMGZiNGUwMDU0ODdhMzYzNjRhNWNmZWRiMTcxOWYwNmMyZDU4ZGQyZDA1MGI4ZDlmNTdiYzQ4ZWViYzBjODI3ODBmNTFiOWJmZTY1NmQ0NWNmMGFlODQzOGJmNmY3NWM3ZDc3Y2ExNTg3ZGIwYTIzZmNlMzE=",
     "clientTheme": "none",

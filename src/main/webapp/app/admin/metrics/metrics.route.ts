@@ -1,10 +1,10 @@
 import { Route } from '@angular/router';
 
-import { MetricsComponent } from './metrics.component';
+import { SfMetricsComponent } from './metrics.component';
 
 export const metricsRoute: Route = {
   path: '',
-  component: MetricsComponent,
+  component: SfMetricsComponent,
   data: {
     pageTitle: 'metrics.title'
   }

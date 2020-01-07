@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse, HttpHeaders } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { User } from 'app/core/user/user.model';
 import { UserManagementDeleteDialogComponent } from './user-management-delete-dialog.component';
 
 @Component({
-  selector: 'jhi-user-mgmt',
+  selector: 'sf-user-mgmt',
   templateUrl: './user-management.component.html'
 })
 export class UserManagementComponent implements OnInit, OnDestroy {

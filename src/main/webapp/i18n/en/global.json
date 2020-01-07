@@ -7,15 +7,6 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
-        "track": "Track",
-        "playlist": "Playlist",
-        "album": "Album",
-        "likeTrack": "Like Track",
-        "followUser": "Follow User",
-        "followPlaylist": "Follow Playlist",
-        "likeAlbum": "Like Album",
-        "genre": "Genre",
-        "playback": "Playback",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

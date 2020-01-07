@@ -3,8 +3,8 @@
  */
 import { Injectable } from '@angular/core';
 import { NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { Moment } from 'moment';
 import * as moment from 'moment';
+import { Moment } from 'moment';
 
 @Injectable()
 export class NgbDateMomentAdapter extends NgbDateAdapter<Moment> {

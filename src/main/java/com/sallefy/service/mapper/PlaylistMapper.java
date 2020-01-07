@@ -1,9 +1,9 @@
 package com.sallefy.service.mapper;
 
-import com.sallefy.domain.*;
+import com.sallefy.domain.Playlist;
 import com.sallefy.service.dto.PlaylistDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity {@link Playlist} and its DTO {@link PlaylistDTO}.o

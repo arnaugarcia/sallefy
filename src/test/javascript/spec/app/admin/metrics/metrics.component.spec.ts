@@ -1,29 +1,29 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import { SallefyTestModule } from '../../../test.module';
-import { MetricsComponent } from 'app/admin/metrics/metrics.component';
-import { MetricsService } from 'app/admin/metrics/metrics.service';
+import { SfMetricsComponent } from 'app/admin/metrics/metrics.component';
+import { SfMetricsService } from 'app/admin/metrics/metrics.service';
 
 describe('Component Tests', () => {
-  describe('MetricsComponent', () => {
-    let comp: MetricsComponent;
-    let fixture: ComponentFixture<MetricsComponent>;
-    let service: MetricsService;
+  describe('SfMetricsComponent', () => {
+    let comp: SfMetricsComponent;
+    let fixture: ComponentFixture<SfMetricsComponent>;
+    let service: SfMetricsService;
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [SallefyTestModule],
-        declarations: [MetricsComponent]
+        declarations: [SfMetricsComponent]
       })
-        .overrideTemplate(MetricsComponent, '')
+        .overrideTemplate(SfMetricsComponent, '')
         .compileComponents();
     }));
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(MetricsComponent);
+      fixture = TestBed.createComponent(SfMetricsComponent);
       comp = fixture.componentInstance;
-      service = fixture.debugElement.injector.get(MetricsService);
+      service = fixture.debugElement.injector.get(SfMetricsService);
     });
 
     describe('refresh', () => {

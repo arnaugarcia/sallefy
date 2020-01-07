@@ -1,17 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router, RouterEvent, NavigationEnd } from '@angular/router';
+import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Subject, of } from 'rxjs';
-import { TranslateModule, TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { of, Subject } from 'rxjs';
+import { LangChangeEvent, TranslateModule, TranslateService } from '@ngx-translate/core';
 
-import { MainComponent } from 'app/layouts/main/main.component';
+import { SfMainComponent } from 'app/layouts/main/main.component';
 import { SallefyTestModule } from '../../../test.module';
 import { MockRouter } from '../../../helpers/mock-route.service';
 
 describe('Component Tests', () => {
-  describe('MainComponent', () => {
-    let comp: MainComponent;
-    let fixture: ComponentFixture<MainComponent>;
+  describe('SfMainComponent', () => {
+    let comp: SfMainComponent;
+    let fixture: ComponentFixture<SfMainComponent>;
     let router: MockRouter;
     const routerEventsSubject = new Subject<RouterEvent>();
     let titleService: Title;
@@ -20,15 +20,15 @@ describe('Component Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [SallefyTestModule, TranslateModule.forRoot()],
-        declarations: [MainComponent],
+        declarations: [SfMainComponent],
         providers: [Title]
       })
-        .overrideTemplate(MainComponent, '')
+        .overrideTemplate(SfMainComponent, '')
         .compileComponents();
     }));
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(MainComponent);
+      fixture = TestBed.createComponent(SfMainComponent);
       comp = fixture.componentInstance;
       router = TestBed.get(Router);
       router.setEvents(routerEventsSubject.asObservable());

@@ -27,7 +27,7 @@ import org.springframework.validation.Validator;
 
 import static com.sallefy.service.dto.builder.LatLongDTOBuilder.aLatLongDTO;
 import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
-import static java.lang.Double.*;
+import static java.lang.Double.MAX_VALUE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;

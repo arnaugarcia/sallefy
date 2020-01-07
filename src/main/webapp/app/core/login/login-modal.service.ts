@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
-import { LoginModalComponent } from 'app/shared/login/login.component';
+import { SfLoginModalComponent } from 'app/shared/login/login.component';
 
 @Injectable({ providedIn: 'root' })
 export class LoginModalService {
@@ -14,7 +14,7 @@ export class LoginModalService {
       return;
     }
     this.isOpen = true;
-    const modalRef: NgbModalRef = this.modalService.open(LoginModalComponent);
+    const modalRef: NgbModalRef = this.modalService.open(SfLoginModalComponent);
     modalRef.result.finally(() => (this.isOpen = false));
   }
 }

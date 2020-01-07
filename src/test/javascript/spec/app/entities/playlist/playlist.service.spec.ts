@@ -1,6 +1,6 @@
-import { TestBed, getTestBed } from '@angular/core/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { take, map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { PlaylistService } from 'app/entities/playlist/playlist.service';
 import { IPlaylist, Playlist } from 'app/shared/model/playlist.model';
 

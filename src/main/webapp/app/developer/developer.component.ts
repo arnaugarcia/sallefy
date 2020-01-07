@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'jhi-developer',
+  selector: 'sf-developer',
   templateUrl: './developer.component.html',
   styleUrls: ['./developer.component.scss']
 })

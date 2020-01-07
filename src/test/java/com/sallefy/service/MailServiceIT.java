@@ -1,8 +1,7 @@
 package com.sallefy.service;
 
-import com.sallefy.config.Constants;
-
 import com.sallefy.SallefyApp;
+import com.sallefy.config.Constants;
 import com.sallefy.domain.User;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,12 +27,13 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -43,7 +43,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(classes = SallefyApp.class)
 public class MailServiceIT {
 
-    private static String languages[] = {
+    private static String[] languages = {
         "ca",
         "es",
         "en"
@@ -222,7 +222,7 @@ public class MailServiceIT {
             URL resource = this.getClass().getClassLoader().getResource(propertyFilePath);
             File file = new File(new URI(resource.getFile()).getPath());
             Properties properties = new Properties();
-            properties.load(new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")));
+            properties.load(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
 
             String emailTitle = (String) properties.get("email.test.title");
             assertThat(message.getSubject()).isEqualTo(emailTitle);

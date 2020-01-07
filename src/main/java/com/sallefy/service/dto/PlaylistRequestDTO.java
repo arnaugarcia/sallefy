@@ -6,7 +6,9 @@ import io.swagger.annotations.ApiModel;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @ApiModel(value = "PlaylistRequest", description = "A DTO for creating/updating a playlist")
 public class PlaylistRequestDTO implements Serializable {

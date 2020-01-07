@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Renderer, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -6,7 +6,7 @@ import { LoginModalService } from 'app/core/login/login-modal.service';
 import { PasswordResetFinishService } from './password-reset-finish.service';
 
 @Component({
-  selector: 'jhi-password-reset-finish',
+  selector: 'sf-password-reset-finish',
   templateUrl: './password-reset-finish.component.html'
 })
 export class PasswordResetFinishComponent implements OnInit, AfterViewInit {

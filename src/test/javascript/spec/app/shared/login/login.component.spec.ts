@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed, async, inject, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { LoginService } from 'app/core/login/login.service';
-import { LoginModalComponent } from 'app/shared/login/login.component';
+import { SfLoginModalComponent } from 'app/shared/login/login.component';
 import { SallefyTestModule } from '../../../test.module';
 import { MockLoginService } from '../../../helpers/mock-login.service';
 import { MockRouter } from '../../../helpers/mock-route.service';
@@ -12,8 +12,8 @@ import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
 
 describe('Component Tests', () => {
   describe('LoginComponent', () => {
-    let comp: LoginModalComponent;
-    let fixture: ComponentFixture<LoginModalComponent>;
+    let comp: SfLoginModalComponent;
+    let fixture: ComponentFixture<SfLoginModalComponent>;
     let mockLoginService: MockLoginService;
     let mockRouter: MockRouter;
     let mockActiveModal: MockActiveModal;
@@ -21,7 +21,7 @@ describe('Component Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [SallefyTestModule],
-        declarations: [LoginModalComponent],
+        declarations: [SfLoginModalComponent],
         providers: [
           FormBuilder,
           {
@@ -30,12 +30,12 @@ describe('Component Tests', () => {
           }
         ]
       })
-        .overrideTemplate(LoginModalComponent, '')
+        .overrideTemplate(SfLoginModalComponent, '')
         .compileComponents();
     }));
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(LoginModalComponent);
+      fixture = TestBed.createComponent(SfLoginModalComponent);
       comp = fixture.componentInstance;
       mockLoginService = TestBed.get(LoginService);
       mockRouter = TestBed.get(Router);

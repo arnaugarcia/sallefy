@@ -1,11 +1,7 @@
-import { browser, ExpectedConditions as ec /* , promise */ } from 'protractor';
+import { browser, ExpectedConditions as ec } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
-import {
-  PlaylistComponentsPage,
-  /* PlaylistDeleteDialog,
-   */ PlaylistUpdatePage
-} from './playlist.page-object';
+import { PlaylistComponentsPage, PlaylistUpdatePage } from './playlist.page-object';
 
 const expect = chai.expect;
 

@@ -1,19 +1,19 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { flatMap } from 'rxjs/operators';
 
-import { MetricsService, Metrics, MetricsKey, ThreadDump, Thread } from './metrics.service';
+import { Metrics, MetricsKey, SfMetricsService, Thread, ThreadDump } from './metrics.service';
 
 @Component({
-  selector: 'jhi-metrics',
+  selector: 'sf-metrics',
   templateUrl: './metrics.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MetricsComponent implements OnInit {
+export class SfMetricsComponent implements OnInit {
   metrics?: Metrics;
   threads?: Thread[];
   updatingMetrics = true;
 
-  constructor(private metricsService: MetricsService, private changeDetector: ChangeDetectorRef) {}
+  constructor(private metricsService: SfMetricsService, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.refresh();

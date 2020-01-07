@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, Routes } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { JhiResolvePagingParams } from 'ng-jhipster';
 
-import { User, IUser } from 'app/core/user/user.model';
+import { IUser, User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { UserManagementComponent } from './user-management.component';
 import { UserManagementDetailComponent } from './user-management-detail.component';

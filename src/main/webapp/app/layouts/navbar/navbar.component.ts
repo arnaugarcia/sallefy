@@ -9,9 +9,10 @@ import { AccountService } from 'app/core/auth/account.service';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { LoginService } from 'app/core/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { OverlayService } from 'app/layouts/main/overlay.service';
 
 @Component({
-  selector: 'jhi-navbar',
+  selector: 'sf-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['navbar.scss']
 })
@@ -21,6 +22,7 @@ export class NavbarComponent implements OnInit {
   languages = LANGUAGES;
   swaggerEnabled?: boolean;
   version: string;
+  showMobileMenu = false;
 
   constructor(
     private loginService: LoginService,
@@ -29,15 +31,21 @@ export class NavbarComponent implements OnInit {
     private accountService: AccountService,
     private loginModalService: LoginModalService,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private overlayService: OverlayService
   ) {
     this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
+    this.isNavbarCollapsed = true;
   }
 
   ngOnInit(): void {
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.swaggerEnabled = profileInfo.swaggerEnabled;
+    });
+
+    this.overlayService.overlayClicked.subscribe(() => {
+      this.showMobileMenu = false;
     });
   }
 
@@ -56,6 +64,15 @@ export class NavbarComponent implements OnInit {
 
   login(): void {
     this.loginModalService.open();
+  }
+
+  toggleMobileMenu(): void {
+    this.showMobileMenu = !this.showMobileMenu;
+    if (this.showMobileMenu) {
+      this.overlayService.changeStatus(true);
+    } else {
+      this.overlayService.changeStatus(false);
+    }
   }
 
   logout(): void {

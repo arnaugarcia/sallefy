@@ -1,200 +1,130 @@
-<nav class="navbar navbar-dark navbar-expand-md bg-dark">
-    <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-        <span class="logo-img"></span>
-        <span jhiTranslate="global.title" class="navbar-title">Sallefy</span> <span class="navbar-version">{{version}}</span>
-    </a>
-    <a class="navbar-toggler d-lg-none" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
-        <fa-icon icon="bars"></fa-icon>
-    </a>
-    <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
-                    <span>
-                        <fa-icon icon="home"></fa-icon>
-                        <span jhiTranslate="global.menu.home">Home</span>
-                    </span>
-                </a>
+<div class="off-canvas off-canvas-left d-flex flex-column" [class.show]="showMobileMenu" id="primary-menu-offcanvas">
+    <div class="m-3">
+        <a class="close-offcanvas-main-menu" (click)="toggleMobileMenu()">
+            <span class="adonis-icon icon-5x">
+                <svg height="20" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M13.4 12l5.3-5.3c0.4-0.4 0.4-1 0-1.4s-1-0.4-1.4 0l-5.3 5.3-5.3-5.3c-0.4-0.4-1-0.4-1.4 0s-0.4 1 0 1.4l5.3 5.3-5.3 5.3c-0.4 0.4-0.4 1 0 1.4 0.2 0.2 0.4 0.3 0.7 0.3s0.5-0.1 0.7-0.3l5.3-5.3 5.3 5.3c0.2 0.2 0.5 0.3 0.7 0.3s0.5-0.1 0.7-0.3c0.4-0.4 0.4-1 0-1.4l-5.3-5.3z"></path>
+                </svg>
+            </span>
+        </a>
+    </div>
+    <div class="side-nav-container d-flex flex-column align-items-center ml-auto mr-auto position-relative">
+        <ul class="side-nav adonis-effect">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/home" routerLinkActive="active"
+                   [routerLinkActiveOptions]="{exact: true}">Home</a>
             </li>
-            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
-                    <span>
-                        <fa-icon icon="th-list"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.main">
-                            Entities
-                        </span>
-                    </span>
-                </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-                    <li>
-                        <a class="dropdown-item" routerLink="track" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.track">Track</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="playlist" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.playlist">Playlist</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="album" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.album">Album</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="like-track" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.likeTrack">Like Track</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="follow-user" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.followUser">Follow User</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="follow-playlist" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.followPlaylist">Follow Playlist</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="like-album" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.likeAlbum">Like Album</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="genre" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.genre">Genre</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="playback" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.playback">Playback</span>
-                        </a>
-                    </li>
-                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-                </ul>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/playlists" routerLinkActive="active"
+                   [routerLinkActiveOptions]="{exact: true}">Playlists</a>
             </li>
-            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
-                    <span>
-                        <fa-icon icon="user-plus"></fa-icon>
-                        <span jhiTranslate="global.menu.admin.main">Administration</span>
-                    </span>
-                </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="user" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.admin.userManagement">User management</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="tachometer-alt" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.admin.metrics">Metrics</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/health" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="heart" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.admin.health">Health</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="list" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.admin.configuration">Configuration</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/audits" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="bell" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.admin.audits">Audits</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="tasks" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.admin.logs">Logs</span>
-                        </a>
-                    </li>
-                    <li *ngIf="swaggerEnabled">
-                        <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="book" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.admin.apidocs">API</span>
-                        </a>
-                    </li>
-                    <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
-                </ul>
-            </li>
-            <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
-                    <span>
-                        <fa-icon icon="flag"></fa-icon>
-                        <span jhiTranslate="global.menu.language">Language</span>
-                    </span>
-                </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
-                    <li *ngFor="let language of languages">
-                        <a class="dropdown-item" [jhiActiveMenu]="language" href="javascript:void(0);" (click)="changeLanguage(language);collapseNavbar();">{{language | findLanguageFromKey}}</a>
-                    </li>
-                </ul>
-            </li>
-            <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
-                  <span *ngIf="!getImageUrl()">
-                    <fa-icon icon="user"></fa-icon>
-                    <span jhiTranslate="global.menu.account.main">
-                      Account
-                    </span>
-                  </span>
-                  <span *ngIf="getImageUrl()">
-                      <img [src]="getImageUrl()" class="profile-image rounded-circle" alt="Avatar">
-                  </span>
-                </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
-                    <li *ngSwitchCase="true">
-                        <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="wrench" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.account.settings">Settings</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="true">
-                        <a class="dropdown-item" routerLink="account/password" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="lock" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.account.password">Password</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="true">
-                        <a class="dropdown-item" (click)="logout()" id="logout">
-                            <fa-icon icon="sign-out-alt" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.account.logout">Sign out</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="false">
-                        <a class="dropdown-item" (click)="login()" id="login">
-                            <fa-icon icon="sign-in-alt" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.account.login">Sign in</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="false">
-                        <a class="dropdown-item" routerLink="account/register" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="user-plus" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.account.register">Register</span>
-                        </a>
-                    </li>
-                </ul>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/developer/api" routerLinkActive="active"
+                   [routerLinkActiveOptions]="{exact: true}">Api</a>
             </li>
         </ul>
     </div>
-</nav>
+    <sf-footer class="p-3"></sf-footer>
+</div>
+<header class="site-header">
+    <div class="master-container-fluid header-inner">
+        <div class="row justify-content-between">
+            <div class="col-2 col-xl-3 d-flex align-items-center">
+                <div class="d-block d-lg-none">
+                    <a class="navbar-toggler toggle-off-canvas-main-menu mr-2" (click)="toggleMobileMenu()">
+                        <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
+                    </a>
+                </div>
+                <div class="brand">
+                    <a class="brand d-flex align-items-center" routerLink="/">
+                        <span class="adonis-icon mr-md-2 mr-1 icon-5x">
+                            <svg version="1.1" viewBox="0 0 27 32" xmlns="http://www.w3.org/2000/svg"><path
+                                d="M2.594 0.275c-0.257-0.166-0.571-0.265-0.908-0.265-0.932 0-1.688 0.756-1.688 1.688 0 0.028 0.001 0.055 0.002 0.082l-0-0.004v13.246l16.702-6.219zM26.030 14.49l-4.184-2.541-21.846 8.102v10.154c-0.001 0.024-0.002 0.051-0.002 0.079 0 0.927 0.752 1.679 1.679 1.679 0.319 0 0.617-0.089 0.871-0.243l-0.007 0.004c1.501-0.888 22.21-13.433 23.489-14.214 0.52-0.316 0.863-0.88 0.863-1.524s-0.342-1.207-0.855-1.519l-0.008-0.004z"></path></svg></span>
+                        <strong class="p-1 fs-6 fs-md-8">Sallefy</strong>{{version}}
+                    </a>
+                </div>
+            </div>
+            <div class="col-auto col-xl-6 align-items-center justify-content-center d-none d-md-flex">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                                <a class="nav-link" routerLink="/" jhiTranslate="global.menu.home">Home</a>
+                            </li>
+                            <li *sfHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer"
+                                display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
+                                    <span>
+                                        <span jhiTranslate="global.menu.admin.main">Administration</span>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+                                    <li>
+                                        <a class="dropdown-item" routerLink="admin/user-management"
+                                           routerLinkActive="active">
+                                            <span jhiTranslate="global.menu.admin.userManagement">User management</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active">
+                                            <span jhiTranslate="global.menu.admin.metrics">Metrics</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" routerLink="admin/health" routerLinkActive="active">
+                                            <span jhiTranslate="global.menu.admin.health">Health</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" routerLink="admin/configuration"
+                                           routerLinkActive="active">
+                                            <span jhiTranslate="global.menu.admin.configuration">Configuration</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" routerLink="admin/audits" routerLinkActive="active">
+                                            <span jhiTranslate="global.menu.admin.audits">Audits</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active">
+                                            <span jhiTranslate="global.menu.admin.logs">Logs</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- <li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                                 <a class="nav-link" routerLink="/playlists">Playlists</a>
+                             </li>-->
+                            <li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                                <a class="nav-link" routerLink="/developer/api">API</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div
+                class="col-auto col-xl-3 d-flex justify-content-end justify-content-lg-end align-items-center navbar-secondary">
+                <div>
+                    <a class="nav-link" id="btn-search-4">
+                        <span class="adonis-icon icon-3x">
+                            <svg height="32" version="1.1" viewBox="0 0 30 32" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M30.046 29.806l-7.127-7.287c2.109-2.395 3.397-5.558 3.397-9.021 0-3.721-1.486-7.094-3.896-9.56l0.003 0.003c-2.361-2.432-5.661-3.942-9.313-3.942s-6.953 1.51-9.31 3.939l-0.003 0.003c-2.388 2.462-3.86 5.824-3.86 9.53s1.472 7.068 3.863 9.533l-0.003-0.003c2.35 2.441 5.645 3.958 9.295 3.958 2.992 0 5.747-1.020 7.935-2.73l-0.028 0.021 7.207 7.383c0.232 0.225 0.548 0.364 0.896 0.368h0.001c0.344-0.001 0.656-0.142 0.881-0.368l0-0c0.252-0.237 0.409-0.573 0.409-0.945 0-0.34-0.131-0.65-0.345-0.881l0.001 0.001zM20.709 21.189c-1.906 1.978-4.577 3.206-7.536 3.206s-5.63-1.228-7.532-3.203l-0.003-0.003c-1.932-1.992-3.123-4.713-3.123-7.712s1.191-5.719 3.126-7.715l-0.003 0.003c1.906-1.978 4.577-3.206 7.536-3.206s5.63 1.228 7.532 3.203l0.003 0.003c1.932 1.992 3.123 4.713 3.123 7.712s-1.191 5.719-3.126 7.715l0.003-0.003z"></path>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+                <div class="nav-item d-none d-md-block">
+                    <sf-notification></sf-notification>
+                </div>
+                <div class="nav-item position-relative">
+                    <sf-profile></sf-profile>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

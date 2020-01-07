@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
-import { LoggersResponse, Level } from './log.model';
+import { Level, LoggersResponse } from './log.model';
 
 @Injectable({ providedIn: 'root' })
 export class LogsService {

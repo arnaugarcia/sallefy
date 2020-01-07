@@ -1,18 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRouteSnapshot, NavigationEnd, NavigationError } from '@angular/router';
+import { ActivatedRouteSnapshot, NavigationEnd, NavigationError, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { AccountService } from 'app/core/auth/account.service';
+import { OverlayService } from 'app/layouts/main/overlay.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
-  selector: 'jhi-main',
+  selector: 'sf-main',
   templateUrl: './main.component.html'
 })
-export class MainComponent implements OnInit {
+export class SfMainComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private translateService: TranslateService,
+    private overlayService: OverlayService,
+    @Inject(DOCUMENT) private document: Document,
     private titleService: Title,
     private router: Router
   ) {}
@@ -29,6 +33,18 @@ export class MainComponent implements OnInit {
         this.router.navigate(['/404']);
       }
     });
+
+    this.overlayService.overlayStatus.subscribe((overlayStatus: boolean) => {
+      if (overlayStatus) {
+        this.document.body.classList.add('off-canvas-overlay-on');
+      } else {
+        this.document.body.classList.remove('off-canvas-overlay-on');
+      }
+    });
+  }
+
+  overlayClicked(): void {
+    this.overlayService.clicked();
 
     this.translateService.onLangChange.subscribe(() => this.updateTitle());
   }

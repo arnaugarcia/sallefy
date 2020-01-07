@@ -8,10 +8,12 @@ import com.sallefy.service.MailService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.PasswordChangeDTO;
 import com.sallefy.service.dto.UserDTO;
-import com.sallefy.web.rest.errors.*;
+import com.sallefy.web.rest.errors.EmailAlreadyUsedException;
+import com.sallefy.web.rest.errors.EmailNotFoundException;
+import com.sallefy.web.rest.errors.InvalidPasswordException;
+import com.sallefy.web.rest.errors.LoginAlreadyUsedException;
 import com.sallefy.web.rest.vm.KeyAndPasswordVM;
 import com.sallefy.web.rest.vm.ManagedUserVM;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.

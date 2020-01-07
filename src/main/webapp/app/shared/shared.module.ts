@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { SallefySharedLibsModule } from './shared-libs.module';
 import { FindLanguageFromKeyPipe } from './language/find-language-from-key.pipe';
-import { AlertComponent } from './alert/alert.component';
-import { AlertErrorComponent } from './alert/alert-error.component';
-import { LoginModalComponent } from './login/login.component';
+import { SfAlertComponent } from './alert/alert.component';
+import { SfAlertErrorComponent } from './alert/alert-error.component';
+import { SfLoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
 @NgModule({
   imports: [SallefySharedLibsModule],
-  declarations: [FindLanguageFromKeyPipe, AlertComponent, AlertErrorComponent, LoginModalComponent, HasAnyAuthorityDirective],
-  entryComponents: [LoginModalComponent],
+  declarations: [FindLanguageFromKeyPipe, SfAlertComponent, SfAlertErrorComponent, SfLoginModalComponent, HasAnyAuthorityDirective],
+  entryComponents: [SfLoginModalComponent],
   exports: [
     SallefySharedLibsModule,
     FindLanguageFromKeyPipe,
-    AlertComponent,
-    AlertErrorComponent,
-    LoginModalComponent,
+    SfAlertComponent,
+    SfAlertErrorComponent,
+    SfLoginModalComponent,
     HasAnyAuthorityDirective
   ]
 })

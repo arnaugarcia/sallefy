@@ -1,7 +1,6 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.service.AuditEventService;
-
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.springframework.boot.actuate.audit.AuditEvent;

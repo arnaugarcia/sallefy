@@ -1,4 +1,4 @@
-import { element, by, ElementFinder } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 
 /* eslint @typescript-eslint/no-use-before-define: 0 */
 export class NavBarPage {

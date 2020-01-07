@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Renderer, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
@@ -6,10 +6,10 @@ import { Router } from '@angular/router';
 import { LoginService } from 'app/core/login/login.service';
 
 @Component({
-  selector: 'jhi-login-modal',
+  selector: 'sf-login-modal',
   templateUrl: './login.component.html'
 })
-export class LoginModalComponent implements AfterViewInit {
+export class SfLoginModalComponent implements AfterViewInit {
   @ViewChild('username', { static: false })
   username?: ElementRef;
 

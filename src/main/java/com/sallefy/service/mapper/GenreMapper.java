@@ -1,9 +1,9 @@
 package com.sallefy.service.mapper;
 
-import com.sallefy.domain.*;
+import com.sallefy.domain.Genre;
 import com.sallefy.service.dto.GenreDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity {@link Genre} and its DTO {@link GenreDTO}.

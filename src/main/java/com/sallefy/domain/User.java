@@ -1,11 +1,9 @@
 package com.sallefy.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sallefy.config.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

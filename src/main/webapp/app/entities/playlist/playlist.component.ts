@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
+import { JhiDataUtils, JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IPlaylist } from 'app/shared/model/playlist.model';
@@ -9,7 +9,7 @@ import { PlaylistService } from './playlist.service';
 import { PlaylistDeleteDialogComponent } from './playlist-delete-dialog.component';
 
 @Component({
-  selector: 'jhi-playlist',
+  selector: 'sf-playlist',
   templateUrl: './playlist.component.html'
 })
 export class PlaylistComponent implements OnInit, OnDestroy {

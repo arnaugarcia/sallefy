@@ -2,12 +2,12 @@ package com.sallefy.web.rest;
 
 import com.sallefy.service.LikeService;
 import com.sallefy.service.PlayService;
-import com.sallefy.service.dto.LatLongDTO;
-import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.service.TrackService;
+import com.sallefy.service.dto.LatLongDTO;
 import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.dto.criteria.TrackCriteriaDTO;
+import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.swagger.annotations.*;

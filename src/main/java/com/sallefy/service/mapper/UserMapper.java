@@ -3,11 +3,13 @@ package com.sallefy.service.mapper;
 import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
 import com.sallefy.service.dto.UserDTO;
-
 import com.sallefy.service.dto.UserSimplifiedDTO;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
