@@ -3,7 +3,7 @@
         <div class="user">
             <img alt="" class="rounded-circle" src="/content/images/user-thumb-1.jpg">
         </div>
-        <span class="ml-2 mt-2 fs-1 d-none d-lg-block">{{currentAccount.firstName}} {{currentAccount.lastName}}</span>
+        <span class="ml-2 mt-2 fs-1 d-none d-lg-block">{{currentAccount?.firstName}} {{currentAccount?.lastName}}</span>
     </div>
 </a>
 <div aria-labelledby="dropdownUserSettings" class="dropdown-menu dropdown-menu-right user-settings-dropdown clearfix" [class.show]="show">
@@ -12,11 +12,11 @@
             <img alt="" src="/content/images/user/cover.jpg">
         </div>
         <div class="user-profile-image rounded-circle">
-            <img [alt]="currentAccount.firstName" [src]="getImageUrl()">
+            <img [alt]="currentAccount?.firstName" [src]="getImageUrl()">
         </div>
     </div>
     <div class="settings-bottom">
-        <h5 class="user-name text-center">{{currentAccount.firstName}} {{currentAccount.lastName}}</h5>
+        <h5 class="user-name text-center">{{currentAccount?.firstName}} {{currentAccount?.lastName}}</h5>
         <ul class="user-settings-menu list-unstyled">
             <li>
                 <a class="inactive-color" href="Javascript:void(0)" routerLink="account/settings">
