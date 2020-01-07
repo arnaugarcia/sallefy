@@ -9,7 +9,8 @@ import { HttpResponse } from '@angular/common/http';
   styleUrls: ['./tracks.component.scss']
 })
 export class TracksComponent implements OnInit {
-  public tracks: ITrack[] = [];
+  private tracks: ITrack[] = [];
+  groupedTracks: ITrack[][] = [];
 
   customOptions: any = {
     loop: true,
@@ -38,8 +39,19 @@ export class TracksComponent implements OnInit {
   constructor(private trackService: TrackService) {}
 
   ngOnInit(): void {
-    this.trackService.query().subscribe((response: HttpResponse<ITrack[]>) => {
+    this.trackService.query({ size: 25 }).subscribe((response: HttpResponse<ITrack[]>) => {
       this.tracks = response.body != null ? response.body : [];
+      this.groupedTracks = this.chunkArray(this.tracks, 5);
     });
+  }
+
+  private chunkArray(myArray: ITrack[], chunkSize: number): ITrack[][] {
+    const results = [];
+
+    while (myArray.length) {
+      results.push(myArray.splice(0, chunkSize));
+    }
+
+    return results;
   }
 }

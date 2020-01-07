@@ -1,77 +1,15 @@
 <owl-carousel-o [options]="customOptions" class="owl-carousel owl-theme-adonis">
-    <ng-template carouselSlide *ngFor="let track of tracks; let i = index">
-        <div class="item">
+    <ng-template carouselSlide *ngFor="let column of groupedTracks; let i = index">
+        <div class="item" *ngFor="let track of column">
             <div class="img-box-horizontal music-img-box h-g-bg h-d-shadow">
                 <div class="img-box img-box-sm box-rounded-sm">
                     <img src="/content/images/hot-song/hot-1.jpg" alt="">
                 </div>
                 <div class="des">
-                    <h6 class="title fs-2"><a href="#">The Separation</a></h6>
-                    <p class="sub-title"><a href="#">Rachel Platten</a></p>
-                </div>
-                <div class="hover-state d-flex justify-content-between align-items-center">
-                    <span class="pointer play-btn-dark box-rounded-sm"><i class="play-icon"></i></span>
-                    <div class="d-flex align-items-center">
-                        <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg xmlns="http://www.w3.org/2000/svg" version="1.1"><use xlink:href="#icon-heart-blank" /></svg></span>
-                        <span class="pointer dropdown-menu-toggle"><span class="icon-dot-nav-horizontal text-light"></span></span>
-                    </div>
-                </div>
-            </div>
-            <div class="img-box-horizontal music-img-box h-g-bg h-d-shadow">
-                <div class="img-box img-box-sm box-rounded-sm">
-                    <img src="/content/images/hot-song/hot-2.jpg" alt="">
-                </div>
-                <div class="des">
-                    <h6 class="title fs-2"><a href="#">Country girl shake it for me</a></h6>
-                    <p class="sub-title"><a href="#">Bing Crosby</a></p>
-                </div>
-                <div class="hover-state d-flex justify-content-between align-items-center">
-                    <span class="pointer play-btn-dark box-rounded-sm"><i class="play-icon"></i></span>
-                    <div class="d-flex align-items-center">
-                        <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg xmlns="http://www.w3.org/2000/svg" version="1.1"><use xlink:href="#icon-heart-blank" /></svg></span>
-                        <span class="pointer dropdown-menu-toggle"><span class="icon-dot-nav-horizontal text-light"></span></span>
-                    </div>
-                </div>
-            </div>
-            <div class="img-box-horizontal music-img-box h-g-bg h-d-shadow">
-                <div class="img-box img-box-sm box-rounded-sm">
-                    <img src="/content/images/hot-song/hot-3.jpg" alt="">
-                </div>
-                <div class="des">
-                    <h6 class="title fs-2"><a href="#">Stirring of a fool</a></h6>
-                    <p class="sub-title"><a href="#">Rachel Platten</a></p>
-                </div>
-                <div class="hover-state d-flex justify-content-between align-items-center">
-                    <span class="pointer play-btn-dark box-rounded-sm"><i class="play-icon"></i></span>
-                    <div class="d-flex align-items-center">
-                        <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg xmlns="http://www.w3.org/2000/svg" version="1.1"><use xlink:href="#icon-heart-blank" /></svg></span>
-                        <span class="pointer dropdown-menu-toggle"><span class="icon-dot-nav-horizontal text-light"></span></span>
-                    </div>
-                </div>
-            </div>
-            <div class="img-box-horizontal music-img-box h-g-bg h-d-shadow">
-                <div class="img-box img-box-sm box-rounded-sm">
-                    <img src="/content/images/hot-song/hot-4.jpg" alt="">
-                </div>
-                <div class="des">
-                    <h6 class="title fs-2"><a href="#">Nothings into Somethings</a></h6>
-                    <p class="sub-title"><a href="#">Rachel Platten</a></p>
-                </div>
-                <div class="hover-state d-flex justify-content-between align-items-center">
-                    <span class="pointer play-btn-dark box-rounded-sm"><i class="play-icon"></i></span>
-                    <div class="d-flex align-items-center">
-                        <span class="adonis-icon text-light pointer mr-2 icon-2x"><svg xmlns="http://www.w3.org/2000/svg" version="1.1"><use xlink:href="#icon-heart-blank" /></svg></span>
-                        <span class="pointer dropdown-menu-toggle"><span class="icon-dot-nav-horizontal text-light"></span></span>
-                    </div>
-                </div>
-            </div>
-            <div class="img-box-horizontal music-img-box h-g-bg h-d-shadow">
-                <div class="img-box img-box-sm box-rounded-sm">
-                    <img src="/content/images/hot-song/hot-5.jpg" alt="">
-                </div>
-                <div class="des">
-                    <h6 class="title fs-2"><a href="#">Let You Down</a></h6>
-                    <p class="sub-title"><a href="#">Rachel Platten</a></p>
+                    <h6 class="title fs-2"><a href="#">{{track.name}}</a></h6>
+                    <p class="sub-title">
+                        <a href="#" *ngFor="let genre of track.genres">{{genre.name}}</a>
+                    </p>
                 </div>
                 <div class="hover-state d-flex justify-content-between align-items-center">
                     <span class="pointer play-btn-dark box-rounded-sm"><i class="play-icon"></i></span>
