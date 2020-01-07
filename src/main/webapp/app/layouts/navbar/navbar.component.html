@@ -54,6 +54,12 @@
                             <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                                 <a class="nav-link" routerLink="/" jhiTranslate="global.menu.home">Home</a>
                             </li>
+                            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                                <a class="nav-link" routerLink="/playlists" jhiTranslate="global.menu.playlists">Playlists</a>
+                            </li>
+                            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                                <a class="nav-link" routerLink="/artists" jhiTranslate="global.menu.artists">Top Artists</a>
+                            </li>
                             <li *sfHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer"
                                 display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">

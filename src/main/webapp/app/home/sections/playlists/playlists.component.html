@@ -1,18 +1,32 @@
-<div class="d-flex">
-    <div class="title-box">
-        <h6 class="sub-title inactive-color">Featured</h6>
-        <h2 class="title">Playlists</h2>
-    </div>
-    <div class="button-right ml-auto ml-auto d-flex align-items-end mb-4">
-        <a class="inactive-color mr-4 mr-md-0" href="#">See all
-            <span class="adonis-icon pl-1 icon-arrow icon-1x">
-                                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                                    <use xlink:href="#icon-see-all-arrow-right"/></svg>
-                                            </span>
-        </a>
-    </div>
-</div>
-<div class="adonis-carousel">
-
-</div>
+<owl-carousel-o [options]="customOptions" class="owl-carousel owl-theme-adonis">
+    <ng-template carouselSlide *ngFor="let playlist of playlists">
+        <div class="item">
+            <div class="music-img-box">
+                <div class="img-box box-rounded-md">
+                    <img class="retina" [src]="playlist.thumbnail" [alt]="playlist.description">
+                    <div class="hover-state">
+                        <div class="absolute-bottom-left pl-e-20 pb-e-20">
+                            <span class="pointer play-btn-dark round-btn"><i class="play-icon"></i></span>
+                        </div>
+                        <div class="absolute-top-right pr-e-20 pt-e-20">
+                            <span class="pointer dropdown-menu-toggle">
+                                <span class="adonis-icon icon-4x">
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                                        <use xlink:href="#icon-horizontal-dots"></use>
+                                    </svg>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <h6 class="title">
+                    <a href="#">{{playlist.name}}</a>
+                </h6>
+                <p class="sub-title category">
+                    <!--<a href="#" *ngFor="let genre of playlist.tracks[0].genres">{{genre.name}}</a>-->
+                </p>
+            </div>
+        </div>
+    </ng-template>
+</owl-carousel-o>
 <div class="pt-e-20 pt-e-lg-40"></div>

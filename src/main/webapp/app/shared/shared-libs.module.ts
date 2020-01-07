@@ -6,17 +6,21 @@ import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   exports: [
     FormsModule,
     CommonModule,
+    BrowserAnimationsModule,
     NgbModule,
     NgJhipsterModule,
     InfiniteScrollModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    CarouselModule
   ]
 })
 export class SallefySharedLibsModule {}

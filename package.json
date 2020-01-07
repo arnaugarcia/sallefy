@@ -8,6 +8,7 @@
     "node_modules"
   ],
   "dependencies": {
+    "@angular/animations": "^8.2.14",
     "@angular/common": "8.2.14",
     "@angular/compiler": "8.2.14",
     "@angular/core": "8.2.14",
@@ -23,18 +24,19 @@
     "@ngx-translate/http-loader": "4.0.0",
     "bootstrap": "4.4.1",
     "core-js": "3.5.0",
+    "jquery": "^3.4.1",
     "moment": "2.24.0",
     "ng-jhipster": "0.11.5",
     "ngx-cookie": "4.0.2",
     "ngx-infinite-scroll": "8.0.1",
-    "ngx-webstorage": "4.0.1",
-    "rxjs": "6.5.3",
-    "videogular2": "^7.0.1",
-    "owl.carousel": "^2.3.4",
     "ngx-owl-carousel": "^2.0.7",
-    "ngx-owl-carousel-o": "^2.0.1",
+    "ngx-owl-carousel-o": "^2.0.3",
+    "ngx-webstorage": "4.0.1",
+    "owl.carousel": "^2.3.4",
+    "rxjs": "6.5.3",
     "swagger-ui-dist": "3.24.3",
     "tslib": "1.10.0",
+    "videogular2": "^7.0.1",
     "zone.js": "0.10.2"
   },
   "devDependencies": {
