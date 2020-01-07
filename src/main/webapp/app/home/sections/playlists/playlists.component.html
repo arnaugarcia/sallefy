@@ -1,98 +1,10 @@
 <owl-carousel-o [options]="customOptions" class="owl-carousel owl-theme-adonis">
-    <ng-template carouselSlide>
-        <div class="item">
+    <ng-template carouselSlide *ngFor="let playlist of playlists">
+        <div class="item" style="width: 230px; opacity: 1; transform: translateX(0px);">
             <div class="music-img-box">
                 <div class="img-box box-rounded-md">
                     <img class="retina" src="/content/images/new-releases/new-releases-1.jpg"
                          data-2x="/content/images/new-releases/new-releases-1@2x.jpg" alt="">
-                    <div class="hover-state">
-                        <div class="absolute-bottom-left pl-e-20 pb-e-20">
-                            <span class="pointer play-btn-dark round-btn"><i class="play-icon"></i></span>
-                        </div>
-                        <div class="absolute-top-right pr-e-20 pt-e-20">
-                            <span class="pointer dropdown-menu-toggle"><span class="adonis-icon icon-4x"><svg
-                                xmlns="http://www.w3.org/2000/svg" version="1.1"><use
-                                xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                        </div>
-                    </div>
-                </div>
-                <h6 class="title"><a href="#">Vestibulum nibh lorem ipsum</a></h6>
-                <p class="sub-title category"><a href="#">Adonis Music Pop</a></p>
-            </div>
-        </div>
-    </ng-template>
-    <ng-template carouselSlide>
-        <div class="item">
-            <div class="music-img-box">
-                <div class="img-box box-rounded-md">
-                    <img class="retina" src="/content/images/new-releases/new-releases-2.jpg"
-                         data-2x="/content/images/new-releases/new-releases-2@2x.jpg" alt="">
-                    <div class="hover-state">
-                        <div class="absolute-bottom-left pl-e-20 pb-e-20">
-                            <span class="pointer play-btn-dark round-btn"><i class="play-icon"></i></span>
-                        </div>
-                        <div class="absolute-top-right pr-e-20 pt-e-20">
-                            <span class="pointer dropdown-menu-toggle"><span class="adonis-icon icon-4x"><svg
-                                xmlns="http://www.w3.org/2000/svg" version="1.1"><use
-                                xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                        </div>
-                    </div>
-                </div>
-                <h6 class="title"><a href="#">Vestibulum nibh lorem ipsum</a></h6>
-                <p class="sub-title category"><a href="#">Adonis Music Pop</a></p>
-            </div>
-        </div>
-    </ng-template>
-    <ng-template carouselSlide>
-        <div class="item">
-            <div class="music-img-box">
-                <div class="img-box box-rounded-md">
-                    <img class="retina" src="/content/images/new-releases/new-releases-3.jpg"
-                         data-2x="/content/images/new-releases/new-releases-3@2x.jpg" alt="">
-                    <div class="hover-state">
-                        <div class="absolute-bottom-left pl-e-20 pb-e-20">
-                            <span class="pointer play-btn-dark round-btn"><i class="play-icon"></i></span>
-                        </div>
-                        <div class="absolute-top-right pr-e-20 pt-e-20">
-                            <span class="pointer dropdown-menu-toggle"><span class="adonis-icon icon-4x"><svg
-                                xmlns="http://www.w3.org/2000/svg" version="1.1"><use
-                                xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                        </div>
-                    </div>
-                </div>
-                <h6 class="title"><a href="#">Vestibulum nibh lorem ipsum</a></h6>
-                <p class="sub-title category"><a href="#">Adonis Music Pop</a></p>
-            </div>
-        </div>
-    </ng-template>
-    <ng-template carouselSlide>
-        <div class="item">
-            <div class="music-img-box">
-                <div class="img-box box-rounded-md">
-                    <img class="retina" src="/content/images/new-releases/new-releases-4.jpg"
-                         data-2x="/content/images/new-releases/new-releases-4@2x.jpg" alt="">
-                    <div class="hover-state">
-                        <div class="absolute-bottom-left pl-e-20 pb-e-20">
-                            <span class="pointer play-btn-dark round-btn"><i class="play-icon"></i></span>
-                        </div>
-                        <div class="absolute-top-right pr-e-20 pt-e-20">
-                            <span class="pointer dropdown-menu-toggle"><span class="adonis-icon icon-4x"><svg
-                                xmlns="http://www.w3.org/2000/svg" version="1.1"><use
-                                xlink:href="#icon-horizontal-dots"></use></svg></span></span>
-                        </div>
-                    </div>
-                </div>
-                <h6 class="title"><a href="#">Vestibulum nibh lorem ipsum</a></h6>
-                <p class="sub-title category"><a href="#">Adonis Music Pop</a></p>
-            </div>
-        </div>
-    </ng-template>
-    <ng-template carouselSlide>
-        <div class="item">
-            <div class="music-img-box">
-                <div class="img-box box-rounded-md">
-                    <img class="retina" src="/content/images/new-releases/new-releases-5.jpg"
-                         data-2x="/content/images/new-releases/new-releases-5@2x.jpg" alt="">
                     <div class="hover-state">
                         <div class="absolute-bottom-left pl-e-20 pb-e-20">
                             <span class="pointer play-btn-dark round-btn"><i class="play-icon"></i></span>
