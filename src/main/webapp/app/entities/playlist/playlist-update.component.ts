@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 import { JhiDataUtils, JhiEventManager, JhiEventWithContent, JhiFileLoadError } from 'ng-jhipster';
 
 import { IPlaylist, Playlist } from 'app/shared/model/playlist.model';
-import { PlaylistService } from './playlist.service';
+import { PlaylistService } from '../../shared/services/playlist.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';

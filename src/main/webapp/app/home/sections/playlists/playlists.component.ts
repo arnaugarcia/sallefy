@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PlaylistService } from 'app/entities/playlist/playlist.service';
+import { PlaylistService } from 'app/shared/services/playlist.service';
 import { IPlaylist } from 'app/shared/model/playlist.model';
 import { HttpResponse } from '@angular/common/http';
 
