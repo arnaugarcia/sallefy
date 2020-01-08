@@ -1,151 +1,34 @@
-<div class="adonis-carousel">
-    <div class="gutter-30">
-        <div class="owl-carousel owl-theme-adonis">
-            <div class="item">
-                <div class="radio">
-                    <div class="img-box-text-over lg box-rounded-lg">
-                        <img alt=""
-                             data-2x="..content/images/radios/radios-1@2x.jpg"
-                             src="/content/images/radios/radios-1.jpg">
-                        <div class="hover-state show">
-                            <div
-                                class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
-                                <h5 class="text-light">FEATURED RADIO</h5>
-                            </div>
-                            <div
-                                class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
-                                <a class="text-light" href="#"><i
-                                    class="icon-arrow-right2"></i> View all
-                                    <span class="adonis-icon pl-1 icon-arrow icon-1x"><svg
-                                        version="1.1"
-                                        xmlns="http://www.w3.org/2000/svg"><use
-                                        xlink:href="#icon-see-all-arrow-right"/></svg></span></a>
-                            </div>
-                        </div>
-                    </div>
+<owl-carousel-o [options]="customOptions" class="owl-carousel owl-theme-adonis">
+    <ng-template carouselSlide *ngFor="let column of groupedTracks; let i = index">
+        <div class="item" *ngFor="let track of column">
+            <div class="img-box-horizontal music-img-box h-g-bg h-d-shadow">
+                <div class="img-box img-box-sm box-rounded-sm">
+                    <img [src]="track.thumbnail" onerror="this.src='./content/images/svg/play-btn-light.svg';" height="50" width="50" [alt]="track.name">
                 </div>
-            </div>
-            <div class="item">
-                <div class="radio">
-                    <div class="img-box-text-over lg box-rounded-lg">
-                        <img alt=""
-                             data-2x="..content/images/radios/radios-2@2x.jpg"
-                             src="/content/images/radios/radios-2.jpg">
-                        <div class="hover-state show">
-                            <div
-                                class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
-                                <h5 class="text-light">DISCOVER</h5>
-                            </div>
-                            <div
-                                class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
-                                <a class="text-light" href="#"><i
-                                    class="icon-arrow-right2"></i> View all
-                                    <span class="adonis-icon pl-1 icon-arrow icon-1x"><svg
-                                        version="1.1"
-                                        xmlns="http://www.w3.org/2000/svg"><use
-                                        xlink:href="#icon-see-all-arrow-right"/></svg></span></a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="des">
+                    <h6 class="title fs-2">
+                        <a href="#">{{track.name}}</a>
+                    </h6>
+                    <p class="sub-title">
+                        <a href="#" *ngFor="let genre of track.genres">{{genre.name}}</a>
+                    </p>
                 </div>
-            </div>
-            <div class="item">
-                <div class="radio">
-                    <div class="img-box-text-over lg box-rounded-lg">
-                        <img alt=""
-                             data-2x="..content/images/radios/radios-3@2x.jpg"
-                             src="/content/images/radios/radios-3.jpg">
-                        <div class="hover-state show">
-                            <div
-                                class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
-                                <h5 class="text-light">THE DEFINITIVE HITS</h5>
-                            </div>
-                            <div
-                                class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
-                                <a class="text-light" href="#"><i
-                                    class="icon-arrow-right2"></i> View all
-                                    <span class="adonis-icon pl-1 icon-arrow icon-1x"><svg
-                                        version="1.1"
-                                        xmlns="http://www.w3.org/2000/svg"><use
-                                        xlink:href="#icon-see-all-arrow-right"/></svg></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="radio">
-                    <div class="img-box-text-over lg box-rounded-lg">
-                        <img alt=""
-                             data-2x="..content/images/radios/radios-4@2x.jpg"
-                             src="/content/images/radios/radios-4.jpg">
-                        <div class="hover-state show">
-                            <div
-                                class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
-                                <h5 class="text-light">OUR MUSICAL GIFT FOR
-                                    YOU</h5>
-                            </div>
-                            <div
-                                class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
-                                <a class="text-light" href="#"><i
-                                    class="icon-arrow-right2"></i> View all
-                                    <span class="adonis-icon pl-1 icon-arrow icon-1x"><svg
-                                        version="1.1"
-                                        xmlns="http://www.w3.org/2000/svg"><use
-                                        xlink:href="#icon-see-all-arrow-right"/></svg></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="radio">
-                    <div class="img-box-text-over lg box-rounded-lg">
-                        <img alt=""
-                             data-2x="..content/images/radios/radios-5@2x.jpg"
-                             src="/content/images/radios/radios-5.jpg">
-                        <div class="hover-state show">
-                            <div
-                                class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
-                                <h5 class="text-light">FEATURED RADIO</h5>
-                            </div>
-                            <div
-                                class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
-                                <a class="text-light" href="#"><i
-                                    class="icon-arrow-right2"></i> View all
-                                    <span class="adonis-icon pl-1 icon-arrow icon-1x"><svg
-                                        version="1.1"
-                                        xmlns="http://www.w3.org/2000/svg"><use
-                                        xlink:href="#icon-see-all-arrow-right"/></svg></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="radio">
-                    <div class="img-box-text-over lg box-rounded-lg">
-                        <img alt=""
-                             data-2x="..content/images/radios/radios-1@2x.jpg"
-                             src="/content/images/radios/radios-1.jpg">
-                        <div class="hover-state show">
-                            <div
-                                class="absolute-top-left pl-e-percent-10 pt-e-percent-8">
-                                <h5 class="text-light">THE DEFINITIVE HITS</h5>
-                            </div>
-                            <div
-                                class="absolute-bottom-right pr-e-percent-8 pb-e-percent-8">
-                                <a class="text-light" href="#"><i
-                                    class="icon-arrow-right2"></i> View all
-                                    <span class="adonis-icon pl-1 icon-arrow icon-1x"><svg
-                                        version="1.1"
-                                        xmlns="http://www.w3.org/2000/svg"><use
-                                        xlink:href="#icon-see-all-arrow-right"/></svg></span></a>
-                            </div>
-                        </div>
+                <div class="hover-state d-flex justify-content-between align-items-center">
+                    <span class="pointer play-btn-dark box-rounded-sm">
+                        <i class="play-icon"></i>
+                    </span>
+                    <div class="d-flex align-items-center">
+                        <span class="adonis-icon text-light pointer mr-2 icon-2x">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                                <use xlink:href="#icon-heart-blank"/>
+                            </svg>
+                        </span>
+                        <span class="pointer dropdown-menu-toggle">
+                            <span class="icon-dot-nav-horizontal text-light"></span>
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </ng-template>
+</owl-carousel-o>

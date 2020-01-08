@@ -6,7 +6,7 @@ import { flatMap } from 'rxjs/operators';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { IPlaylist, Playlist } from 'app/shared/model/playlist.model';
-import { PlaylistService } from './playlist.service';
+import { PlaylistService } from '../../shared/services/playlist.service';
 import { PlaylistComponent } from './playlist.component';
 import { PlaylistDetailComponent } from './playlist-detail.component';
 import { PlaylistUpdateComponent } from './playlist-update.component';

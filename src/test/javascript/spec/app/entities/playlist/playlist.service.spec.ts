@@ -1,7 +1,7 @@
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { map, take } from 'rxjs/operators';
-import { PlaylistService } from 'app/entities/playlist/playlist.service';
+import { PlaylistService } from 'app/shared/services/playlist.service';
 import { IPlaylist, Playlist } from 'app/shared/model/playlist.model';
 
 describe('Service Tests', () => {

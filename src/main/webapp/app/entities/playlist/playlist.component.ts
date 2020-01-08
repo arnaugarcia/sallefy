@@ -5,7 +5,7 @@ import { JhiDataUtils, JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IPlaylist } from 'app/shared/model/playlist.model';
-import { PlaylistService } from './playlist.service';
+import { PlaylistService } from '../../shared/services/playlist.service';
 import { PlaylistDeleteDialogComponent } from './playlist-delete-dialog.component';
 
 @Component({

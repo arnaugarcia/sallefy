@@ -7,7 +7,7 @@ import { SallefyTestModule } from '../../../test.module';
 import { MockEventManager } from '../../../helpers/mock-event-manager.service';
 import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
 import { PlaylistDeleteDialogComponent } from 'app/entities/playlist/playlist-delete-dialog.component';
-import { PlaylistService } from 'app/entities/playlist/playlist.service';
+import { PlaylistService } from 'app/shared/services/playlist.service';
 
 describe('Component Tests', () => {
   describe('Playlist Management Delete Component', () => {

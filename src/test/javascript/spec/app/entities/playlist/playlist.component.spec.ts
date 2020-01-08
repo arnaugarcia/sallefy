@@ -4,7 +4,7 @@ import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { SallefyTestModule } from '../../../test.module';
 import { PlaylistComponent } from 'app/entities/playlist/playlist.component';
-import { PlaylistService } from 'app/entities/playlist/playlist.service';
+import { PlaylistService } from 'app/shared/services/playlist.service';
 import { Playlist } from 'app/shared/model/playlist.model';
 
 describe('Component Tests', () => {

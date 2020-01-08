@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { IPlaylist } from 'app/shared/model/playlist.model';
-import { PlaylistService } from './playlist.service';
+import { PlaylistService } from '../../shared/services/playlist.service';
 
 @Component({
   templateUrl: './playlist-delete-dialog.component.html'

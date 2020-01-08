@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 /**
  * Mapper for the entity {@link Genre} and its DTO {@link GenreDTO}.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring")
 public interface GenreMapper extends EntityMapper<GenreDTO, Genre> {
 
     @Mapping(target = "popularity", ignore = true)

@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 
 import { SallefyTestModule } from '../../../test.module';
 import { PlaylistUpdateComponent } from 'app/entities/playlist/playlist-update.component';
-import { PlaylistService } from 'app/entities/playlist/playlist.service';
+import { PlaylistService } from 'app/shared/services/playlist.service';
 import { Playlist } from 'app/shared/model/playlist.model';
 
 describe('Component Tests', () => {
