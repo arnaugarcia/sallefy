@@ -31,7 +31,7 @@ export class TracksComponent implements OnInit {
         items: 3
       },
       940: {
-        items: 6
+        items: 4
       }
     },
     nav: true
