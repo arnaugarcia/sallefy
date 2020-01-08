@@ -3,8 +3,7 @@
         <div class="item" *ngFor="let track of column">
             <div class="img-box-horizontal music-img-box h-g-bg h-d-shadow">
                 <div class="img-box img-box-sm box-rounded-sm">
-                    <img *ngIf="track.thumbnail" [src]="track.thumbnail" [alt]="track.name">
-                    <img *ngIf="!track.thumbnail" [src]="'/content/images/svg/play-btn-light.svg'" height="50" width="50" [alt]="track.name">
+                    <img [src]="track.thumbnail" sfImageCheck [alt]="track.name">
                 </div>
                 <div class="des">
                     <h6 class="title fs-2">
