@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption, Pagination } from 'app/shared/util/request-util';
+import { createRequestOption } from 'app/shared/util/request-util';
 import { IUser } from './user.model';
 
 @Injectable({ providedIn: 'root' })
@@ -20,11 +20,15 @@ export class UserService {
     return this.http.put<IUser>(this.resourceUrl, user);
   }
 
+  follow(user: IUser): Observable<HttpResponse<{ follow: boolean }>> {
+    return this.http.put<{ follow: boolean }>(`${this.resourceUrl}/${user.login}/follow`, user, { observe: 'response' });
+  }
+
   find(login: string): Observable<IUser> {
     return this.http.get<IUser>(`${this.resourceUrl}/${login}`);
   }
 
-  query(req?: Pagination): Observable<HttpResponse<IUser[]>> {
+  query(req?: any): Observable<HttpResponse<IUser[]>> {
     const options = createRequestOption(req);
     return this.http.get<IUser[]>(this.resourceUrl, { params: options, observe: 'response' });
   }

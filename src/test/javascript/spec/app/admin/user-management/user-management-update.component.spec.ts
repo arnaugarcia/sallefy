@@ -15,7 +15,9 @@ describe('Component Tests', () => {
     let fixture: ComponentFixture<UserManagementUpdateComponent>;
     let service: UserService;
     const route: ActivatedRoute = ({
-      data: of({ user: new User(1, 'user', 'first', 'last', 'first@last.com', true, 'en', ['ROLE_USER'], 'admin') })
+      data: of({
+        user: new User(1, 'user', 'first', 'last', 'first@last.com', 'first@last.com', true, 'en', 5, 5, 6, 6, ['ROLE_USER'], 'admin')
+      })
     } as any) as ActivatedRoute;
 
     beforeEach(async(() => {
