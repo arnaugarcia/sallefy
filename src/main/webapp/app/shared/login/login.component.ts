@@ -6,7 +6,8 @@ import { LoginService } from 'app/core/login/login.service';
 
 @Component({
   selector: 'sf-login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['login.component.scss']
 })
 export class SfLoginComponent implements AfterViewInit {
   @ViewChild('username', { static: false })
@@ -46,23 +47,9 @@ export class SfLoginComponent implements AfterViewInit {
       .subscribe(
         () => {
           this.authenticationError = false;
-          if (
-            this.router.url === '/account/register' ||
-            this.router.url.startsWith('/account/activate') ||
-            this.router.url.startsWith('/account/reset/')
-          ) {
-            this.router.navigate(['']);
-          }
+          this.router.navigate(['/']);
         },
         () => (this.authenticationError = true)
       );
-  }
-
-  register(): void {
-    this.router.navigate(['/account/register']);
-  }
-
-  requestResetPassword(): void {
-    this.router.navigate(['/account/reset', 'request']);
   }
 }
