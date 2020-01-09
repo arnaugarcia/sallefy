@@ -94,23 +94,5 @@ describe('Component Tests', () => {
       expect(comp.loginForm.get('rememberMe')!.value).toEqual(expected.rememberMe);
       expect(mockActiveModal.dismissSpy).toHaveBeenCalledWith('cancel');
     });
-
-    it('should redirect user when register', () => {
-      // WHEN
-      comp.register();
-
-      // THEN
-      expect(mockActiveModal.dismissSpy).toHaveBeenCalledWith('to state register');
-      expect(mockRouter.navigateSpy).toHaveBeenCalledWith(['/account/register']);
-    });
-
-    it('should redirect user when request password', () => {
-      // WHEN
-      comp.requestResetPassword();
-
-      // THEN
-      expect(mockActiveModal.dismissSpy).toHaveBeenCalledWith('to state requestReset');
-      expect(mockRouter.navigateSpy).toHaveBeenCalledWith(['/account/reset', 'request']);
-    });
   });
 });
