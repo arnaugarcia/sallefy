@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { LoginService } from 'app/core/login/login.service';
-import { SfLoginModalComponent } from 'app/shared/login/login.component';
+import { SfLoginComponent } from 'app/shared/login/login.component';
 import { SallefyTestModule } from '../../../test.module';
 import { MockLoginService } from '../../../helpers/mock-login.service';
 import { MockRouter } from '../../../helpers/mock-route.service';
@@ -12,8 +12,8 @@ import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
 
 describe('Component Tests', () => {
   describe('LoginComponent', () => {
-    let comp: SfLoginModalComponent;
-    let fixture: ComponentFixture<SfLoginModalComponent>;
+    let comp: SfLoginComponent;
+    let fixture: ComponentFixture<SfLoginComponent>;
     let mockLoginService: MockLoginService;
     let mockRouter: MockRouter;
     let mockActiveModal: MockActiveModal;
@@ -21,7 +21,7 @@ describe('Component Tests', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [SallefyTestModule],
-        declarations: [SfLoginModalComponent],
+        declarations: [SfLoginComponent],
         providers: [
           FormBuilder,
           {
@@ -30,12 +30,12 @@ describe('Component Tests', () => {
           }
         ]
       })
-        .overrideTemplate(SfLoginModalComponent, '')
+        .overrideTemplate(SfLoginComponent, '')
         .compileComponents();
     }));
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(SfLoginModalComponent);
+      fixture = TestBed.createComponent(SfLoginComponent);
       comp = fixture.componentInstance;
       mockLoginService = TestBed.get(LoginService);
       mockRouter = TestBed.get(Router);
@@ -93,24 +93,6 @@ describe('Component Tests', () => {
       expect(comp.loginForm.get('password')!.value).toEqual(expected.password);
       expect(comp.loginForm.get('rememberMe')!.value).toEqual(expected.rememberMe);
       expect(mockActiveModal.dismissSpy).toHaveBeenCalledWith('cancel');
-    });
-
-    it('should redirect user when register', () => {
-      // WHEN
-      comp.register();
-
-      // THEN
-      expect(mockActiveModal.dismissSpy).toHaveBeenCalledWith('to state register');
-      expect(mockRouter.navigateSpy).toHaveBeenCalledWith(['/account/register']);
-    });
-
-    it('should redirect user when request password', () => {
-      // WHEN
-      comp.requestResetPassword();
-
-      // THEN
-      expect(mockActiveModal.dismissSpy).toHaveBeenCalledWith('to state requestReset');
-      expect(mockRouter.navigateSpy).toHaveBeenCalledWith(['/account/reset', 'request']);
     });
   });
 });

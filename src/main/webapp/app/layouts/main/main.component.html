@@ -2,11 +2,11 @@
 
 <div class="light main-wrap clearfix" id="wrap">
 
-    <div class="adonis-player-wrap" data-sticky-offset="150">
+    <div *ngIf="isAuthenticated()" class="adonis-player-wrap" data-sticky-offset="150">
         <sf-player></sf-player>
     </div>
 
-    <div id="site-header">
+    <div *ngIf="isAuthenticated()" id="site-header">
         <router-outlet name="navbar"></router-outlet>
     </div>
 
