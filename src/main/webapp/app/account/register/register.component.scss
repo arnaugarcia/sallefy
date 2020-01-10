@@ -1,0 +1,37 @@
+#register {
+  width: 1000px;
+  margin: 10rem auto 2%;
+  transition: opacity 1s;
+  -webkit-transition: opacity 1s;
+}
+
+#login h1 {
+  background: #3399cc;
+  padding: 20px 0;
+  font-size: 140%;
+  font-weight: 300;
+  text-align: center;
+  color: #fff;
+}
+
+form {
+  background: #575757;
+  padding: 6% 4%;
+}
+
+input[type='submit'] {
+  width: 100%;
+  background: #b08cf9;
+  border: 0;
+  padding: 2%;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100%;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s;
+  -webkit-transition: background 0.3s;
+}
+
+input[type='submit']:hover {
+  background: #6610f2;
+}
