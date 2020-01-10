@@ -11,12 +11,14 @@ import { PasswordResetInitComponent } from './password-reset/init/password-reset
 import { PasswordResetFinishComponent } from './password-reset/finish/password-reset-finish.component';
 import { SettingsComponent } from './settings/settings.component';
 import { accountState } from './account.route';
+import { LoginComponent } from 'app/account/login/login.component';
 
 @NgModule({
   imports: [SallefySharedModule, RouterModule.forChild(accountState)],
   declarations: [
     ActivateComponent,
     RegisterComponent,
+    LoginComponent,
     PasswordComponent,
     PasswordStrengthBarComponent,
     PasswordResetInitComponent,

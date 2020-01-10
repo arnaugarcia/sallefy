@@ -13,7 +13,7 @@
           "pattern": "El seu nom d'usuari només pot contenir lletres minúscules i números."
         }
       },
-      "success": "<strong>Registre guardat!</strong> Si us plau, consulti el seu compte de correu electrònic per confirmar.",
+      "success": "<strong>Compte creat!</strong> Inicia sessió per començar a rockejar!",
       "error": {
         "fail": "<strong>Error en registre!</strong> Si us plau, torni-ho a intentar més tard.",
         "userexists": "<strong>El nom d'usuari ja existeix!</strong> Si us plau, esculli'n un altre.",
