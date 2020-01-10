@@ -52,8 +52,4 @@ export class LoginComponent implements AfterViewInit {
         () => (this.authenticationError = true)
       );
   }
-
-  register(): void {
-    this.router.navigate(['account', 'register']);
-  }
 }

@@ -58,7 +58,6 @@ describe('Component Tests', () => {
           login: '',
           langKey: 'en'
         });
-        expect(comp.success).toBe(true);
         expect(mockTranslate.getCurrentLanguageSpy).toHaveBeenCalled();
         expect(comp.errorUserExists).toBe(false);
         expect(comp.errorEmailExists).toBe(false);

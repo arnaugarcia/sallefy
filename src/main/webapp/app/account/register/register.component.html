@@ -1,6 +1,6 @@
 <div id="register">
-    <div class="alert alert-success" *ngIf="success" jhiTranslate="register.messages.success">
-        <strong>Registration saved!</strong> Please check your email for confirmation.
+    <div class="alert alert-success" *ngIf="success">
+        <strong>Account created!</strong> <a routerLink="/account/login">Please click here to start rocking!.</a>
     </div>
 
     <div class="alert alert-danger" *ngIf="error" jhiTranslate="register.messages.error.fail">

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Renderer, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { JhiLanguageService } from 'ng-jhipster';
@@ -11,7 +11,7 @@ import { RegisterService } from './register.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements AfterViewInit {
+export class RegisterComponent {
   @ViewChild('login', { static: false })
   login?: ElementRef;
 
@@ -28,18 +28,7 @@ export class RegisterComponent implements AfterViewInit {
     confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]]
   });
 
-  constructor(
-    private languageService: JhiLanguageService,
-    private registerService: RegisterService,
-    private renderer: Renderer,
-    private fb: FormBuilder
-  ) {}
-
-  ngAfterViewInit(): void {
-    if (this.login) {
-      this.renderer.invokeElementMethod(this.login.nativeElement, 'focus', []);
-    }
-  }
+  constructor(private languageService: JhiLanguageService, private registerService: RegisterService, private fb: FormBuilder) {}
 
   register(): void {
     this.doNotMatch = false;

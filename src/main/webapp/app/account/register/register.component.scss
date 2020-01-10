@@ -5,9 +5,17 @@
   -webkit-transition: opacity 1s;
 }
 
-#login h1 {
+a {
+  color: #575757;
+}
+
+a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+#login h2 {
   background: #3399cc;
-  padding: 20px 0;
   font-size: 140%;
   font-weight: 300;
   text-align: center;
@@ -16,7 +24,7 @@
 
 form {
   background: #575757;
-  padding: 6% 4%;
+  padding: 4% 4%;
 }
 
 input[type='submit'] {
