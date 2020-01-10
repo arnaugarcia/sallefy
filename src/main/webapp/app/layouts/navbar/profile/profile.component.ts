@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
   logout(): void {
     this.show = false;
     this.loginService.logout();
-    this.router.navigate(['login']);
+    this.router.navigate(['/account/login']);
   }
 
   getImageUrl(): string | null {

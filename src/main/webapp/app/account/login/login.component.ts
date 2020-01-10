@@ -9,7 +9,7 @@ import { LoginService } from 'app/core/login/login.service';
   templateUrl: './login.component.html',
   styleUrls: ['login.component.scss']
 })
-export class SfLoginComponent implements AfterViewInit {
+export class LoginComponent implements AfterViewInit {
   @ViewChild('username', { static: false })
   username?: ElementRef;
 
@@ -51,5 +51,9 @@ export class SfLoginComponent implements AfterViewInit {
         },
         () => (this.authenticationError = true)
       );
+  }
+
+  register(): void {
+    this.router.navigate(['account', 'register']);
   }
 }
