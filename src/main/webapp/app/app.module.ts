@@ -17,10 +17,12 @@ import { ErrorComponent } from './layouts/error/error.component';
 import { SallefyPlayerModule } from 'app/layouts/player/player.module';
 import { NotificationComponent } from './layouts/navbar/notification/notification.component';
 import { ProfileComponent } from './layouts/navbar/profile/profile.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     SallefySharedModule,
     SallefyCoreModule,
     SallefyHomeModule,
