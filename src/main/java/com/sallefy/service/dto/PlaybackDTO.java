@@ -3,10 +3,13 @@ package com.sallefy.service.dto;
 import com.sallefy.domain.enumeration.AgentType;
 import io.swagger.annotations.ApiModel;
 
+import java.time.ZonedDateTime;
+
 @ApiModel(value = "Playback", description = "A DTO representing a playback of a song")
 public class PlaybackDTO {
     private Double latitude;
     private Double longitude;
+    private ZonedDateTime dateTime;
     private AgentType client;
     private UserSimplifiedDTO user;
     private TrackDTO track;
@@ -25,6 +28,14 @@ public class PlaybackDTO {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public ZonedDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(ZonedDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public AgentType getClient() {
