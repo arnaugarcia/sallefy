@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
 public class PlaybackDTO {
     private Double latitude;
     private Double longitude;
-    private ZonedDateTime playedAt;
+    private ZonedDateTime time;
     private AgentType client;
     private UserSimplifiedDTO user;
     private TrackDTO track;
@@ -30,12 +30,12 @@ public class PlaybackDTO {
         this.longitude = longitude;
     }
 
-    public ZonedDateTime getPlayedAt() {
-        return playedAt;
+    public ZonedDateTime getTime() {
+        return time;
     }
 
-    public void setPlayedAt(ZonedDateTime playedAt) {
-        this.playedAt = playedAt;
+    public void setTime(ZonedDateTime time) {
+        this.time = time;
     }
 
     public AgentType getClient() {
