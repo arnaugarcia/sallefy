@@ -33,3 +33,40 @@ body {
 .swagger-ui .opblock .opblock-summary-description {
   color: white;
 }
+
+.swagger-ui table thead tr td,
+.swagger-ui table thead tr th {
+  color: white;
+}
+
+.swagger-ui .response-col_status {
+  border-color: white;
+  color: white;
+}
+
+.swagger-ui .response-col_description {
+  border-color: white;
+  color: white;
+}
+
+.swagger-ui .tab li {
+  color: white;
+}
+
+.swagger-ui .opblock-description-wrapper p,
+.swagger-ui .opblock-external-docs-wrapper p,
+.swagger-ui .opblock-title_normal p {
+  color: white;
+}
+
+.swagger-ui .parameter__name {
+  color: white;
+}
+
+.swagger-ui .parameter__type {
+  color: white;
+}
+
+.swagger-ui label {
+  color: white;
+}
