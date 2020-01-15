@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+}
+
+.swagger-ui {
+  color: white;
+  background-color: #1b1b1b;
+}
+
+.swagger-ui .info .title {
+  color: white;
+}
+
+.swagger-ui .info .base-url {
+  color: white;
+}
+
+.swagger-ui .info li,
+.swagger-ui .info p,
+.swagger-ui .info table {
+  color: white;
+}
+
+.swagger-ui a.nostyle,
+.swagger-ui a.nostyle:visited {
+  color: white;
+}
+
+.swagger-ui .opblock-tag small {
+  color: white;
+}
+
+.swagger-ui .opblock .opblock-summary-description {
+  color: white;
+}
