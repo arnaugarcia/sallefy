@@ -1,12 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'sf-developer',
-  templateUrl: './developer.component.html',
-  styleUrls: ['./developer.component.scss']
+  templateUrl: './developer.component.html'
 })
-export class DeveloperComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {}
-}
+export class DeveloperComponent {}

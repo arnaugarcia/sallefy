@@ -1,0 +1,118 @@
+body {
+  margin: 0;
+}
+
+.swagger-ui .info a {
+  color: #b8babc;
+  text-decoration: none;
+}
+
+.swagger-ui .info a:hover {
+  color: #b08cf9;
+}
+
+.topbar {
+  display: none;
+}
+
+.swagger-ui .info {
+  margin: 0;
+}
+
+.swagger-ui {
+  color: white;
+}
+
+.swagger-ui .info .title {
+  color: white;
+}
+
+.swagger-ui .info .base-url {
+  color: white;
+}
+
+.swagger-ui .info li,
+.swagger-ui .info p,
+.swagger-ui .info table {
+  color: white;
+}
+
+.swagger-ui a.nostyle,
+.swagger-ui a.nostyle:visited {
+  color: white;
+}
+
+.swagger-ui .opblock-tag small {
+  color: white;
+}
+
+.swagger-ui .opblock .opblock-summary-description {
+  color: white;
+}
+
+.swagger-ui table thead tr td,
+.swagger-ui table thead tr th {
+  color: white;
+}
+
+.swagger-ui .response-col_status {
+  border-color: white;
+  color: white;
+}
+
+.swagger-ui .response-col_description {
+  border-color: white;
+  color: white;
+}
+
+.swagger-ui .tab li {
+  color: white;
+}
+
+.swagger-ui .opblock-description-wrapper p,
+.swagger-ui .opblock-external-docs-wrapper p,
+.swagger-ui .opblock-title_normal p {
+  color: white;
+}
+
+.swagger-ui .parameter__name {
+  color: white;
+}
+
+.swagger-ui .parameter__type {
+  color: white;
+}
+
+.swagger-ui label {
+  color: white;
+}
+
+.swagger-ui .responses-inner h4,
+.swagger-ui .responses-inner h5 {
+  color: white;
+}
+
+.swagger-ui .prop-format {
+  color: white;
+}
+
+.swagger-ui .parameter__extension,
+.swagger-ui .parameter__in {
+  color: white;
+}
+
+/**
+  Models Section
+ */
+
+.swagger-ui section.models h4 {
+  color: white;
+}
+
+.swagger-ui .model-title {
+  color: white;
+}
+
+.swagger-ui .model {
+  color: white;
+}

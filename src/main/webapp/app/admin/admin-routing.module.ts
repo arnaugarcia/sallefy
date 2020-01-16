@@ -23,10 +23,6 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./configuration/configuration.module').then(m => m.ConfigurationModule)
       },
       {
-        path: 'docs',
-        loadChildren: () => import('./docs/docs.module').then(m => m.DocsModule)
-      },
-      {
         path: 'health',
         loadChildren: () => import('./health/health.module').then(m => m.SfHealthModule)
       },
