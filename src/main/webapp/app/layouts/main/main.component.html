@@ -12,9 +12,22 @@
 
     <div id="site-content">
         <div id="site-content-inner">
-            <div class="pt-4 pt-lg-5"></div>
-            <router-outlet></router-outlet>
-            <router-outlet name="popup"></router-outlet>
+            <div class="master-container-fluid">
+                <div class="row">
+                    <div [class.col-md-12]="!isAuthenticated()" [class.col-md-9]="isAuthenticated()" [class.flex-column-content-md]="isAuthenticated()">
+                        <main id="main">
+                            <router-outlet></router-outlet>
+                        </main>
+                    </div>
+                    <div *ngIf="isAuthenticated()" class="col-md-3 flex-column-sidebar-md sidebar">
+                        <sf-widgets></sf-widgets>
+                        <div class="widget">
+                            <sf-footer></sf-footer>
+                        </div>
+                    </div>
+                    <router-outlet name="popup"></router-outlet>
+                </div>
+            </div>
         </div>
     </div>
 
