@@ -26,6 +26,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         },
         {
           path: 'developer',
+          canActivate: [UserRouteAccessService],
           loadChildren: () => import('./developer/developer.module').then(m => m.DeveloperModule)
         },
         ...LAYOUT_ROUTES
