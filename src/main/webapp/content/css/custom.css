@@ -2,6 +2,15 @@ body {
   margin: 0;
 }
 
+.swagger-ui .info a {
+  color: #b8babc;
+  text-decoration: none;
+}
+
+.swagger-ui .info a:hover {
+  color: #b08cf9;
+}
+
 .topbar {
   display: none;
 }
