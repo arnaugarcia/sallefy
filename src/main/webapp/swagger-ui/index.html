@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Sallefy - Swagger UI</title>
     <link rel="stylesheet" type="text/css" href="./swagger-ui.css">
-    <link href="/content/css/custom.css" rel="stylesheet" type="text/css">
+    <link href="/content/css/swagger-ui-dark.css" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32"/>
     <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16"/>
 </head>
@@ -20,7 +20,7 @@
 <script type="text/javascript">
     window.onload = function () {
 
-        var urls = [];
+        let urls = [];
         axios.get("/swagger-resources").then(function (response) {
             response.data.forEach(function (resource) {
                 urls.push({"name": resource.name, "url": resource.location});
@@ -48,7 +48,7 @@
                     SwaggerUIBundle.plugins.DownloadUrl
                 ],
                 requestInterceptor: function (req) {
-                    var authToken = JSON.parse(localStorage.getItem("sf-authenticationtoken")
+                    const authToken = JSON.parse(localStorage.getItem("sf-authenticationtoken")
                         || sessionStorage.getItem("sf-authenticationtoken"));
 
                     if (authToken) {
