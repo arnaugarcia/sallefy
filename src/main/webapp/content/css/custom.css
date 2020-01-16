@@ -69,3 +69,8 @@ body {
 .swagger-ui label {
   color: white;
 }
+
+.swagger-ui .responses-inner h4,
+.swagger-ui .responses-inner h5 {
+  color: white;
+}
