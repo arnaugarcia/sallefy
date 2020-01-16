@@ -2,6 +2,14 @@ body {
   margin: 0;
 }
 
+.topbar {
+  display: none;
+}
+
+.swagger-ui .info {
+  margin: 0;
+}
+
 .swagger-ui {
   color: white;
 }
@@ -72,5 +80,30 @@ body {
 
 .swagger-ui .responses-inner h4,
 .swagger-ui .responses-inner h5 {
+  color: white;
+}
+
+.swagger-ui .prop-format {
+  color: white;
+}
+
+.swagger-ui .parameter__extension,
+.swagger-ui .parameter__in {
+  color: white;
+}
+
+/**
+  Models Section
+ */
+
+.swagger-ui section.models h4 {
+  color: white;
+}
+
+.swagger-ui .model-title {
+  color: white;
+}
+
+.swagger-ui .model {
   color: white;
 }
