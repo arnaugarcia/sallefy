@@ -8,6 +8,7 @@ import { WidgetsDirective } from './widgets.directive';
 
 @NgModule({
   declarations: [WidgetsComponent, GenresComponent, ArtistsComponent, TopTracksComponent, WidgetsDirective],
+  entryComponents: [GenresComponent, ArtistsComponent, TopTracksComponent],
   imports: [SallefySharedModule],
   exports: [WidgetsComponent]
 })

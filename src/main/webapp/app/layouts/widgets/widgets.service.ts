@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { WidgetBase } from 'app/layouts/widgets/widget-base';
 
 @Injectable({
   providedIn: 'root'
@@ -6,9 +7,9 @@ import { Injectable } from '@angular/core';
 export class WidgetsService {
   // TODO: This service should implement a logic to remove, add or reload widgets of the aside
 
-  reload(selector: string): void {}
+  reload(widget: WidgetBase): void {}
 
-  add(selector: string): void {}
+  add(widget: WidgetBase): void {}
 
-  remove(selector: string): void {}
+  remove(widget: WidgetBase): void {}
 }
