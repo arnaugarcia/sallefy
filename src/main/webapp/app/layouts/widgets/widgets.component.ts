@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, OnDestroy, OnInit, Type, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { WidgetsDirective } from 'app/layouts/widgets/widgets.directive';
 import { GenresComponent } from 'app/layouts/widgets/genres/genres.component';
 import { WidgetsService } from 'app/layouts/widgets/widgets.service';
@@ -22,14 +22,25 @@ export class WidgetsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.warn('Widgets init');
-    this.loadComponent(GenresComponent);
-    this.loadComponent(TopTracksComponent);
+    this.widgetsService.widgets$.subscribe((widgets: WidgetBase[]) => {
+      console.warn('New widgets loaded!');
+      console.warn(widgets);
+      widgets.forEach(value => this.loadComponent(value));
+    });
   }
 
-  private loadComponent(widget: Type<WidgetBase>): void {
+  private loadComponent(widget: WidgetBase): void {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(widget);
     const viewContainerRef = this.widgetsAnchor.viewContainerRef;
 
     viewContainerRef.createComponent(componentFactory);
+  }
+
+  addGenres(): void {
+    this.widgetsService.add(GenresComponent);
+  }
+
+  addTracks(): void {
+    this.widgetsService.add(TopTracksComponent);
   }
 }
