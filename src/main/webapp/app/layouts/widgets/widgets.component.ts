@@ -6,3 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./widgets.component.scss']
 })
 export class WidgetsComponent {}
+// TODO: Create a WidgetBase in order to inherit reload() method to all widgets
+// TODO: Make sure that the widgets doesn't create a memory leak
