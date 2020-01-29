@@ -8,22 +8,22 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class WidgetsService {
   // TODO: This service should implement a logic to remove, add or reload widgets of the aside
 
-  private widgets = new BehaviorSubject<WidgetBase[]>([]);
-  widgets$: Observable<WidgetBase[]> = this.widgets.asObservable();
+  private widgets = new BehaviorSubject<Type<WidgetBase>[]>([]);
+  widgets$: Observable<Type<WidgetBase>[]> = this.widgets.asObservable();
 
-  reload(widget: WidgetBase): void {
+  reload(widget: Type<WidgetBase>): void {
     // TODO: find widget and execute reload() method
   }
 
   add(widget: Type<WidgetBase>): void {
     const widgets = this.widgets.getValue();
-    widgets.push(new widget());
+    widgets.push(widget);
     this.widgets.next(widgets);
   }
 
   remove(widget: Type<WidgetBase>): void {
     const widgets = this.widgets.getValue();
-    const index = widgets.indexOf(new widget());
+    const index = widgets.indexOf(widget);
     widgets.splice(index, 1);
     this.widgets.next(widgets);
   }
