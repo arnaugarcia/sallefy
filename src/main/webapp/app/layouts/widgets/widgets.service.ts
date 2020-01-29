@@ -17,14 +17,18 @@ export class WidgetsService {
 
   add(widget: Type<WidgetBase>): void {
     const widgets = this.widgets.getValue();
-    widgets.push(widget);
-    this.widgets.next(widgets);
+    if (!widgets.includes(widget)) {
+      widgets.push(widget);
+      this.widgets.next(widgets);
+    }
   }
 
   remove(widget: Type<WidgetBase>): void {
     const widgets = this.widgets.getValue();
     const index = widgets.indexOf(widget);
-    widgets.splice(index, 1);
-    this.widgets.next(widgets);
+    if (index !== -1) {
+      widgets.splice(index, 1);
+      this.widgets.next(widgets);
+    }
   }
 }

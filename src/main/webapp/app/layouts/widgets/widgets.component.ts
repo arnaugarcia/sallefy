@@ -13,6 +13,7 @@ import { TopTracksComponent } from 'app/layouts/widgets/top-tracks/top-tracks.co
 // TODO: Create a WidgetBase in order to inherit reload() method to all widgets
 // TODO: Make sure that the widgets doesn't create a memory leak
 export class WidgetsComponent implements OnInit, OnDestroy {
+  public widgets: Type<WidgetBase>[] = [];
   @ViewChild(WidgetsDirective, { static: true })
   private widgetsAnchor?: WidgetsDirective;
 
@@ -23,19 +24,25 @@ export class WidgetsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.warn('Widgets init');
     this.widgetsService.widgets$.subscribe((widgets: Type<WidgetBase>[]) => {
-      console.warn('New widgets loaded!');
-      console.warn(widgets);
+      console.warn('New widgets loaded!', widgets);
       widgets.forEach((widget: Type<WidgetBase>) => {
-        this.loadComponent(widget);
+        if (!this.widgets.includes(widget)) {
+          this.loadComponent(widget);
+        }
+        const difference = this.widgets.filter(x => !widgets.includes(x));
+        if (difference) {
+          difference.forEach((deleteWidget: Type<WidgetBase>) => this.widgets.slice(this.widgets.indexOf(deleteWidget), 1));
+        }
       });
     });
   }
 
-  private loadComponent(widget: Type<WidgetBase>): void {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(widget);
-    const viewContainerRef = this.widgetsAnchor.viewContainerRef;
+  removeTracks(): void {
+    this.widgetsService.remove(TopTracksComponent);
+  }
 
-    viewContainerRef.createComponent(componentFactory);
+  removeGenres(): void {
+    this.widgetsService.remove(GenresComponent);
   }
 
   addGenres(): void {
@@ -44,5 +51,17 @@ export class WidgetsComponent implements OnInit, OnDestroy {
 
   addTracks(): void {
     this.widgetsService.add(TopTracksComponent);
+  }
+
+  private loadComponent(widget: Type<WidgetBase>): void {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(widget);
+    const viewContainerRef = this.widgetsAnchor.viewContainerRef;
+    viewContainerRef.createComponent(componentFactory);
+    this.widgets.push(widget);
+  }
+
+  private removeComponent(widget: Type<WidgetBase>): void {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(widget);
+    const viewContainerRef = this.widgetsAnchor.viewContainerRef;
   }
 }
