@@ -28,10 +28,12 @@ export class WidgetsComponent implements OnInit, OnDestroy {
       widgets.forEach((widget: Type<WidgetBase>) => {
         if (!this.widgets.includes(widget)) {
           this.loadComponent(widget);
-        }
-        const difference = this.widgets.filter(x => !widgets.includes(x));
-        if (difference) {
-          difference.forEach((deleteWidget: Type<WidgetBase>) => this.widgets.slice(this.widgets.indexOf(deleteWidget), 1));
+        } else {
+          const difference = this.widgets.filter(x => !widgets.includes(x));
+          if (difference.length) {
+            this.removeComponent(difference[0]);
+            // difference.forEach((deleteWidget: Type<WidgetBase>) => this.widgets.slice(this.widgets.indexOf(deleteWidget), 1));
+          }
         }
       });
     });
@@ -61,7 +63,8 @@ export class WidgetsComponent implements OnInit, OnDestroy {
   }
 
   private removeComponent(widget: Type<WidgetBase>): void {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(widget);
     const viewContainerRef = this.widgetsAnchor.viewContainerRef;
+    viewContainerRef.remove(this.widgets.indexOf(widget));
+    this.widgets.splice(this.widgets.indexOf(widget), 1);
   }
 }
