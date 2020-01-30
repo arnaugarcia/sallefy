@@ -16,9 +16,9 @@ export class WidgetsComponent implements OnInit, OnDestroy, AfterViewInit {
   public widgets: Type<WidgetBase>[] = [];
 
   @ViewChild(WidgetsDirective, { static: true })
-  private anchorPoint: WidgetsDirective;
+  private anchorPoint: WidgetsDirective | undefined;
 
-  private widgetContainerRef: ViewContainerRef;
+  private widgetContainerRef: ViewContainerRef | undefined;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private widgetsService: WidgetsService) {}
 
@@ -31,7 +31,9 @@ export class WidgetsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.widgetContainerRef = this.anchorPoint.viewContainerRef;
+    if (this.anchorPoint) {
+      this.widgetContainerRef = this.anchorPoint.viewContainerRef;
+    }
   }
 
   removeTracks(): void {
@@ -52,10 +54,14 @@ export class WidgetsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private loadComponent(widget: Type<WidgetBase>): void {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(widget);
-    this.widgetContainerRef.createComponent(componentFactory);
+    if (this.widgetContainerRef) {
+      this.widgetContainerRef.createComponent(componentFactory);
+    }
   }
 
   private removeComponent(widget: Type<WidgetBase>): void {
-    this.widgetContainerRef.remove(this.widgets.indexOf(widget));
+    if (this.widgetContainerRef) {
+      this.widgetContainerRef.remove(this.widgets.indexOf(widget));
+    }
   }
 }
