@@ -27,7 +27,9 @@ export class WidgetsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.widgets$ = this.widgetsService.widgets$.subscribe((widgets: Type<WidgetBase>[]) => {
-      this.widgets = widgets;
+      // There is a change in the array can be an addition or subtraction
+      const difference = widgets.filter(x => !this.widgets.includes(x));
+      console.warn(difference);
     });
   }
 
