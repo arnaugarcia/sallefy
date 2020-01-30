@@ -1,9 +1,7 @@
 import { AfterViewInit, Component, ComponentFactoryResolver, OnDestroy, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { WidgetsDirective } from 'app/layouts/widgets/widgets.directive';
-import { GenresComponent } from 'app/layouts/widgets/genres/genres.component';
 import { WidgetsService } from 'app/layouts/widgets/widgets.service';
 import { WidgetBase } from 'app/layouts/widgets/widget-base';
-import { TopTracksComponent } from 'app/layouts/widgets/top-tracks/top-tracks.component';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -11,8 +9,6 @@ import { Subscription } from 'rxjs';
   templateUrl: './widgets.component.html',
   styleUrls: ['./widgets.component.scss']
 })
-// TODO: Create a WidgetBase in order to inherit reload() method to all widgets
-// TODO: Make sure that the widgets doesn't create a memory leak
 export class WidgetsComponent implements OnInit, AfterViewInit, OnDestroy {
   public widgets: Type<WidgetBase>[] = [];
 
@@ -27,10 +23,21 @@ export class WidgetsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.widgets$ = this.widgetsService.widgets$.subscribe((widgets: Type<WidgetBase>[]) => {
-      // There is a change in the array can be an addition or subtraction
-      const difference = widgets.filter(x => !this.widgets.includes(x));
-      console.warn(difference);
+      this.operateChangeInView(widgets);
     });
+  }
+
+  private operateChangeInView(widgets: Type<WidgetBase>[]): void {
+    // There is a change in the array can be an addition or subtraction
+    const addition = widgets.find(x => !this.widgets.includes(x));
+    if (addition) {
+      this.loadComponent(addition);
+      this.widgets.push(addition);
+    } else {
+      const subtraction = this.widgets.find(x => !widgets.includes(x));
+      this.removeComponent(subtraction);
+      this.widgets.splice(this.widgets.indexOf(subtraction), 1);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -41,22 +48,6 @@ export class WidgetsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.widgets$.unsubscribe();
-  }
-
-  removeTracks(): void {
-    this.widgetsService.remove(TopTracksComponent);
-  }
-
-  removeGenres(): void {
-    this.widgetsService.remove(GenresComponent);
-  }
-
-  addGenres(): void {
-    this.widgetsService.add(GenresComponent);
-  }
-
-  addTracks(): void {
-    this.widgetsService.add(TopTracksComponent);
   }
 
   private loadComponent(widget: Type<WidgetBase>): void {
