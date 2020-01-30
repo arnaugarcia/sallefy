@@ -4,6 +4,7 @@ import { GenresComponent } from 'app/layouts/widgets/genres/genres.component';
 import { WidgetsService } from 'app/layouts/widgets/widgets.service';
 import { WidgetBase } from 'app/layouts/widgets/widget-base';
 import { TopTracksComponent } from 'app/layouts/widgets/top-tracks/top-tracks.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'sf-widgets',
@@ -12,7 +13,7 @@ import { TopTracksComponent } from 'app/layouts/widgets/top-tracks/top-tracks.co
 })
 // TODO: Create a WidgetBase in order to inherit reload() method to all widgets
 // TODO: Make sure that the widgets doesn't create a memory leak
-export class WidgetsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class WidgetsComponent implements OnInit, AfterViewInit, OnDestroy {
   public widgets: Type<WidgetBase>[] = [];
 
   @ViewChild(WidgetsDirective, { static: true })
@@ -20,12 +21,12 @@ export class WidgetsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private widgetContainerRef: ViewContainerRef | undefined;
 
+  private widgets$: Subscription = new Subscription();
+
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private widgetsService: WidgetsService) {}
 
-  ngOnDestroy(): void {}
-
   ngOnInit(): void {
-    this.widgetsService.widgets$.subscribe((widgets: Type<WidgetBase>[]) => {
+    this.widgets$ = this.widgetsService.widgets$.subscribe((widgets: Type<WidgetBase>[]) => {
       this.widgets = widgets;
     });
   }
@@ -34,6 +35,10 @@ export class WidgetsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.anchorPoint) {
       this.widgetContainerRef = this.anchorPoint.viewContainerRef;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.widgets$.unsubscribe();
   }
 
   removeTracks(): void {
