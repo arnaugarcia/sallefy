@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { GenreService } from 'app/shared/services/genre.service';
 import { IGenre } from 'app/shared/model/genre.model';
 import { HttpResponse } from '@angular/common/http';
 import { WidgetBase } from 'app/layouts/widgets/widget-base';
+import { Subscription } from 'rxjs';
+import { WidgetsService } from 'app/layouts/widgets/widgets.service';
 
 @Component({
   selector: 'sf-genres',
@@ -11,16 +13,26 @@ import { WidgetBase } from 'app/layouts/widgets/widget-base';
 })
 export class GenresComponent implements OnInit, WidgetBase {
   genres: IGenre[] | null = [];
+  private widgetReloaded$: Subscription = new Subscription();
 
-  constructor(private genreService: GenreService) {}
+  constructor(private elementRef: ElementRef, private genreService: GenreService, private widgetsService: WidgetsService) {}
 
   ngOnInit(): void {
-    console.warn('Init genres component');
     this.loadAll();
+
+    this.widgetReloaded$ = this.widgetsService.reloadWidget$.subscribe((widgetSelector: string) => {
+      if (this.hasTheSelector(widgetSelector)) {
+        this.reload();
+      }
+    });
   }
 
-  reload(): void {
-    console.warn('Reload genres component');
+  private hasTheSelector(widgetSelector: string): boolean {
+    return this.elementRef.nativeElement.tagName === widgetSelector.toUpperCase();
+  }
+
+  public reload(): void {
+    console.warn('Reloaded genres widget');
     this.loadAll();
   }
 

@@ -1,34 +1,14 @@
-import { Injectable, Type } from '@angular/core';
-import { WidgetBase } from 'app/layouts/widgets/widget-base';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WidgetsService {
-  // TODO: This service should implement a logic to remove, add or reload widgets of the aside
+  private reloadWidget = new BehaviorSubject<string>('');
+  reloadWidget$: Observable<string> = this.reloadWidget.asObservable();
 
-  private widgets = new BehaviorSubject<Type<WidgetBase>[]>([]);
-  widgets$: Observable<Type<WidgetBase>[]> = this.widgets.asObservable();
-
-  reload(widget: Type<WidgetBase>): void {
-    // TODO: find widget and execute reload() method
-  }
-
-  add(widget: Type<WidgetBase>): void {
-    const widgets = this.widgets.getValue();
-    if (!widgets.includes(widget)) {
-      widgets.push(widget);
-      this.widgets.next(widgets);
-    }
-  }
-
-  remove(widget: Type<WidgetBase>): void {
-    const widgets = this.widgets.getValue();
-    const index = widgets.indexOf(widget);
-    if (index !== -1) {
-      widgets.splice(index, 1);
-      this.widgets.next(widgets);
-    }
+  reload(widget: string): void {
+    this.reloadWidget.next(widget);
   }
 }

@@ -7,9 +7,7 @@ import { WidgetBase } from 'app/layouts/widgets/widget-base';
   styleUrls: ['./top-tracks.component.scss']
 })
 export class TopTracksComponent implements OnInit, WidgetBase {
-  constructor() {}
-
   ngOnInit(): void {}
 
-  reload(): void {}
+  public reload(): void {}
 }
