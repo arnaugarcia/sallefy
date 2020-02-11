@@ -18,6 +18,7 @@ import { ErrorComponent } from './layouts/error/error.component';
 import { SallefyPlayerModule } from 'app/layouts/player/player.module';
 import { NotificationComponent } from './layouts/navbar/notification/notification.component';
 import { ProfileComponent } from './layouts/navbar/profile/profile.component';
+import { SallefyWidgetsModule } from 'app/layouts/widgets/widgets.module';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { ProfileComponent } from './layouts/navbar/profile/profile.component';
     // jhipster-needle-angular-add-module JHipster will add new module here
     SallefyEntityModule,
     SallefyPlayerModule,
+    SallefyWidgetsModule,
     SallefyAppRoutingModule
   ],
   declarations: [
