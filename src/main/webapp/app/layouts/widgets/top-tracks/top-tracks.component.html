@@ -11,8 +11,8 @@
             <h6 class="title">
                 <a href="#">{{track.name}}</a>
             </h6>
-            <p class="sub-title">
-                <a href="#">{{track.id}}</a>
+            <p class="sub-title" *ngIf="track.owner as owner">
+                <a href="#">{{owner.firstName}} {{owner.lastName}}</a>
             </p>
         </div>
         <div class="hover-state d-flex justify-content-between align-items-center">
