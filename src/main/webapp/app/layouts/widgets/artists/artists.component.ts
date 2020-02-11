@@ -42,11 +42,12 @@ export class ArtistsComponent implements OnInit, OnDestroy, WidgetBase {
   }
 
   public reload(): void {
-    console.warn('Artists widget reloaded');
     this.loadAll();
   }
 
   follow(user: IUser): void {
-    this.userService.follow(user).subscribe();
+    this.userService.follow(user).subscribe((response: HttpResponse<{ follow: boolean }>) => {
+      if (response.ok) this.reload();
+    });
   }
 }
