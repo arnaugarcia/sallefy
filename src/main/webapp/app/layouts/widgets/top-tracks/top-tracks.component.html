@@ -5,7 +5,7 @@
     </div>
     <div class="img-box-horizontal music-img-box img-box-horizontal-style-2" *ngFor="let track of tracks">
         <div class="img-box img-box-sm box-rounded-sm">
-            <img alt="" src="/content/images/hot-song/hot-7.jpg">
+            <img [alt]="track.name" [src]="track.thumbnail">
         </div>
         <div class="des">
             <h6 class="title">
