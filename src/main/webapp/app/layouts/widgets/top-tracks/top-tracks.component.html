@@ -1,18 +1,18 @@
 <div class="widget">
     <div class="d-flex justify-content-between inactive-colored-links mb-3">
         <h4>Top Tracks</h4>
-        <a class="inactive-color" href="#">View all</a>
+        <!--<a class="inactive-color" href="#">View all</a>-->
     </div>
-    <div class="img-box-horizontal music-img-box img-box-horizontal-style-2">
+    <div class="img-box-horizontal music-img-box img-box-horizontal-style-2" *ngFor="let track of tracks">
         <div class="img-box img-box-sm box-rounded-sm">
             <img alt="" src="/content/images/hot-song/hot-7.jpg">
         </div>
         <div class="des">
             <h6 class="title">
-                <a href="#">The Separation</a>
+                <a href="#">{{track.name}}</a>
             </h6>
             <p class="sub-title">
-                <a href="#">Rachel Platten</a>
+                <a href="#">{{track.id}}</a>
             </p>
         </div>
         <div class="hover-state d-flex justify-content-between align-items-center">

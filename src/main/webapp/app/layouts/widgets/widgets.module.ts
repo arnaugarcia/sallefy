@@ -4,11 +4,10 @@ import { TopTracksComponent } from 'app/layouts/widgets/top-tracks/top-tracks.co
 import { ArtistsComponent } from 'app/layouts/widgets/artists/artists.component';
 import { GenresComponent } from 'app/layouts/widgets/genres/genres.component';
 import { WidgetsComponent } from './widgets.component';
-import { WidgetsDirective } from './widgets.directive';
 import { LanguageComponent } from './language/language.component';
 
 @NgModule({
-  declarations: [WidgetsComponent, GenresComponent, ArtistsComponent, TopTracksComponent, WidgetsDirective, LanguageComponent],
+  declarations: [WidgetsComponent, GenresComponent, ArtistsComponent, TopTracksComponent, LanguageComponent],
   entryComponents: [GenresComponent, ArtistsComponent, TopTracksComponent],
   imports: [SallefySharedModule],
   exports: [WidgetsComponent]
