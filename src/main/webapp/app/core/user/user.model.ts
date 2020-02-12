@@ -1,3 +1,23 @@
+export interface IUserSimplified {
+  id?: any;
+  login?: string;
+  imageUrl?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+}
+
+class UserSimplified implements IUserSimplified {
+  constructor(
+    public id: any,
+    public login: string,
+    public email: string,
+    public firstName: string,
+    public imageUrl: string,
+    public lastName: string
+  ) {}
+}
+
 export interface IUser {
   id?: any;
   login?: string;
