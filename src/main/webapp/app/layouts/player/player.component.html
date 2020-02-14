@@ -1,4 +1,26 @@
-<div aria-label="media player" class="master-container-holder" id="adonis_jp_container" role="application">
+
+    <!--<vg-controls>
+        <vg-play-pause></vg-play-pause>
+        <vg-playback-button></vg-playback-button>
+
+        <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+
+        <vg-scrub-bar>
+            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+            <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+        </vg-scrub-bar>
+
+        <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+        <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+
+        <vg-mute></vg-mute>
+
+        <vg-fullscreen></vg-fullscreen>
+    </vg-controls>-->
+    <audio #media id="myAudio" preload="auto">
+        <source src="http://static.videogular.com/assets/audios/videogular.mp3" type="audio/mp3">
+    </audio>
+<div aria-label="media player" class="master-container-holder" id="adonis_jp_container" role="application" style="width: 100%">
     <div class="jp-jplayer" id="adonis_jplayer_main"></div>
     <div class="adonis-player-horizontal">
         <div class="master-container-fluid">

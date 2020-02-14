@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PlayerService } from 'app/layouts/player/player.service';
 
 @Component({
@@ -7,6 +7,10 @@ import { PlayerService } from 'app/layouts/player/player.service';
   styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements OnInit, AfterViewInit {
+  @ViewChild('media', { static: false })
+  private audioPlayerRef: ElementRef | undefined;
+  private audioPlayer: HTMLAudioElement | undefined;
+
   constructor(private playerService: PlayerService) {}
 
   ngOnInit(): void {}
@@ -15,5 +19,10 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     this.playerService.playlistOpen(true);
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    if (this.audioPlayerRef) {
+      this.audioPlayer = this.audioPlayerRef.nativeElement as HTMLAudioElement;
+      this.audioPlayer.play();
+    }
+  }
 }
