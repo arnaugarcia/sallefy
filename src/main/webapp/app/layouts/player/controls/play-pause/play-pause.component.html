@@ -1,0 +1,18 @@
+<a class="jp-play ml-sm-3 mr-sm-3 fs-6" role="button" tabindex="0" (click)="playerApi.play()">
+                                    <span class="adonis-icon icon-2x" *ngIf="playerApi.state == 'paused'">
+                                        <svg height="20" version="1.1" viewBox="0 0 29 32"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M27.703 14.461l-24.945-14.187c-0.272-0.174-0.604-0.278-0.96-0.278-0.993 0-1.798 0.805-1.798 1.798 0 0.001 0 0.002 0 0.004v-0 28.434c0.004 0.982 0.801 1.776 1.783 1.776 0.338 0 0.653-0.094 0.922-0.257l-0.008 0.004c1.524-0.869 23.65-13.44 25.006-14.217 0.549-0.303 0.914-0.878 0.914-1.539s-0.366-1.236-0.905-1.534l-0.009-0.005z"></path>
+                                        </svg>
+                                    </span>
+    <span class="adonis-icon icon-2x" *ngIf="playerApi.state == 'paused'" (click)="playerApi.pause()">
+                                        <svg height="20" version="1.1" viewBox="0 0 29 32"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M19.2 0h8c0.884 0 1.6 0.716 1.6 1.6v28.8c0 0.884-0.716 1.6-1.6 1.6h-8c-0.884 0-1.6-0.716-1.6-1.6v-28.8c0-0.884 0.716-1.6 1.6-1.6z"></path>
+                                            <path
+                                                d="M1.6 0h8c0.884 0 1.6 0.716 1.6 1.6v28.8c0 0.884-0.716 1.6-1.6 1.6h-8c-0.884 0-1.6-0.716-1.6-1.6v-28.8c0-0.884 0.716-1.6 1.6-1.6z"></path>
+                                        </svg>
+                                    </span>
+</a>

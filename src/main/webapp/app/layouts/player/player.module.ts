@@ -8,9 +8,10 @@ import { PlayerPlaylistComponent } from './player-playlist/player-playlist.compo
 import { SallefySharedModule } from 'app/shared/shared.module';
 import { TrackListComponent } from './player-playlist/track-list/track-list.component';
 import { TrackComponent } from './player-playlist/track/track.component';
+import { PlayPauseComponent } from './controls/play-pause/play-pause.component';
 
 @NgModule({
-  declarations: [PlayerComponent, PlayerPlaylistComponent, TrackListComponent, TrackComponent],
+  declarations: [PlayerComponent, PlayerPlaylistComponent, TrackListComponent, TrackComponent, PlayPauseComponent],
   imports: [SallefySharedModule, VgCoreModule, VgControlsModule, VgOverlayPlayModule, VgBufferingModule],
   exports: [PlayerComponent]
 })

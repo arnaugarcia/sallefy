@@ -24,4 +24,8 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {}
+
+  seekTrack(): void {
+    console.warn('Seeking track!');
+  }
 }
