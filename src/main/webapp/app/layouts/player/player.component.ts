@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { PlayerService } from 'app/layouts/player/player.service';
+import { VgAPI } from 'videogular2/compiled/src/core/services/vg-api';
 
 @Component({
   selector: 'sf-player',
@@ -7,9 +8,8 @@ import { PlayerService } from 'app/layouts/player/player.service';
   styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements OnInit, AfterViewInit {
-  @ViewChild('media', { static: false })
-  private audioPlayerRef: ElementRef | undefined;
-  private audioPlayer: HTMLAudioElement | undefined;
+  public api: VgAPI | undefined;
+  percentRemaining = 0;
 
   constructor(private playerService: PlayerService) {}
 
@@ -19,10 +19,9 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     this.playerService.playlistOpen(true);
   }
 
-  ngAfterViewInit(): void {
-    if (this.audioPlayerRef) {
-      this.audioPlayer = this.audioPlayerRef.nativeElement as HTMLAudioElement;
-      this.audioPlayer.play();
-    }
+  onPlayerReady(api: VgAPI): void {
+    this.api = api;
   }
+
+  ngAfterViewInit(): void {}
 }
