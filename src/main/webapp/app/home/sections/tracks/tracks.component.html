@@ -7,14 +7,14 @@
                 </div>
                 <div class="des">
                     <h6 class="title fs-2">
-                        <a href="#">{{track.name}}</a>
+                        <a href="#" (click)="play(track)">{{track.name}}</a>
                     </h6>
                     <p class="sub-title">
-                        <a href="#" *ngFor="let genre of track.genres">{{genre.name}}</a>
+                        <a href="#" (click)="play(track)" *ngFor="let genre of track.genres">{{genre.name}}</a>
                     </p>
                 </div>
                 <div class="hover-state d-flex justify-content-between align-items-center">
-                    <span class="pointer play-btn-dark box-rounded-sm">
+                    <span class="pointer play-btn-dark box-rounded-sm" (click)="play(track)">
                         <i class="play-icon"></i>
                     </span>
                     <div class="d-flex align-items-center">

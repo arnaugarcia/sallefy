@@ -1,6 +1,6 @@
 <vg-player (onPlayerReady)="onPlayerReady($event)">
     <audio #media [vgMedia]="media" id="myAudio" preload="auto">
-        <source src="http://static.videogular.com/assets/audios/videogular.mp3" type="audio/mp3">
+        <source [src]="track.url" type="audio/mp3" *ngFor="let track of tracks">
     </audio>
     <div aria-label="media player" class="master-container-holder" id="adonis_jp_container" role="application" style="width: 100%" *ngIf="api">
         <div class="jp-jplayer" id="adonis_jplayer_main"></div>
