@@ -13,7 +13,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   public tracks: ITrack[] = [];
   public currentTrack: ITrack = new Track();
 
-  constructor(private playerService: PlayerService) {}
+  constructor(public playerService: PlayerService) {}
 
   ngOnInit(): void {
     this.playerService.queue$.subscribe((tracks: ITrack[]) => {

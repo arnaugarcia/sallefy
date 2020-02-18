@@ -22,7 +22,12 @@ export class PlayerService {
 
   prev(): void {}
 
-  next(): void {}
+  next(): ITrack[] {
+    const queue = this.queueSource.getValue();
+    queue.shift();
+    this.queueSource.next(queue);
+    return queue;
+  }
 
   add(tracks: ITrack[]): ITrack[] {
     const queue = this.queueSource.getValue();
