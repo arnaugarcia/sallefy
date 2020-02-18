@@ -10,11 +10,11 @@
                     <div class="col-sm-6 col-md-4 col-xxl-2 d-none d-sm-block">
                         <div class="media current-item">
                             <div class="mr-3 song-poster sm">
-                                <img alt="" class="box-rounded-sm" src="https://upload.wikimedia.org/wikipedia/en/thumb/4/49/Hotelcalifornia.jpg/220px-Hotelcalifornia.jpg">
+                                <img alt="" class="box-rounded-sm" [src]="currentTrack.thumbnail">
                             </div>
                             <div class="des">
-                                <div aria-label="title" class="jp-title h5 mb-1">Hotel California</div>
-                                <div class="artist-name inactive-color"><a class="inactive-color" href="#">Eagles</a></div>
+                                <div aria-label="title" class="jp-title h5 mb-1">{{currentTrack.name}}</div>
+                                <div class="artist-name inactive-color"><a class="inactive-color" href="#">{{currentTrack.owner?.firstName}}</a></div>
                             </div>
                         </div>
                         <div class="jp-details" style="display: none">
