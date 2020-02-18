@@ -63,11 +63,6 @@
                             <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
                             <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
                         </vg-scrub-bar>
-                        <!--<div class="jp-progress inner d-flex align-items-center mt-0">
-                            <div class="jp-seek-bar" style="width: 100%" (click)="seekTrack()">
-                                <div class="jp-play-bar" [style.width]="percentRemaining + '%'"></div>
-                            </div>
-                        </div>-->
                         <div aria-label="duration" class="jp-duration mr-1" role="timer">
                             <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
                         </div>
@@ -81,14 +76,33 @@
                             </a>
                         </div>
                         <div class="jp-volume-controls flex-row align-items-center ml-3 mr-4 d-none d-xl-flex">
-                            <a class="mr-3 adonis-mute-control" role="button" tabindex="0"><span class="adonis-icon icon-3x"><svg height="13" version="1.1" viewBox="0 0 48 32" xmlns="http://www.w3.org/2000/svg"><path d="M31.76 9.056l-1.36 2.592c1.265 1.020 2.071 2.567 2.080 4.302v0.002c0 1.896-0.456 3.616-1.952 4.648l1.28 2.184c1.962-1.642 3.202-4.092 3.202-6.831 0-2.776-1.272-5.254-3.266-6.884l-0.016-0.013zM36.664 4.424l-1.664 2.288c2.479 2.331 4.027 5.627 4.040 9.286v0.002c-0.027 3.717-1.634 7.053-4.182 9.375l-0.010 0.009 1.728 2.2c3.058-2.92 4.96-7.028 4.96-11.581 0-0.001 0-0.002 0-0.003v0c-0.017-4.532-1.877-8.626-4.87-11.574l-0.002-0.002zM41.6 0l-1.848 2.168c3.497 3.563 5.665 8.442 5.696 13.826l0 0.006c-0.043 5.368-2.202 10.223-5.683 13.779l0.003-0.003 1.832 2.168c3.946-4.151 6.373-9.778 6.373-15.972s-2.427-11.821-6.383-15.982l0.009 0.010zM0 10.888v10.4c0 1.328 1.2 3.016 2.688 3.016h8.080v-16.616h-8.080c-1.488 0-2.688 1.912-2.688 3.2zM23.272 0.136l-11.272 7.4v16.984l11.272 7.48c1.48 0 3.608-1.072 3.608-2.4v-27.072c0-1.32-2.128-2.392-3.608-2.392z"></path></svg></span></a>
+                            <a class="mr-3 adonis-mute-control" role="button" tabindex="0">
+                                <span class="adonis-icon icon-3x">
+                                    <svg height="13" version="1.1" viewBox="0 0 48 32" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M31.76 9.056l-1.36 2.592c1.265 1.020 2.071 2.567 2.080 4.302v0.002c0 1.896-0.456 3.616-1.952 4.648l1.28 2.184c1.962-1.642 3.202-4.092 3.202-6.831 0-2.776-1.272-5.254-3.266-6.884l-0.016-0.013zM36.664 4.424l-1.664 2.288c2.479 2.331 4.027 5.627 4.040 9.286v0.002c-0.027 3.717-1.634 7.053-4.182 9.375l-0.010 0.009 1.728 2.2c3.058-2.92 4.96-7.028 4.96-11.581 0-0.001 0-0.002 0-0.003v0c-0.017-4.532-1.877-8.626-4.87-11.574l-0.002-0.002zM41.6 0l-1.848 2.168c3.497 3.563 5.665 8.442 5.696 13.826l0 0.006c-0.043 5.368-2.202 10.223-5.683 13.779l0.003-0.003 1.832 2.168c3.946-4.151 6.373-9.778 6.373-15.972s-2.427-11.821-6.383-15.982l0.009 0.010zM0 10.888v10.4c0 1.328 1.2 3.016 2.688 3.016h8.080v-16.616h-8.080c-1.488 0-2.688 1.912-2.688 3.2zM23.272 0.136l-11.272 7.4v16.984l11.272 7.48c1.48 0 3.608-1.072 3.608-2.4v-27.072c0-1.32-2.128-2.392-3.608-2.392z"></path>
+                                    </svg>
+                                </span>
+                            </a>
                             <div class="jp-volume-bar d-flex align-items-center">
-                                <div class="jp-volume-bar-value"></div>
+                                <vg-volume></vg-volume>
+                                <!--<div class="jp-volume-bar-value" style="width: 10%"></div>-->
                             </div>
                         </div>
                         <div class="align-items-center d-flex lh-0">
-                            <a class="pl-2 pr-2 d-inline-block fs-2 inactive-color" href="#"><span class="adonis-icon icon-2x"><svg version="1.1" xmlns="http://www.w3.org/2000/svg"><use xlink:href="#icon-heart-blank"></use></svg></span></a>
-                            <a class="pl-2 pr-2 d-inline-block inactive-color current-track-menu" href="#"><span class="adonis-icon icon-1x"><svg height="22" version="1.1" viewBox="0 0 6 32" xmlns="http://www.w3.org/2000/svg"><path d="M3.2 25.6c-1.767 0-3.2 1.433-3.2 3.2s1.433 3.2 3.2 3.2c1.767 0 3.2-1.433 3.2-3.2v0c0-1.767-1.433-3.2-3.2-3.2v0zM3.2 12.8c-1.767 0-3.2 1.433-3.2 3.2s1.433 3.2 3.2 3.2c1.767 0 3.2-1.433 3.2-3.2v0c0-1.767-1.433-3.2-3.2-3.2v0zM3.2 6.4c1.767 0 3.2-1.433 3.2-3.2s-1.433-3.2-3.2-3.2c-1.767 0-3.2 1.433-3.2 3.2v0c0 1.767 1.433 3.2 3.2 3.2v0z"></path></svg></span></a>
+                            <a class="pl-2 pr-2 d-inline-block fs-2 inactive-color" href="#">
+                                <span class="adonis-icon icon-2x">
+                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                        <use xlink:href="#icon-heart-blank"></use>
+                                    </svg>
+                                </span>
+                            </a>
+                            <a class="pl-2 pr-2 d-inline-block inactive-color current-track-menu" href="#">
+                                <span class="adonis-icon icon-1x">
+                                    <svg height="22" version="1.1" viewBox="0 0 6 32" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.2 25.6c-1.767 0-3.2 1.433-3.2 3.2s1.433 3.2 3.2 3.2c1.767 0 3.2-1.433 3.2-3.2v0c0-1.767-1.433-3.2-3.2-3.2v0zM3.2 12.8c-1.767 0-3.2 1.433-3.2 3.2s1.433 3.2 3.2 3.2c1.767 0 3.2-1.433 3.2-3.2v0c0-1.767-1.433-3.2-3.2-3.2v0zM3.2 6.4c1.767 0 3.2-1.433 3.2-3.2s-1.433-3.2-3.2-3.2c-1.767 0-3.2 1.433-3.2 3.2v0c0 1.767 1.433 3.2 3.2 3.2v0z"></path>
+                                    </svg>
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -99,6 +113,6 @@
                 </div>
             </div>
         </div>
-        <sf-player-playlist></sf-player-playlist>
+        <sf-player-playlist [playerApi]="api"></sf-player-playlist>
     </div>
 </vg-player>

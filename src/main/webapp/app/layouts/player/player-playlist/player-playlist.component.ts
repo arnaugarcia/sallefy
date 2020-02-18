@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PlayerService } from 'app/layouts/player/player.service';
 import { OverlayService } from 'app/layouts/main/overlay.service';
+import { VgAPI } from 'videogular2/compiled/src/core/services/vg-api';
 
 @Component({
   selector: 'sf-player-playlist',
@@ -8,6 +9,8 @@ import { OverlayService } from 'app/layouts/main/overlay.service';
   styleUrls: ['./player-playlist.component.scss']
 })
 export class PlayerPlaylistComponent implements OnInit {
+  @Input()
+  public playerApi: VgAPI | undefined;
   showPlaylist = false;
 
   constructor(private playerService: PlayerService, private overlayService: OverlayService) {}

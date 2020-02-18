@@ -6206,7 +6206,7 @@ button::after {
   line-height: 0;
 }
 .adonis-player-wrap .jp-volume-controls .jp-volume-bar {
-  width: 110px;
+  width: 100px;
   overflow: visible;
   position: relative;
   height: 30px;

@@ -9,7 +9,6 @@ import { VgAPI } from 'videogular2/compiled/src/core/services/vg-api';
 })
 export class PlayerComponent implements OnInit, AfterViewInit {
   public api: VgAPI | undefined;
-  percentRemaining = 0;
 
   constructor(private playerService: PlayerService) {}
 
@@ -24,8 +23,4 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {}
-
-  seekTrack(): void {
-    console.warn('Seeking track!');
-  }
 }
