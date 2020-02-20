@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PlayerService } from 'app/layouts/player/player.service';
 import { VgAPI } from 'videogular2/compiled/src/core/services/vg-api';
 import { ITrack, Track } from 'app/shared/model/track.model';
@@ -8,18 +8,17 @@ import { ITrack, Track } from 'app/shared/model/track.model';
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss']
 })
-export class PlayerComponent implements OnInit, AfterViewInit {
+export class PlayerComponent implements OnInit {
   public api: VgAPI | undefined;
   public currentTrack: ITrack = new Track();
-  public tracks: Track[] = [];
+  public sources: ITrack[] = [];
 
   constructor(public playerService: PlayerService) {}
 
   ngOnInit(): void {
     this.playerService.currentTrack$.subscribe((track: ITrack) => {
       this.currentTrack = track;
-      this.tracks.push(track);
-      this.playCurrentLoadedTrack();
+      this.loadCurrentTrack();
     });
   }
 
@@ -29,11 +28,17 @@ export class PlayerComponent implements OnInit, AfterViewInit {
 
   onPlayerReady(api: VgAPI): void {
     this.api = api;
+    this.api.getDefaultMedia().subscriptions.loadedMetadata.subscribe((value: any) => {
+      this.play();
+    });
   }
 
-  playCurrentLoadedTrack(): void {
+  play(): void {
     if (this.api) this.api.play();
   }
 
-  ngAfterViewInit(): void {}
+  loadCurrentTrack(): void {
+    this.sources.splice(0, 1);
+    this.sources.push(this.currentTrack);
+  }
 }
