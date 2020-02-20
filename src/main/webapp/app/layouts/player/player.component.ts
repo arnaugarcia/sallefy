@@ -10,18 +10,16 @@ import { ITrack, Track } from 'app/shared/model/track.model';
 })
 export class PlayerComponent implements OnInit, AfterViewInit {
   public api: VgAPI | undefined;
-  public tracks: ITrack[] = [];
   public currentTrack: ITrack = new Track();
+  public tracks: Track[] = [];
 
   constructor(public playerService: PlayerService) {}
 
   ngOnInit(): void {
-    this.playerService.queue$.subscribe((tracks: ITrack[]) => {
-      this.tracks = tracks;
-      if (this.tracks.length !== 0) {
-        this.currentTrack = this.tracks[0];
-        this.playCurrentLoadedTrack();
-      }
+    this.playerService.currentTrack$.subscribe((track: ITrack) => {
+      this.currentTrack = track;
+      this.tracks.push(track);
+      this.playCurrentLoadedTrack();
     });
   }
 

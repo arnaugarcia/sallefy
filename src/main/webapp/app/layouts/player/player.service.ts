@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ITrack } from 'app/shared/model/track.model';
+import { ITrack, Track } from 'app/shared/model/track.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
+  private historySource = new BehaviorSubject<ITrack[]>([]);
+  history$ = this.historySource.asObservable();
+
+  private currentTrack = new BehaviorSubject<ITrack>(new Track());
+  currentTrack$ = this.currentTrack.asObservable();
+
   private queueSource = new BehaviorSubject<ITrack[]>([]);
   queue$ = this.queueSource.asObservable();
 
@@ -16,17 +22,31 @@ export class PlayerService {
     this.playlistOpenSource.next(value);
   }
 
-  play(): void {}
+  /**
+   * Pushes a track to the history and queue. And updates the current track
+   * @param track the track to play
+   */
+  play(track: ITrack): void {
+    this.currentTrack.next(track);
+    const queue = this.queueSource.getValue();
+    queue.unshift(track);
+    const history = this.historySource.getValue();
+    history.unshift(track);
+  }
 
-  pause(): void {}
+  prev(): void {
+    const queue = this.queueSource.getValue();
+    const history = this.historySource.getValue();
+    queue.unshift(history[history.length]);
+    this.queueSource.next(queue);
+    this.play(queue[0]);
+  }
 
-  prev(): void {}
-
-  next(): ITrack[] {
+  next(): void {
     const queue = this.queueSource.getValue();
     queue.shift();
     this.queueSource.next(queue);
-    return queue;
+    this.play(queue[0]);
   }
 
   add(tracks: ITrack[]): ITrack[] {
@@ -36,9 +56,15 @@ export class PlayerService {
     return queue;
   }
 
-  remove(tracks: ITrack[]): ITrack[] {
-    return [];
+  remove(track: ITrack): ITrack[] {
+    const queue = this.queueSource.getValue();
+    const index = queue.indexOf(track);
+    queue.slice(index, 1);
+    this.queueSource.next(queue);
+    return queue;
   }
 
-  clear(): void {}
+  clear(): void {
+    this.queueSource.next([]);
+  }
 }

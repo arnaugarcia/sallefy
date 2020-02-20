@@ -57,6 +57,6 @@ export class TracksComponent implements OnInit {
   }
 
   public play(track: ITrack): void {
-    this.playerService.add(new Array(track));
+    this.playerService.play(track);
   }
 }
