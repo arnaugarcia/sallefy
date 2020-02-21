@@ -13,7 +13,7 @@ import { HttpResponse } from '@angular/common/http';
   styleUrls: ['./top-tracks.component.scss']
 })
 export class TopTracksComponent implements OnInit, WidgetBase {
-  private tracks: ITrack[] | null = [];
+  public tracks: ITrack[] | null = [];
   private widgetReloaded$: Subscription = new Subscription();
 
   constructor(
