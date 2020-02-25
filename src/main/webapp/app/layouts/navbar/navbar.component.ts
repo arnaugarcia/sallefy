@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
   swaggerEnabled?: boolean;
   version: string;
   showMobileMenu = false;
+  implemented = false;
 
   constructor(
     private loginService: LoginService,

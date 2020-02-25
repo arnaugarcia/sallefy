@@ -18,12 +18,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.SetJoin;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static javax.persistence.criteria.JoinType.INNER;
+import static javax.persistence.criteria.JoinType.LEFT;
 import static org.springframework.data.domain.PageRequest.of;
 
 /**
@@ -86,21 +88,26 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
             if (criteria.getPopular() != null) {
                 specification = specification.and(sortByMostFollowed());
             }
-            if (isSelectedAndTrue(criteria.getNotFollowing())) {
+            /*if (isSelectedAndTrue(criteria.getNotFollowing())) {
                 specification = specification.and(notFollowedBy(user.getId()));
-            }
+            }*/
         }
         return specification;
     }
 
     private Specification<User> notFollowedBy(Long id) {
+
+        /*SELECT u.*
+        FROM jhi_user AS u
+        LEFT JOIN follow_user AS f ON f.followed_id = u.id
+        AND f.user_id = 3
+        WHERE f.user_id IS NULL AND u.id  != 3*/
+
         return (root, query, builder) -> {
-            SetJoin<User, FollowUser> followers = root.join(User_.followers, INNER);
-            query.groupBy(followers.get(FollowUser_.user));
+            SetJoin<User, FollowUser> followers = root.join(User_.followers, LEFT);
+            final Path<User> user = followers.get(FollowUser_.user);
 
-            final Order order = builder.desc(builder.count(followers.get(FollowUser_.id)));
-
-            return query.where(builder.notEqual(followers.get(FollowUser_.user), id)).orderBy(order).getRestriction();
+            return query.where(user.get(User_.id).isNotNull()).getRestriction();
         };
     }
 

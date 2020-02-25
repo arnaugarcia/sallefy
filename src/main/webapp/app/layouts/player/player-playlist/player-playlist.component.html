@@ -1,5 +1,5 @@
 <div class="adonis-playlist off-canvas off-canvas-right d-flex flex-column" [class.show]="showPlaylist" id="adonis-playlist">
-    <div class="adonis-playlist-player adonis-player player-bg-yellow">
+    <div class="adonis-playlist-player adonis-player player-bg-yellow" *ngIf="currentTrack">
         <a class="close-offcanvas m-2" (click)="closePlaylist()">
             <span class="adonis-icon icon-3x">
                 <svg height="20" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.4 12l5.3-5.3c0.4-0.4 0.4-1 0-1.4s-1-0.4-1.4 0l-5.3 5.3-5.3-5.3c-0.4-0.4-1-0.4-1.4 0s-0.4 1 0 1.4l5.3 5.3-5.3 5.3c-0.4 0.4-0.4 1 0 1.4 0.2 0.2 0.4 0.3 0.7 0.3s0.5-0.1 0.7-0.3l5.3-5.3 5.3 5.3c0.2 0.2 0.5 0.3 0.7 0.3s0.5-0.1 0.7-0.3c0.4-0.4 0.4-1 0-1.4l-5.3-5.3z"></path></svg>
@@ -10,11 +10,11 @@
         </div>
         <div class="media current-item">
             <div class="song-poster mb-4 col-4 p-0">
-                <img alt="" class="box-rounded-sm" src="/content/images/playlists/playlist-2.jpg">
+                <img alt="" class="box-rounded-sm" [src]="currentTrack.thumbnail">
             </div>
             <div class="player-details col-8 pr-0 pl-20 pl-e-lg-30">
-                <h3 class="h2 mt-3 mb-3 jp-title">What Makes You Country</h3>
-                <p class="artist-name">Adonis Music R&amp;B</p>
+                <h3 class="h2 mt-3 mb-3 jp-title">{{currentTrack.name}}</h3>
+                <p class="artist-name">{{currentTrack.owner?.firstName}} {{currentTrack.owner?.firstName}}</p>
                 <div class="controls d-flex flex-row justify-content-between">
                     <div class="fs-3">
                         <a class="jp-shuffle inactive-color mr-3 ml-0" role="button" tabindex="0">
@@ -31,22 +31,33 @@
         </div>
         <div class="d-flex fs-1 mt-3 media align-items-center controls">
             <div class="lh-0 d-flex playlist-player-control justify-content-between align-items-center col-4 p-0 ">
-                <a class="jp-previous" role="button" tabindex="0"><span class="adonis-icon icon-4x"><svg height="13" version="1.1" viewBox="0 0 58 32" xmlns="http://www.w3.org/2000/svg"><path d="M55.064 0.272l-25.2 14.192c-0.555 0.299-0.925 0.876-0.925 1.54s0.371 1.241 0.916 1.535l0.009 0.005c1.336 0.784 23.64 13.344 25.256 14.216 0.265 0.162 0.585 0.258 0.928 0.258 0.986 0 1.787-0.793 1.8-1.777v-28.433c0-0.004 0-0.009 0-0.014 0-0.999-0.809-1.808-1.808-1.808-0.362 0-0.7 0.107-0.983 0.29l0.007-0.004zM26.12 0.272c-1.112 0.624-23.304 13.12-25.192 14.192-0.555 0.299-0.925 0.876-0.925 1.54s0.371 1.241 0.916 1.535l0.009 0.005c1.36 0.8 23.64 13.344 25.248 14.216 0.265 0.161 0.586 0.257 0.928 0.257 0.987 0 1.79-0.792 1.808-1.775l0-0.002v-28.432c0-0.001 0-0.003 0-0.005 0-1.003-0.813-1.816-1.816-1.816-0.362 0-0.7 0.106-0.983 0.289l0.007-0.004z"></path></svg></span>
+                <a class="jp-previous" role="button" tabindex="0">
+                    <span class="adonis-icon icon-4x">
+                        <svg height="13" version="1.1" viewBox="0 0 58 32" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M55.064 0.272l-25.2 14.192c-0.555 0.299-0.925 0.876-0.925 1.54s0.371 1.241 0.916 1.535l0.009 0.005c1.336 0.784 23.64 13.344 25.256 14.216 0.265 0.162 0.585 0.258 0.928 0.258 0.986 0 1.787-0.793 1.8-1.777v-28.433c0-0.004 0-0.009 0-0.014 0-0.999-0.809-1.808-1.808-1.808-0.362 0-0.7 0.107-0.983 0.29l0.007-0.004zM26.12 0.272c-1.112 0.624-23.304 13.12-25.192 14.192-0.555 0.299-0.925 0.876-0.925 1.54s0.371 1.241 0.916 1.535l0.009 0.005c1.36 0.8 23.64 13.344 25.248 14.216 0.265 0.161 0.586 0.257 0.928 0.257 0.987 0 1.79-0.792 1.808-1.775l0-0.002v-28.432c0-0.001 0-0.003 0-0.005 0-1.003-0.813-1.816-1.816-1.816-0.362 0-0.7 0.106-0.983 0.289l0.007-0.004z"></path>
+                        </svg>
+                    </span>
                 </a>
-                <a class="jp-play fs-4" role="button" tabindex="0">
-                    <span class="adonis-icon icon-play icon-2x"><svg height="19" version="1.1" viewBox="0 0 29 32" xmlns="http://www.w3.org/2000/svg"><path d="M27.703 14.461l-24.945-14.187c-0.272-0.174-0.604-0.278-0.96-0.278-0.993 0-1.798 0.805-1.798 1.798 0 0.001 0 0.002 0 0.004v-0 28.434c0.004 0.982 0.801 1.776 1.783 1.776 0.338 0 0.653-0.094 0.922-0.257l-0.008 0.004c1.524-0.869 23.65-13.44 25.006-14.217 0.549-0.303 0.914-0.878 0.914-1.539s-0.366-1.236-0.905-1.534l-0.009-0.005z"></path></svg></span>
-                    <span class="adonis-icon icon-pause icon-2x"><svg height="19" version="1.1" viewBox="0 0 29 32" xmlns="http://www.w3.org/2000/svg"><path d="M19.2 0h8c0.884 0 1.6 0.716 1.6 1.6v28.8c0 0.884-0.716 1.6-1.6 1.6h-8c-0.884 0-1.6-0.716-1.6-1.6v-28.8c0-0.884 0.716-1.6 1.6-1.6z"></path><path d="M1.6 0h8c0.884 0 1.6 0.716 1.6 1.6v28.8c0 0.884-0.716 1.6-1.6 1.6h-8c-0.884 0-1.6-0.716-1.6-1.6v-28.8c0-0.884 0.716-1.6 1.6-1.6z"></path></svg></span>
+                <sf-play-pause [playerApi]="playerApi"></sf-play-pause>
+                <a class="jp-next" role="button" tabindex="0">
+                    <span class="adonis-icon icon-5x">
+                        <svg height="15" version="1.1" viewBox="0 0 58 32" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M28 14.464l-25.216-14.192c-0.276-0.179-0.614-0.286-0.976-0.286-0.999 0-1.808 0.809-1.808 1.808 0 0.005 0 0.010 0 0.015v-0.001 28.432c0.013 0.985 0.814 1.778 1.8 1.778 0.343 0 0.663-0.096 0.936-0.262l-0.008 0.005c1.6-0.872 23.896-13.432 25.256-14.216 0.559-0.298 0.934-0.877 0.934-1.544 0-0.66-0.367-1.235-0.908-1.531l-0.009-0.005zM56.944 14.464l-25.216-14.192c-0.276-0.179-0.614-0.286-0.976-0.286-0.999 0-1.808 0.809-1.808 1.808 0 0.005 0 0.010 0 0.015v-0.001 28.432c0.013 0.985 0.814 1.778 1.8 1.778 0.343 0 0.663-0.096 0.936-0.262l-0.008 0.005c1.6-0.872 23.888-13.432 25.256-14.216 0.55-0.303 0.917-0.879 0.917-1.54s-0.367-1.237-0.908-1.535l-0.009-0.005z"></path>
+                        </svg>
+                    </span>
                 </a>
-                <a class="jp-next" role="button" tabindex="0"><span class="adonis-icon icon-5x"><svg height="15" version="1.1" viewBox="0 0 58 32" xmlns="http://www.w3.org/2000/svg"><path d="M28 14.464l-25.216-14.192c-0.276-0.179-0.614-0.286-0.976-0.286-0.999 0-1.808 0.809-1.808 1.808 0 0.005 0 0.010 0 0.015v-0.001 28.432c0.013 0.985 0.814 1.778 1.8 1.778 0.343 0 0.663-0.096 0.936-0.262l-0.008 0.005c1.6-0.872 23.896-13.432 25.256-14.216 0.559-0.298 0.934-0.877 0.934-1.544 0-0.66-0.367-1.235-0.908-1.531l-0.009-0.005zM56.944 14.464l-25.216-14.192c-0.276-0.179-0.614-0.286-0.976-0.286-0.999 0-1.808 0.809-1.808 1.808 0 0.005 0 0.010 0 0.015v-0.001 28.432c0.013 0.985 0.814 1.778 1.8 1.778 0.343 0 0.663-0.096 0.936-0.262l-0.008 0.005c1.6-0.872 23.888-13.432 25.256-14.216 0.55-0.303 0.917-0.879 0.917-1.54s-0.367-1.237-0.908-1.535l-0.009-0.005z"></path></svg></span></a>
             </div>
             <div class="d-flex control-ext align-items-center col-8 pr-0 pl-20 pl-e-lg-30">
-                <div aria-label="time" class="jp-current-time mr-1 jp-time" role="timer"></div>
-                <div class="jp-progress d-flex ml-2 mr-2 jp-time d-flex align-items-center">
-                    <div class="jp-seek-bar">
-                        <div class="jp-play-bar"></div>
-                    </div>
+                <div aria-label="time" class="jp-current-time" role="timer">
+                    <vg-time-display vgFormat="mm:ss"></vg-time-display>
                 </div>
-                <div aria-label="duration" class="jp-duration mr-1" role="timer"></div>
+                <vg-scrub-bar class="jp-progress d-flex ml-2 mr-2 jp-time d-flex align-items-center">
+                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                    <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+                </vg-scrub-bar>
+                <div aria-label="duration" class="jp-duration mr-1" role="timer">
+                    <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+                </div>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <a class="nav-link dropdown-toggle w-nowrap pr-0" (click)="toggleShowProfile()" href="javascript:void(0);">
     <div class="flex-row d-inline-flex">
         <div class="user">
-            <img alt="" class="rounded-circle" src="/content/images/user-thumb-1.jpg">
+            <img alt="" class="rounded-circle" [src]="getImageUrl()">
         </div>
         <span class="ml-2 mt-2 fs-1 d-none d-lg-block">{{currentAccount?.firstName}} {{currentAccount?.lastName}}</span>
     </div>
