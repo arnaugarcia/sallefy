@@ -1,5 +1,5 @@
 <div class="adonis-playlist off-canvas off-canvas-right d-flex flex-column" [class.show]="showPlaylist" id="adonis-playlist">
-    <div class="adonis-playlist-player adonis-player player-bg-yellow">
+    <div class="adonis-playlist-player adonis-player player-bg-yellow" *ngIf="currentTrack">
         <a class="close-offcanvas m-2" (click)="closePlaylist()">
             <span class="adonis-icon icon-3x">
                 <svg height="20" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.4 12l5.3-5.3c0.4-0.4 0.4-1 0-1.4s-1-0.4-1.4 0l-5.3 5.3-5.3-5.3c-0.4-0.4-1-0.4-1.4 0s-0.4 1 0 1.4l5.3 5.3-5.3 5.3c-0.4 0.4-0.4 1 0 1.4 0.2 0.2 0.4 0.3 0.7 0.3s0.5-0.1 0.7-0.3l5.3-5.3 5.3 5.3c0.2 0.2 0.5 0.3 0.7 0.3s0.5-0.1 0.7-0.3c0.4-0.4 0.4-1 0-1.4l-5.3-5.3z"></path></svg>
@@ -10,11 +10,11 @@
         </div>
         <div class="media current-item">
             <div class="song-poster mb-4 col-4 p-0">
-                <img alt="" class="box-rounded-sm" src="/content/images/playlists/playlist-2.jpg">
+                <img alt="" class="box-rounded-sm" [src]="currentTrack.thumbnail">
             </div>
             <div class="player-details col-8 pr-0 pl-20 pl-e-lg-30">
-                <h3 class="h2 mt-3 mb-3 jp-title">What Makes You Country</h3>
-                <p class="artist-name">Adonis Music R&amp;B</p>
+                <h3 class="h2 mt-3 mb-3 jp-title">{{currentTrack.name}}</h3>
+                <p class="artist-name">{{currentTrack.owner?.firstName}} {{currentTrack.owner?.firstName}}</p>
                 <div class="controls d-flex flex-row justify-content-between">
                     <div class="fs-3">
                         <a class="jp-shuffle inactive-color mr-3 ml-0" role="button" tabindex="0">

@@ -35,18 +35,18 @@ export class PlayerService {
   }
 
   prev(): void {
-    const queue = this.queueSource.getValue();
+    /*const queue = this.queueSource.getValue();
     const history = this.historySource.getValue();
     queue.unshift(history[history.length]);
     this.queueSource.next(queue);
-    this.play(queue[0]);
+    this.play(queue[0]);*/
   }
 
   next(): void {
-    const queue = this.queueSource.getValue();
+    /*const queue = this.queueSource.getValue();
     queue.shift();
     this.queueSource.next(queue);
-    this.play(queue[0]);
+    this.play(queue[0]);*/
   }
 
   add(tracks: ITrack[]): ITrack[] {
