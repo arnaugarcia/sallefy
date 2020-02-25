@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ITrack } from 'app/shared/model/track.model';
+import { ITrack, Track } from 'app/shared/model/track.model';
 
 @Component({
   selector: 'sf-track',
@@ -8,7 +8,7 @@ import { ITrack } from 'app/shared/model/track.model';
 })
 export class TrackComponent implements OnInit {
   @Input()
-  public track: ITrack | undefined;
+  public track: ITrack = new Track();
 
   constructor() {}
 

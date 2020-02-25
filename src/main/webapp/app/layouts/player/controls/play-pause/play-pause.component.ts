@@ -7,5 +7,5 @@ import { VgAPI } from 'videogular2/compiled/src/core/services/vg-api';
 })
 export class PlayPauseComponent {
   @Input()
-  public playerApi: VgAPI | undefined;
+  public playerApi: VgAPI = new VgAPI();
 }
