@@ -88,9 +88,9 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
             if (criteria.getPopular() != null) {
                 specification = specification.and(sortByMostFollowed());
             }
-            if (isSelectedAndTrue(criteria.getNotFollowing())) {
+            /*if (isSelectedAndTrue(criteria.getNotFollowing())) {
                 specification = specification.and(notFollowedBy(user.getId()));
-            }
+            }*/
         }
         return specification;
     }
