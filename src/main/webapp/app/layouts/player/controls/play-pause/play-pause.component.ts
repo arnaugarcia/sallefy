@@ -1,11 +1,20 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { VgAPI } from 'videogular2/compiled/src/core/services/vg-api';
 
 @Component({
   selector: 'sf-play-pause',
   templateUrl: './play-pause.component.html'
 })
-export class PlayPauseComponent {
+export class PlayPauseComponent implements OnInit {
   @Input()
   public playerApi: VgAPI = new VgAPI();
+
+  ngOnInit(): void {
+    console.warn(this.playerApi);
+  }
+
+  play($event: Event): void {
+    $event.preventDefault();
+    if (this.playerApi.canPlay) this.playerApi.play();
+  }
 }
