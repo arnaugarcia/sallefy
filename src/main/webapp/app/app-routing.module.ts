@@ -13,6 +13,11 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
     RouterModule.forRoot(
       [
         {
+          // Static route for api documentation
+          path: 'admin/docs',
+          redirectTo: 'developer/api'
+        },
+        {
           path: 'admin',
           data: {
             authorities: ['ROLE_ADMIN']
@@ -26,6 +31,9 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         },
         {
           path: 'developer',
+          data: {
+            authorities: ['ROLE_USER']
+          },
           canActivate: [UserRouteAccessService],
           loadChildren: () => import('./developer/developer.module').then(m => m.DeveloperModule)
         },
