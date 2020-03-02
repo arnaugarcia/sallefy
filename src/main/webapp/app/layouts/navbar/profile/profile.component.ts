@@ -36,6 +36,12 @@ export class ProfileComponent implements OnInit {
   }
 
   getImageUrl(): string | null {
-    return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
+    if (this.isAuthenticated()) {
+      const imageUrl = this.accountService.getImageUrl();
+      if (imageUrl) {
+        return imageUrl;
+      }
+    }
+    return './content/images/svg/default-user.svg';
   }
 }

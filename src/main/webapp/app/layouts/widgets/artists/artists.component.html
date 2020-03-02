@@ -5,11 +5,14 @@
 <div class="follower-box-wrap">
     <div class="media img-box-horizontal follower-box" *ngFor="let artist of users">
         <div class="img-box img-box-sm">
-            <img alt="" class="rounded-circle" [src]="artist.imageUrl">
+            <img *ngIf="artist.imageUrl" [alt]="artist.login" [src]="artist.imageUrl" class="rounded-circle">
+            <img *ngIf="!artist.imageUrl" [alt]="artist.login" [src]="'./content/images/svg/artist.svg'" class="rounded-circle" height="70%" style="border-radius: initial !important;" width="70%">
         </div>
         <div class="des d-flex justify-content-between">
             <div class="clearfix">
-                <h5 class="artist">{{artist.firstName}} {{artist.lastName}}</h5>
+                <h5 class="artist">
+                    {{artist.firstName}} {{artist.lastName}} <ng-container *ngIf="!artist.firstName || !artist.lastName">{{artist.login}}</ng-container>
+                </h5>
                 <span class="adonis-icon mr-1 icon-1x">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <use xlink:href="#icon-users"/></svg>
