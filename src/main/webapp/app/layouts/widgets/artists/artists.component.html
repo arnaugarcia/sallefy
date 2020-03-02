@@ -9,7 +9,9 @@
         </div>
         <div class="des d-flex justify-content-between">
             <div class="clearfix">
-                <h5 class="artist">{{artist.firstName}} {{artist.lastName}}</h5>
+                <h5 class="artist">
+                    {{artist.firstName}} {{artist.lastName}} <ng-container *ngIf="!artist.firstName || !artist.lastName">{{artist.login}}</ng-container>
+                </h5>
                 <span class="adonis-icon mr-1 icon-1x">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <use xlink:href="#icon-users"/></svg>
