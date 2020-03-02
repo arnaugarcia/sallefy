@@ -104,10 +104,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @OneToMany(mappedBy = "user", fetch = LAZY)
     private Set<Track> tracks = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", fetch = LAZY)
+    @OneToMany(mappedBy = "followed", fetch = LAZY)
     private Set<FollowUser> followers = new HashSet<>();
 
-    @OneToMany(mappedBy = "followed", fetch = LAZY)
+    @OneToMany(mappedBy = "user", fetch = LAZY)
     private Set<FollowUser> following = new HashSet<>();
 
     @JsonIgnore
