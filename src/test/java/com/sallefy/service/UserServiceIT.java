@@ -226,8 +226,6 @@ public class UserServiceIT {
         User follower1 = UserResourceIT.createEntity();
         userRepository.save(follower1);
 
-        userRepository.save(UserResourceIT.createEntity());
-
         final List<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, true));
         final int sizeBeforeFollowing = nonFollowingUsers.size();
 
