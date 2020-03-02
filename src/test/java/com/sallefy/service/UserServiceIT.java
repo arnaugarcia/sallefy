@@ -9,6 +9,7 @@ import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.dto.criteria.UserCriteriaDTO;
 import com.sallefy.service.impl.UserQueryService;
 import com.sallefy.service.util.RandomUtil;
+import com.sallefy.web.rest.UserResourceIT;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -64,6 +65,9 @@ public class UserServiceIT {
 
     @Autowired
     private UserQueryService userQueryService;
+
+    @Autowired
+    private FollowService followService;
 
     @Autowired
     private AuditingHandler auditingHandler;
@@ -204,10 +208,35 @@ public class UserServiceIT {
         if (!userRepository.findOneByLogin(Constants.ANONYMOUS_USER).isPresent()) {
             userRepository.saveAndFlush(user);
         }
-        final List<UserDTO> allManagedUsers = userQueryService.findByCriteria(new UserCriteriaDTO());
+        final List<UserDTO> allManagedUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null));
         assertThat(allManagedUsers.stream()
             .noneMatch(user -> Constants.ANONYMOUS_USER.equals(user.getLogin())))
             .isTrue();
     }
 
+    @Test
+    @Transactional
+    @WithMockUser("not-following-user")
+    public void shouldReturnNotFollowingUsers() {
+
+        // Initialize the database
+        User user = UserResourceIT.createBasicUserWithUsername("not-following-user");
+        userRepository.save(user);
+
+        User follower1 = UserResourceIT.createEntity();
+        userRepository.save(follower1);
+
+        final List<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, true));
+        final int sizeBeforeFollowing = nonFollowingUsers.size();
+
+        assertThat(sizeBeforeFollowing).isGreaterThan(0);
+
+        followService.toggleFollowUser(follower1.getLogin());
+
+        final List<UserDTO> notFollowingUsersAfterUpdating = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, true));
+
+        assertThat(notFollowingUsersAfterUpdating.size()).isLessThan(sizeBeforeFollowing);
+
+
+    }
 }
