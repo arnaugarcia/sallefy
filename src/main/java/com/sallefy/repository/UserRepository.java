@@ -2,6 +2,9 @@ package com.sallefy.repository;
 
 import com.sallefy.domain.User;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -45,6 +48,14 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     @EntityGraph(attributePaths = AUTHORITIES)
     @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
     Optional<User> findOneWithAuthoritiesByEmailIgnoreCase(String email);
+
+    @Override
+    @EntityGraph(GRAPH_USER_ENTITY_ALL)
+    List<User> findAll(Specification<User> specification);
+
+    @Override
+    @EntityGraph(GRAPH_USER_ENTITY_ALL)
+    Page<User> findAll(Specification<User> specification, Pageable pageable);
 
     List<User> findAllByLoginNot(String login);
 }
