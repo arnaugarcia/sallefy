@@ -231,11 +231,14 @@ public class UserServiceIT {
         final List<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, true));
         final int sizeBeforeFollowing = nonFollowingUsers.size();
 
+        assertThat(sizeBeforeFollowing).isGreaterThan(0);
+
         followService.toggleFollowUser(follower1.getLogin());
 
         final List<UserDTO> notFollowingUsersAfterUpdating = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, true));
 
         assertThat(notFollowingUsersAfterUpdating.size()).isLessThan(sizeBeforeFollowing);
+
 
     }
 }
