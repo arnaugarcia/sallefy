@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Path;
 import javax.persistence.criteria.SetJoin;
 import java.util.List;
 import java.util.function.Predicate;
@@ -89,25 +88,22 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
                 specification = specification.and(sortByMostFollowed());
             }
             if (isSelectedAndTrue(criteria.getNotFollowing())) {
-                specification = specification.and(notFollowedBy(user.getId()));
+                specification = specification.and(notFollowedBy(user));
             }
         }
         return specification;
     }
 
-    private Specification<User> notFollowedBy(Long id) {
-
-        /*SELECT u.*
-        FROM jhi_user AS u
-        LEFT JOIN follow_user AS f ON f.followed_id = u.id
-        AND f.user_id = 3
-        WHERE f.user_id IS NULL AND u.id  != 3*/
+    private Specification<User> notFollowedBy(User currentUser) {
 
         return (root, query, builder) -> {
             SetJoin<User, FollowUser> followers = root.join(User_.followers, LEFT);
-            final Path<User> user = followers.get(FollowUser_.user);
+            followers.on(followers.get(FollowUser_.user).in(currentUser));
 
-            return query.where(user.get(User_.id).isNotNull()).getRestriction();
+            return query.where(
+                followers.get(FollowUser_.user).isNull(),
+                root.get(User_.id).in(currentUser.getId()).not()
+            ).getRestriction();
         };
     }
 
