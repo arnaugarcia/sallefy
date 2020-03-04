@@ -5,37 +5,29 @@ import java.util.Objects;
 
 public class TrackCriteriaDTO extends BaseCriteria implements Serializable {
 
-    private Boolean recent;
+    private final Boolean recent;
 
-    private Boolean liked;
+    private final Boolean liked;
 
-    private Boolean played;
+    private final Boolean played;
 
-    public TrackCriteriaDTO() {
+    public TrackCriteriaDTO(Integer size, Boolean recent, Boolean liked, Boolean played) {
+        super(size);
+        this.recent = recent;
+        this.liked = liked;
+        this.played = played;
     }
 
     public Boolean getRecent() {
         return recent;
     }
 
-    public void setRecent(Boolean recent) {
-        this.recent = recent;
-    }
-
     public Boolean getLiked() {
         return liked;
     }
 
-    public void setLiked(Boolean liked) {
-        this.liked = liked;
-    }
-
     public Boolean getPlayed() {
         return played;
-    }
-
-    public void setPlayed(Boolean played) {
-        this.played = played;
     }
 
     @Override

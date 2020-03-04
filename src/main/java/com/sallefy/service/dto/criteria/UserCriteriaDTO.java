@@ -11,7 +11,8 @@ public class UserCriteriaDTO extends BaseCriteria implements Serializable {
 
     private final Boolean notFollowing;
 
-    public UserCriteriaDTO(Boolean recent, Boolean popular, Boolean notFollowing) {
+    public UserCriteriaDTO(Integer size, Boolean recent, Boolean popular, Boolean notFollowing) {
+        super(size);
         this.recent = recent;
         this.popular = popular;
         this.notFollowing = notFollowing;
