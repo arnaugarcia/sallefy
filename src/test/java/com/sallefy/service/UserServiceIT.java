@@ -207,7 +207,7 @@ public class UserServiceIT {
         if (!userRepository.findOneByLogin(Constants.ANONYMOUS_USER).isPresent()) {
             userRepository.saveAndFlush(user);
         }
-        final List<UserDTO> allManagedUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null));
+        final List<UserDTO> allManagedUsers = userQueryService.findByCriteria(new UserCriteriaDTO(5, null, null, null));
         assertThat(allManagedUsers.stream()
             .noneMatch(user -> Constants.ANONYMOUS_USER.equals(user.getLogin())))
             .isTrue();

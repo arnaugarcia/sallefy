@@ -4,17 +4,15 @@ import java.io.Serializable;
 
 public class UserTrackCriteriaDTO extends BaseCriteria implements Serializable {
 
-    private Boolean popular;
+    private final Boolean popular;
 
-    public UserTrackCriteriaDTO() {
+    public UserTrackCriteriaDTO(Integer size, Boolean popular) {
+        super(size);
+        this.popular = popular;
     }
 
     public Boolean getPopular() {
         return popular;
-    }
-
-    public void setPopular(Boolean popular) {
-        this.popular = popular;
     }
 
     @Override

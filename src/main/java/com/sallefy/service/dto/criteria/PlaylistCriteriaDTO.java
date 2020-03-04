@@ -5,19 +5,18 @@ import java.util.Objects;
 
 public class PlaylistCriteriaDTO extends BaseCriteria implements Serializable {
 
-    private Boolean recent;
+    private final Boolean recent;
 
-    private Boolean popular;
+    private final Boolean popular;
 
-    public PlaylistCriteriaDTO() {
+    public PlaylistCriteriaDTO(Integer size, Boolean recent, Boolean popular) {
+        super(size);
+        this.recent = recent;
+        this.popular = popular;
     }
 
     public Boolean isRecent() {
         return recent;
-    }
-
-    public void setRecent(Boolean recent) {
-        this.recent = recent;
     }
 
     public Boolean getRecent() {
@@ -26,10 +25,6 @@ public class PlaylistCriteriaDTO extends BaseCriteria implements Serializable {
 
     public Boolean getPopular() {
         return popular;
-    }
-
-    public void setPopular(Boolean popular) {
-        this.popular = popular;
     }
 
     @Override

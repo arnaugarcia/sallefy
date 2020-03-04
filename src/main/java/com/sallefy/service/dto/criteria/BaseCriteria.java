@@ -2,14 +2,14 @@ package com.sallefy.service.dto.criteria;
 
 public abstract class BaseCriteria {
 
-    private Integer size;
+    private final Integer size;
+
+    public BaseCriteria(Integer size) {
+        this.size = size;
+    }
 
     public Integer getSize() {
         return size;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
     }
 
 }

@@ -28,10 +28,10 @@ import java.util.List;
 
 import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = SallefyApp.class)
 public class FollowResourceIT {
@@ -94,14 +94,14 @@ public class FollowResourceIT {
         User follower1 = UserResourceIT.createEntity();
         userRepository.save(follower1);
 
-        final List<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, true));
+        final List<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null, true));
         final int sizeBeforeFollowing = nonFollowingUsers.size();
 
         assertThat(sizeBeforeFollowing).isGreaterThan(0);
 
         followService.toggleFollowUser(follower1.getLogin());
 
-        final List<UserDTO> notFollowingUsersAfterUpdating = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, true));
+        final List<UserDTO> notFollowingUsersAfterUpdating = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null, true));
 
         assertThat(notFollowingUsersAfterUpdating.size()).isLessThan(sizeBeforeFollowing);
 
@@ -109,27 +109,12 @@ public class FollowResourceIT {
 
     @Test
     @Transactional
-    @WithMockUser("not-following-user-paginated")
+    @WithMockUser
     public void shouldReturnNotFollowingUsersWithLimit() throws Exception {
 
-        // Initialize the database
-        User user = UserResourceIT.createBasicUserWithUsername("not-following-user-paginated");
-        userRepository.save(user);
-
-        User follower1 = UserResourceIT.createEntity();
-        userRepository.save(follower1);
-
-        final List<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, true));
-        final int sizeBeforeFollowing = nonFollowingUsers.size();
-
-        assertThat(sizeBeforeFollowing).isGreaterThan(0);
-
-        followService.toggleFollowUser(follower1.getLogin());
-
-        restUserMockMvc.perform(get("/api/users?notFollowing=true&limit=5"))
+        restUserMockMvc.perform(get("/api/users?notFollowing=true&size=5"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$", hasSize(sizeBeforeFollowing - 1)));
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE));
 
     }
 }
