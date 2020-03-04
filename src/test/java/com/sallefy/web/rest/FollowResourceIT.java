@@ -94,14 +94,14 @@ public class FollowResourceIT {
         User follower1 = UserResourceIT.createEntity();
         userRepository.save(follower1);
 
-        final List<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, true));
+        final List<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null, true));
         final int sizeBeforeFollowing = nonFollowingUsers.size();
 
         assertThat(sizeBeforeFollowing).isGreaterThan(0);
 
         followService.toggleFollowUser(follower1.getLogin());
 
-        final List<UserDTO> notFollowingUsersAfterUpdating = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, true));
+        final List<UserDTO> notFollowingUsersAfterUpdating = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null, true));
 
         assertThat(notFollowingUsersAfterUpdating.size()).isLessThan(sizeBeforeFollowing);
 
@@ -119,7 +119,7 @@ public class FollowResourceIT {
         User follower1 = UserResourceIT.createEntity();
         userRepository.save(follower1);
 
-        final List<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, true));
+        final List<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(5, null, null, true));
         final int sizeBeforeFollowing = nonFollowingUsers.size();
 
         assertThat(sizeBeforeFollowing).isGreaterThan(0);
