@@ -34,7 +34,7 @@ public interface TrackRepository extends JpaRepository<Track, Long>, JpaSpecific
     @Query("select track from Track track left join fetch track.genres where track.id =:id")
     Optional<Track> findOneWithEagerRelationships(@Param("id") Long id);
 
-    @Query("select track from Track track inner join track.likeTracks where track.user.login = ?#{principal.username}")
+    @Query("select track from Track track inner join fetch track.likeTracks liketracks where liketracks.user.login = ?#{principal.username}")
     List<Track> findAllLikedTracksByCurrentUser();
 
     @Query("select track from Track track where track.user.login = :login")
