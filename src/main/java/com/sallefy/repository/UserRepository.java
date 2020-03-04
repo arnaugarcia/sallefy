@@ -16,7 +16,6 @@ import java.util.Optional;
 
 import static com.sallefy.domain.User_.AUTHORITIES;
 import static com.sallefy.domain.graphs.UserGraph.GRAPH_USER_ENTITY_ALL;
-import static org.springframework.data.jpa.repository.EntityGraph.EntityGraphType.FETCH;
 
 /**
  * Spring Data JPA repository for the {@link User} entity.
@@ -57,7 +56,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     @Override
     @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
-    @EntityGraph(value = GRAPH_USER_ENTITY_ALL, type = FETCH)
     Page<User> findAll(Specification<User> specification, Pageable pageable);
 
     List<User> findAllByLoginNot(String login);
