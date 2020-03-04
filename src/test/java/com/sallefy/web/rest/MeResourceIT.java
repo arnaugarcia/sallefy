@@ -181,7 +181,7 @@ public class MeResourceIT {
     @Test
     @Transactional
     @WithMockUser("basic-liked-track-user")
-    public void get_all_liked_tracks() throws Exception {
+    public void get_all_liked_tracks_by_current_user() throws Exception {
 
         // Initialize the database
         User user = UserResourceIT.createBasicUserWithUsername("basic-liked-track-user");
@@ -199,6 +199,40 @@ public class MeResourceIT {
         Track track3 = TrackResourceIT.createEntity();
         track3.setUser(user);
         trackRepository.save(track3);
+
+        // Get all the trackList
+        restMeMockMvc.perform(get("/api/me/tracks/liked"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(0)));
+
+        restTrackMockMvc.perform(put("/api/tracks/{id}/like", track.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.liked").value(true));
+
+        restMeMockMvc.perform(get("/api/me/tracks/liked"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(1)));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("basic-liked-track-non-owner")
+    public void get_all_liked_tracks_non_owner() throws Exception {
+
+        // Initialize the database
+        User owner = UserResourceIT.createEntity();
+        userRepository.save(owner);
+
+        User externalUser = UserResourceIT.createBasicUserWithUsername("basic-liked-track-non-owner");
+        userRepository.save(externalUser);
+
+        // Tracks for track owner
+        Track track1 = TrackResourceIT.createEntity();
+        track1.setUser(owner);
+        Track track = trackRepository.save(track1);
 
         // Get all the trackList
         restMeMockMvc.perform(get("/api/me/tracks/liked"))
