@@ -20,7 +20,6 @@ import static com.sallefy.config.Constants.LOGIN_REGEX;
 import static com.sallefy.domain.User_.*;
 import static com.sallefy.domain.graphs.UserGraph.GRAPH_USER_ENTITY_ALL;
 import static com.sallefy.security.AuthoritiesConstants.ADMIN;
-import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 import static org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE;
 
@@ -98,16 +97,16 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
-    @OneToMany(mappedBy = "user", fetch = LAZY)
+    @OneToMany(mappedBy = "user")
     private Set<Playlist> playlists = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", fetch = LAZY)
+    @OneToMany(mappedBy = "user")
     private Set<Track> tracks = new HashSet<>();
 
-    @OneToMany(mappedBy = "followed", fetch = LAZY)
+    @OneToMany(mappedBy = "followed")
     private Set<FollowUser> followers = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", fetch = LAZY)
+    @OneToMany(mappedBy = "user")
     private Set<FollowUser> following = new HashSet<>();
 
     @JsonIgnore
