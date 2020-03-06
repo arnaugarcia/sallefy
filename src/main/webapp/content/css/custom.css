@@ -1,0 +1,8 @@
+a.disabled {
+  cursor: none;
+  color: #b8babc;
+}
+a.disabled:hover {
+  color: inherit;
+  cursor: unset;
+}

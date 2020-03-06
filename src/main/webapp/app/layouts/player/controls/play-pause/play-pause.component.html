@@ -1,4 +1,4 @@
-<a class="jp-play ml-sm-3 mr-sm-3 fs-6" role="button" tabindex="0" (click)="playerApi.play()">
+<a class="jp-play ml-sm-3 mr-sm-3 fs-6" role="button" tabindex="0" (click)="play($event)" [class.disabled]="!playerApi.canPlay">
                                     <span class="adonis-icon icon-2x" *ngIf="playerApi.state == 'paused'">
                                         <svg height="20" version="1.1" viewBox="0 0 29 32"
                                              xmlns="http://www.w3.org/2000/svg">
