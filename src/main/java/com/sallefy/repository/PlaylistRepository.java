@@ -1,6 +1,7 @@
 package com.sallefy.repository;
 
 import com.sallefy.domain.Playlist;
+import com.sallefy.domain.Track;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,6 +37,8 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Long>, JpaSp
 
     @Query("select playlist from Playlist playlist where playlist.user.login = ?#{principal.username} and playlist.id = :id")
     Optional<Playlist> findByUserIsCurrentUserAndId(@Param("id") Long id);
+
+    List<Playlist> findByTracksContains(Track track);
 
     @Query("select playlist from Playlist playlist where playlist.user.login = :login")
     List<Playlist> findAllByUserLogin(@Param("login") String login);

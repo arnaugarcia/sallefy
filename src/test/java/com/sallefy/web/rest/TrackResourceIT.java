@@ -2,9 +2,11 @@ package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
 import com.sallefy.domain.Genre;
+import com.sallefy.domain.Playlist;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
 import com.sallefy.repository.GenreRepository;
+import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.*;
@@ -134,6 +136,9 @@ public class TrackResourceIT {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PlaylistRepository playlistRepository;
 
     @Autowired
     private PlayService playService;
@@ -489,6 +494,31 @@ public class TrackResourceIT {
         // Validate the database contains one less item
         List<Track> trackList = trackRepository.findAll();
         assertThat(trackList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("admin")
+    public void should_delete_track_in_multiple_playlists_as_admin() throws Exception {
+        User owner = userRepository.save(UserResourceIT.createEntity());
+        User user1 = userRepository.save(UserResourceIT.createEntity());
+
+        Track track = TrackResourceIT.createEntity();
+        track.setUser(owner);
+        track = trackRepository.save(track);
+
+        Playlist playlist = PlaylistResourceIT.createEntity(em);
+        playlist.setUser(owner);
+        playlist.addTrack(track);
+        playlistRepository.save(playlist);
+
+        Playlist playlist2 = PlaylistResourceIT.createEntity(em);
+        playlist.setUser(user1);
+        playlist.addTrack(track);
+        playlistRepository.save(playlist);
+
+        restTrackMockMvc.perform(delete("/api/tracks/{id}", track.getId()))
+            .andExpect(status().isNoContent());
     }
 
     @Test
