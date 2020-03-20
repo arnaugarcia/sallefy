@@ -1,9 +1,11 @@
 package com.sallefy.service.impl;
 
 import com.sallefy.domain.Genre;
+import com.sallefy.domain.Playlist;
 import com.sallefy.domain.Track;
 import com.sallefy.domain.User;
 import com.sallefy.repository.GenreRepository;
+import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.service.TrackService;
 import com.sallefy.service.UserService;
@@ -40,16 +42,20 @@ public class TrackServiceImpl implements TrackService {
 
     private final GenreRepository genreRepository;
 
+    private final PlaylistRepository playlistRepository;
+
     private final TrackMapper trackMapper;
 
     private final UserService userService;
 
     public TrackServiceImpl(TrackRepository trackRepository,
                             GenreRepository genreRepository,
+                            PlaylistRepository playlistRepository,
                             TrackMapper trackMapper,
                             UserService userService) {
         this.trackRepository = trackRepository;
         this.genreRepository = genreRepository;
+        this.playlistRepository = playlistRepository;
         this.trackMapper = trackMapper;
         this.userService = userService;
     }
@@ -159,7 +165,17 @@ public class TrackServiceImpl implements TrackService {
             checkUserIsTheOwner(track, currentUser);
         }
 
+        removeTrackFromPlaylists(track);
+
         trackRepository.deleteById(trackId);
+    }
+
+    private void removeTrackFromPlaylists(Track track) {
+        final List<Playlist> playlists = playlistRepository.findByTracksContains(track)
+            .stream()
+            .map(playlist -> playlist.removeTrack(track))
+            .collect(toList());
+        playlistRepository.saveAll(playlists);
     }
 
     @Override
