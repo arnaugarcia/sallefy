@@ -35,7 +35,7 @@ public class TrackDTO implements Serializable {
     @Max(1000)
     private Integer duration;
 
-    private int playbacks;
+    private Integer playbacks;
 
     private String color;
 

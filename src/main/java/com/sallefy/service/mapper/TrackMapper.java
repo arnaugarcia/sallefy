@@ -32,7 +32,7 @@ public interface TrackMapper extends EntityMapper<TrackDTO, Track> {
     @Mapping(target = "removeAlbum", ignore = true)
     Track toEntity(TrackDTO trackDTO);
 
-    static int map(Set<Playback> playbacks) {
+    static Integer map(Set<Playback> playbacks) {
         return playbacks.size();
     }
 
