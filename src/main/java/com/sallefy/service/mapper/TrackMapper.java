@@ -1,9 +1,12 @@
 package com.sallefy.service.mapper;
 
+import com.sallefy.domain.Playback;
 import com.sallefy.domain.Track;
 import com.sallefy.service.dto.TrackDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.Set;
 
 /**
  * Mapper for the entity {@link Track} and its DTO {@link TrackDTO}.
@@ -28,6 +31,10 @@ public interface TrackMapper extends EntityMapper<TrackDTO, Track> {
     @Mapping(target = "albums", ignore = true)
     @Mapping(target = "removeAlbum", ignore = true)
     Track toEntity(TrackDTO trackDTO);
+
+    static int map(Set<Playback> playbacks) {
+        return playbacks.size();
+    }
 
     default Track fromId(Long id) {
         if (id == null) {
