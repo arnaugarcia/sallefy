@@ -19,14 +19,6 @@ public interface TrackMapper extends EntityMapper<TrackDTO, Track> {
     @Mapping(target = "popularity", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "removeGenre", ignore = true)
-    @Mapping(target = "playbacks", ignore = true)
-    @Mapping(target = "removePlayback", ignore = true)
-    @Mapping(target = "likeTracks", ignore = true)
-    @Mapping(target = "removeLikeTrack", ignore = true)
-    @Mapping(target = "playlists", ignore = true)
-    @Mapping(target = "removePlaylist", ignore = true)
-    @Mapping(target = "albums", ignore = true)
-    @Mapping(target = "removeAlbum", ignore = true)
     Track toEntity(TrackDTO trackDTO);
 
     default Track fromId(Long id) {

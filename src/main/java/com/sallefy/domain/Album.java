@@ -137,13 +137,11 @@ public class Album implements Serializable {
 
     public Album addTrack(Track track) {
         this.tracks.add(track);
-        track.getAlbums().add(this);
         return this;
     }
 
     public Album removeTrack(Track track) {
         this.tracks.remove(track);
-        track.getAlbums().remove(this);
         return this;
     }
 

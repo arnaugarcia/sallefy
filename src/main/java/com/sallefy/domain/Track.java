@@ -89,11 +89,6 @@ public class Track implements Serializable {
     @JsonIgnore
     private Set<Playlist> playlists = new HashSet<>();
 
-    @ManyToMany(mappedBy = "tracks")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JsonIgnore
-    private Set<Album> albums = new HashSet<>();
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -331,31 +326,6 @@ public class Track implements Serializable {
 
     public void setPlaylists(Set<Playlist> playlists) {
         this.playlists = playlists;
-    }
-
-    public Set<Album> getAlbums() {
-        return albums;
-    }
-
-    public Track albums(Set<Album> albums) {
-        this.albums = albums;
-        return this;
-    }
-
-    public Track addAlbum(Album album) {
-        this.albums.add(album);
-        album.getTracks().add(this);
-        return this;
-    }
-
-    public Track removeAlbum(Album album) {
-        this.albums.remove(album);
-        album.getTracks().remove(this);
-        return this;
-    }
-
-    public void setAlbums(Set<Album> albums) {
-        this.albums = albums;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

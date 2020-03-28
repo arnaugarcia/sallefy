@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.sallefy.domain.FollowPlaylist_.PLAYLIST;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
 /**
@@ -88,7 +89,7 @@ public class Playlist implements Serializable {
     @OneToMany(fetch = LAZY, mappedBy = PLAYLIST)
     private Set<FollowPlaylist> followers = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "playlist_track",
                joinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"),
