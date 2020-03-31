@@ -14,7 +14,7 @@ export class SfMetricsService {
   constructor(private http: HttpClient) {}
 
   getMetrics(): Observable<Metrics> {
-    return this.http.get<Metrics>(SERVER_API_URL + 'management/metrics');
+    return this.http.get<Metrics>(SERVER_API_URL + 'management/jhimetrics');
   }
 
   threadDump(): Observable<ThreadDump> {
