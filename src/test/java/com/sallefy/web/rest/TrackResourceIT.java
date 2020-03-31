@@ -10,6 +10,7 @@ import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.*;
+import com.sallefy.service.dto.LikeDTO;
 import com.sallefy.service.dto.TrackDTO;
 import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.service.mapper.TrackMapper;
@@ -556,7 +557,46 @@ public class TrackResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$", hasSize(2)));
+    }
 
+    @Test
+    @Transactional
+    @WithMockUser
+    public void should_like_a_track() {
+
+        User owner = createBasicUserWithUsername("track-owner");
+        userRepository.save(owner);
+
+        Track track = createEntity();
+        track.setUser(owner);
+        track = trackRepository.save(track);
+        track = trackRepository.save(track);
+
+        assertThat(likeService.checkLikeTrack(track.getId())).isEqualTo(new LikeDTO(false));
+
+        likeService.toggleLikeTrack(track.getId());
+
+        assertThat(likeService.checkLikeTrack(track.getId())).isEqualTo(new LikeDTO(true));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
+    public void should_return_liked_tracks() throws Exception {
+
+        User owner = createBasicUserWithUsername("track-owner");
+        userRepository.save(owner);
+
+        Track track = createEntity();
+        track.setUser(owner);
+        track = trackRepository.save(track);
+
+        likeService.toggleLikeTrack(track.getId());
+
+        restTrackMockMvc.perform(get("/api/tracks?liked=true"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(1)));
     }
 
     @Test
