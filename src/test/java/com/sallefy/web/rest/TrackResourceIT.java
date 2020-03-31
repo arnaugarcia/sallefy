@@ -595,7 +595,8 @@ public class TrackResourceIT {
 
         restTrackMockMvc.perform(get("/api/tracks?liked=true"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE));
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(1)));
     }
 
     @Test
