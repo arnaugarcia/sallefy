@@ -1,6 +1,7 @@
 package com.sallefy.service.mapper;
 
 import com.sallefy.domain.LikeTrack;
+import com.sallefy.domain.Playback;
 import com.sallefy.domain.Track;
 import com.sallefy.security.SecurityUtils;
 import com.sallefy.service.dto.TrackDTO;
@@ -16,6 +17,8 @@ import java.util.Set;
 @Mapper(componentModel = "spring", uses = {UserMapper.class, GenreMapper.class})
 public interface TrackMapper extends EntityMapper<TrackDTO, Track> {
 
+    @Mapping(source = "playbacks", target = "plays")
+    @Mapping(source = "likeTracks", target = "likes")
     @Mapping(source = "likeTracks", target = "liked")
     @Mapping(source = "user", target = "owner")
     TrackDTO toDto(Track track);
@@ -33,7 +36,7 @@ public interface TrackMapper extends EntityMapper<TrackDTO, Track> {
     @Mapping(target = "removeGenre", ignore = true)
     Track toEntity(TrackDTO trackDTO);
 
-    default Boolean map(Set<LikeTrack> likeTracks) {
+    default Boolean mapLike(Set<LikeTrack> likeTracks) {
 
         final Optional<String> currentUserLogin = SecurityUtils.getCurrentUserLogin();
         if (!currentUserLogin.isPresent()) {
@@ -47,6 +50,14 @@ public interface TrackMapper extends EntityMapper<TrackDTO, Track> {
                     .getLogin()
                     .equals(currentUserLogin.get())
             );
+    }
+
+    default Integer mapPlaybacks(Set<Playback> playbacks) {
+        return playbacks.size();
+    }
+
+    default Integer mapLikes(Set<LikeTrack> likeTrackSet) {
+        return likeTrackSet.size();
     }
 
     default Track fromId(Long id) {

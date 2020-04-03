@@ -37,6 +37,10 @@ public class TrackDTO implements Serializable {
 
     private Boolean liked;
 
+    private Integer likes;
+
+    private Integer plays;
+
     private String color;
 
     private UserSimplifiedDTO owner;
@@ -97,6 +101,22 @@ public class TrackDTO implements Serializable {
 
     public void setLiked(Boolean liked) {
         this.liked = liked;
+    }
+
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
+    }
+
+    public Integer getPlays() {
+        return plays;
+    }
+
+    public void setPlays(Integer plays) {
+        this.plays = plays;
     }
 
     public String getColor() {
