@@ -29,6 +29,10 @@ public class PlaylistDTO implements Serializable {
 
     private Boolean publicAccessible;
 
+    private Boolean followed;
+
+    private Integer followers;
+
     private UserSimplifiedDTO owner;
 
     private Set<TrackDTO> tracks = new HashSet<>();
@@ -75,6 +79,22 @@ public class PlaylistDTO implements Serializable {
 
     public Boolean isPublicAccessible() {
         return publicAccessible;
+    }
+
+    public Boolean getFollowed() {
+        return followed;
+    }
+
+    public void setFollowed(Boolean followed) {
+        this.followed = followed;
+    }
+
+    public Integer getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Integer followers) {
+        this.followers = followers;
     }
 
     public void setPublicAccessible(Boolean publicAccessible) {
@@ -130,4 +150,5 @@ public class PlaylistDTO implements Serializable {
             ", owner='" + getOwner() + "'" +
             "}";
     }
+
 }
