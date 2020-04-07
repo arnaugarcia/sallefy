@@ -13,18 +13,31 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.sallefy.domain.Track_.GENRES;
+import static com.sallefy.domain.Track_.*;
+import static com.sallefy.domain.graphs.UserGraph.GRAPH_TRACK_ALL;
 import static com.sallefy.domain.graphs.UserGraph.GRAPH_TRACK_GENRE;
+import static javax.persistence.FetchType.EAGER;
 
 /**
  * A Track.
  */
 @Entity
-@NamedEntityGraph(
-    name = GRAPH_TRACK_GENRE,
-    attributeNodes = {
-        @NamedAttributeNode(GENRES),
-    }
+@NamedEntityGraphs({
+    @NamedEntityGraph(
+        name = GRAPH_TRACK_GENRE,
+        attributeNodes = {
+            @NamedAttributeNode(GENRES)
+        }
+    ),
+    @NamedEntityGraph(
+        name = GRAPH_TRACK_ALL,
+        attributeNodes = {
+            @NamedAttributeNode(GENRES),
+            @NamedAttributeNode(PLAYBACKS),
+            @NamedAttributeNode(LIKE_TRACKS),
+
+        }
+    )}
 )
 @Table(name = "track")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -76,18 +89,13 @@ public class Track implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
     private Set<Genre> genres = new HashSet<>();
 
-    @OneToMany(mappedBy = "track", orphanRemoval = true)
+    @OneToMany(fetch = EAGER, mappedBy = "track", orphanRemoval = true)
     @JsonIgnore
     private Set<Playback> playbacks = new HashSet<>();
 
-    @OneToMany(mappedBy = "track", orphanRemoval = true)
+    @OneToMany(fetch = EAGER, mappedBy = "track", orphanRemoval = true)
     @JsonIgnore
     private Set<LikeTrack> likeTracks = new HashSet<>();
-
-    @ManyToMany(mappedBy = "tracks")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JsonIgnore
-    private Set<Playlist> playlists = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -303,30 +311,6 @@ public class Track implements Serializable {
         this.likeTracks = likeTracks;
     }
 
-    public Set<Playlist> getPlaylists() {
-        return playlists;
-    }
-
-    public Track playlists(Set<Playlist> playlists) {
-        this.playlists = playlists;
-        return this;
-    }
-
-    public Track addPlaylist(Playlist playlist) {
-        this.playlists.add(playlist);
-        playlist.getTracks().add(this);
-        return this;
-    }
-
-    public Track removePlaylist(Playlist playlist) {
-        this.playlists.remove(playlist);
-        playlist.getTracks().remove(this);
-        return this;
-    }
-
-    public void setPlaylists(Set<Playlist> playlists) {
-        this.playlists = playlists;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
