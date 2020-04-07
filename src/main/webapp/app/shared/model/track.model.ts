@@ -6,6 +6,7 @@ export interface ITrack {
   name?: string;
   url?: string;
   thumbnail?: string;
+  liked?: boolean;
   duration?: number;
   color?: string;
   owner?: IUserSimplified;
@@ -18,6 +19,7 @@ export class Track implements ITrack {
     public name?: string,
     public url?: string,
     public thumbnail?: string,
+    public liked?: boolean,
     public duration?: number,
     public color?: string,
     public owner?: IUser,
