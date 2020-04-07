@@ -1,18 +1,14 @@
 package com.sallefy.web.rest;
 
 import com.sallefy.SallefyApp;
-import com.sallefy.domain.Authority;
-import com.sallefy.domain.Playlist;
-import com.sallefy.domain.Track;
-import com.sallefy.domain.User;
+import com.sallefy.domain.*;
+import com.sallefy.repository.FollowUserRepository;
 import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
-import com.sallefy.service.FollowService;
-import com.sallefy.service.PlaylistService;
-import com.sallefy.service.TrackService;
-import com.sallefy.service.UserService;
+import com.sallefy.service.*;
+import com.sallefy.service.dto.LatLongDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.service.impl.UserQueryService;
@@ -28,6 +24,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -123,6 +120,12 @@ public class UserResourceIT {
 
     @Autowired
     private TrackQueryService trackQueryService;
+
+    @Autowired
+    private FollowUserRepository followUserRepository;
+
+    @Autowired
+    private PlayService playService;
 
     @BeforeEach
     public void setup() {
@@ -622,6 +625,39 @@ public class UserResourceIT {
         // Validate the database is empty
         List<User> userList = userRepository.findAll();
         assertThat(userList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser("admin")
+    public void deleteUserAsAdmin() throws Exception {
+        // Initialize the database
+        User user = userRepository.saveAndFlush(createBasicUserWithUsername("user-delete"));
+
+        User follower = userRepository.save(UserResourceIT.createEntity());
+
+        Track track = TrackResourceIT.createEntity();
+        track.setUser(user);
+        track = trackRepository.save(track);
+        Playlist playlist = PlaylistResourceIT.createEntity(em);
+        playlist.addTrack(track);
+        playlist.setUser(user);
+        playlistRepository.save(playlist);
+        followService.toggleFollowUser(follower.getLogin());
+        followUserRepository.save(new FollowUser(follower, user));
+        playService.playTrack(new MockHttpServletRequest(), new LatLongDTO(12d, 55d), track.getId());
+
+        // Delete the user
+        restUserMockMvc.perform(delete("/api/users/{login}", user.getLogin())
+            .accept(APPLICATION_JSON_UTF8))
+            .andExpect(status().isNoContent());
+
+        assertThat(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).get(user.getLogin())).isNull();
+
+        // Validate the database is empty
+        List<User> userList = userRepository.findAll();
+
+        assertThat(userList.stream().anyMatch(user1 -> user1.getLogin().equals(user.getLogin()))).isFalse();
     }
 
     @Test
