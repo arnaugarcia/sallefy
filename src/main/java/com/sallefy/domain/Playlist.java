@@ -14,7 +14,6 @@ import java.util.Set;
 
 import static com.sallefy.domain.FollowPlaylist_.PLAYLIST;
 import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.FetchType.LAZY;
 
 /**
  * A Playlist.
@@ -86,7 +85,7 @@ public class Playlist implements Serializable {
     @JsonIgnoreProperties("playlists")
     private User user;
 
-    @OneToMany(fetch = LAZY, mappedBy = PLAYLIST)
+    @OneToMany(fetch = EAGER, mappedBy = PLAYLIST)
     private Set<FollowPlaylist> followers = new HashSet<>();
 
     @ManyToMany(fetch = EAGER)
@@ -267,13 +266,11 @@ public class Playlist implements Serializable {
 
     public Playlist addTrack(Track track) {
         this.tracks.add(track);
-        track.getPlaylists().add(this);
         return this;
     }
 
     public Playlist removeTrack(Track track) {
         this.tracks.remove(track);
-        track.getPlaylists().remove(this);
         return this;
     }
 

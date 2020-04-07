@@ -23,10 +23,8 @@ public interface TrackMapper extends EntityMapper<TrackDTO, Track> {
     @Mapping(source = "user", target = "owner")
     TrackDTO toDto(Track track);
 
-    @Mapping(target = "removePlaylist", ignore = true)
     @Mapping(target = "removePlayback", ignore = true)
     @Mapping(target = "removeLikeTrack", ignore = true)
-    @Mapping(target = "playlists", ignore = true)
     @Mapping(target = "playbacks", ignore = true)
     @Mapping(target = "likeTracks", ignore = true)
     @Mapping(target = "user", source = "owner")
