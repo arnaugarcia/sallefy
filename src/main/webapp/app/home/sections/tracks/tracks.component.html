@@ -17,17 +17,17 @@
                     <span class="pointer play-btn-dark box-rounded-sm" (click)="play(track)">
                         <i class="play-icon"></i>
                     </span>
-                    <div class="d-flex align-items-center">
+                </div>
+                <div class="d-flex align-items-center" [style.opacity]="track.liked ? 1 : 0">
                         <span class="adonis-icon text-light pointer mr-2 icon-2x">
                             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" fill="white">
                                 <use *ngIf="track.liked" xlink:href="#icon-heart-blank-full"/>
                                 <use *ngIf="!track.liked" xlink:href="#icon-heart-blank"/>
                             </svg>
                         </span>
-                        <span class="pointer dropdown-menu-toggle">
+                    <span class="pointer dropdown-menu-toggle" style="opacity: 0">
                             <span class="icon-dot-nav-horizontal text-light"></span>
                         </span>
-                    </div>
                 </div>
             </div>
         </div>
