@@ -6,6 +6,7 @@ import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
+import com.sallefy.service.UserDeleteService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;
@@ -83,18 +84,22 @@ public class UserResource {
 
     private final UserQueryService userQueryService;
 
+    private final UserDeleteService userDeleteService;
+
     public UserResource(UserService userService,
                         UserRepository userRepository,
                         FollowService followService,
                         PlaylistService playlistService,
                         TrackQueryService trackQueryService,
-                        UserQueryService userQueryService) {
+                        UserQueryService userQueryService,
+                        UserDeleteService userDeleteService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.followService = followService;
         this.playlistService = playlistService;
         this.trackQueryService = trackQueryService;
         this.userQueryService = userQueryService;
+        this.userDeleteService = userDeleteService;
     }
 
     /**
@@ -286,7 +291,7 @@ public class UserResource {
     @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
-        userService.deleteUser(login);
+        userDeleteService.removeUser(login);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login))
             .build();

@@ -127,11 +127,14 @@ public class UserResourceIT {
     @Autowired
     private PlayService playService;
 
+    @Autowired
+    private UserDeleteService userDeleteService;
+
     @BeforeEach
     public void setup() {
         cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).clear();
         cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).clear();
-        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackQueryService, userQueryService);
+        UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackQueryService, userQueryService, userDeleteService);
 
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
