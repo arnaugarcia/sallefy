@@ -37,6 +37,14 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final PlayService playService;
+
+    private final PlaylistService playlistService;
+
+    private final TrackService trackService;
+
+    private final FollowService followService;
+
     private final PasswordEncoder passwordEncoder;
 
     private final AuthorityRepository authorityRepository;
@@ -44,10 +52,18 @@ public class UserService {
     private final CacheManager cacheManager;
 
     public UserService(UserRepository userRepository,
+                       PlayService playService,
+                       PlaylistService playlistService,
+                       TrackService trackService,
+                       FollowService followService,
                        PasswordEncoder passwordEncoder,
                        AuthorityRepository authorityRepository,
                        CacheManager cacheManager) {
         this.userRepository = userRepository;
+        this.playService = playService;
+        this.playlistService = playlistService;
+        this.trackService = trackService;
+        this.followService = followService;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
@@ -227,6 +243,7 @@ public class UserService {
     public void deleteUser(String login) {
         userRepository.findOneByLogin(login).ifPresent(user -> {
             userRepository.delete(user);
+            playlistService.deleteByUser(user.getLogin());
             this.clearUserCaches(user);
             log.debug("Deleted User: {}", user);
         });
