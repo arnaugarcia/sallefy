@@ -10,37 +10,41 @@
     <div class="table-responsive" *ngIf="users">
         <table class="table table-striped" aria-describedby="user-management-page-heading">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="transition.bind(this)">
-                <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th scope="col"  jhiSortBy="login"><span jhiTranslate="userManagement.login">Login</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th scope="col"  jhiSortBy="email"><span jhiTranslate="userManagement.email">Email</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <tr>
+                <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+                <th scope="col"><span jhiTranslate="userManagement.login">Login</span></th>
+                <th scope="col"><span jhiTranslate="userManagement.email">Email</span></th>
+                <th scope="col"><span>Playlists</span></th>
+                <th scope="col"><span>Tracks</span></th>
+                <th scope="col"><span>Followers</span></th>
+                <th scope="col"><span>Following</span></th>
                 <th scope="col"></th>
-                <th scope="col"  jhiSortBy="langKey"> <span jhiTranslate="userManagement.langKey">Lang Key</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <th scope="col"><span jhiTranslate="userManagement.profiles">Profiles</span></th>
-                <th scope="col" jhiSortBy="createdDate"><span jhiTranslate="userManagement.createdDate">Created Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th scope="col" jhiSortBy="lastModifiedBy"><span jhiTranslate="userManagement.lastModifiedBy">Last Modified By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th scope="col" jhiSortBy="lastModifiedDate"><span jhiTranslate="userManagement.lastModifiedDate">Last Modified Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th scope="col"><span jhiTranslate="userManagement.lastModifiedBy">Last Modified By</span></th>
+                <th scope="col"><span jhiTranslate="userManagement.lastModifiedDate">Last Modified Date</span></th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody *ngIf ="users">
-            <tr *ngFor="let user of users; trackBy: trackIdentity">
+            <tr *ngFor="let user of users">
                 <td><a [routerLink]="['./', user.login, 'view']">{{user.id}}</a></td>
                 <td>{{user.login}}</td>
                 <td>{{user.email}}</td>
+                <td>{{user.playlists}}</td>
+                <td>{{user.tracks}}</td>
+                <td>{{user.followers}}</td>
+                <td>{{user.following}}</td>
                 <td>
                     <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated"
                             jhiTranslate="userManagement.deactivated">Deactivated</button>
                     <button class="btn btn-success btn-sm" (click)="setActive(user, false)" *ngIf="user.activated"
                             [disabled]="!currentAccount || currentAccount.login === user.login" jhiTranslate="userManagement.activated">Activated</button>
                 </td>
-                <td>{{user.langKey}}</td>
                 <td>
                     <div *ngFor="let authority of user.authorities">
                         <span class="badge badge-info">{{ authority }}</span>
                     </div>
                 </td>
-                <td>{{user.createdDate | date:'dd/MM/yy HH:mm'}}</td>
                 <td>{{user.lastModifiedBy}}</td>
                 <td>{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</td>
                 <td class="text-right">
@@ -68,13 +72,5 @@
             </tr>
             </tbody>
         </table>
-    </div>
-    <div *ngIf="users">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-        </div>
     </div>
 </div>
