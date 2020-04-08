@@ -97,6 +97,9 @@ public class MeResourceIT {
     @Autowired
     private UserQueryService userQueryService;
 
+    @Autowired
+    private UserDeleteService userDeleteService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -129,7 +132,8 @@ public class MeResourceIT {
             followService,
             playlistService,
             trackQueryService,
-            userQueryService);
+            userQueryService,
+            userDeleteService);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())

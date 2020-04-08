@@ -61,4 +61,10 @@ public interface PlaylistService {
      * @return the list of playlists
      */
     List<PlaylistDTO> findAllByUserLogin(String login);
+
+    /**
+     * Method to delete a playlist by user login
+     * @param login the login of the user
+     */
+    void deleteByUser(String login);
 }

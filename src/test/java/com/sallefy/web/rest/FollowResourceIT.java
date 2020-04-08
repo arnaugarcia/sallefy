@@ -5,6 +5,7 @@ import com.sallefy.domain.User;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.service.FollowService;
 import com.sallefy.service.PlaylistService;
+import com.sallefy.service.UserDeleteService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.dto.criteria.UserCriteriaDTO;
@@ -68,11 +69,13 @@ public class FollowResourceIT {
     @Autowired
     private TrackQueryService trackQueryService;
 
+    @Autowired
+    private UserDeleteService userDeleteService;
 
     @BeforeEach()
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackQueryService, userQueryService);
+        final UserResource userResource = new UserResource(userService, userRepository, followService, playlistService, trackQueryService, userQueryService, userDeleteService);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

@@ -40,6 +40,14 @@ public class FollowUser implements Serializable {
     @JsonIgnoreProperties("followUsers")
     private User user;
 
+    public FollowUser() {
+    }
+
+    public FollowUser(User follower, User following) {
+        this.user = follower;
+        this.followed = following;
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
