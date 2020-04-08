@@ -97,16 +97,16 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private Set<Playlist> playlists = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private Set<Track> tracks = new HashSet<>();
 
-    @OneToMany(mappedBy = "followed")
+    @OneToMany(mappedBy = "followed", orphanRemoval = true)
     private Set<FollowUser> followers = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private Set<FollowUser> following = new HashSet<>();
 
     @JsonIgnore

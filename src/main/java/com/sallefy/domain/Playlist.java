@@ -85,7 +85,7 @@ public class Playlist implements Serializable {
     @JsonIgnoreProperties("playlists")
     private User user;
 
-    @OneToMany(fetch = EAGER, mappedBy = PLAYLIST)
+    @OneToMany(fetch = EAGER, mappedBy = PLAYLIST, orphanRemoval = true)
     private Set<FollowPlaylist> followers = new HashSet<>();
 
     @ManyToMany(fetch = EAGER)
