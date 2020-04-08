@@ -211,9 +211,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     @Override
     public void deleteByUser(String login) {
-        playlistRepository.findAllByUserLogin(login)
-            .stream()
-            .forEach(playlistRepository::delete);
+        playlistRepository.findAllByUserLogin(login).forEach(playlistRepository::delete);
     }
 
     private boolean isTheSameUser(String login, User currentUser) {
