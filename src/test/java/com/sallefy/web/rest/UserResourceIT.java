@@ -107,9 +107,6 @@ public class UserResourceIT {
     private PlaylistService playlistService;
 
     @Autowired
-    private TrackService trackService;
-
-    @Autowired
     private PlaylistRepository playlistRepository;
 
     @Autowired
@@ -631,7 +628,6 @@ public class UserResourceIT {
     }
 
     @Test
-    @Transactional
     @WithMockUser("admin")
     public void deleteUserAsAdmin() throws Exception {
         // Initialize the database
@@ -642,7 +638,7 @@ public class UserResourceIT {
         Track track = TrackResourceIT.createEntity();
         track.setUser(user);
         track = trackRepository.save(track);
-        Playlist playlist = PlaylistResourceIT.createEntity(em);
+        Playlist playlist = PlaylistResourceIT.createEntity();
         playlist.addTrack(track);
         playlist.setUser(user);
         playlistRepository.save(playlist);

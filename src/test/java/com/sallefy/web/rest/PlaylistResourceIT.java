@@ -169,6 +169,19 @@ public class PlaylistResourceIT {
         return playlist;
     }
 
+    public static Playlist createEntity() {
+        return new Playlist()
+            .name(DEFAULT_NAME)
+            .collaborative(DEFAULT_COLLABORATIVE)
+            .description(DEFAULT_DESCRIPTION)
+            .primaryColor(DEFAULT_PRIMARY_COLOR)
+            .cover(DEFAULT_COVER)
+            .thumbnail(DEFAULT_THUMBNAIL)
+            .publicAccessible(DEFAULT_PUBLIC_ACCESSIBLE)
+            .numberSongs(DEFAULT_NUMBER_SONGS)
+            .rating(DEFAULT_RATING);
+    }
+
     /**
      * Create an updated entity for this test.
      * <p>
