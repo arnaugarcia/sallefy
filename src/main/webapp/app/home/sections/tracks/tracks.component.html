@@ -1,7 +1,7 @@
 <owl-carousel-o [options]="customOptions" class="owl-carousel owl-theme-adonis">
     <ng-template carouselSlide *ngFor="let column of groupedTracks; let i = index">
         <div class="item" *ngFor="let track of column">
-            <div class="img-box-horizontal music-img-box h-g-bg h-d-shadow">
+            <div class="img-box-horizontal music-img-box h-g-bg h-d-shadow" (mouseenter)="message('enter')" (mouseleave)="message('exits')">
                 <div class="img-box img-box-sm box-rounded-sm">
                     <img [src]="track.thumbnail" onerror="this.src='./content/images/svg/play-btn-light.svg';" height="50" width="50" [alt]="track.name">
                 </div>
@@ -17,15 +17,26 @@
                     <span class="pointer play-btn-dark box-rounded-sm" (click)="play(track)">
                         <i class="play-icon"></i>
                     </span>
-                </div>
-                <div class="d-flex align-items-center" [style.opacity]="track.liked ? 1 : 0">
+                    <div class="d-flex align-items-center" *ngIf="hover">
                         <span class="adonis-icon text-light pointer mr-2 icon-2x">
                             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" fill="white">
                                 <use *ngIf="track.liked" xlink:href="#icon-heart-blank-full"/>
                                 <use *ngIf="!track.liked" xlink:href="#icon-heart-blank"/>
                             </svg>
                         </span>
-                    <span class="pointer dropdown-menu-toggle" style="opacity: 0">
+                        <span class="pointer dropdown-menu-toggle" [style.opacity]="hover ? 1 : 0">
+                            <span class="icon-dot-nav-horizontal text-light"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center" [style.opacity]="track.liked ? 1 : 0" *ngIf="!hover">
+                        <span class="adonis-icon text-light pointer mr-2 icon-2x">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" fill="white">
+                                <use *ngIf="track.liked" xlink:href="#icon-heart-blank-full"/>
+                                <use *ngIf="!track.liked" xlink:href="#icon-heart-blank"/>
+                            </svg>
+                        </span>
+                    <span class="pointer dropdown-menu-toggle" [style.opacity]="hover ? 1 : 0">
                             <span class="icon-dot-nav-horizontal text-light"></span>
                         </span>
                 </div>
