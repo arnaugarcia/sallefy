@@ -92,7 +92,8 @@
                             <a class="pl-2 pr-2 d-inline-block fs-2 inactive-color" href="#">
                                 <span class="adonis-icon icon-2x">
                                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                        <use xlink:href="#icon-heart-blank"></use>
+                                        <use xlink:href="#icon-heart-blank" *ngIf="!currentTrack.liked"></use>
+                                        <use xlink:href="#icon-heart-blank-full" *ngIf="currentTrack.liked"></use>
                                     </svg>
                                 </span>
                             </a>
