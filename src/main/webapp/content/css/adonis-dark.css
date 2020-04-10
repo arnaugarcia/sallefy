@@ -6654,8 +6654,8 @@ button::after {
   opacity: 1;
   visibility: visible;
 }
-.music-img-box.img-box-horizontal:hover .title {
-  width: calc(100% - 80px);
+.music-img-box.img-box-horizontal .title {
+  width: calc(100% - 15px);
 }
 .music-img-box.img-box-horizontal.shop-item:hover .title {
   margin-right: 0;
