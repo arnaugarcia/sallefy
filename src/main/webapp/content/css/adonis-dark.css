@@ -5438,6 +5438,161 @@ button::after {
     display: none;
   }
 }
+.adonis-album-list > sf-track > li {
+  padding: 1.3rem 0;
+  margin: 0;
+  position: relative;
+  display: flex;
+  border-bottom: 1px solid #dddddd;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+.adonis-album-list > sf-track > li > div {
+  min-height: 20px;
+}
+.adonis-album-list > li:first-child {
+  padding-top: 0;
+}
+.adonis-album-list > sf-track > li a {
+  color: #000000;
+}
+.adonis-album-list > sf-track > li .hover-bg {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+.adonis-album-list > sf-track > li .hover-show {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.adonis-album-list > sf-track > li .hover-hide {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.adonis-album-list > sf-track > li .item-number {
+  width: 4%;
+  min-width: 20px;
+  padding-left: 0;
+}
+.adonis-album-list > sf-track > li .item-title {
+  width: 40%;
+  max-width: 40%;
+  min-width: 60px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.adonis-album-list > sf-track > li .item-genre {
+  width: 30%;
+  max-width: 30%;
+  padding: 0 0.2rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-left: auto;
+  position: relative;
+  overflow: hidden;
+  min-width: 20%;
+}
+.adonis-album-list > sf-track > li .item-genre span {
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.adonis-album-list > sf-track > li .item-duration {
+  width: 60px;
+  min-width: 40px;
+  margin-left: auto;
+}
+.adonis-album-list > sf-track > li .item-tools {
+  width: 60px;
+  min-width: 50px;
+  text-align: center;
+  margin-left: auto;
+}
+.adonis-album-list > sf-track > li .item-price {
+  width: 140px;
+  min-width: 140px;
+  margin-left: auto;
+  text-align: right;
+}
+.adonis-album-list > sf-track > li .item-duration,
+.adonis-album-list > sf-track > li .item-tools {
+  text-align: center;
+  position: relative;
+  margin-left: auto;
+}
+.adonis-album-list > sf-track > li .item-duration .hover-show,
+.adonis-album-list > sf-track > li .item-duration .hover-hide,
+.adonis-album-list > sf-track > li .item-tools .hover-show,
+.adonis-album-list > sf-track > li .item-tools .hover-hide {
+  width: 100%;
+  text-align: center;
+  left: 0;
+}
+.adonis-album-list > sf-track > li .hover-tools {
+  right: 1.5rem;
+  left: auto !important;
+  width: auto !important;
+  align-items: center;
+}
+.adonis-album-list > sf-track > li.item:hover a:not([class^='btn']) {
+  color: #b08cf9;
+}
+.adonis-album-list > sf-track > li.item:hover.hover-bg-item {
+  color: #ffffff;
+}
+.adonis-album-list > sf-track > li.item:hover .hover-bg {
+  opacity: 1;
+}
+.adonis-album-list > sf-track > li.item:hover .hover-hide {
+  opacity: 0;
+  visibility: hidden;
+}
+.adonis-album-list > sf-track > li.item:hover .hover-show {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (min-width: 992px) {
+  .adonis-album-list > sf-track > li.item:hover .hover-lg-show {
+    opacity: 1;
+    visibility: visible;
+  }
+  .adonis-album-list > sf-track > li.item .item-number {
+    padding-left: 1rem;
+    min-width: 50px;
+  }
+}
+@media (max-width: 767px) {
+  .album-spacer {
+    height: 70vmin;
+  }
+
+  .adonis-album-list > sf-track > li .item-genre {
+    display: none;
+  }
+  .adonis-album-list > sf-track > li .item-duration {
+    display: none;
+  }
+}
+
 .customer-rating .rating {
   display: flex;
   align-items: center;

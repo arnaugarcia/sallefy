@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(PlaylistService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Playlist(0, 'AAAAAAA', false, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', false, 0, 0, 0);
+      elemDefault = new Playlist(0, 'AAAAAAA', false, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', false, 0, true, 0);
     });
 
     describe('Service methods', () => {

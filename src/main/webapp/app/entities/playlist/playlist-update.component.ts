@@ -80,7 +80,7 @@ export class PlaylistUpdateComponent implements OnInit {
       numberSongs: playlist.numberSongs,
       followers: playlist.followers,
       rating: playlist.rating,
-      userId: playlist.userId,
+      // userId: playlist.userId,
       tracks: playlist.tracks
     });
   }
@@ -129,7 +129,7 @@ export class PlaylistUpdateComponent implements OnInit {
       numberSongs: this.editForm.get(['numberSongs'])!.value,
       followers: this.editForm.get(['followers'])!.value,
       rating: this.editForm.get(['rating'])!.value,
-      userId: this.editForm.get(['userId'])!.value,
+      // userId: this.editForm.get(['userId'])!.value,
       tracks: this.editForm.get(['tracks'])!.value
     };
   }
