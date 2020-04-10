@@ -57,10 +57,6 @@ export class TracksComponent implements OnInit {
     return results;
   }
 
-  public play(track: ITrack): void {
-    this.playerService.play(track);
-  }
-
   message(message: string): void {
     this.hover = message === 'enter';
   }

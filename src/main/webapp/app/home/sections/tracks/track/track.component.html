@@ -16,7 +16,7 @@
             <i class="play-icon"></i>
         </span>
         <div class="d-flex align-items-center">
-            <span class="adonis-icon text-light pointer mr-2 icon-2x">
+            <span class="adonis-icon text-light pointer mr-2 icon-2x" (click)="toggleLike()">
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" fill="white">
                     <use *ngIf="!track.liked" xlink:href="#icon-heart-blank"/>
                 </svg>
@@ -25,7 +25,7 @@
     </div>
     <div class="d-flex justify-content-between align-items-center" style="padding-right: 15px">
         <div class="d-flex align-items-center">
-            <span class="adonis-icon text-light pointer mr-2 icon-2x">
+            <span class="adonis-icon text-light pointer mr-2 icon-2x" (click)="toggleLike()">
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" fill="white">
                     <use *ngIf="track.liked" xlink:href="#icon-heart-blank-full"/>
                 </svg>
@@ -40,10 +40,10 @@
     <ng-template contextMenuItem (execute)="addToQueue()">
         Add to queue
     </ng-template>
-    <ng-template contextMenuItem (execute)="like()" *ngIf="!track.liked">
+    <ng-template contextMenuItem (execute)="toggleLike()" *ngIf="!track.liked">
         Like
     </ng-template>
-    <ng-template contextMenuItem (execute)="dislike()" *ngIf="track.liked">
+    <ng-template contextMenuItem (execute)="toggleLike()" *ngIf="track.liked">
         Dislike
     </ng-template>
     <ng-template contextMenuItem (execute)="openArtistProfile()">

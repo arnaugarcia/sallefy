@@ -1,13 +1,17 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ITrack, Track } from 'app/shared/model/track.model';
 import { ContextMenuComponent } from 'ngx-contextmenu';
+import { PlayerService } from 'app/layouts/player/player.service';
+import { TrackService } from 'app/shared/services/track.service';
+import { ILike } from 'app/shared/model/like.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'sf-track',
   templateUrl: './track.component.html',
   styleUrls: ['./track.component.scss']
 })
-export class TrackComponent implements OnInit {
+export class TrackComponent {
   @Input()
   public track: ITrack = new Track();
 
@@ -16,17 +20,23 @@ export class TrackComponent implements OnInit {
   @ViewChild(ContextMenuComponent, { static: true })
   public basicMenu: ContextMenuComponent | undefined;
 
-  constructor() {}
+  constructor(private playerService: PlayerService, private trackService: TrackService) {}
 
-  ngOnInit(): void {}
+  play(): void {
+    this.playerService.play(this.track);
+  }
 
-  play(): void {}
+  addToQueue(): void {
+    this.playerService.add(this.track);
+  }
 
-  addToQueue(): void {}
-
-  like(): void {}
-
-  dislike(): void {}
+  toggleLike(): void {
+    this.trackService.toggleLike(this.track).subscribe((response: HttpResponse<ILike>) => {
+      if (response.ok && response.body) {
+        this.track.liked = response.body.liked;
+      }
+    });
+  }
 
   openArtistProfile(): void {}
 }
