@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { ITrack } from 'app/shared/model/track.model';
+import { ILike } from 'app/shared/model/like.model';
 
 type EntityResponseType = HttpResponse<ITrack>;
 type EntityArrayResponseType = HttpResponse<ITrack[]>;
@@ -22,5 +23,9 @@ export class TrackService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<ITrack[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  toggleLike(track: ITrack): Observable<HttpResponse<ILike>> {
+    return this.http.put<ILike>(`${this.resourceUrl}/${track.id}/like`, null, { observe: 'response' });
   }
 }
