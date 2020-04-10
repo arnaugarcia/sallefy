@@ -10,7 +10,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ContextMenuModule } from 'ngx-contextmenu';
 
 @NgModule({
-  imports: [ContextMenuModule.forRoot()],
+  imports: [ContextMenuModule.forRoot({ useBootstrap4: true })],
   exports: [
     FormsModule,
     CommonModule,
