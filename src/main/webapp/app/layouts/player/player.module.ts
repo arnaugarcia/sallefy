@@ -13,6 +13,6 @@ import { PlayPauseComponent } from './controls/play-pause/play-pause.component';
 @NgModule({
   declarations: [PlayerComponent, PlayerPlaylistComponent, TrackListComponent, TrackComponent, PlayPauseComponent],
   imports: [SallefySharedModule, VgCoreModule, VgControlsModule, VgOverlayPlayModule, VgBufferingModule],
-  exports: [PlayerComponent]
+  exports: [PlayerComponent, TrackComponent]
 })
 export class SallefyPlayerModule {}

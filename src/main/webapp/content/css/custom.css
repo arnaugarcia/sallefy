@@ -1,0 +1,7 @@
+a.disabled:hover {
+  cursor: not-allowed;
+  color: #6c757d;
+}
+a.disabled:active {
+  background: initial;
+}

@@ -35,23 +35,30 @@ export class PlayerService {
   }
 
   prev(): void {
-    /*const queue = this.queueSource.getValue();
+    /* const queue = this.queueSource.getValue();
     const history = this.historySource.getValue();
     queue.unshift(history[history.length]);
     this.queueSource.next(queue);
-    this.play(queue[0]);*/
+    this.play(queue[0]); */
   }
 
   next(): void {
-    /*const queue = this.queueSource.getValue();
+    /* const queue = this.queueSource.getValue();
     queue.shift();
     this.queueSource.next(queue);
-    this.play(queue[0]);*/
+    this.play(queue[0]); */
   }
 
-  add(tracks: ITrack[]): ITrack[] {
+  addAll(tracks: ITrack[]): ITrack[] {
     const queue = this.queueSource.getValue();
     queue.push(...tracks);
+    this.queueSource.next(queue);
+    return queue;
+  }
+
+  add(track: ITrack): ITrack[] {
+    const queue = this.queueSource.getValue();
+    queue.push(track);
     this.queueSource.next(queue);
     return queue;
   }

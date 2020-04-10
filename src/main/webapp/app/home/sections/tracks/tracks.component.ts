@@ -37,6 +37,7 @@ export class TracksComponent implements OnInit {
     },
     nav: true
   };
+  public hover = false;
   constructor(private trackService: TrackService, private playerService: PlayerService) {}
 
   ngOnInit(): void {
@@ -56,7 +57,7 @@ export class TracksComponent implements OnInit {
     return results;
   }
 
-  public play(track: ITrack): void {
-    this.playerService.play(track);
+  message(message: string): void {
+    this.hover = message === 'enter';
   }
 }
