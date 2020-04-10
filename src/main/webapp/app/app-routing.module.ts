@@ -37,6 +37,14 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           canActivate: [UserRouteAccessService],
           loadChildren: () => import('./developer/developer.module').then(m => m.DeveloperModule)
         },
+        {
+          path: 'playlist',
+          data: {
+            authorities: ['ROLE_USER']
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./playlist/playlist.module').then(m => m.SallefyPlaylistModule)
+        },
         ...LAYOUT_ROUTES
       ],
       { enableTracing: DEBUG_INFO_ENABLED }

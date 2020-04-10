@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <h6 class="title">
-                    <a href="#">{{playlist.name}}</a>
+                    <a [routerLink]="['/playlist', playlist.id]">{{playlist.name}}</a>
                 </h6>
                 <p class="sub-title category">
                     <!--<a href="#" *ngFor="let genre of playlist.tracks[0].genres">{{genre.name}}</a>-->

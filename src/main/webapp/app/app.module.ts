@@ -7,7 +7,6 @@ import { SallefySharedModule } from 'app/shared/shared.module';
 import { SallefyCoreModule } from 'app/core/core.module';
 import { SallefyAppRoutingModule } from './app-routing.module';
 import { SallefyHomeModule } from './home/home.module';
-import { SallefyEntityModule } from './entities/entity.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { SfMainComponent } from './layouts/main/main.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
@@ -19,6 +18,7 @@ import { SallefyPlayerModule } from 'app/layouts/player/player.module';
 import { NotificationComponent } from './layouts/navbar/notification/notification.component';
 import { ProfileComponent } from './layouts/navbar/profile/profile.component';
 import { SallefyWidgetsModule } from 'app/layouts/widgets/widgets.module';
+import { SallefyPlaylistModule } from 'app/playlist/playlist.module';
 
 @NgModule({
   imports: [
@@ -28,7 +28,8 @@ import { SallefyWidgetsModule } from 'app/layouts/widgets/widgets.module';
     SallefyCoreModule,
     SallefyHomeModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
-    SallefyEntityModule,
+    // SallefyEntityModule,
+    SallefyPlaylistModule,
     SallefyPlayerModule,
     SallefyWidgetsModule,
     SallefyAppRoutingModule
