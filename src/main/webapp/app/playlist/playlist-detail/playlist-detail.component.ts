@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IPlaylist, Playlist } from 'app/shared/model/playlist.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'sf-playlist-detail',
@@ -6,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./playlist-detail.component.scss']
 })
 export class PlaylistDetailComponent implements OnInit {
-  constructor() {}
+  public playlist: IPlaylist = new Playlist();
 
-  ngOnInit(): void {}
+  constructor(protected activatedRoute: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ playlist }) => {
+      this.playlist = playlist;
+    });
+  }
 }

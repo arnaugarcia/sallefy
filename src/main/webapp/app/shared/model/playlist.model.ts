@@ -1,4 +1,5 @@
 import { ITrack } from 'app/shared/model/track.model';
+import { IUser } from 'app/core/user/user.model';
 
 export interface IPlaylist {
   id?: number;
@@ -12,8 +13,7 @@ export interface IPlaylist {
   numberSongs?: number;
   followers?: number;
   rating?: number;
-  userLogin?: string;
-  userId?: number;
+  owner?: IUser;
   tracks?: ITrack[];
 }
 
@@ -30,8 +30,7 @@ export class Playlist implements IPlaylist {
     public numberSongs?: number,
     public followers?: number,
     public rating?: number,
-    public userLogin?: string,
-    public userId?: number,
+    public owner?: IUser,
     public tracks?: ITrack[]
   ) {
     this.collaborative = this.collaborative || false;
