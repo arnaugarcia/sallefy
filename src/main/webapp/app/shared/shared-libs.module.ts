@@ -8,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ContextMenuModule } from 'ngx-contextmenu';
+import { TrackBaseComponent } from 'app/shared/component/track-base.component';
 
 @NgModule({
   imports: [ContextMenuModule.forRoot({ useBootstrap4: true })],
@@ -22,6 +23,7 @@ import { ContextMenuModule } from 'ngx-contextmenu';
     TranslateModule,
     CarouselModule,
     ContextMenuModule
-  ]
+  ],
+  declarations: [TrackBaseComponent]
 })
 export class SallefySharedLibsModule {}
