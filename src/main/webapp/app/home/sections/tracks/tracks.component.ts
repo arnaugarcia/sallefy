@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ITrack } from 'app/shared/model/track.model';
 import { TrackService } from 'app/shared/services/track.service';
 import { HttpResponse } from '@angular/common/http';
-import { PlayerService } from 'app/layouts/player/player.service';
 
 @Component({
   selector: 'sf-tracks',
@@ -38,7 +37,7 @@ export class TracksComponent implements OnInit {
     nav: true
   };
   public hover = false;
-  constructor(private trackService: TrackService, private playerService: PlayerService) {}
+  constructor(private trackService: TrackService) {}
 
   ngOnInit(): void {
     this.trackService.query({ size: 25 }).subscribe((response: HttpResponse<ITrack[]>) => {

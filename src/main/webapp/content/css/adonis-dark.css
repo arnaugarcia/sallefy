@@ -6655,7 +6655,7 @@ button::after {
   visibility: visible;
 }
 .music-img-box.img-box-horizontal .title {
-  width: calc(100% - 15px);
+  width: calc(100% - 27%);
 }
 .music-img-box.img-box-horizontal.shop-item:hover .title {
   margin-right: 0;
@@ -6968,7 +6968,7 @@ button::after {
   padding-left: 15px;
   padding-top: 7px;
   position: relative;
-  max-width: calc(100% - 50px);
+  max-width: calc(100% - 20%);
   /* overflow: visible;
      overflow-x: hidden;*/
   flex-wrap: wrap;
@@ -6988,9 +6988,9 @@ button::after {
   flex: 0 0 auto;
   flex-grow: 0;
 }
-.img-box-horizontal.h-g-bg .hover-state {
+/*.img-box-horizontal.h-g-bg .hover-state {
   padding-right: 15px;
-}
+}*/
 .img-box-horizontal .hover-state .play-btn-dark {
   width: 50px;
   height: 50px;
