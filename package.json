@@ -9,6 +9,7 @@
   ],
   "dependencies": {
     "@angular/animations": "^8.2.14",
+    "@angular/cdk": "8.2.3",
     "@angular/common": "8.2.14",
     "@angular/compiler": "8.2.14",
     "@angular/core": "8.2.14",
@@ -27,6 +28,7 @@
     "jquery": "^3.4.1",
     "moment": "2.24.0",
     "ng-jhipster": "0.11.5",
+    "ngx-contextmenu": "^5.4.0",
     "ngx-cookie": "4.0.2",
     "ngx-infinite-scroll": "8.0.1",
     "ngx-owl-carousel": "^2.0.7",

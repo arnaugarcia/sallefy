@@ -7,8 +7,10 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { ContextMenuModule } from 'ngx-contextmenu';
 
 @NgModule({
+  imports: [ContextMenuModule.forRoot()],
   exports: [
     FormsModule,
     CommonModule,
@@ -18,7 +20,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     FontAwesomeModule,
     ReactiveFormsModule,
     TranslateModule,
-    CarouselModule
+    CarouselModule,
+    ContextMenuModule
   ]
 })
 export class SallefySharedLibsModule {}
