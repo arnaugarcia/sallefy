@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IPlaylist } from 'app/shared/model/playlist.model';
-import { IFollow } from 'app/shared/model/follow-playlist.model';
+import { IFollow } from 'app/shared/model/follow.model';
 
 type EntityResponseType = HttpResponse<IPlaylist>;
 type EntityArrayResponseType = HttpResponse<IPlaylist[]>;
