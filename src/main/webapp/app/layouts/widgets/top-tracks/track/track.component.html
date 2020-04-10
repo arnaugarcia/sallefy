@@ -1,4 +1,4 @@
-<div class="img-box-horizontal music-img-box h-g-bg h-d-shadow" [contextMenu]="basicMenu" [contextMenuSubject]="track">
+<div class="img-box-horizontal music-img-box img-box-horizontal-style-2" [contextMenu]="basicMenu" [contextMenuSubject]="track">
     <div class="img-box img-box-sm box-rounded-sm">
         <img [src]="track.thumbnail" onerror="this.src='./content/images/svg/play-btn-light.svg';" height="50" width="50" [alt]="track.name">
     </div>
@@ -6,14 +6,14 @@
         <h6 class="title fs-2">
             <a href="#" (click)="play()">{{track.name}}</a>
         </h6>
-        <p class="sub-title">
-            <a href="#" (click)="play()" *ngFor="let genre of track.genres">{{genre.name}}</a>
+        <p class="sub-title" *ngIf="track.owner as owner">
+            <a href="#" (click)="play()">{{owner.firstName}} {{owner.lastName}}</a>
         </p>
     </div>
     <div class="hover-state d-flex justify-content-between align-items-center">
-        <span class="pointer play-btn-dark box-rounded-sm" (click)="play()">
-            <i class="play-icon"></i>
-        </span>
+            <span class="pointer play-btn-dark box-rounded-sm" (click)="play()">
+                <i class="play-icon"></i>
+            </span>
         <div class="d-flex align-items-center">
             <span class="adonis-icon text-light pointer mr-2 icon-2x" (click)="toggleLike()">
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" fill="white">
@@ -22,7 +22,7 @@
             </span>
         </div>
     </div>
-    <div class="d-flex justify-content-between align-items-center" style="padding-right: 15px">
+    <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
             <span class="adonis-icon text-light pointer mr-2 icon-2x" (click)="toggleLike()">
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" fill="white">
