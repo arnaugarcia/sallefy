@@ -37,5 +37,6 @@ export class Playlist implements IPlaylist {
   ) {
     this.collaborative = this.collaborative || false;
     this.publicAccessible = this.publicAccessible || false;
+    this.followed = this.followed || false;
   }
 }
