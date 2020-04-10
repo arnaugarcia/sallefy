@@ -20,9 +20,13 @@ export class TrackComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  play(track: ITrack): void {}
+  play(): void {}
 
-  showMessage(s: string): void {
-    console.warn(s);
-  }
+  addToQueue(): void {}
+
+  like(): void {}
+
+  dislike(): void {}
+
+  openArtistProfile(): void {}
 }
