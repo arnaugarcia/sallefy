@@ -49,9 +49,16 @@ export class PlayerService {
     this.play(queue[0]);*/
   }
 
-  add(tracks: ITrack[]): ITrack[] {
+  addAll(tracks: ITrack[]): ITrack[] {
     const queue = this.queueSource.getValue();
     queue.push(...tracks);
+    this.queueSource.next(queue);
+    return queue;
+  }
+
+  add(track: ITrack): ITrack[] {
+    const queue = this.queueSource.getValue();
+    queue.push(track);
     this.queueSource.next(queue);
     return queue;
   }
