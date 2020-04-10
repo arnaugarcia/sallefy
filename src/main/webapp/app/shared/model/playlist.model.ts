@@ -11,6 +11,7 @@ export interface IPlaylist {
   thumbnail?: string;
   publicAccessible?: boolean;
   numberSongs?: number;
+  followed?: boolean;
   followers?: number;
   rating?: number;
   owner?: IUser;
@@ -28,6 +29,7 @@ export class Playlist implements IPlaylist {
     public thumbnail?: string,
     public publicAccessible?: boolean,
     public numberSongs?: number,
+    public followed?: boolean,
     public followers?: number,
     public rating?: number,
     public owner?: IUser,
