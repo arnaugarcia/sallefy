@@ -1,4 +1,4 @@
-<li class="item hover-bg-item">
+<li class="item hover-bg-item" (dblclick)="play()">
     <div class="item-number">
         <span class="hover-hide">{{index}}</span>
         <span class="hover-show adonis-icon icon-1x" (click)="play()">
@@ -16,14 +16,17 @@
     <div class="item-duration">
         <span class="hover-hide">{{track.duration}}</span>
     </div>
+    <div class="item-duration">
+        <span class="adonis-icon icon-1x" (click)="toggleLike()">
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                <use xlink:href="#icon-heart-blank-full" *ngIf="track.liked"></use>
+                <use xlink:href="#icon-heart-blank" *ngIf="!track.liked"></use>
+            </svg>
+        </span>
+    </div>
     <div class="item-tools">
         <span class="hover-hide">{{track.likes}}</span>
         <div class="hover-show d-flex flex-nowrap hover-tools">
-            <span class="adonis-icon icon-1x">
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-                    <use xlink:href="#icon-heart-blank"></use>
-                </svg>
-            </span>
             <span class="ml-3 adonis-icon icon-3x">
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
                     <use xlink:href="#icon-plus"></use>

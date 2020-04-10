@@ -32,7 +32,15 @@ export class TrackBaseComponent {
   toggleLike(): void {
     this.trackService.toggleLike(this.track).subscribe((response: HttpResponse<ILike>) => {
       if (response.ok && response.body) {
-        this.track.liked = response.body.liked;
+        const liked = response.body.liked;
+        this.track.liked = liked;
+        if (this.track.likes !== undefined) {
+          if (liked) {
+            this.track.likes = this.track.likes + 1;
+          } else {
+            this.track.likes = this.track.likes - 1;
+          }
+        }
       }
     });
   }
