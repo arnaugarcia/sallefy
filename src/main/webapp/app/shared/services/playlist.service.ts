@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IPlaylist } from 'app/shared/model/playlist.model';
+import { IFollow } from 'app/shared/model/follow-playlist.model';
 
 type EntityResponseType = HttpResponse<IPlaylist>;
 type EntityArrayResponseType = HttpResponse<IPlaylist[]>;
@@ -21,6 +22,10 @@ export class PlaylistService {
 
   update(playlist: IPlaylist): Observable<EntityResponseType> {
     return this.http.put<IPlaylist>(this.resourceUrl, playlist, { observe: 'response' });
+  }
+
+  follow(playlist: IPlaylist): Observable<HttpResponse<IFollow>> {
+    return this.http.put<IFollow>(`${this.resourceUrl}/${playlist.id}/follow`, null, { observe: 'response' });
   }
 
   find(id: number): Observable<EntityResponseType> {
