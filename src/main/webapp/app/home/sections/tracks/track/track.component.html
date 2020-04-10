@@ -47,6 +47,6 @@
         Dislike
     </ng-template>
     <ng-template contextMenuItem (execute)="openArtistProfile()" [enabled]="false">
-        Go to {{track.owner.login}} profile
+        Go to {{track.owner?.login}} profile
     </ng-template>
 </context-menu>
