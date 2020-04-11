@@ -6,7 +6,7 @@
                     <img *ngIf="playlist.thumbnail" class="retina box-rounded-md" [src]="playlist.thumbnail" [alt]="playlist.name">
                     <img *ngIf="!playlist.thumbnail" class="retina box-rounded-md" src="/content/images/playlists/empty_playlist_thumbnail.png">
                 </div>
-                <div class="absolute-info">
+                <div class="absolute-info" *ngIf="hasTracks()">
                     <a class="btn btn-60-60 btn-primary absolute-center adonis-album-button round-btn text-light" role="button" (click)="play()">
                         <span class="adonis-icon icon-play icon-2x">
                             <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -46,7 +46,7 @@
             <div class="separator mb-4 mt-4">
                 <span class="separator-md"></span>
             </div>
-            <p *ngIf="playlist.tracks" class="mb-2">{{playlist.tracks.length}} Songs - {{getTotalSongsDuration()}} minutes</p>
+            <p *ngIf="hasTracks()" class="mb-2">{{playlist.tracks.length}} Songs - {{getTotalSongsDuration()}} minutes</p>
             <!--<p class="mb-2">Released on November 12, 2017</p>-->
         </div>
         <div class="mb-4 ml-md-0 mr-md-0">
@@ -66,11 +66,12 @@
     <div class="col-xl-12 col-xxl-3 text-center text-lg-left">
         <div class="about">
             <h4>About this playlist</h4>
-            <p>{{playlist.description}}</p>
+            <p *ngIf="playlist.description">{{playlist.description}}</p>
+            <p *ngIf="!playlist.description">This playlist doesn't have any description already.</p>
         </div>
     </div>
 </div>
-<ul class="adonis-album-list pb-5 pt-e-30">
+<ul class="adonis-album-list pb-5 pt-e-30" *ngIf="hasTracks()">
     <li>
         <div class="item-number h6 inactive-color">#</div>
         <div class="item-title h6 inactive-color">Song</div>
@@ -86,6 +87,12 @@
         <sf-track [track]="track" [index]="index"></sf-track>
     </ng-container>
 </ul>
+<div class="adonis-album-list pb-5 pt-e-30">
+    <h2 *ngIf="!hasTracks()">
+        This playlist it's empty
+        <ng-container *ngIf="currentUserIsTheOwner()"> come on, <a [routerLink]="'edit'">add some songs</a>!</ng-container>
+    </h2>
+</div>
 <div class="pt-e-20 pt-e-lg-40"></div>
 <section>
     <div class="title-box">
