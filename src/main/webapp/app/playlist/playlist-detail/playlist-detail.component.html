@@ -3,10 +3,11 @@
         <div class="album-image">
             <div class="music-img-box d-inline-block">
                 <div class="img-box">
-                    <img class="retina box-rounded-md" [src]="playlist.thumbnail" [alt]="playlist.name">
+                    <img *ngIf="playlist.thumbnail" class="retina box-rounded-md" [src]="playlist.thumbnail" [alt]="playlist.name">
+                    <img *ngIf="!playlist.thumbnail" class="retina box-rounded-md" src="/content/images/playlists/empty_playlist_thumbnail.png">
                 </div>
                 <div class="absolute-info">
-                    <a class="btn btn-60-60 btn-primary absolute-center adonis-album-button round-btn text-light" data-album-id="1" role="button" tabindex="0">
+                    <a class="btn btn-60-60 btn-primary absolute-center adonis-album-button round-btn text-light" role="button" (click)="play()">
                         <span class="adonis-icon icon-play icon-2x">
                             <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
                                 <use xlink:href="#icon-brand-play"></use>
@@ -29,12 +30,12 @@
                 </svg>
             </span>
             <span class="pr-2">{{playlist.followers}}</span>
-            <span class="adonis-icon pr-2 icon-1x">
+            <!--<span class="adonis-icon pr-2 icon-1x">
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
                     <use xlink:href="#icon-brand-play"></use>
                 </svg>
             </span>
-            <span>125K</span>
+            <span>get</span>-->
         </div>
     </div>
     <div class="pl-e-xl-40 col-lg-7 flex-column-lg-album-content text-center text-lg-left">
@@ -45,7 +46,7 @@
             <div class="separator mb-4 mt-4">
                 <span class="separator-md"></span>
             </div>
-            <p class="mb-2">{{playlist.tracks.length}} Songs - 30 minutes</p>
+            <p *ngIf="playlist.tracks" class="mb-2">{{playlist.tracks.length}} Songs - {{getTotalSongsDuration()}} minutes</p>
             <!--<p class="mb-2">Released on November 12, 2017</p>-->
         </div>
         <div class="mb-4 ml-md-0 mr-md-0">
