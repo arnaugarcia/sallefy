@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ITrack, Track } from 'app/shared/model/track.model';
+import { IPlaylist } from 'app/shared/model/playlist.model';
 
 @Injectable({
   providedIn: 'root'
@@ -73,5 +74,14 @@ export class PlayerService {
 
   clear(): void {
     this.queueSource.next([]);
+  }
+
+  playPlaylist(playlist: IPlaylist): void {
+    if (!playlist.tracks) {
+      return;
+    }
+    this.addAll(playlist.tracks);
+    const queue = this.queueSource.getValue();
+    this.play(queue[0]);
   }
 }
