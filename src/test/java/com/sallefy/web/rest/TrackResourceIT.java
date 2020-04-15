@@ -630,6 +630,17 @@ public class TrackResourceIT {
     @Test
     @Transactional
     @WithMockUser
+    public void should_not_return_tracks_because_genre_not_exists() throws Exception {
+
+        restTrackMockMvc.perform(get("/api/tracks?genre={name}", anyString()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
     public void should_fail_because_genre_id_not_exists() throws Exception {
 
         restGenreMockMvc.perform(get("/api/genres/{id}/tracks", Long.MAX_VALUE))
