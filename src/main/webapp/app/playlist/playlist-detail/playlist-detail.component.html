@@ -50,8 +50,8 @@
             <!--<p class="mb-2">Released on November 12, 2017</p>-->
         </div>
         <div class="mb-4 ml-md-0 mr-md-0">
-            <button class="btn btn-outline active-border rounded-btn btn-lg mr-2 mr-md-3" *ngIf="playlist.followed" (click)="toggleFollowPlaylist()">UNFOLLOW PLAYLIST</button>
-            <button class="btn btn-outline active-border rounded-btn btn-lg mr-2 mr-md-3" *ngIf="!playlist.followed" (click)="toggleFollowPlaylist()">FOLLOW PLAYLIST</button>
+            <button class="btn btn-outline active-border rounded-btn btn-lg mr-2 mr-md-3" *ngIf="playlist.followed" (click)="toggleFollow()">UNFOLLOW PLAYLIST</button>
+            <button class="btn btn-outline active-border rounded-btn btn-lg mr-2 mr-md-3" *ngIf="!playlist.followed" (click)="toggleFollow()">FOLLOW PLAYLIST</button>
             <button class="btn btn-45-45 btn-primary p-0 rounded-circle dropdown-menu-toggle">
                 <span class="pointer text-light">
                     <span class="adonis-icon icon-4x">
@@ -79,8 +79,11 @@
         <div class="item-duration h6 inactive-color">Time</div>
         <div class="item-duration h6 inactive-color"></div>
         <div class="item-tools">
-            <span class="adonis-icon h6 inactive-color icon-1x"><svg xmlns="http://www.w3.org/2000/svg" version="1.1"><use
-                xlink:href="#icon-heart-blank"></use></svg></span>
+            <span class="adonis-icon h6 inactive-color icon-1x">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                    <use xlink:href="#icon-heart-blank"></use>
+                </svg>
+            </span>
         </div>
     </li>
     <ng-container *ngFor="let track of playlist.tracks; let index = index">
@@ -288,3 +291,23 @@
     </div>-->
     <div class="pt-e-20 pt-e-lg-40"></div>
 </section>
+<context-menu>
+    <ng-template contextMenuItem (execute)="play()" [enabled]="hasTracks()">
+        Play
+    </ng-template>
+    <ng-template contextMenuItem (execute)="addToQueue()" [enabled]="hasTracks()">
+        Add to queue
+    </ng-template>
+    <ng-template contextMenuItem (execute)="makePrivate()" *ngIf="playlist.publicAccessible">
+        Make private
+    </ng-template>
+    <ng-template contextMenuItem (execute)="makePublic()" *ngIf="playlist.publicAccessible">
+        Make public
+    </ng-template>
+    <ng-template contextMenuItem (execute)="toggleFollow()" *ngIf="!playlist.followed">
+        Follow
+    </ng-template>
+    <ng-template contextMenuItem (execute)="toggleFollow()" *ngIf="playlist.followed">
+        Unfollow
+    </ng-template>
+</context-menu>

@@ -1,4 +1,4 @@
-<li class="item hover-bg-item" (dblclick)="play()">
+<li class="item hover-bg-item" (dblclick)="play()" [contextMenu]="trackMenuPlaylist" [contextMenuSubject]="track">
     <div class="item-number">
         <span class="hover-hide">{{index}}</span>
         <span class="hover-show adonis-icon icon-1x" (click)="play()">
@@ -36,3 +36,20 @@
     </div>
     <div class="hover-bg gradient-adonis"></div>
 </li>
+<context-menu #trackMenuPlaylist>
+    <ng-template contextMenuItem (execute)="play()">
+        Play
+    </ng-template>
+    <ng-template contextMenuItem (execute)="addToQueue()">
+        Add to queue
+    </ng-template>
+    <ng-template contextMenuItem (execute)="toggleLike()" *ngIf="!track.liked">
+        Like
+    </ng-template>
+    <ng-template contextMenuItem (execute)="toggleLike()" *ngIf="track.liked">
+        Dislike
+    </ng-template>
+    <ng-template contextMenuItem (execute)="openArtistProfile()" [enabled]="false">
+        Go to {{track.owner?.login}} profile
+    </ng-template>
+</context-menu>

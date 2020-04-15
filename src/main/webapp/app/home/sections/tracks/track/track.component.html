@@ -1,4 +1,4 @@
-<div class="img-box-horizontal music-img-box h-g-bg h-d-shadow" [contextMenu]="basicMenu" [contextMenuSubject]="track">
+<div class="img-box-horizontal music-img-box h-g-bg h-d-shadow" [contextMenu]="trackMenu" [contextMenuSubject]="track">
     <div class="img-box img-box-sm box-rounded-sm">
         <img [src]="track.thumbnail" onerror="this.src='./content/images/svg/play-btn-light.svg';" height="50" width="50" [alt]="track.name">
     </div>
@@ -32,7 +32,7 @@
         </div>
     </div>
 </div>
-<context-menu>
+<context-menu #trackMenu>
     <ng-template contextMenuItem (execute)="play()">
         Play
     </ng-template>

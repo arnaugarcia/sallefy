@@ -1,6 +1,5 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ITrack, Track } from 'app/shared/model/track.model';
-import { ContextMenuComponent } from 'ngx-contextmenu';
 import { PlayerService } from 'app/layouts/player/player.service';
 import { TrackService } from 'app/shared/services/track.service';
 import { HttpResponse } from '@angular/common/http';
@@ -15,9 +14,6 @@ export class TrackBaseComponent {
   public track: ITrack = new Track();
 
   public hover = false;
-
-  @ViewChild(ContextMenuComponent, { static: true })
-  public basicMenu: ContextMenuComponent | undefined;
 
   constructor(private playerService: PlayerService, private trackService: TrackService) {}
 

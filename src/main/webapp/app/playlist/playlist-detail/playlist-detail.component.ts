@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IPlaylist, Playlist } from 'app/shared/model/playlist.model';
 import { ActivatedRoute } from '@angular/router';
 import { PlaylistService } from 'app/shared/services/playlist.service';
-import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { IFollow } from 'app/shared/model/follow.model';
 import { PlayerService } from 'app/layouts/player/player.service';
 import { AccountService } from 'app/core/auth/account.service';
@@ -41,7 +41,7 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
     this.accountSubscription.unsubscribe();
   }
 
-  toggleFollowPlaylist(): void {
+  toggleFollow(): void {
     this.playlistService.follow(this.playlist).subscribe((response: HttpResponse<IFollow>) => {
       if (response.ok && response.body) {
         this.playlist.followed = response.body.followed;
@@ -69,5 +69,33 @@ export class PlaylistDetailComponent implements OnInit, OnDestroy {
       return false;
     }
     return this.playlist.owner.login === this.currentUser.login;
+  }
+
+  addToQueue(): void {
+    if (this.playlist.tracks) this.playerService.addAll(this.playlist.tracks);
+  }
+
+  makePublic(): void {
+    this.playlist.publicAccessible = true;
+    this.updatePlaylist();
+  }
+
+  makePrivate(): void {
+    this.playlist.publicAccessible = false;
+    this.updatePlaylist();
+  }
+
+  private updatePlaylist(): void {
+    this.playlistService.update(this.playlist).subscribe(this.onSuccess, this.onError);
+  }
+
+  private onSuccess(response: HttpResponse<IPlaylist>): void {
+    if (response.ok && response.body) {
+      this.playlist = response.body;
+    }
+  }
+
+  private onError(error: HttpErrorResponse): void {
+    console.error(error.message);
   }
 }
