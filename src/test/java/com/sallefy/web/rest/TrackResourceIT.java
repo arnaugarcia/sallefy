@@ -621,7 +621,7 @@ public class TrackResourceIT {
         track2.addGenre(pop);
         track2 = trackRepository.save(track2);
 
-        restTrackMockMvc.perform(get("/api/tracks").param("keyword", rock.getName()))
+        restTrackMockMvc.perform(get("/api/tracks").param("genre", rock.getName()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$", hasSize(1)));
