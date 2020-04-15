@@ -614,12 +614,12 @@ public class TrackResourceIT {
         Track track1 = createEntity();
         track1.setUser(owner);
         track1.addGenre(rock);
-        track1 = trackRepository.save(track1);
+        trackRepository.save(track1);
 
         Track track2 = createEntity();
         track2.setUser(owner);
         track2.addGenre(pop);
-        track2 = trackRepository.save(track2);
+        trackRepository.save(track2);
 
         restTrackMockMvc.perform(get("/api/tracks").param("genre", rock.getName()))
             .andExpect(status().isOk())
