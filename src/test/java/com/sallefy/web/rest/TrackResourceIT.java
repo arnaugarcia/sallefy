@@ -621,7 +621,7 @@ public class TrackResourceIT {
         track2.addGenre(pop);
         track2 = trackRepository.save(track2);
 
-        restTrackMockMvc.perform(get("/api/tracks?genre={name}", rock.getName()))
+        restTrackMockMvc.perform(get("/api/tracks").param("keyword", rock.getName()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$", hasSize(1)));
@@ -632,7 +632,7 @@ public class TrackResourceIT {
     @WithMockUser
     public void should_not_return_tracks_because_genre_not_exists() throws Exception {
 
-        restTrackMockMvc.perform(get("/api/tracks?genre={name}", anyString()))
+        restTrackMockMvc.perform(get("/api/tracks").param("genres", "genre"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$", hasSize(0)));
