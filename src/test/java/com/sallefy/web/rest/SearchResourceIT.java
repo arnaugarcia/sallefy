@@ -129,8 +129,9 @@ public class SearchResourceIT {
 
     @Test
     public void shouldReturnAListOfUsers() throws Exception {
-
-        User user = userRepository.save(UserResourceIT.createEntity());
+        User user = UserResourceIT.createEntity();
+        user.setFirstName("Anselmo");
+        user = userRepository.save(user);
 
         restSearchMockMvc.perform(
             get("/api/search")
