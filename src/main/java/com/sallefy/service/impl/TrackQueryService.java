@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.SetJoin;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -109,7 +110,7 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDT
                 specification = specification.and(sortByMostPlayed());
             }
             if (criteria.getGenre() != null) {
-
+                specification = specification.and(byGenres(criteria.getGenre()));
             }
         }
         return specification;
@@ -162,6 +163,14 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDT
         return (root, criteriaQuery, criteriaBuilder) -> {
             final Order order = criteriaBuilder.desc(root.get(Track_.createdAt));
             return criteriaQuery.orderBy(order).getRestriction();
+        };
+    }
+
+    private Specification<Track> byGenres(String genre) {
+        return (root, query, builder) -> {
+            final Join<Track, Genre> genreJoin = root.join(Track_.genres);
+            final Path<String> genreName = genreJoin.get(Genre_.name);
+            return query.where(builder.equal(genreName, genre)).getGroupRestriction();
         };
     }
 
