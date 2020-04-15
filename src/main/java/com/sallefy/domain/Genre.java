@@ -34,6 +34,13 @@ public class Genre implements Serializable {
     @JsonIgnore
     private Set<Track> tracks = new HashSet<>();
 
+    public Genre() {
+    }
+
+    public Genre(String name) {
+        this.name = name;
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;

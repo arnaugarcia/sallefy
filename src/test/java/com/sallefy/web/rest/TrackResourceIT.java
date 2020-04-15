@@ -602,6 +602,45 @@ public class TrackResourceIT {
     @Test
     @Transactional
     @WithMockUser
+    public void should_return_tracks_by_genere() throws Exception {
+
+        User owner = createBasicUserWithUsername("track-owner");
+        userRepository.save(owner);
+
+        Genre rock = genreRepository.save(new Genre("ROCK"));
+        Genre pop = genreRepository.save(new Genre("POP"));
+
+
+        Track track1 = createEntity();
+        track1.setUser(owner);
+        track1.addGenre(rock);
+        trackRepository.save(track1);
+
+        Track track2 = createEntity();
+        track2.setUser(owner);
+        track2.addGenre(pop);
+        trackRepository.save(track2);
+
+        restTrackMockMvc.perform(get("/api/tracks").param("genre", rock.getName()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(1)));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
+    public void should_not_return_tracks_because_genre_not_exists() throws Exception {
+
+        restTrackMockMvc.perform(get("/api/tracks").param("genres", "genre"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
     public void should_fail_because_genre_id_not_exists() throws Exception {
 
         restGenreMockMvc.perform(get("/api/genres/{id}/tracks", Long.MAX_VALUE))
