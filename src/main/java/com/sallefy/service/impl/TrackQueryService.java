@@ -102,11 +102,14 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDT
             if (criteria.getRecent() != null && criteria.getRecent()) {
                 specification = specification.and(sortByCreated());
             }
-            if (criteria.getLiked() != null) {
+            if (criteria.getLiked() != null && criteria.getLiked()) {
                 specification = specification.and(sortByMostLiked());
             }
             if (criteria.getPlayed() != null) {
                 specification = specification.and(sortByMostPlayed());
+            }
+            if (criteria.getGenre() != null) {
+
             }
         }
         return specification;
