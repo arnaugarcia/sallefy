@@ -16,7 +16,6 @@ import java.util.Set;
 import static com.sallefy.domain.Track_.*;
 import static com.sallefy.domain.graphs.UserGraph.GRAPH_TRACK_ALL;
 import static com.sallefy.domain.graphs.UserGraph.GRAPH_TRACK_GENRE;
-import static javax.persistence.FetchType.EAGER;
 
 /**
  * A Track.
@@ -89,11 +88,11 @@ public class Track implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
     private Set<Genre> genres = new HashSet<>();
 
-    @OneToMany(fetch = EAGER, mappedBy = "track", orphanRemoval = true)
+    @OneToMany(mappedBy = "track", orphanRemoval = true)
     @JsonIgnore
     private Set<Playback> playbacks = new HashSet<>();
 
-    @OneToMany(fetch = EAGER, mappedBy = "track", orphanRemoval = true)
+    @OneToMany(mappedBy = "track", orphanRemoval = true)
     @JsonIgnore
     private Set<LikeTrack> likeTracks = new HashSet<>();
 
