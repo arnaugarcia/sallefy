@@ -13,6 +13,7 @@ import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.dto.criteria.UserCriteriaDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,6 @@ import java.util.stream.Collectors;
 
 import static javax.persistence.criteria.JoinType.INNER;
 import static javax.persistence.criteria.JoinType.LEFT;
-import static org.springframework.data.domain.PageRequest.of;
 
 /**
  * Service for executing complex queries for {@link User} entities in the database.
@@ -54,17 +54,11 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<UserDTO> findByCriteria(UserCriteriaDTO criteria) {
+    public List<UserDTO> findByCriteria(UserCriteriaDTO criteria, Pageable pageable) {
         log.debug("Find users by criteria : {}", criteria);
         final Specification<User> specification = createSpecification(criteria);
 
-        List<User> users;
-
-        if (isSizeSelected(criteria)) {
-            users = userRepository.findAll(specification, of(0, criteria.getSize())).getContent();
-        } else {
-            users = userRepository.findAll(specification);
-        }
+        List<User> users = userRepository.findAll(specification, pageable).getContent();
 
         return transformAndFilterUsers(users);
     }
@@ -138,9 +132,5 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
 
     private Predicate<UserDTO> notAnonymousUser() {
         return userDTO -> !userDTO.getLogin().equalsIgnoreCase(Constants.ANONYMOUS_USER);
-    }
-
-    private boolean isSizeSelected(UserCriteriaDTO criteria) {
-        return criteria.getSize() != null;
     }
 }

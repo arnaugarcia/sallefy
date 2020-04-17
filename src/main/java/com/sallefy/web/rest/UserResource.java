@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -166,9 +167,8 @@ public class UserResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
      */
     @GetMapping("/users")
-    public ResponseEntity<List<UserDTO>> getAllUsers(UserCriteriaDTO criteria) {
-        final List<UserDTO> users = userQueryService.findByCriteria(criteria);
-        return ok(users);
+    public ResponseEntity<List<UserDTO>> getAllUsers(UserCriteriaDTO criteria, Pageable pageable) {
+        return ok(userQueryService.findByCriteria(criteria, pageable));
     }
 
     /**
@@ -210,10 +210,9 @@ public class UserResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/tracks")
-    public ResponseEntity<List<TrackDTO>> getTracksOfUser(@PathVariable String login, UserTrackCriteriaDTO criteria) {
+    public ResponseEntity<List<TrackDTO>> getTracksOfUser(@PathVariable String login, UserTrackCriteriaDTO criteria, Pageable pageable) {
         log.debug("REST request to get {} user tracks", login);
-        List<TrackDTO> tracks = trackQueryService.findByCriteria(criteria, login);
-        return ok(tracks);
+        return ok(trackQueryService.findByCriteria(criteria, login, pageable));
     }
 
     /**

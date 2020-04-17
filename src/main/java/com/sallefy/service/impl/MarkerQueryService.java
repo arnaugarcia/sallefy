@@ -8,6 +8,7 @@ import com.sallefy.service.dto.criteria.PlaybackCriteriaDTO;
 import com.sallefy.service.mapper.PlaybackMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,6 @@ import javax.persistence.criteria.SetJoin;
 import java.util.List;
 
 import static java.lang.Math.cos;
-import static org.springframework.data.domain.PageRequest.of;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
@@ -32,8 +32,8 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
 
     private final Logger log = LoggerFactory.getLogger(MarkerQueryService.class);
 
-    private PlaybackRepository playbackRepository;
-    private PlaybackMapper playbackMapper;
+    private final PlaybackRepository playbackRepository;
+    private final PlaybackMapper playbackMapper;
 
     public MarkerQueryService(PlaybackRepository playbackRepository, PlaybackMapper playbackMapper) {
         this.playbackRepository = playbackRepository;
@@ -47,18 +47,12 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
      * @return the matching entities.
      */
     @Override
-    public List<PlaybackDTO> findByCriteria(PlaybackCriteriaDTO criteria) {
+    public List<PlaybackDTO> findByCriteria(PlaybackCriteriaDTO criteria, Pageable pageable) {
         log.debug("find playbacks by criteria : {}", criteria);
 
         final Specification<Playback> specification = createSpecification(criteria);
 
-        List<Playback> playbacks;
-
-        if (isSizeSelected(criteria)) {
-            playbacks = playbackRepository.findAll(specification, of(0, criteria.getSize())).getContent();
-        } else {
-            playbacks = playbackRepository.findAll(specification);
-        }
+        List<Playback> playbacks = playbackRepository.findAll(specification, pageable).getContent();
 
         return playbackMapper.toDto(playbacks);
     }
@@ -127,11 +121,6 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
         return (root, query, builder) -> builder.and(
             builder.between(root.get(Playback_.latitude), maxLatitude, minLatitude),
             builder.between(root.get(Playback_.longitude), maxLongitude, minLongitude));
-    }
-
-
-    private boolean isSizeSelected(PlaybackCriteriaDTO criteria) {
-        return criteria.getSize() != null;
     }
 
 }

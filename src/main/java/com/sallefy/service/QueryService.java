@@ -1,11 +1,12 @@
 package com.sallefy.service;
 
-import com.sallefy.service.dto.criteria.BaseCriteria;
+import org.springframework.data.domain.Pageable;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface QueryService<D, C extends BaseCriteria> {
+public interface QueryService<D, C extends Serializable> {
 
-    List<D> findByCriteria(C criteria);
+    List<D> findByCriteria(C criteria, Pageable pageable);
 
 }

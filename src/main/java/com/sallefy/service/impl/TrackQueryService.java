@@ -4,12 +4,12 @@ import com.sallefy.domain.*;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.service.QueryService;
 import com.sallefy.service.dto.TrackDTO;
-import com.sallefy.service.dto.criteria.BaseCriteria;
 import com.sallefy.service.dto.criteria.TrackCriteriaDTO;
 import com.sallefy.service.dto.criteria.UserTrackCriteriaDTO;
 import com.sallefy.service.mapper.TrackMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static javax.persistence.criteria.JoinType.INNER;
-import static org.springframework.data.domain.PageRequest.of;
 
 /**
  * Service for executing complex queries for {@link Track} entities in the database.
@@ -53,17 +52,11 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDT
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<TrackDTO> findByCriteria(TrackCriteriaDTO criteria) {
+    public List<TrackDTO> findByCriteria(TrackCriteriaDTO criteria, Pageable pageable) {
         log.debug("Find tracks by criteria : {}", criteria);
         final Specification<Track> specification = createSpecification(criteria);
 
-        List<Track> tracks;
-
-        if (isSizeSelected(criteria)) {
-            tracks = trackRepository.findAll(specification, of(0, criteria.getSize())).getContent();
-        } else {
-            tracks = trackRepository.findAll(specification);
-        }
+        List<Track> tracks = trackRepository.findAll(specification, pageable).getContent();
 
         return transformTracks(tracks);
     }
@@ -75,17 +68,11 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDT
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<TrackDTO> findByCriteria(UserTrackCriteriaDTO criteria, String login) {
+    public List<TrackDTO> findByCriteria(UserTrackCriteriaDTO criteria, String login, Pageable pageable) {
         log.debug("Find tracks of {} criteria : {}", login, criteria);
         final Specification<Track> specification = createSpecification(criteria, login);
 
-        List<Track> tracks;
-
-        if (isSizeSelected(criteria)) {
-            tracks = trackRepository.findAll(specification, of(0, criteria.getSize())).getContent();
-        } else {
-            tracks = trackRepository.findAll(specification);
-        }
+        List<Track> tracks = trackRepository.findAll(specification, pageable).getContent();
 
         return transformTracks(tracks);
     }
@@ -178,9 +165,5 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDT
         return tracks.stream()
             .map(trackMapper::toDto)
             .collect(Collectors.toList());
-    }
-
-    private boolean isSizeSelected(BaseCriteria criteria) {
-        return criteria.getSize() != null;
     }
 }

@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @AllOrNone({"latitude", "longitude", "radius"})
-public class PlaybackCriteriaDTO extends BaseCriteria implements Serializable {
+public class PlaybackCriteriaDTO implements Serializable {
 
     private final Double latitude;
     private final Double longitude;
@@ -15,8 +15,7 @@ public class PlaybackCriteriaDTO extends BaseCriteria implements Serializable {
     private final Long trackId;
     private final String genre;
 
-    public PlaybackCriteriaDTO(Integer size, Double latitude, Double longitude, Integer radius, String username, Long trackId, String genre) {
-        super(size);
+    public PlaybackCriteriaDTO(Double latitude, Double longitude, Integer radius, String username, Long trackId, String genre) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.radius = radius;

@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,9 +50,9 @@ public class PlaybackResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/playbacks")
-    public ResponseEntity<List<PlaybackDTO>> findMarkers(@Valid PlaybackCriteriaDTO criteria) {
+    public ResponseEntity<List<PlaybackDTO>> findMarkers(@Valid PlaybackCriteriaDTO criteria, Pageable pageable) {
         log.debug("REST request to get playbacks by criteria");
-        return ok(markerQueryService.findByCriteria(criteria));
+        return ok(markerQueryService.findByCriteria(criteria, pageable));
     }
 
 }

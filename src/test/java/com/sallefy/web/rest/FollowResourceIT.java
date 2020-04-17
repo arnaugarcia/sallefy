@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import static com.sallefy.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.data.domain.Pageable.unpaged;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -97,14 +99,14 @@ public class FollowResourceIT {
         User follower1 = UserResourceIT.createEntity();
         userRepository.save(follower1);
 
-        final List<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null, true));
+        final List<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null), unpaged());
         final int sizeBeforeFollowing = nonFollowingUsers.size();
 
         assertThat(sizeBeforeFollowing).isGreaterThan(0);
 
         followService.toggleFollowUser(follower1.getLogin());
 
-        final List<UserDTO> notFollowingUsersAfterUpdating = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null, true));
+        final List<UserDTO> notFollowingUsersAfterUpdating = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null), PageRequest.of(0, 10));
 
         assertThat(notFollowingUsersAfterUpdating.size()).isLessThan(sizeBeforeFollowing);
 
