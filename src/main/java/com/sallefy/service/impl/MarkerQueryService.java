@@ -14,7 +14,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.SetJoin;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.lang.Math.cos;
@@ -78,15 +78,15 @@ public class MarkerQueryService {
             if (!isEmpty(criteria.getUsername())) {
                 specification = specification.and(byUsername(criteria.getUsername()));
             }
-            LocalDate startDate = isEmpty(criteria.getStartDate()) ? LocalDate.now().minusMonths(1) : criteria.getStartDate();
-            LocalDate endDate = isEmpty(criteria.getEndDate()) ? LocalDate.now() : criteria.getEndDate();
+            LocalDateTime startDate = isEmpty(criteria.getStartDate()) ? LocalDateTime.now().minusMonths(1) : criteria.getStartDate();
+            LocalDateTime endDate = isEmpty(criteria.getEndDate()) ? LocalDateTime.now() : criteria.getEndDate();
             specification = specification.and(betweenDates(startDate, endDate));
         }
 
         return specification;
     }
 
-    private Specification<Playback> betweenDates(LocalDate startDate, LocalDate endDate) {
+    private Specification<Playback> betweenDates(LocalDateTime startDate, LocalDateTime endDate) {
         return (root, query, builder) -> builder.between(root.get(Playback_.DATE), startDate, endDate);
     }
 

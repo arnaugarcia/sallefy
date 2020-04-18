@@ -3,7 +3,7 @@ package com.sallefy.service.dto.criteria;
 import com.sallefy.service.dto.constraints.AllOrNone;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @AllOrNone({"latitude", "longitude", "radius"})
@@ -12,13 +12,13 @@ public class PlaybackCriteriaDTO implements Serializable {
     private final Double latitude;
     private final Double longitude;
     private final Integer radius;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
+    private final LocalDateTime startDate;
+    private final LocalDateTime endDate;
     private final String username;
     private final Long trackId;
     private final String genre;
 
-    public PlaybackCriteriaDTO(Double latitude, Double longitude, Integer radius, LocalDate startDate, LocalDate endDate, String username, Long trackId, String genre) {
+    public PlaybackCriteriaDTO(Double latitude, Double longitude, Integer radius, LocalDateTime startDate, LocalDateTime endDate, String username, Long trackId, String genre) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.radius = radius;
@@ -41,11 +41,11 @@ public class PlaybackCriteriaDTO implements Serializable {
         return radius;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
