@@ -78,10 +78,9 @@ public class MarkerQueryService {
             if (!isEmpty(criteria.getUsername())) {
                 specification = specification.and(byUsername(criteria.getUsername()));
             }
-            if (!isEmpty(criteria.getStartDate())) {
-                LocalDate endDate = isEmpty(criteria.getEndDate()) ? LocalDate.now() : criteria.getEndDate();
-                specification = specification.and(betweenDates(criteria.getStartDate(), endDate));
-            }
+            LocalDate startDate = isEmpty(criteria.getStartDate()) ? LocalDate.now().minusMonths(1) : criteria.getStartDate();
+            LocalDate endDate = isEmpty(criteria.getEndDate()) ? LocalDate.now() : criteria.getEndDate();
+            specification = specification.and(betweenDates(startDate, endDate));
         }
 
         return specification;
