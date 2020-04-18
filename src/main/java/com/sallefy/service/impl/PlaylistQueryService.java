@@ -9,6 +9,7 @@ import com.sallefy.service.dto.criteria.PlaylistCriteriaDTO;
 import com.sallefy.service.mapper.PlaylistMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.SetJoin;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static javax.persistence.criteria.JoinType.INNER;
 
@@ -52,11 +52,11 @@ public class PlaylistQueryService implements QueryService<PlaylistDTO, PlaylistC
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<PlaylistDTO> findByCriteria(PlaylistCriteriaDTO criteria, Pageable pageable) {
+    public Page<PlaylistDTO> findByCriteria(PlaylistCriteriaDTO criteria, Pageable pageable) {
         log.debug("find by criteria : {}", criteria);
         final Specification<Playlist> specification = createSpecification(criteria);
 
-        List<Playlist> playlists = playlistRepository.findAll(specification, pageable).getContent();
+        Page<Playlist> playlists = playlistRepository.findAll(specification, pageable);
 
         return transformPlaylists(playlists);
     }
@@ -110,9 +110,7 @@ public class PlaylistQueryService implements QueryService<PlaylistDTO, PlaylistC
         };
     }
 
-    private List<PlaylistDTO> transformPlaylists(List<Playlist> playlists) {
-        return playlists.stream()
-            .map(playlistMapper::toDto)
-            .collect(Collectors.toList());
+    private Page<PlaylistDTO> transformPlaylists(Page<Playlist> playlists) {
+        return playlists.map(playlistMapper::toDto);
     }
 }

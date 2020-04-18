@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.auditing.AuditingHandler;
 import org.springframework.data.auditing.DateTimeProvider;
+import org.springframework.data.domain.Page;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -208,7 +209,7 @@ public class UserServiceIT {
         if (!userRepository.findOneByLogin(Constants.ANONYMOUS_USER).isPresent()) {
             userRepository.saveAndFlush(user);
         }
-        final List<UserDTO> allManagedUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null), unpaged());
+        final Page<UserDTO> allManagedUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null), unpaged());
         assertThat(allManagedUsers.stream()
             .noneMatch(user -> Constants.ANONYMOUS_USER.equals(user.getLogin())))
             .isTrue();

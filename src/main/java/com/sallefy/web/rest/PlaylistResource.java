@@ -9,13 +9,17 @@ import com.sallefy.service.dto.criteria.PlaylistCriteriaDTO;
 import com.sallefy.service.impl.PlaylistQueryService;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -111,8 +115,10 @@ public class PlaylistResource {
     @GetMapping("/playlists")
     public ResponseEntity<List<PlaylistDTO>> getAllPlaylists(PlaylistCriteriaDTO criteria, Pageable pageable) {
         log.debug("REST request to get all Playlists");
-        final List<PlaylistDTO> playlists = playlistQueryService.findByCriteria(criteria, pageable);
-        return ok(playlists);
+        final Page<PlaylistDTO> page = playlistQueryService.findByCriteria(criteria, pageable);
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**

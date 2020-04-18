@@ -8,6 +8,7 @@ import com.sallefy.service.dto.criteria.PlaybackCriteriaDTO;
 import com.sallefy.service.mapper.PlaybackMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -47,14 +48,14 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
      * @return the matching entities.
      */
     @Override
-    public List<PlaybackDTO> findByCriteria(PlaybackCriteriaDTO criteria, Pageable pageable) {
+    public Page<PlaybackDTO> findByCriteria(PlaybackCriteriaDTO criteria, Pageable pageable) {
         log.debug("find playbacks by criteria : {}", criteria);
 
         final Specification<Playback> specification = createSpecification(criteria);
 
-        List<Playback> playbacks = playbackRepository.findAll(specification, pageable).getContent();
+        Page<Playback> playbacks = playbackRepository.findAll(specification, pageable);
 
-        return playbackMapper.toDto(playbacks);
+        return toDTO(playbacks);
     }
 
     /**
@@ -121,6 +122,10 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
         return (root, query, builder) -> builder.and(
             builder.between(root.get(Playback_.latitude), maxLatitude, minLatitude),
             builder.between(root.get(Playback_.longitude), maxLongitude, minLongitude));
+    }
+
+    private Page<PlaybackDTO> toDTO(Page<Playback> playbacks) {
+        return playbacks.map(playbackMapper::toDto);
     }
 
 }

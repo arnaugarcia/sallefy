@@ -1,6 +1,5 @@
 package com.sallefy.service.impl;
 
-import com.sallefy.config.Constants;
 import com.sallefy.domain.FollowUser;
 import com.sallefy.domain.FollowUser_;
 import com.sallefy.domain.User;
@@ -13,6 +12,8 @@ import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.dto.criteria.UserCriteriaDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,10 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.SetJoin;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
+import static com.sallefy.config.Constants.ANONYMOUS_USER;
+import static com.sallefy.config.Constants.SYSTEM_ACCOUNT;
+import static java.util.stream.Collectors.toList;
 import static javax.persistence.criteria.JoinType.INNER;
 import static javax.persistence.criteria.JoinType.LEFT;
 
@@ -54,11 +57,11 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<UserDTO> findByCriteria(UserCriteriaDTO criteria, Pageable pageable) {
+    public Page<UserDTO> findByCriteria(UserCriteriaDTO criteria, Pageable pageable) {
         log.debug("Find users by criteria : {}", criteria);
         final Specification<User> specification = createSpecification(criteria);
 
-        List<User> users = userRepository.findAll(specification, pageable).getContent();
+        Page<User> users = userRepository.findAll(specification, pageable);
 
         return transformAndFilterUsers(users);
     }
@@ -123,14 +126,25 @@ public class UserQueryService implements QueryService<UserDTO, UserCriteriaDTO> 
         };
     }
 
-    private List<UserDTO> transformAndFilterUsers(List<User> users) {
-        return users.stream()
-            .map(UserDTO::new)
+    private Page<UserDTO> transformAndFilterUsers(Page<User> users) {
+        return new PageImpl<>(users
             .filter(notAnonymousUser())
-            .collect(Collectors.toList());
+            .filter(notSystem())
+            .stream()
+            .map(UserDTO::new)
+            .collect(toList()));
     }
 
-    private Predicate<UserDTO> notAnonymousUser() {
-        return userDTO -> !userDTO.getLogin().equalsIgnoreCase(Constants.ANONYMOUS_USER);
+    private Predicate<User> notSystem() {
+        return not(SYSTEM_ACCOUNT);
     }
+
+    private Predicate<User> notAnonymousUser() {
+        return not(ANONYMOUS_USER);
+    }
+
+    private Predicate<User> not(String login) {
+        return user -> !user.getLogin().equalsIgnoreCase(login);
+    }
+
 }

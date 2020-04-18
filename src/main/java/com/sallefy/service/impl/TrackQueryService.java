@@ -9,6 +9,7 @@ import com.sallefy.service.dto.criteria.UserTrackCriteriaDTO;
 import com.sallefy.service.mapper.TrackMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,6 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.SetJoin;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static javax.persistence.criteria.JoinType.INNER;
 
@@ -52,11 +52,11 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDT
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<TrackDTO> findByCriteria(TrackCriteriaDTO criteria, Pageable pageable) {
+    public Page<TrackDTO> findByCriteria(TrackCriteriaDTO criteria, Pageable pageable) {
         log.debug("Find tracks by criteria : {}", criteria);
         final Specification<Track> specification = createSpecification(criteria);
 
-        List<Track> tracks = trackRepository.findAll(specification, pageable).getContent();
+        Page<Track> tracks = trackRepository.findAll(specification, pageable);
 
         return transformTracks(tracks);
     }
@@ -68,11 +68,11 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDT
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<TrackDTO> findByCriteria(UserTrackCriteriaDTO criteria, String login, Pageable pageable) {
+    public Page<TrackDTO> findByCriteria(UserTrackCriteriaDTO criteria, String login, Pageable pageable) {
         log.debug("Find tracks of {} criteria : {}", login, criteria);
         final Specification<Track> specification = createSpecification(criteria, login);
 
-        List<Track> tracks = trackRepository.findAll(specification, pageable).getContent();
+        Page<Track> tracks = trackRepository.findAll(specification, pageable);
 
         return transformTracks(tracks);
     }
@@ -161,9 +161,7 @@ public class TrackQueryService implements QueryService<TrackDTO, TrackCriteriaDT
         };
     }
 
-    private List<TrackDTO> transformTracks(List<Track> tracks) {
-        return tracks.stream()
-            .map(trackMapper::toDto)
-            .collect(Collectors.toList());
+    private Page<TrackDTO> transformTracks(Page<Track> tracks) {
+        return tracks.map(trackMapper::toDto);
     }
 }

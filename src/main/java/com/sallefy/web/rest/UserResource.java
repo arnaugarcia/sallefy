@@ -20,6 +20,7 @@ import com.sallefy.web.rest.errors.BadRequestAlertException;
 import com.sallefy.web.rest.errors.EmailAlreadyUsedException;
 import com.sallefy.web.rest.errors.LoginAlreadyUsedException;
 import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -27,10 +28,13 @@ import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -168,7 +172,10 @@ public class UserResource {
      */
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getAllUsers(UserCriteriaDTO criteria, Pageable pageable) {
-        return ok(userQueryService.findByCriteria(criteria, pageable));
+        final Page<UserDTO> page = userQueryService.findByCriteria(criteria, pageable);
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ok().headers(headers).body(page.getContent());
     }
 
     /**
@@ -212,7 +219,10 @@ public class UserResource {
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}/tracks")
     public ResponseEntity<List<TrackDTO>> getTracksOfUser(@PathVariable String login, UserTrackCriteriaDTO criteria, Pageable pageable) {
         log.debug("REST request to get {} user tracks", login);
-        return ok(trackQueryService.findByCriteria(criteria, login, pageable));
+        final Page<TrackDTO> page = trackQueryService.findByCriteria(criteria, login, pageable);
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ok().headers(headers).body(page.getContent());
     }
 
     /**
