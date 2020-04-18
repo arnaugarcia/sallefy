@@ -3,23 +3,20 @@ package com.sallefy.web.rest;
 import com.sallefy.service.dto.PlaybackDTO;
 import com.sallefy.service.dto.criteria.PlaybackCriteriaDTO;
 import com.sallefy.service.impl.MarkerQueryService;
-import io.github.jhipster.web.util.PaginationUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 /**
  * REST controller for getting all the playbacks of songs
@@ -52,12 +49,9 @@ public class PlaybackResource {
         @ApiResponse(code = 200, message = "Successful operation")
     })
     @GetMapping("/playbacks")
-    public ResponseEntity<List<PlaybackDTO>> findMarkers(@Valid PlaybackCriteriaDTO criteria, Pageable pageable) {
+    public ResponseEntity<List<PlaybackDTO>> findMarkers(@Valid PlaybackCriteriaDTO criteria) {
         log.debug("REST request to get playbacks by criteria");
-        final Page<PlaybackDTO> page = markerQueryService.findByCriteria(criteria, pageable);
-
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        return ok(markerQueryService.findByCriteria(criteria));
     }
 
 }
