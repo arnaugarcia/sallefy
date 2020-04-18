@@ -2,14 +2,11 @@ package com.sallefy.service.impl;
 
 import com.sallefy.domain.*;
 import com.sallefy.repository.PlaybackRepository;
-import com.sallefy.service.QueryService;
 import com.sallefy.service.dto.PlaybackDTO;
 import com.sallefy.service.dto.criteria.PlaybackCriteriaDTO;
 import com.sallefy.service.mapper.PlaybackMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +14,11 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.SetJoin;
+import java.time.LocalDate;
 import java.util.List;
 
 import static java.lang.Math.cos;
+import static java.util.stream.Collectors.toList;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
@@ -29,7 +28,7 @@ import static org.springframework.util.ObjectUtils.isEmpty;
  * It returns a {@link List} of {@link PlaybackDTO} which fulfills the criteria.
  */
 @Service
-public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCriteriaDTO> {
+public class MarkerQueryService {
 
     private final Logger log = LoggerFactory.getLogger(MarkerQueryService.class);
 
@@ -47,13 +46,12 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
-    @Override
-    public Page<PlaybackDTO> findByCriteria(PlaybackCriteriaDTO criteria, Pageable pageable) {
+    public List<PlaybackDTO> findByCriteria(PlaybackCriteriaDTO criteria) {
         log.debug("find playbacks by criteria : {}", criteria);
 
         final Specification<Playback> specification = createSpecification(criteria);
 
-        Page<Playback> playbacks = playbackRepository.findAll(specification, pageable);
+        List<Playback> playbacks = playbackRepository.findAll(specification);
 
         return toDTO(playbacks);
     }
@@ -80,9 +78,17 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
             if (!isEmpty(criteria.getUsername())) {
                 specification = specification.and(byUsername(criteria.getUsername()));
             }
+            if (!isEmpty(criteria.getStartDate())) {
+                LocalDate endDate = isEmpty(criteria.getEndDate()) ? LocalDate.now() : criteria.getEndDate();
+                specification = specification.and(betweenDates(criteria.getStartDate(), endDate));
+            }
         }
 
         return specification;
+    }
+
+    private Specification<Playback> betweenDates(LocalDate startDate, LocalDate endDate) {
+        return (root, query, builder) -> builder.between(root.get(Playback_.DATE), startDate, endDate);
     }
 
     private Specification<Playback> byUsername(String username) {
@@ -124,8 +130,10 @@ public class MarkerQueryService implements QueryService<PlaybackDTO, PlaybackCri
             builder.between(root.get(Playback_.longitude), maxLongitude, minLongitude));
     }
 
-    private Page<PlaybackDTO> toDTO(Page<Playback> playbacks) {
-        return playbacks.map(playbackMapper::toDto);
+    private List<PlaybackDTO> toDTO(List<Playback> playbacks) {
+        return playbacks.stream()
+            .map(playbackMapper::toDto)
+            .collect(toList());
     }
 
 }
