@@ -98,14 +98,14 @@ public class FollowResourceIT {
         User follower1 = UserResourceIT.createEntity();
         userRepository.save(follower1);
 
-        final Page<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null), unpaged());
+        final Page<UserDTO> nonFollowingUsers = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, true), unpaged());
         final int sizeBeforeFollowing = nonFollowingUsers.getSize();
 
         assertThat(sizeBeforeFollowing).isGreaterThan(0);
 
         followService.toggleFollowUser(follower1.getLogin());
 
-        final Page<UserDTO> notFollowingUsersAfterUpdating = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, null), PageRequest.of(0, 10));
+        final Page<UserDTO> notFollowingUsersAfterUpdating = userQueryService.findByCriteria(new UserCriteriaDTO(null, null, true), PageRequest.of(0, 10));
 
         assertThat(notFollowingUsersAfterUpdating.getSize()).isLessThan(sizeBeforeFollowing);
 
