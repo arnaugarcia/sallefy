@@ -10,13 +10,18 @@ import com.sallefy.service.dto.criteria.TrackCriteriaDTO;
 import com.sallefy.service.impl.TrackQueryService;
 import com.sallefy.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
 import io.swagger.annotations.*;
 import org.mapstruct.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -135,9 +140,12 @@ public class TrackResource {
         @ApiResponse(code = 200, message = "Successful operation"),
     })
     @GetMapping("/tracks")
-    public ResponseEntity<List<TrackDTO>> getAllTracks(TrackCriteriaDTO trackCriteria) {
+    public ResponseEntity<List<TrackDTO>> getAllTracks(TrackCriteriaDTO trackCriteria, Pageable pageable) {
         log.debug("REST request to get all Tracks");
-        return ResponseEntity.ok(trackQueryService.findByCriteria(trackCriteria));
+        final Page<TrackDTO> page = trackQueryService.findByCriteria(trackCriteria, pageable);
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**

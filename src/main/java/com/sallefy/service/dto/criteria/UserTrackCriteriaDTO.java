@@ -2,12 +2,11 @@ package com.sallefy.service.dto.criteria;
 
 import java.io.Serializable;
 
-public class UserTrackCriteriaDTO extends BaseCriteria implements Serializable {
+public class UserTrackCriteriaDTO implements Serializable {
 
     private final Boolean popular;
 
-    public UserTrackCriteriaDTO(Integer size, Boolean popular) {
-        super(size);
+    public UserTrackCriteriaDTO(Boolean popular) {
         this.popular = popular;
     }
 

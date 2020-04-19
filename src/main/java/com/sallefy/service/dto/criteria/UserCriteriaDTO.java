@@ -3,7 +3,7 @@ package com.sallefy.service.dto.criteria;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class UserCriteriaDTO extends BaseCriteria implements Serializable {
+public class UserCriteriaDTO implements Serializable {
 
     private final Boolean recent;
 
@@ -11,8 +11,7 @@ public class UserCriteriaDTO extends BaseCriteria implements Serializable {
 
     private final Boolean notFollowing;
 
-    public UserCriteriaDTO(Integer size, Boolean recent, Boolean popular, Boolean notFollowing) {
-        super(size);
+    public UserCriteriaDTO(Boolean recent, Boolean popular, Boolean notFollowing) {
         this.recent = recent;
         this.popular = popular;
         this.notFollowing = notFollowing;

@@ -3,23 +3,27 @@ package com.sallefy.service.dto.criteria;
 import com.sallefy.service.dto.constraints.AllOrNone;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @AllOrNone({"latitude", "longitude", "radius"})
-public class PlaybackCriteriaDTO extends BaseCriteria implements Serializable {
+public class PlaybackCriteriaDTO implements Serializable {
 
     private final Double latitude;
     private final Double longitude;
     private final Integer radius;
+    private final LocalDateTime startDate;
+    private final LocalDateTime endDate;
     private final String username;
     private final Long trackId;
     private final String genre;
 
-    public PlaybackCriteriaDTO(Integer size, Double latitude, Double longitude, Integer radius, String username, Long trackId, String genre) {
-        super(size);
+    public PlaybackCriteriaDTO(Double latitude, Double longitude, Integer radius, LocalDateTime startDate, LocalDateTime endDate, String username, Long trackId, String genre) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.radius = radius;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.username = username;
         this.trackId = trackId;
         this.genre = genre;
@@ -35,6 +39,14 @@ public class PlaybackCriteriaDTO extends BaseCriteria implements Serializable {
 
     public Integer getRadius() {
         return radius;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
     }
 
     public String getUsername() {
@@ -57,6 +69,8 @@ public class PlaybackCriteriaDTO extends BaseCriteria implements Serializable {
         return Objects.equals(latitude, that.latitude) &&
             Objects.equals(longitude, that.longitude) &&
             Objects.equals(radius, that.radius) &&
+            Objects.equals(startDate, that.startDate) &&
+            Objects.equals(endDate, that.endDate) &&
             Objects.equals(username, that.username) &&
             Objects.equals(trackId, that.trackId) &&
             Objects.equals(genre, that.genre);
@@ -64,8 +78,20 @@ public class PlaybackCriteriaDTO extends BaseCriteria implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(latitude, longitude, radius, username, trackId, genre);
+        return Objects.hash(latitude, longitude, radius, startDate, endDate, username, trackId, genre);
     }
 
-
+    @Override
+    public String toString() {
+        return "PlaybackCriteriaDTO{" +
+            "latitude=" + latitude +
+            ", longitude=" + longitude +
+            ", radius=" + radius +
+            ", startDate=" + startDate +
+            ", endDate=" + endDate +
+            ", username='" + username + '\'' +
+            ", trackId=" + trackId +
+            ", genre='" + genre + '\'' +
+            '}';
+    }
 }

@@ -9,6 +9,8 @@ import com.sallefy.service.dto.criteria.PlaylistCriteriaDTO;
 import com.sallefy.service.mapper.PlaylistMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.SetJoin;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static javax.persistence.criteria.JoinType.INNER;
-import static org.springframework.data.domain.PageRequest.of;
 
 /**
  * Service for executing complex queries for {@link Playlist} entities in the database.
@@ -52,17 +52,11 @@ public class PlaylistQueryService implements QueryService<PlaylistDTO, PlaylistC
      * @return the matching entities.
      */
     @Transactional(readOnly = true)
-    public List<PlaylistDTO> findByCriteria(PlaylistCriteriaDTO criteria) {
+    public Page<PlaylistDTO> findByCriteria(PlaylistCriteriaDTO criteria, Pageable pageable) {
         log.debug("find by criteria : {}", criteria);
         final Specification<Playlist> specification = createSpecification(criteria);
 
-        List<Playlist> playlists;
-
-        if (isSizeSelected(criteria)) {
-            playlists = playlistRepository.findAll(specification, of(0, criteria.getSize())).getContent();
-        } else {
-            playlists = playlistRepository.findAll(specification);
-        }
+        Page<Playlist> playlists = playlistRepository.findAll(specification, pageable);
 
         return transformPlaylists(playlists);
     }
@@ -116,13 +110,7 @@ public class PlaylistQueryService implements QueryService<PlaylistDTO, PlaylistC
         };
     }
 
-    private List<PlaylistDTO> transformPlaylists(List<Playlist> playlists) {
-        return playlists.stream()
-            .map(playlistMapper::toDto)
-            .collect(Collectors.toList());
-    }
-
-    private boolean isSizeSelected(PlaylistCriteriaDTO criteria) {
-        return criteria.getSize() != null;
+    private Page<PlaylistDTO> transformPlaylists(Page<Playlist> playlists) {
+        return playlists.map(playlistMapper::toDto);
     }
 }

@@ -9,7 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 /**
  * A Playback.
@@ -40,7 +40,7 @@ public class Playback implements Serializable {
 
     @CreationTimestamp
     @Column(name = "date")
-    private ZonedDateTime date;
+    private LocalDateTime date;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -113,16 +113,16 @@ public class Playback implements Serializable {
         this.agent = agent;
     }
 
-    public ZonedDateTime getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public Playback date(ZonedDateTime date) {
+    public Playback date(LocalDateTime date) {
         this.date = date;
         return this;
     }
 
-    public void setDate(ZonedDateTime date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

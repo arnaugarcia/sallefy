@@ -43,7 +43,7 @@ public class PlaybackResource {
      */
     @ApiOperation(
         value = "Finds playbacks by criteria",
-        notes = "Finds playbacks by criteria (song, genre, user, or coordinate)"
+        notes = "Finds playbacks by criteria (song, genre, user, coordinates or dates). If the field 'startDate' isn't defined a default date (last month) is provided instead. The default pattern of start and end date is for example (2020-04-18T14:32:18.23). Check LocalDateTime of Java documentation for more info."
     )
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successful operation")
