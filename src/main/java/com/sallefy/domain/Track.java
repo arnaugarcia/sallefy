@@ -246,13 +246,11 @@ public class Track implements Serializable {
 
     public Track addGenre(Genre genre) {
         this.genres.add(genre);
-        genre.getTracks().add(this);
         return this;
     }
 
     public Track removeGenre(Genre genre) {
         this.genres.remove(genre);
-        genre.getTracks().remove(this);
         return this;
     }
 
