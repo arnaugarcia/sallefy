@@ -1,8 +1,6 @@
 package com.sallefy.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,7 +14,6 @@ import java.time.ZonedDateTime;
 @Table(name = "like_album", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"user_id", "album_id"})
 })
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class LikeAlbum implements Serializable {
 
     private static final long serialVersionUID = 1L;

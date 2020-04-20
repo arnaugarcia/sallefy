@@ -1,8 +1,6 @@
 package com.sallefy.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -17,7 +15,6 @@ import java.time.ZonedDateTime;
 @Table(name = "follow_playlist", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"user_id", "playlist_id"})
 })
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class FollowPlaylist implements Serializable {
 
     private static final long serialVersionUID = 1L;
