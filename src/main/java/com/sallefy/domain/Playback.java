@@ -2,8 +2,6 @@ package com.sallefy.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sallefy.domain.enumeration.AgentType;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -16,7 +14,6 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "playback")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Playback implements Serializable {
 
     private static final long serialVersionUID = 1L;

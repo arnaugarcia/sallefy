@@ -1,20 +1,18 @@
 package com.sallefy.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+
+import static org.hibernate.annotations.CacheConcurrencyStrategy.READ_ONLY;
 
 /**
  * A Genre.
  */
 @Entity
 @Table(name = "genre")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = READ_ONLY)
 public class Genre implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,11 +26,6 @@ public class Genre implements Serializable {
 
     @Column(name = "popularity")
     private Integer popularity;
-
-    @ManyToMany(mappedBy = "genres")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JsonIgnore
-    private Set<Track> tracks = new HashSet<>();
 
     public Genre() {
     }
@@ -74,31 +67,6 @@ public class Genre implements Serializable {
 
     public void setPopularity(Integer popularity) {
         this.popularity = popularity;
-    }
-
-    public Set<Track> getTracks() {
-        return tracks;
-    }
-
-    public Genre tracks(Set<Track> tracks) {
-        this.tracks = tracks;
-        return this;
-    }
-
-    public Genre addTrack(Track track) {
-        this.tracks.add(track);
-        track.getGenres().add(this);
-        return this;
-    }
-
-    public Genre removeTrack(Track track) {
-        this.tracks.remove(track);
-        track.getGenres().remove(this);
-        return this;
-    }
-
-    public void setTracks(Set<Track> tracks) {
-        this.tracks = tracks;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
