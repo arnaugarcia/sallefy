@@ -70,8 +70,7 @@ spring:
         bootstrap-mode: deferred
     web:
       pageable:
-        max-page-size:
-          jpa: 20
+        max-page-size: 20
     open-in-view: false
     properties:
       hibernate.jdbc.time_zone: UTC
