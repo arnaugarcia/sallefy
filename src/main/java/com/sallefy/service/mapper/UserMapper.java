@@ -3,7 +3,6 @@ package com.sallefy.service.mapper;
 import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
 import com.sallefy.service.dto.UserDTO;
-import com.sallefy.service.dto.UserSimplifiedDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -30,10 +29,6 @@ public class UserMapper {
 
     public UserDTO userToUserDTO(User user) {
         return new UserDTO(user);
-    }
-
-    public UserSimplifiedDTO userToUserSimplifiedDTO(User user) {
-        return new UserSimplifiedDTO(user);
     }
 
     public List<User> userDTOsToUsers(List<UserDTO> userDTOs) {
