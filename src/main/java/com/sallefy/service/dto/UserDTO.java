@@ -1,5 +1,6 @@
 package com.sallefy.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sallefy.config.Constants;
 import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
@@ -12,6 +13,8 @@ import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.sallefy.security.AuthoritiesConstants.ADMIN;
 
 /**
  * A DTO representing a user, with his authorities.
@@ -248,6 +251,15 @@ public class UserDTO {
 
     public void setAuthorities(Set<String> authorities) {
         this.authorities = authorities;
+    }
+
+    @JsonIgnore
+    public boolean isAdmin() {
+        if (authorities != null) {
+            return authorities.stream()
+                .anyMatch(authority -> authority.equals(ADMIN));
+        }
+        return false;
     }
 
     @Override
