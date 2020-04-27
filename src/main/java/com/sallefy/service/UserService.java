@@ -8,6 +8,7 @@ import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.security.SecurityUtils;
 import com.sallefy.service.dto.UserDTO;
+import com.sallefy.service.exception.BadOwnerException;
 import com.sallefy.service.exception.EmailAlreadyUsedException;
 import com.sallefy.service.exception.InvalidPasswordException;
 import com.sallefy.service.exception.UsernameAlreadyUsedException;
@@ -197,6 +198,11 @@ public class UserService {
      * @return updated user.
      */
     public Optional<UserDTO> updateUser(UserDTO userDTO) {
+        User currentUser = getUserWithAuthorities();
+        if (!currentUser.isAdmin() || isTheSameUser(userDTO, currentUser)) {
+            throw new BadOwnerException();
+        }
+
         return Optional.of(userRepository
             .findById(userDTO.getId()))
             .filter(Optional::isPresent)
@@ -222,6 +228,10 @@ public class UserService {
                 return user;
             })
             .map(UserDTO::new);
+    }
+
+    public boolean isTheSameUser(UserDTO userDTO, User currentUser) {
+        return currentUser.getLogin().equalsIgnoreCase(userDTO.getLogin());
     }
 
     public void changePassword(String currentClearTextPassword, String newPassword) {
