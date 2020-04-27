@@ -8,7 +8,6 @@ import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.security.SecurityUtils;
 import com.sallefy.service.dto.UserDTO;
-import com.sallefy.service.exception.BadOwnerException;
 import com.sallefy.service.exception.EmailAlreadyUsedException;
 import com.sallefy.service.exception.InvalidPasswordException;
 import com.sallefy.service.exception.UsernameAlreadyUsedException;
@@ -199,10 +198,7 @@ public class UserService {
      */
     public Optional<UserDTO> updateUser(UserDTO userDTO) {
         User currentUser = getUserWithAuthorities();
-        if (!currentUser.isAdmin() || isTheSameUser(userDTO, currentUser)) {
-            throw new BadOwnerException();
-        }
-
+        // TODO: Check if the current user is admin and if the user to update is not making himself admin
         return Optional.of(userRepository
             .findById(userDTO.getId()))
             .filter(Optional::isPresent)
