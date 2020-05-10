@@ -10,7 +10,7 @@ import com.sallefy.service.FollowService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;
-import com.sallefy.service.dto.UserSimplifiedDTO;
+import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.exception.BadFollowerException;
 import com.sallefy.service.exception.PlaylistNotFoundException;
 import com.sallefy.service.exception.UserNotFoundException;
@@ -118,19 +118,19 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     @Transactional
-    public List<UserSimplifiedDTO> findFollowersOfCurrentUser() {
+    public List<UserDTO> findFollowersOfCurrentUser() {
         return followUserRepository.findFollowersByCurrentUser()
             .stream()
-            .map(userMapper::userToUserSimplifiedDTO)
+            .map(userMapper::userToUserDTO)
             .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public List<UserSimplifiedDTO> findFollowingUsersByCurrentUser() {
+    public List<UserDTO> findFollowingUsersByCurrentUser() {
         return followUserRepository.findFollowingsByCurrentUser()
             .stream()
-            .map(userMapper::userToUserSimplifiedDTO)
+            .map(userMapper::userToUserDTO)
             .collect(Collectors.toList());
     }
 
