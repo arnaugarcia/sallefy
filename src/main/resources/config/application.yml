@@ -135,7 +135,7 @@ jhipster:
     default-include-pattern: /api/.*
     title: Sallefy API
     description: Through the Sallefy Web API, external applications retrieve Sallefy content such as album, playlists, tracks... To access user-related data through the Web API, an application must be authorized by the user to access that particular information.
-    version: 0.2.3
+    version: 0.2.4
     terms-of-service-url:
     license: MIT
     license-url: https://raw.githubusercontent.com/arnaugarcia/sallefy/master/LICENSE

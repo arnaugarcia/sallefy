@@ -10,7 +10,7 @@ import com.sallefy.service.FollowService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;
-import com.sallefy.service.dto.UserSimplifiedDTO;
+import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.exception.BadFollowerException;
 import com.sallefy.service.exception.PlaylistNotFoundException;
 import com.sallefy.service.exception.UserNotFoundException;
@@ -21,7 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class FollowServiceImpl implements FollowService {
@@ -35,6 +36,7 @@ public class FollowServiceImpl implements FollowService {
     private final FollowPlaylistRepository followPlaylistRepository;
 
     private final FollowUserRepository followUserRepository;
+
     private final UserMapper userMapper;
 
     public FollowServiceImpl(UserService userService,
@@ -118,20 +120,20 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     @Transactional
-    public List<UserSimplifiedDTO> findFollowersOfCurrentUser() {
+    public List<UserDTO> findFollowersOfCurrentUser() {
         return followUserRepository.findFollowersByCurrentUser()
             .stream()
-            .map(userMapper::userToUserSimplifiedDTO)
-            .collect(Collectors.toList());
+            .map(userMapper::userToUserDTO)
+            .collect(toList());
     }
 
     @Override
     @Transactional
-    public List<UserSimplifiedDTO> findFollowingUsersByCurrentUser() {
+    public List<UserDTO> findFollowingUsersByCurrentUser() {
         return followUserRepository.findFollowingsByCurrentUser()
             .stream()
-            .map(userMapper::userToUserSimplifiedDTO)
-            .collect(Collectors.toList());
+            .map(userMapper::userToUserDTO)
+            .collect(toList());
     }
 
     @Override
@@ -140,7 +142,7 @@ public class FollowServiceImpl implements FollowService {
         return followPlaylistRepository.findPlaylistFollowedByCurrentUser()
             .stream()
             .map(playlistMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
     @Override
@@ -164,6 +166,22 @@ public class FollowServiceImpl implements FollowService {
         } else {
             return new FollowDTO(false);
         }
+    }
+
+    @Override
+    public List<UserDTO> findFollowersByLogin(String login) {
+        return followUserRepository.findFollowersByLogin(login)
+            .stream()
+            .map(userMapper::userToUserDTO)
+            .collect(toList());
+    }
+
+    @Override
+    public List<UserDTO> findFollowingsByLogin(String login) {
+        return followUserRepository.findFollowingsByLogin(login)
+            .stream()
+            .map(userMapper::userToUserDTO)
+            .collect(toList());
     }
 
     private void checkIfPlaylistExists(Long playlistId) {

@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.sallefy.domain.User_.AUTHORITIES;
-import static com.sallefy.domain.graphs.UserGraph.GRAPH_USER_ENTITY_ALL;
 
 /**
  * Spring Data JPA repository for the {@link User} entity.
@@ -35,14 +34,12 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     Optional<User> findOneByEmailIgnoreCase(String email);
 
-    @EntityGraph(GRAPH_USER_ENTITY_ALL)
     Optional<User> findOneByLogin(String login);
 
     @EntityGraph(attributePaths = AUTHORITIES)
     Optional<User> findOneWithAuthoritiesById(Long id);
 
     @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
-    @EntityGraph(GRAPH_USER_ENTITY_ALL)
     Optional<User> findOneWithAuthoritiesByLogin(String login);
 
     @EntityGraph(attributePaths = AUTHORITIES)
@@ -51,7 +48,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     @Override
     @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
-    @EntityGraph(GRAPH_USER_ENTITY_ALL)
     List<User> findAll(Specification<User> specification);
 
     @Override

@@ -2,7 +2,7 @@ package com.sallefy.service;
 
 import com.sallefy.service.dto.FollowDTO;
 import com.sallefy.service.dto.PlaylistDTO;
-import com.sallefy.service.dto.UserSimplifiedDTO;
+import com.sallefy.service.dto.UserDTO;
 
 import java.util.List;
 
@@ -39,14 +39,14 @@ public interface FollowService {
      *
      * @return the list of followers
      */
-    List<UserSimplifiedDTO> findFollowersOfCurrentUser();
+    List<UserDTO> findFollowersOfCurrentUser();
 
     /**
      * Method to find all the following users by the current user
      *
      * @return the list of users
      */
-    List<UserSimplifiedDTO> findFollowingUsersByCurrentUser();
+    List<UserDTO> findFollowingUsersByCurrentUser();
 
     /**
      * Method to find the playlists that follows the current user
@@ -68,4 +68,18 @@ public interface FollowService {
      * @return the list of playlists
      */
     FollowDTO checkCurrentUserFollowPlaylist(Long playlist);
+
+    /**
+     * Method to find followers by the login
+     * @param login the login of the user
+     * @return the list of users
+     */
+    List<UserDTO> findFollowersByLogin(String login);
+
+    /**
+     * Method to find following users by "login"
+     * @param login the login of the user
+     * @return the list of users
+     */
+    List<UserDTO> findFollowingsByLogin(String login);
 }
