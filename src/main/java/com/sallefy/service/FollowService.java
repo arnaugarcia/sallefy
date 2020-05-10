@@ -68,4 +68,18 @@ public interface FollowService {
      * @return the list of playlists
      */
     FollowDTO checkCurrentUserFollowPlaylist(Long playlist);
+
+    /**
+     * Method to find followers by the login
+     * @param login the login of the user
+     * @return the list of users
+     */
+    List<UserDTO> findFollowersByLogin(String login);
+
+    /**
+     * Method to find following users by "login"
+     * @param login the login of the user
+     * @return the list of users
+     */
+    List<UserDTO> findFollowingsByLogin(String login);
 }

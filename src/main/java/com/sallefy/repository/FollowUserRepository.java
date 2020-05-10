@@ -23,8 +23,14 @@ public interface FollowUserRepository extends JpaRepository<FollowUser, Long> {
     @Query("select followUser.user from FollowUser followUser inner join followUser.user where followUser.followed.login = ?#{principal.username}")
     List<User> findFollowersByCurrentUser();
 
+    @Query("select followUser.user from FollowUser followUser inner join followUser.user where followUser.followed.login = :login")
+    List<User> findFollowersByLogin(@Param("login") String login);
+
     @Query("select followUser.followed from FollowUser followUser inner join followUser.user where followUser.user.login = ?#{principal.username}")
     List<User> findFollowingsByCurrentUser();
+
+    @Query("select followUser.followed from FollowUser followUser inner join followUser.user where followUser.user.login = :login")
+    List<User> findFollowingsByLogin(@Param("login") String login);
 
     @Query("select followUser from FollowUser followUser where followUser.user.login = ?#{principal.username}")
     List<FollowUser> findByUserIsCurrentUser();
