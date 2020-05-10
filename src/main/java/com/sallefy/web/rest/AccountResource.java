@@ -25,8 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Optional;
 
-import static org.springframework.http.ResponseEntity.noContent;
-
 /**
  * REST controller for managing the current user's account.
  */
@@ -150,7 +148,6 @@ public class AccountResource {
             throw new AccountResourceException("User could not be found");
         }
         userDeleteService.removeUser(userLogin);
-        noContent();
     }
 
     /**

@@ -763,7 +763,7 @@ public class AccountResourceIT {
     @WithMockUser("delete-user")
     public void deleteAccount() throws Exception {
         userRepository.save(createBasicUserWithUsername("delete-user"));
-        restMvc.perform(delete("/api/account")).andExpect(status().isNoContent());
+        restMvc.perform(delete("/api/account")).andExpect(status().isOk());
     }
 
     @Test
