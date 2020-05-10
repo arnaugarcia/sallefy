@@ -4,17 +4,18 @@ import com.sallefy.SallefyApp;
 import com.sallefy.config.Constants;
 import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
-import com.sallefy.repository.AuthorityRepository;
-import com.sallefy.repository.PlaylistRepository;
-import com.sallefy.repository.TrackRepository;
-import com.sallefy.repository.UserRepository;
+import com.sallefy.repository.*;
 import com.sallefy.security.AuthoritiesConstants;
+import com.sallefy.service.FollowService;
 import com.sallefy.service.MailService;
 import com.sallefy.service.UserDeleteService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.PasswordChangeDTO;
 import com.sallefy.service.dto.UserDTO;
+import com.sallefy.service.impl.FollowServiceImpl;
 import com.sallefy.service.impl.UserDeleteServiceImpl;
+import com.sallefy.service.mapper.PlaylistMapper;
+import com.sallefy.service.mapper.UserMapper;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
 import com.sallefy.web.rest.errors.UserNotFoundException;
 import com.sallefy.web.rest.vm.KeyAndPasswordVM;
@@ -85,19 +86,33 @@ public class AccountResourceIT {
     @Mock
     private TrackRepository trackRepository;
 
+    @Mock
+    private PlaybackRepository playbackRepository;
+
     private MockMvc restMvc;
 
     private MockMvc restUserMockMvc;
 
-    private UserDeleteService userDeleteService;
+    @Mock
+    private PlaylistMapper playlistMapper;
+
+    @Mock
+    private FollowPlaylistRepository followPlaylistRepository;
+
+    @Mock
+    private FollowUserRepository followUserRepository;
+
+    @Mock
+    private UserMapper userMapper;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(any());
+        FollowService followService = new FollowServiceImpl(userService, playlistRepository, playlistMapper, followPlaylistRepository, followUserRepository, userMapper);
+        UserDeleteService userDeleteService = new UserDeleteServiceImpl(userRepository, trackRepository, playlistRepository, playbackRepository, followService);
         AccountResource accountResource =
             new AccountResource(userRepository, userService, userDeleteService, mockMailService);
-        UserDeleteService userDeleteService = new UserDeleteServiceImpl(userRepository, trackRepository, playlistRepository);
         AccountResource accountUserMockResource =
             new AccountResource(userRepository, mockUserService, userDeleteService, mockMailService);
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
@@ -614,7 +629,7 @@ public class AccountResourceIT {
 
         restMvc.perform(post("/api/account/change-password")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1"+currentPassword, "new password"))))
+            .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1" + currentPassword, "new password"))))
             .andExpect(status().isBadRequest());
 
         User updatedUser = userRepository.findOneByLogin("change-password-wrong-existing-password").orElse(null);
