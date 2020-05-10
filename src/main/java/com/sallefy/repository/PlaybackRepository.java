@@ -17,4 +17,6 @@ public interface PlaybackRepository extends JpaRepository<Playback, Long>, JpaSp
 
     @Query("select playback from Playback playback where playback.user.login = ?#{principal.username}")
     List<Playback> findByUserIsCurrentUser();
+
+    void deleteAllByUserLogin(String login);
 }

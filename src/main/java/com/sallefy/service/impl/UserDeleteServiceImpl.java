@@ -2,6 +2,7 @@ package com.sallefy.service.impl;
 
 import com.sallefy.domain.Playlist;
 import com.sallefy.domain.Track;
+import com.sallefy.repository.PlaybackRepository;
 import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
@@ -20,12 +21,16 @@ public class UserDeleteServiceImpl implements UserDeleteService {
 
     private final PlaylistRepository playlistRepository;
 
+    private final PlaybackRepository playbackRepository;
+
     public UserDeleteServiceImpl(UserRepository userRepository,
                                  TrackRepository trackRepository,
-                                 PlaylistRepository playlistRepository) {
+                                 PlaylistRepository playlistRepository,
+                                 PlaybackRepository playbackRepository) {
         this.userRepository = userRepository;
         this.trackRepository = trackRepository;
         this.playlistRepository = playlistRepository;
+        this.playbackRepository = playbackRepository;
     }
 
     @Transactional
@@ -34,6 +39,7 @@ public class UserDeleteServiceImpl implements UserDeleteService {
         userRepository.findOneByLogin(login).ifPresent(user -> {
             trackRepository.findAllByUserLogin(login)
                 .forEach(this::removeTrackInAnotherPlaylist);
+            playbackRepository.deleteAllByUserLogin(login);
             userRepository.delete(user);
         });
     }
