@@ -5,12 +5,16 @@ import com.sallefy.config.Constants;
 import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
 import com.sallefy.repository.AuthorityRepository;
+import com.sallefy.repository.PlaylistRepository;
+import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.security.AuthoritiesConstants;
 import com.sallefy.service.MailService;
+import com.sallefy.service.UserDeleteService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.PasswordChangeDTO;
 import com.sallefy.service.dto.UserDTO;
+import com.sallefy.service.impl.UserDeleteServiceImpl;
 import com.sallefy.web.rest.errors.ExceptionTranslator;
 import com.sallefy.web.rest.errors.UserNotFoundException;
 import com.sallefy.web.rest.vm.KeyAndPasswordVM;
@@ -36,13 +40,13 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static com.sallefy.web.rest.UserResourceIT.createBasicUserWithUsername;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -75,19 +79,27 @@ public class AccountResourceIT {
     @Mock
     private MailService mockMailService;
 
+    @Mock
+    private PlaylistRepository playlistRepository;
+
+    @Mock
+    private TrackRepository trackRepository;
+
     private MockMvc restMvc;
 
     private MockMvc restUserMockMvc;
+
+    private UserDeleteService userDeleteService;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(any());
         AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService);
-
+            new AccountResource(userRepository, userService, userDeleteService, mockMailService);
+        UserDeleteService userDeleteService = new UserDeleteServiceImpl(userRepository, trackRepository, playlistRepository);
         AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService);
+            new AccountResource(userRepository, mockUserService, userDeleteService, mockMailService);
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
             .setMessageConverters(httpMessageConverters)
             .setControllerAdvice(exceptionTranslator)
@@ -730,6 +742,13 @@ public class AccountResourceIT {
             post("/api/account/reset-password/init")
                 .content("password-reset-wrong-email@example.com"))
             .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser("delete-user")
+    public void deleteAccount() throws Exception {
+        userRepository.save(createBasicUserWithUsername("delete-user"));
+        restMvc.perform(delete("/api/account")).andExpect(status().isNoContent());
     }
 
     @Test
