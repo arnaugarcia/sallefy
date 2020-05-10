@@ -6,10 +6,7 @@ import com.sallefy.domain.Authority;
 import com.sallefy.domain.User;
 import com.sallefy.repository.*;
 import com.sallefy.security.AuthoritiesConstants;
-import com.sallefy.service.FollowService;
-import com.sallefy.service.MailService;
-import com.sallefy.service.UserDeleteService;
-import com.sallefy.service.UserService;
+import com.sallefy.service.*;
 import com.sallefy.service.dto.PasswordChangeDTO;
 import com.sallefy.service.dto.UserDTO;
 import com.sallefy.service.impl.FollowServiceImpl;
@@ -105,12 +102,15 @@ public class AccountResourceIT {
     @Mock
     private UserMapper userMapper;
 
+    @Mock
+    private LikeService likeService;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(any());
         FollowService followService = new FollowServiceImpl(userService, playlistRepository, playlistMapper, followPlaylistRepository, followUserRepository, userMapper);
-        UserDeleteService userDeleteService = new UserDeleteServiceImpl(userRepository, trackRepository, playlistRepository, playbackRepository, followService);
+        UserDeleteService userDeleteService = new UserDeleteServiceImpl(userRepository, trackRepository, playlistRepository, playbackRepository, followService, likeService);
         AccountResource accountResource =
             new AccountResource(userRepository, userService, userDeleteService, mockMailService);
         AccountResource accountUserMockResource =
