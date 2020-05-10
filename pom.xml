@@ -5,7 +5,7 @@
 
     <groupId>com.sallefy</groupId>
     <artifactId>sallefy</artifactId>
-    <version>0.2.3-BETA</version>
+    <version>0.2.4-BETA</version>
     <packaging>jar</packaging>
     <name>Sallefy</name>
 
