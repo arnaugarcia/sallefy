@@ -5,6 +5,7 @@ import com.sallefy.domain.User;
 import com.sallefy.repository.UserRepository;
 import com.sallefy.security.SecurityUtils;
 import com.sallefy.service.MailService;
+import com.sallefy.service.UserDeleteService;
 import com.sallefy.service.UserService;
 import com.sallefy.service.dto.PasswordChangeDTO;
 import com.sallefy.service.dto.UserDTO;
@@ -43,12 +44,18 @@ public class AccountResource {
 
     private final UserService userService;
 
+    private final UserDeleteService userDeleteService;
+
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    public AccountResource(UserRepository userRepository,
+                           UserService userService,
+                           UserDeleteService userDeleteService,
+                           MailService mailService) {
 
         this.userRepository = userRepository;
         this.userService = userService;
+        this.userDeleteService = userDeleteService;
         this.mailService = mailService;
     }
 
@@ -126,6 +133,21 @@ public class AccountResource {
         }
         userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
             userDTO.getLangKey(), userDTO.getImageUrl());
+    }
+
+    /**
+     * {@code DELETE  /account} : remove the current user.
+     *
+     * @throws RuntimeException {@code 500 (Internal Server Error)} if the user login wasn't found.
+     */
+    @DeleteMapping("/account")
+    public void deleteAccount() {
+        String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("Current user login not found"));
+        Optional<User> user = userRepository.findOneByLogin(userLogin);
+        if (!user.isPresent()) {
+            throw new AccountResourceException("User could not be found");
+        }
+        userDeleteService.removeUser(userLogin);
     }
 
     /**
