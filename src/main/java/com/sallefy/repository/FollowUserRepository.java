@@ -38,4 +38,5 @@ public interface FollowUserRepository extends JpaRepository<FollowUser, Long> {
     @Query("select followUser from FollowUser followUser where followUser.user.login = ?#{principal.username} and followUser.followed.login = :login")
     Optional<FollowUser> findIfFollowedUserIsFollowedByCurrentUser(@Param("login") String login);
 
+    void deleteByUserLogin(String login);
 }

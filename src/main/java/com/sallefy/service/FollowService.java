@@ -35,6 +35,12 @@ public interface FollowService {
     void deleteFollowersByPlaylist(Long playlistId);
 
     /**
+     * Method to delete all the following actions of a user
+     * @param login the login of a user
+     */
+    void deleteAllFollowingsByLogin(String login);
+
+    /**
      * Method to find all the followers of by the current user
      *
      * @return the list of followers

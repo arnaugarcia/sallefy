@@ -25,4 +25,5 @@ public interface FollowPlaylistRepository extends JpaRepository<FollowPlaylist, 
 
     void deleteByPlaylistId(@Param("playlistId") Long playlistId);
 
+    void deleteByUserLogin(String login);
 }

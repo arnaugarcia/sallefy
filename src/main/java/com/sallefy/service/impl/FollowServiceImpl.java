@@ -119,6 +119,12 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
+    public void deleteAllFollowingsByLogin(String login) {
+        followUserRepository.deleteByUserLogin(login);
+        followPlaylistRepository.deleteByUserLogin(login);
+    }
+
+    @Override
     @Transactional
     public List<UserDTO> findFollowersOfCurrentUser() {
         return followUserRepository.findFollowersByCurrentUser()

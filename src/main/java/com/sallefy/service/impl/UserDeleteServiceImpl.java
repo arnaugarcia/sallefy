@@ -6,6 +6,7 @@ import com.sallefy.repository.PlaybackRepository;
 import com.sallefy.repository.PlaylistRepository;
 import com.sallefy.repository.TrackRepository;
 import com.sallefy.repository.UserRepository;
+import com.sallefy.service.FollowService;
 import com.sallefy.service.UserDeleteService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,14 +24,18 @@ public class UserDeleteServiceImpl implements UserDeleteService {
 
     private final PlaybackRepository playbackRepository;
 
+    private final FollowService followService;
+
     public UserDeleteServiceImpl(UserRepository userRepository,
                                  TrackRepository trackRepository,
                                  PlaylistRepository playlistRepository,
-                                 PlaybackRepository playbackRepository) {
+                                 PlaybackRepository playbackRepository,
+                                 FollowService followService) {
         this.userRepository = userRepository;
         this.trackRepository = trackRepository;
         this.playlistRepository = playlistRepository;
         this.playbackRepository = playbackRepository;
+        this.followService = followService;
     }
 
     @Transactional
@@ -39,6 +44,7 @@ public class UserDeleteServiceImpl implements UserDeleteService {
         userRepository.findOneByLogin(login).ifPresent(user -> {
             trackRepository.findAllByUserLogin(login)
                 .forEach(this::removeTrackInAnotherPlaylist);
+            followService.deleteAllFollowingsByLogin(login);
             playbackRepository.deleteAllByUserLogin(login);
             userRepository.delete(user);
         });
