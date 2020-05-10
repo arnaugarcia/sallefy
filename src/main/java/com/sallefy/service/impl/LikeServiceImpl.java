@@ -70,6 +70,11 @@ public class LikeServiceImpl implements LikeService {
 
     }
 
+    @Override
+    public void removeLikesByLogin(String login) {
+        likeTrackRepository.deleteByUserLogin(login);
+    }
+
 
     private void findTrackById(Long trackId) {
         trackService.findOne(trackId);

@@ -21,4 +21,10 @@ public interface LikeService {
      * @return a LikeDTO with true if the user has liked or false if the track isn't found or not liked
      */
     LikeDTO checkLikeTrack(Long id);
+
+    /**
+     * Delete all likes by user
+     * @param login the login of a user
+     */
+    void removeLikesByLogin(String login);
 }

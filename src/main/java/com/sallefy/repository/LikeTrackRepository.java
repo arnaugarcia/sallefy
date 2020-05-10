@@ -22,4 +22,5 @@ public interface LikeTrackRepository extends JpaRepository<LikeTrack, Long> {
     @Query("select likeTrack from LikeTrack likeTrack where likeTrack.user.login = ?#{principal.username} and likeTrack.track.id = :id")
     Optional<LikeTrack> findTrackByUserIsCurrentUser(@Param("id") Long id);
 
+    void deleteByUserLogin(String login);
 }
