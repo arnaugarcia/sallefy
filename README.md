@@ -108,7 +108,7 @@ Refer to [Using JHipster in production][] for more details.
 
 To package your application as a war in order to deploy it to an application server, run:
 
-    ./mvnw -Pprod,war clean verify
+    ./mvnw -Pprod,war,swagger clean verify
 
 ## Testing
 
