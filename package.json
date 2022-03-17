@@ -36,7 +36,7 @@
     "ngx-webstorage": "4.0.1",
     "owl.carousel": "^2.3.4",
     "rxjs": "6.5.3",
-    "swagger-ui-dist": "3.24.3",
+    "swagger-ui-dist": "4.1.3",
     "tslib": "1.10.0",
     "videogular2": "^7.0.1",
     "zone.js": "0.10.2"
